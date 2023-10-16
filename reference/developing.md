@@ -1,24 +1,5 @@
 # developing
 
-## TODO
-
-- [ ] 테이블 기획
-  - [x] 공지사항
-  - [ ] 뉴스레터
-  - [ ] 연락
-  - [x] 회원정보
-  - [x] 고객의 소리
-  - [ ] 통계 정보(가입자(개인/기업), 지역, 로스팅 횟수)
-  - [ ] 로스팅 로그 확인 메뉴(회원번호, 날짜 검색)
-  - [ ] 회원 정보 관리 메뉴(조회, 생성, 수정-삭제)
-  - [ ] 기계 정보(상태, 일련번호, SW버전)
-  - [ ] 고객의 소리 대응
-- [ ] 이메일 인증
-- [ ] thymleaf security 안되는거 먼저 해결.
-- [ ] 불필요한 파일 제거
-- [ ] 기획에 맞게 템플릿 커스터마이징
-
-
 ## Docker.
 - [추석특집 도커 (Docker) 기초 강의 몰아보기](https://www.youtube.com/watch?v=IqnAiM1A0d8)
 - [가장 쉽게 배우는 도커](https://www.youtube.com/watch?v=hWPv9LMlme8)
@@ -27,8 +8,7 @@
 - [[따배쿠] 쿠버네티스 시리즈](https://www.youtube.com/playlist?list=PLApuRlvrZKohaBHvXAOhUD-RxD0uQ3z0c)
     - https://wikidocs.net/186107
 
-
-Docker Mariadb
+### Mariadb
 
 `docker run --name mariadb -d -p 3306:3306 -e MARIADB_ROOT_PASSWORD=root mariadb:latest`
 
@@ -49,7 +29,7 @@ docker ps
 docker stop mariadb
 ```
 
-h2
+## H2
 
 ```text
 데이터베이스 파일 생성

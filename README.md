@@ -20,7 +20,7 @@ Gradle
 
 참고 구조. (업데이트 예정..)
 
-![Result](https://raw.githubusercontent.com/jihunparkme/re-on-site/dev/reference/system-architecture.png 'Result')
+![Result](https://raw.githubusercontent.com/jihunparkme/reon-site/dev/reference/system-architecture.png 'Result')
 
 ## Plan
 
@@ -28,14 +28,8 @@ Gradle
 
 - 메인페이지에 회사 소개
 - Notice - 관리자 작성
-  ```sql
-  ```
 - News Letter - 관리자 작성
-  ```sql
-  ```
 - Contact us - 고객 작성
-  ```sql
-  ```
 
 회원가입.
 
@@ -43,8 +37,7 @@ Gradle
 - 개인: 구매자 이름, 이메일, 전화번호 / 기업: 상호명, 대표자 이름, 주소, 이메일, 전화번호
 - 제품코드
 - 일련번호(S/N)
-- 참고: OAuth 로그인대신 SNS 로그인 사용, 일반 Session 보다는 JDBC Session
-- 가입 시 이메일 인증
+- 가입 시 이메일 인증 -> mail SMTP 회사 계정으로
 
 가입 계정.
 
