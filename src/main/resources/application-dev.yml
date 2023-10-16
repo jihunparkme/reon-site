@@ -1,0 +1,31 @@
+spring:
+  config:
+    activate:
+      on-profile: develop
+  session:
+    store-type: jdbc
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+        format_sql: true
+        default_batch_fetch_size: 100
+    hibernate:
+      ddl-auto: update
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  messages:
+    basename: messages,errors
+
+file:
+  directory: /Users/aaron/reon/uploadFiles/

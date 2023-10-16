@@ -1,0 +1,12 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: UTF-8
+
+spring:
+  profiles:
+    active: test
+    group:
+      test: test,mail
+      develop: develop,mail,devdb
+      production: production,mail,proddb
