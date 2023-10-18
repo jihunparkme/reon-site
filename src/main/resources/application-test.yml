@@ -48,4 +48,5 @@ logging:
         SQL: DEBUG
 
 file:
-  directory: /Users/aaron/reon/uploadFiles/
+  upload:
+    location: /Users/aaron/reon/uploadFiles/
