@@ -25,7 +25,7 @@ ALTER TABLE `NOTICE_UPLOAD_FILE`
 ALTER TABLE `NOTICE_UPLOAD_FILE`
     AUTO_INCREMENT = 1;
 
-#----------------------------------------------------------------------------------------------
+-- ########################################################################################
 
 -- 공지사항
 DROP TABLE IF EXISTS `NOTICE` RESTRICT;
@@ -66,7 +66,7 @@ ALTER TABLE `NOTICE_UPLOAD_FILE`
                 )
             ON DELETE SET NULL ON UPDATE NO ACTION;
 
-#----------------------------------------------------------------------------------------------
+-- ########################################################################################
 
 -- 고객의 소리
 DROP TABLE IF EXISTS `VOICE` RESTRICT;
@@ -95,7 +95,7 @@ ALTER TABLE `VOICE`
 ALTER TABLE `VOICE`
     AUTO_INCREMENT = 1;
 
-#----------------------------------------------------------------------------------------------
+-- ########################################################################################
 
 DROP TABLE IF EXISTS `USERS` RESTRICT;
 
@@ -137,18 +137,7 @@ ALTER TABLE `USERS`
 ALTER TABLE `USERS`
     AUTO_INCREMENT = 1;
 
-
-ALTER TABLE `VOICE`
-    ADD CONSTRAINT `FK_USERS_TO_VOICE` -- 사용자 -> 고객의 소리
-        FOREIGN KEY (
-                     `user_id` -- 사용자 ID
-            )
-            REFERENCES `USERS` ( -- 사용자
-                                `id` -- 사용자 ID
-                )
-            ON DELETE SET NULL ON UPDATE NO ACTION;
-
-#----------------------------------------------------------------------------------------------
+-- ########################################################################################
 
 -- 문의하기
 DROP TABLE IF EXISTS `CONTACT` RESTRICT;
@@ -179,7 +168,7 @@ ALTER TABLE `CONTACT`
 ALTER TABLE `CONTACT`
     AUTO_INCREMENT = 1;
 
-#----------------------------------------------------------------------------------------------
+-- ########################################################################################
 
 --  뉴스레터 첨부 파일
 DROP TABLE IF EXISTS `NEWS_LETTER_UPLOAD_FILE` RESTRICT;
@@ -206,7 +195,7 @@ ALTER TABLE `NEWS_LETTER_UPLOAD_FILE`
 ALTER TABLE `NEWS_LETTER_UPLOAD_FILE`
     AUTO_INCREMENT = 1;
 
-#----------------------------------------------------------------------------------------------
+-- ########################################################################################
 
 -- 뉴스레터
 DROP TABLE IF EXISTS `NEWS_LETTER` RESTRICT;
@@ -245,5 +234,3 @@ ALTER TABLE `NEWS_LETTER_UPLOAD_FILE`
                                       `id`
                 )
             ON DELETE SET NULL ON UPDATE NO ACTION;
-
-#----------------------------------------------------------------------------------------------
