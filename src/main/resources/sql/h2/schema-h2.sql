@@ -234,3 +234,29 @@ ALTER TABLE `NEWS_LETTER_UPLOAD_FILE`
                                       `id`
                 )
             ON DELETE SET NULL ON UPDATE NO ACTION;
+
+-- ########################################################################################
+
+-- 로스팅 기록
+DROP TABLE IF EXISTS `RECORD` RESTRICT;
+
+CREATE TABLE `RECORD`
+(
+    `ID`         BIGINT         NOT NULL,
+    `TITLE`      VARCHAR(100)   NOT NULL,
+    `REQUEST`        VARCHAR(20000) NOT NULL,
+    `USER_ID`    BIGINT         NOT NULL,
+    `CREATED_DT` DATETIME       NOT NULL
+);
+
+ALTER TABLE `RECORD`
+    ADD CONSTRAINT `PK_RECORD` -- 공지사항 기본키
+        PRIMARY KEY (
+                     `id` -- 공지사항 ID
+            );
+
+ALTER TABLE `RECORD`
+    MODIFY COLUMN `id` BIGINT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `RECORD`
+    AUTO_INCREMENT = 1;
