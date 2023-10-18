@@ -2108,3 +2108,26 @@ section {
 #footer .credits a:hover {
   color: white;
 }
+
+
+/*--------------------------------------------------------------
+# Pagination
+--------------------------------------------------------------*/
+
+.paging-div {
+  display: table;
+  text-align: center;
+  margin: 60px auto;
+  justify-content: center !important;
+}
+
+.page-item.active .page-link {
+  z-index: 3 !important;
+  color: #fff !important;
+  background-color: #5D432C !important;
+  border-color: #5D432C !important;
+}
+
+.page-link {
+  color: #5D432C !important;
+}
