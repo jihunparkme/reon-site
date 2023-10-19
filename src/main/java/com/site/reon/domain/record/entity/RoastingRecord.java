@@ -1,20 +1,18 @@
 package com.site.reon.domain.record.entity;
 
+import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoastingRecord {
+public class RoastingRecord extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +25,8 @@ public class RoastingRecord {
     private String request;
 
     @Column(nullable = false)
-    private long userId;
+    private String prdSn;
 
-    @CreatedDate
-    private LocalDateTime createDt;
+    @Column(nullable = false)
+    private long userId;
 }

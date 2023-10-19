@@ -3,14 +3,17 @@ package com.site.reon.domain.record.web;
 import com.site.reon.domain.record.dto.RoastingRecordRequest;
 import com.site.reon.domain.record.service.RoastingRecordService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import static com.site.reon.global.common.constant.Result.FAIL;
+import static com.site.reon.global.common.constant.Result.SUCCESS;
+
+@Slf4j
 @Controller
 @RequestMapping("/record")
 @RequiredArgsConstructor
@@ -24,6 +27,12 @@ public class RoastingRecordController {
             @RequestParam(value = "size", required = false, defaultValue = "6") Integer size,
             Model model) {
 
+        // TODO: 로그인 정보 확인해서 관리자면 전체 조회, 일반 회원이면 회원 정보만 조회
+
+        // TODO: 회원번호, 날짜로 검색
+
+        // TODO: 저장된 데이터 보여주기
+
 //        Page<RoastingRecord> roastingRecordListPage = recordService.findAllSortByIdDescPaging(page, size);
 
 //        model.addAttribute("roastingRecordListPage", roastingRecordListPage);
@@ -34,13 +43,23 @@ public class RoastingRecordController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(RoastingRecordRequest request){
-        recordService.upload(request);
-        return ResponseEntity.ok("SUCCESS");
+    public ResponseEntity<?> uploadFile(@RequestBody RoastingRecordRequest request){
+        try {
+            recordService.upload(request);
+            return ResponseEntity.ok(SUCCESS);
+        } catch (Exception e) {
+            log.error("RoastingRecordController.uploadFile Exception: ", e);
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
      * TODO: View 로 보여줄 때는 json 을 잘 풀어서 보여줄 수 있도록..
-     * {"fan":[90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,105,105,105,105,105,105,105,105],"power":[100,105,125,130,130,130,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,125,135,155,155,155,155]}
+     * chart.js로 차트 그려주기.
+     * https://www.chartjs.org/
+     *
+     * tabulator 테이블 그리드
+     * https://tabulator.info/
+     * https://blog.naver.com/sacroo/222285981374
      */
 }
