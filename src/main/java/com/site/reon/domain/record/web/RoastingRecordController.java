@@ -41,6 +41,12 @@ public class RoastingRecordController {
         return "record/record-list";
     }
 
+    @GetMapping("{id}")
+    public String view(@PathVariable Long id, Model model) {
+        model.addAttribute("record", recordService.findRoastingRecord(id));
+        return "record/record-view";
+    }
+
     @ResponseBody
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestBody RoastingRecordRequest request){
@@ -52,14 +58,4 @@ public class RoastingRecordController {
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    /**
-     * TODO: View 로 보여줄 때는 json 을 잘 풀어서 보여줄 수 있도록..
-     * chart.js로 차트 그려주기.
-     * https://www.chartjs.org/
-     *
-     * tabulator 테이블 그리드
-     * https://tabulator.info/
-     * https://blog.naver.com/sacroo/222285981374
-     */
 }

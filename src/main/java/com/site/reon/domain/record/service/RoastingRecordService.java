@@ -8,4 +8,6 @@ public interface RoastingRecordService {
     void upload(RoastingRecordRequest request);
 
     Page<RoastingRecord> findAllSortByIdDescPaging(int page, int size);
+
+    RoastingRecord findRoastingRecord(Long id);
 }
