@@ -26,7 +26,7 @@ public class RoastingRecordController {
     @GetMapping
     public String list(
             @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(value = "size", required = false, defaultValue = "6") int size,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
             Model model) {
 
         // TODO: 로그인 정보 확인해서 관리자면 전체 조회, 일반 회원이면 회원 정보만 조회
@@ -41,6 +41,7 @@ public class RoastingRecordController {
         return "record/record-list";
     }
 
+    @ResponseBody
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestBody RoastingRecordRequest request){
         try {
