@@ -1,9 +1,11 @@
 package com.site.reon.domain.record.web;
 
 import com.site.reon.domain.record.dto.RoastingRecordRequest;
+import com.site.reon.domain.record.entity.RoastingRecord;
 import com.site.reon.domain.record.service.RoastingRecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,20 +25,17 @@ public class RoastingRecordController {
 
     @GetMapping
     public String list(
-            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
-            @RequestParam(value = "size", required = false, defaultValue = "6") Integer size,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "6") int size,
             Model model) {
 
         // TODO: 로그인 정보 확인해서 관리자면 전체 조회, 일반 회원이면 회원 정보만 조회
 
         // TODO: 회원번호, 날짜로 검색
 
-        // TODO: 저장된 데이터 보여주기
+        Page<RoastingRecord> roastingRecordListPage = recordService.findAllSortByIdDescPaging(page, size);
 
-//        Page<RoastingRecord> roastingRecordListPage = recordService.findAllSortByIdDescPaging(page, size);
-
-//        model.addAttribute("roastingRecordListPage", roastingRecordListPage);
-
+        model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", page);
 
         return "record/record-list";
