@@ -18,7 +18,12 @@ public class RoastingRecordResponse {
 
     private Long id;
     private String title;
-    private String record;
+    private String fan;
+    private String heater;
+    private String temp1;
+    private String temp2;
+    private String temp3;
+    private String temp4;
     private String roasterSn;
     private long userId;
     private LocalDateTime createdDt;
@@ -28,7 +33,12 @@ public class RoastingRecordResponse {
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
                 .title(roastingRecord.getTitle())
-                .record(roastingRecord.getRecord())
+                .fan(roastingRecord.getFan())
+                .heater(roastingRecord.getHeater())
+                .temp1(roastingRecord.getTemp1())
+                .temp2(roastingRecord.getTemp2())
+                .temp3(roastingRecord.getTemp3())
+                .temp4(roastingRecord.getTemp4())
                 .roasterSn(roastingRecord.getRoasterSn())
                 .userId(roastingRecord.getUserId())
                 .createdDt(roastingRecord.getCreatedDt())

@@ -22,7 +22,22 @@ public class RoastingRecord extends BaseTimeEntity {
     private String title;
 
     @Column(nullable = false)
-    private String record;
+    private String fan;
+
+    @Column(nullable = false)
+    private String heater;
+
+    @Column(nullable = false)
+    private String temp1;
+
+    @Column(nullable = false)
+    private String temp2;
+
+    @Column(nullable = false)
+    private String temp3;
+
+    @Column(nullable = false)
+    private String temp4;
 
     @Column(nullable = false)
     private String roasterSn;
