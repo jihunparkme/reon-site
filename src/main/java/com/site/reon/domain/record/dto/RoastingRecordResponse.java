@@ -24,7 +24,7 @@ public class RoastingRecordResponse {
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
                 .title(roastingRecord.getTitle())
-                .request(roastingRecord.getRequest())
+                .request(roastingRecord.getRecord())
                 .prdSn(roastingRecord.getPrdSn())
                 .userId(roastingRecord.getUserId())
                 .build();
