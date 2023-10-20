@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -19,6 +21,8 @@ public class RoastingRecordResponse {
     private String record;
     private String roasterSn;
     private long userId;
+    private LocalDateTime createdDt;
+    private LocalDateTime modifiedDt;
 
     public static RoastingRecordResponse of(RoastingRecord roastingRecord) {
         return RoastingRecordResponse.builder()
@@ -27,6 +31,8 @@ public class RoastingRecordResponse {
                 .record(roastingRecord.getRecord())
                 .roasterSn(roastingRecord.getRoasterSn())
                 .userId(roastingRecord.getUserId())
+                .createdDt(roastingRecord.getCreatedDt())
+                .modifiedDt(roastingRecord.getModifiedDt())
                 .build();
     }
 }

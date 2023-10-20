@@ -1,0 +1,65 @@
+<div th:replace="/common/head :: head"></div>
+<body>
+<div th:replace="/common/header :: header('record')"></div>
+
+  <main id="main">
+    <section id="breadcrumbs" class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2><a href="/record" style="color: black">Record</a></h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/record">Record</a></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="notice" class="notice">
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="entries">
+            <article class="entry entry-single">
+
+              <h2 class="entry-view-title">
+                <p>[(${record.title})]</p>
+              </h2>
+              <div class="entry-meta">
+                <ul>
+                  <li class="d-flex align-items-center"><i class="bi bi-clock"></i>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]</li>
+                  <th:block th:if="${not #strings.isEmpty(record.modifiedDt)}">
+                    <li class="d-flex align-items-center"><i class="bi bi-pencil"></i>[(${#temporals.format(record.modifiedDt, 'yyyy-MM-dd HH:mm')})]</li>
+                  </th:block>
+                </ul>
+              </div>
+
+              <div class="entry-content">
+                <p>[(${record.record})]</p>
+              </div>
+
+              <div class="entry-footer">
+                <i class="bi bi-folder"></i>
+                <ul class="cats">
+                  <li><a href="/record">Record</a></li>
+                </ul>
+              </div>
+
+              <div class="entry-button">
+                <div>
+                  <button th:onclick="|location.href='@{/record}'|" class="btn btn-outline-dark">목록</button>
+                </div>
+              </div>
+
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div th:replace="/common/footer :: footer"></div>
+  </main>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div th:replace="/common/commonjs"></div>
+</body>
+</html>
