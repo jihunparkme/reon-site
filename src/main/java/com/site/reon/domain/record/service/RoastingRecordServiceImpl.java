@@ -37,8 +37,19 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
 
     @Override
     @Transactional(readOnly = true)
-    public RoastingRecordResponse findRoastingRecord(Long id) {
+    public RoastingRecordResponse findRoastingRecordBy(Long id) {
         Optional<RoastingRecord> roastingRecordOpt = recordRepository.findById(id);
+        if (roastingRecordOpt.isEmpty()) {
+            return RoastingRecordResponse.EMPTY;
+        }
+
+        return RoastingRecordResponse.of(roastingRecordOpt.get());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RoastingRecordResponse findRoastingRecordBy(String roasterSn) {
+        Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByRoasterSn(roasterSn);
         if (roastingRecordOpt.isEmpty()) {
             return RoastingRecordResponse.EMPTY;
         }

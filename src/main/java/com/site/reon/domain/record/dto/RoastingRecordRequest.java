@@ -9,13 +9,13 @@ import lombok.Getter;
 public class RoastingRecordRequest {
     private String title;
     private String record;
-    private String prdSn;
+    private String roasterSn;
 
     public RoastingRecord toEntity(long userId) {
         return RoastingRecord.builder()
                 .title(title)
-                .request(record)
-                .prdSn(prdSn)
+                .record(record)
+                .roasterSn(roasterSn)
                 .userId(userId)
                 .build();
     }

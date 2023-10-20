@@ -10,5 +10,7 @@ public interface RoastingRecordService {
 
     Page<RoastingRecord> findAllSortByIdDescPaging(int page, int size);
 
-    RoastingRecordResponse findRoastingRecord(Long id);
+    RoastingRecordResponse findRoastingRecordBy(Long id);
+
+    RoastingRecordResponse findRoastingRecordBy(String roasterSn);
 }

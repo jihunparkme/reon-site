@@ -16,16 +16,16 @@ public class RoastingRecordResponse {
 
     private Long id;
     private String title;
-    private String request;
-    private String prdSn;
+    private String record;
+    private String roasterSn;
     private long userId;
 
     public static RoastingRecordResponse of(RoastingRecord roastingRecord) {
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
                 .title(roastingRecord.getTitle())
-                .request(roastingRecord.getRecord())
-                .prdSn(roastingRecord.getPrdSn())
+                .record(roastingRecord.getRecord())
+                .roasterSn(roastingRecord.getRoasterSn())
                 .userId(roastingRecord.getUserId())
                 .build();
     }

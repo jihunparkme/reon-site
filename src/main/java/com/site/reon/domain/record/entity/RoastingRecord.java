@@ -25,7 +25,7 @@ public class RoastingRecord extends BaseTimeEntity {
     private String record;
 
     @Column(nullable = false)
-    private String prdSn;
+    private String roasterSn;
 
     @Column(nullable = false)
     private long userId;
