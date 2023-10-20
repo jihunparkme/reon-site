@@ -2,77 +2,80 @@
 <body>
 <div th:replace="/common/header :: header('record')"></div>
 
-  <main id="main">
+<main id="main">
     <section id="breadcrumbs" class="breadcrumbs">
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center">
-          <h2><a href="/record" style="color: black">Record</a></h2>
-          <ol>
-            <li><a href="/">Home</a></li>
-            <li><a href="/record">Record</a></li>
-          </ol>
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2><a href="/record" style="color: black">Record</a></h2>
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/record">Record</a></li>
+                </ol>
+            </div>
         </div>
-      </div>
     </section>
 
     <form name="form" id="form" th:action="@{/record}" method="get">
-      <input type="hidden" id="page" name="page" value="0"/>
+        <input type="hidden" id="page" name="page" value="0"/>
     </form>
 
     <section id="services" class="services">
-      <div class="container">
-        <div class="row">
-          <div style="margin-bottom: 30px;">
-            <h5 style="float: left">Total : [(${roastingRecordListPage.totalElements})]</h5>
-          </div>
+        <div class="container">
+            <div class="row">
+                <div style="margin-bottom: 30px;">
+                    <h5 style="float: left">Total : [(${roastingRecordListPage.totalElements})]</h5>
+                </div>
 
-          <tr th:if="${roastingRecordListPage.totalElements} == 0">
-            <div class="col-md-6">
-              <div class="icon-box">
-                <i class="bi bi-bar-chart"></i>
-                <h4><a>등록된 기록이 없습니다.</a></h4>
-              </div>
+                <tr th:if="${roastingRecordListPage.totalElements} == 0">
+                    <div class="col-md-6">
+                        <div class="icon-box">
+                            <i class="bi bi-bar-chart"></i>
+                            <h4><a>등록된 기록이 없습니다.</a></h4>
+                        </div>
+                    </div>
+                </tr>
+
+                <div th:each="record, status : ${roastingRecordListPage.content}"
+                     th:unless="${#lists.isEmpty(roastingRecordListPage.content)}" class="col-md-6"
+                     th:classappend="${status.index gt 0 ? 'mt-4 mt-md-0' : ''}">
+                    <div class="icon-box" th:onclick="'location.href=\'' + @{/record/{id}(id=${record.id})} + '\''">
+                        <i class="bi bi-bar-chart"></i>
+                        <h4><a th:href="@{/record/{id}(id=${record.id})}">[(${record.title})]</a></h4>
+                        <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]</p>
+                    </div>
+                </div>
+
             </div>
-          </tr>
 
-          <div th:each="record, status : ${roastingRecordListPage.content}" th:unless="${#lists.isEmpty(roastingRecordListPage.content)}" class="col-md-6" th:classappend="${status.index gt 0 ? 'mt-4 mt-md-0' : ''}">
-            <div class="icon-box" th:onclick="'location.href=\'' + @{/record/{id}(id=${record.id})} + '\''">
-              <i class="bi bi-bar-chart"></i>
-              <h4><a th:href="@{/record/{id}(id=${record.id})}">[(${record.title})]</a></h4>
-              <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]</p>
+            <div class="paging-div">
+                <ul class="pagination" id="pagination"></ul>
             </div>
-          </div>
-
         </div>
-
-        <div class="paging-div">
-          <ul class="pagination" id="pagination"></ul>
-        </div>
-      </div>
     </section>
 
     <div th:replace="/common/footer :: footer"></div>
-  </main>
+</main>
 
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
 <div th:replace="/common/commonjs"></div>
 <script type="text/javascript" th:src="@{/js/record/record.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-  /*<![CDATA[*/
-  window.pagObj = $('#pagination').twbsPagination({
-    totalPages: [[${roastingRecordListPage.totalPages}]],
-    startPage: [[${roastingRecordListPage.number}]] + 1,
-    visiblePages: 10,
-    prev: "‹",
-    next: "›",
-    first: '«',
-    last: '»',
-    onPageClick: function (event, page) {
-    }
-  }).on('page', function (event, page) {
-    searchRecordList(page - 1);
-  });
-  /*]]>*/
+    /*<![CDATA[*/
+    window.pagObj = $('#pagination').twbsPagination({
+        totalPages: [[${roastingRecordListPage.totalPages}]],
+        startPage: [[${roastingRecordListPage.number}]] + 1,
+        visiblePages: 10,
+        prev: "‹",
+        next: "›",
+        first: '«',
+        last: '»',
+        onPageClick: function (event, page) {
+        }
+    }).on('page', function (event, page) {
+        searchRecordList(page - 1);
+    });
+    /*]]>*/
 </script>
 </body>
 </html>
