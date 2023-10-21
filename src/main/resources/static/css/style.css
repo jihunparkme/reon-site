@@ -518,8 +518,6 @@ h6 {
 section {
   padding: 60px 0;
   overflow: hidden;
-  min-height: 100%;
-  position: relative;
 }
 
 .section-bg,
@@ -1451,6 +1449,8 @@ section {
 --------------------------------------------------------------*/
 .notice {
   padding: 40px 0 200px 0;
+  min-height: 70%;
+  position: relative;
 }
 
 .notice .entry {
