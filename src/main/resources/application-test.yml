@@ -55,6 +55,11 @@ logging:
             sql: TRACE
         SQL: DEBUG
 
+jwt:
+  header: Authorization
+  secret: YWFyb24tdGVjaC1zcHJpbmctYm9vdC1qd3QtdHV0b3JpYWwtc2VjcmV0LWFhcm9uLXRlY2gtc3ByaW5nLWJvb3Qtand0LXR1dG9yaWFsLXNlY3JldAo=
+  token-validity-in-seconds: 86400
+
 file:
   upload:
     location: /Users/aaron/reon/uploadFiles/

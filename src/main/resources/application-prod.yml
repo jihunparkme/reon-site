@@ -25,5 +25,10 @@ spring:
   messages:
     basename: messages,errors
 
+jwt:
+  header: Authorization
+  secret: cmVvbi1zaXRlLXNwcmluZy1ib290LWp3dC1zZWNyZXQtbWFkZS1ieS1hYXJvbi1yZW9uLXNpdGUtc3ByaW5nLWJvb3Qtand0LXNlY3JldC1tYWRlLWJ5LWFhcm9uCg==
+  token-validity-in-seconds: 86400
+
 file:
   directory: /Users/aaron/uploadFiles/

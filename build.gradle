@@ -22,14 +22,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	compileOnly 'org.springframework.boot:spring-boot-devtools'
 
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// data
 	runtimeOnly 'com.h2database:h2'
 
-	compileOnly 'org.springframework.boot:spring-boot-devtools'
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson'
 
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
