@@ -19,7 +19,7 @@
         <input type="hidden" id="page" name="page" value="0"/>
     </form>
 
-    <section id="services" class="services">
+    <section id="records" class="records">
         <div class="container">
             <div class="row">
                 <div style="margin-bottom: 30px;">
@@ -41,7 +41,9 @@
                     <div class="icon-box" th:onclick="'location.href=\'' + @{/record/{id}(id=${record.id})} + '\''">
                         <i class="bi bi-bar-chart"></i>
                         <h4><a th:href="@{/record/{id}(id=${record.id})}">[(${record.title})]</a></h4>
-                        <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]</p>
+                        <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]
+                        <br/>
+                        Roaster S/N : [(${record.roasterSn})]</p>
                     </div>
                 </div>
 
