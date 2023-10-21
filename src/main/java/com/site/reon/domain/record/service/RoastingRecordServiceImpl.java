@@ -1,15 +1,17 @@
 package com.site.reon.domain.record.service;
 
 import com.site.reon.domain.record.dto.RoastingRecordRequest;
+import com.site.reon.domain.record.dto.RoastingRecordResponse;
 import com.site.reon.domain.record.entity.RoastingRecord;
 import com.site.reon.domain.record.repository.RoastingRecordRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +37,23 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
 
     @Override
     @Transactional(readOnly = true)
-    public RoastingRecord findRoastingRecord(Long id) {
-        return recordRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("해당 기록이 존재하지 않습니다. id=" + id));
+    public RoastingRecordResponse findRoastingRecordBy(Long id) {
+        Optional<RoastingRecord> roastingRecordOpt = recordRepository.findById(id);
+        if (roastingRecordOpt.isEmpty()) {
+            return RoastingRecordResponse.EMPTY;
+        }
+
+        return RoastingRecordResponse.of(roastingRecordOpt.get());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RoastingRecordResponse findRoastingRecordBy(String roasterSn) {
+        Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByRoasterSn(roasterSn);
+        if (roastingRecordOpt.isEmpty()) {
+            return RoastingRecordResponse.EMPTY;
+        }
+
+        return RoastingRecordResponse.of(roastingRecordOpt.get());
     }
 }
