@@ -21,9 +21,9 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
 
     @Override
     public void upload(RoastingRecordRequest request) {
-        // TODO: S/N 로 userId 검색
-        long userId = 2L;
-        RoastingRecord roastingRecord = request.toEntity(userId);
+        // TODO: S/N 로 memberId 검색
+        long memberId = 2L;
+        RoastingRecord roastingRecord = request.toEntity(memberId);
 
         recordRepository.save(roastingRecord);
     }
