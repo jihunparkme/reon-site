@@ -38,13 +38,6 @@
                                 <canvas id="roastingChart" width="1404" height="702"
                                         style="display: block; box-sizing: border-box; height: 351px; width: 702px;"></canvas>
                             </div>
-
-                            <p>[(${record.fan})]</p>
-                            <p>[(${record.heater})]</p>
-                            <p>[(${record.temp1})]</p>
-                            <p>[(${record.temp2})]</p>
-                            <p>[(${record.temp3})]</p>
-                            <p>[(${record.temp4})]</p>
                         </div>
 
                         <div class="entry-footer">
@@ -91,17 +84,39 @@
         datasets: [
             {
                 label: 'Heater',
-                data: [(${record.fan})],
+                data: [(${record.heater})],
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgb(255, 99, 132)',
-                yAxisID: 'y',
             },
             {
                 label: 'Fan',
-                data: [(${record.heater})],
+                data: [(${record.fan})],
                 borderColor: 'rgb(54, 162, 235)',
                 backgroundColor: 'rgb(54, 162, 235)',
-                yAxisID: 'y1',
+            },
+            {
+                label: 'Temp1',
+                data: [(${record.temp1})],
+                borderColor: 'rgb(255, 159, 64)',
+                backgroundColor: 'rgb(255, 159, 64)',
+            },
+            {
+                label: 'Temp2',
+                data: [(${record.temp2})],
+                borderColor: 'rgb(255, 205, 86)',
+                backgroundColor: 'rgb(255, 205, 86)',
+            },
+            {
+                label: 'Temp3',
+                data: [(${record.temp3})],
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgb(75, 192, 192)',
+            },
+            {
+                label: 'Temp4',
+                data: [(${record.temp4})],
+                borderColor: 'rgb(153, 102, 255)',
+                backgroundColor: 'rgb(153, 102, 255)',
             }
         ]
     };
@@ -123,19 +138,16 @@
                 }
             },
             scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Second.'
+                    }
+                },
                 y: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                },
-                y1: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right',
-                    grid: {
-                        drawOnChartArea: false,
-                    },
-                },
+                    min: 0,
+                    max: 300,
+                }
             }
         },
     });
