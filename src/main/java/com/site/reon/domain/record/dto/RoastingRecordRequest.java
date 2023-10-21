@@ -18,7 +18,7 @@ public class RoastingRecordRequest {
     private String temp4;
     private String roasterSn;
 
-    public RoastingRecord toEntity(long userId) {
+    public RoastingRecord toEntity(long memberId) {
         return RoastingRecord.builder()
                 .title(this.title)
                 .fan(this.fan)
@@ -28,7 +28,7 @@ public class RoastingRecordRequest {
                 .temp3(this.temp3)
                 .temp4(this.temp4)
                 .roasterSn(this.roasterSn)
-                .userId(userId)
+                .memberId(memberId)
                 .build();
     }
 }

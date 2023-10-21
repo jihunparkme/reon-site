@@ -18,30 +18,30 @@ public class RoastingRecord extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 100, nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(length = 20000, nullable = false)
     private String fan;
 
-    @Column(nullable = false)
+    @Column(length = 20000, nullable = false)
     private String heater;
 
-    @Column(nullable = false)
+    @Column(length = 20000, nullable = false)
     private String temp1;
 
-    @Column(nullable = false)
+    @Column(length = 20000, nullable = false)
     private String temp2;
 
-    @Column(nullable = false)
+    @Column(length = 20000, nullable = false)
     private String temp3;
 
-    @Column(nullable = false)
+    @Column(length = 20000, nullable = false)
     private String temp4;
 
-    @Column(nullable = false)
+    @Column(length = 100, nullable = false)
     private String roasterSn;
 
     @Column(nullable = false)
-    private long userId;
+    private long memberId;
 }

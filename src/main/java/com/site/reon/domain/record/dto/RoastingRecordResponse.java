@@ -25,7 +25,7 @@ public class RoastingRecordResponse {
     private String temp3;
     private String temp4;
     private String roasterSn;
-    private long userId;
+    private long memberId;
     private LocalDateTime createdDt;
     private LocalDateTime modifiedDt;
 
@@ -40,7 +40,7 @@ public class RoastingRecordResponse {
                 .temp3(roastingRecord.getTemp3())
                 .temp4(roastingRecord.getTemp4())
                 .roasterSn(roastingRecord.getRoasterSn())
-                .userId(roastingRecord.getUserId())
+                .memberId(roastingRecord.getMemberId())
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
                 .build();
