@@ -1,0 +1,18 @@
+### ADMIN
+POST http://localhost:8080/login/authenticate
+Content-Type: application/json
+
+{
+    "email" : "admin@gmail.com",
+    "password" : "admin"
+}
+
+
+### USER
+POST http://localhost:8080/login/authenticate
+Content-Type: application/json
+
+{
+"email" : "user@gmail.com",
+"password" : "user"
+}
