@@ -46,6 +46,7 @@ public class MemberServiceImpl implements MemberService {
                 .authorities(Collections.singleton(authority))
                 .companyName(memberDto.getCompanyName())
                 .address(memberDto.getAddress())
+                .activated(true)
                 .build();
 
 
