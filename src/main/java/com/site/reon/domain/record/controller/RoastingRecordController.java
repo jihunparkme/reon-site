@@ -1,4 +1,4 @@
-package com.site.reon.domain.record.web;
+package com.site.reon.domain.record.controller;
 
 import com.site.reon.domain.record.dto.RoastingRecordRequest;
 import com.site.reon.domain.record.entity.RoastingRecord;
