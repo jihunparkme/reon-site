@@ -1,9 +1,9 @@
 
-insert into MEMBER (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, CREATED_DT)
-values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', 'admin', '010-1234-1234', null, null, 'admin', 'admin', PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+insert into MEMBER (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
-insert into MEMBER (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, CREATED_DT)
-values ('PRIVATE', 'aaron', 'park', 'aaron@gmail.com', 'aaron', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+insert into MEMBER (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
 
 
