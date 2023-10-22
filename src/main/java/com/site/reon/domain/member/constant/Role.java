@@ -1,9 +1,7 @@
 package com.site.reon.domain.member.constant;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-@Getter
 @RequiredArgsConstructor
 public enum Role {
 
@@ -13,4 +11,12 @@ public enum Role {
 
     private final String key;
     private final String title;
+
+    public String key() {
+        return key;
+    }
+
+    public String title() {
+        return title;
+    }
 }

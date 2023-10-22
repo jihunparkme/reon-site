@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum UserType {
+public enum MemberType {
     PRIVATE("PRIVATE"),
     COMPANY("COMPANY"),
     ;
