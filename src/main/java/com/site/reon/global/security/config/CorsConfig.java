@@ -1,4 +1,4 @@
-package com.site.reon.global.config;
+package com.site.reon.global.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

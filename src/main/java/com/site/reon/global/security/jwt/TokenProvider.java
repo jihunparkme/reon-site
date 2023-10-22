@@ -1,4 +1,4 @@
-package com.site.reon.global.jwt;
+package com.site.reon.global.security.jwt;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

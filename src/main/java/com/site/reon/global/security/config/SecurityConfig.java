@@ -1,9 +1,9 @@
-package com.site.reon.global.config;
+package com.site.reon.global.security.config;
 
-import com.site.reon.global.jwt.JwtAccessDeniedHandler;
-import com.site.reon.global.jwt.JwtAuthenticationEntryPoint;
-import com.site.reon.global.jwt.JwtSecurityConfig;
-import com.site.reon.global.jwt.TokenProvider;
+import com.site.reon.global.security.jwt.JwtAccessDeniedHandler;
+import com.site.reon.global.security.jwt.JwtAuthenticationEntryPoint;
+import com.site.reon.global.security.jwt.JwtSecurityConfig;
+import com.site.reon.global.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
