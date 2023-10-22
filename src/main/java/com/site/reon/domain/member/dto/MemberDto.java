@@ -1,13 +1,17 @@
 package com.site.reon.domain.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.site.reon.domain.member.constant.UserType;
+import com.site.reon.domain.member.constant.MemberType;
+import com.site.reon.domain.member.entity.Member;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -16,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class MemberDto {
 
     @NotNull
-    private UserType type;
+    private MemberType type;
 
     @NotNull
     @Size(min = 1, max = 30)
@@ -39,12 +43,6 @@ public class MemberDto {
     @Size(min = 3, max = 20)
     private String phone;
 
-    @Size(min = 3, max = 30)
-    private String companyName;
-
-    @Size(min = 3, max = 1000)
-    private String address;
-
     @NotNull
     @Size(min = 3, max = 100)
     private String prdCode;
@@ -53,17 +51,39 @@ public class MemberDto {
     @Size(min = 3, max = 100)
     private String roasterSn;
 
-//    private Set<AuthorityDto> authorityDtoSet;
-//
-//    public static MemberDto from(Member member) {
-//        if(member == null) return null;
-//
-//        return MemberDto.builder()
-//                .username(member.getUsername())
-//                .nickname(member.getNickname())
-//                .authorityDtoSet(member.getAuthorities().stream()
-//                        .map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
-//                        .collect(Collectors.toSet()))
-//                .build();
-//    }
+    private boolean activated;
+
+    private Set<AuthorityDto> authorityDtoSet;
+
+    // COMPANY
+    @Size(min = 3, max = 30)
+    private String companyName;
+
+    @Size(min = 3, max = 1000)
+    private String address;
+
+    public static MemberDto from(Member member) {
+        if (member == null) {
+            return null;
+        }
+
+        return MemberDto.builder()
+                .type(member.getType())
+                .firstName(member.getFirstName())
+                .lastName(member.getLastName())
+                .email(member.getEmail())
+                .password(member.getPassword())
+                .phone(member.getPhone())
+                .companyName(member.getCompanyName())
+                .address(member.getAddress())
+                .prdCode(member.getPrdCode())
+                .roasterSn(member.getRoasterSn())
+                .activated(member.isActivated())
+                .authorityDtoSet(member.getAuthorities().stream()
+                        .map(authority -> AuthorityDto.builder()
+                                .authorityName(authority.getAuthorityName())
+                                .build())
+                        .collect(Collectors.toSet()))
+                .build();
+    }
 }
