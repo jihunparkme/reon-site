@@ -1,6 +1,6 @@
-package com.site.reon.domain.user.entity;
+package com.site.reon.domain.member.entity;
 
-import com.site.reon.domain.user.constant.UserType;
+import com.site.reon.domain.member.constant.UserType;
 import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class Member extends BaseTimeEntity {
     @Column(length = 30, nullable = false)
     private String lastName;
 
-    @Column(length = 50, unique = true)
+    @Column(length = 50, nullable = false, unique = true)
     private String email;
 
     @Column(length = 100, nullable = false)

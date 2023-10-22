@@ -1,4 +1,4 @@
-package com.site.reon.domain.user.constant;
+package com.site.reon.domain.member.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
