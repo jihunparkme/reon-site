@@ -5,6 +5,7 @@ import com.site.reon.global.jwt.JwtAuthenticationEntryPoint;
 import com.site.reon.global.jwt.JwtSecurityConfig;
 import com.site.reon.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -52,10 +53,11 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/img/**"),
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/vendor/**"),
-                                new AntPathRequestMatcher("/h2-console/**"),
 
+                                new AntPathRequestMatcher("/login/authenticate"),
                                 new AntPathRequestMatcher("/record/**")
                         ).permitAll()
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
                 )
 
