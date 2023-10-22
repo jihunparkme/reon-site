@@ -1,6 +1,6 @@
 package com.site.reon.domain.member.entity;
 
-import com.site.reon.domain.member.constant.UserType;
+import com.site.reon.domain.member.constant.MemberType;
 import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +24,7 @@ public class Member extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10, nullable = false)
-    private UserType type;
+    private MemberType type;
 
     @Column(length = 30, nullable = false)
     private String firstName;
@@ -58,7 +58,7 @@ public class Member extends BaseTimeEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "user_authority",
+            name = "member_authority",
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
