@@ -1,13 +1,16 @@
 package com.site.reon.global.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import com.site.reon.global.jwt.JwtAccessDeniedHandler;
+import com.site.reon.global.jwt.JwtAuthenticationEntryPoint;
+import com.site.reon.global.jwt.JwtSecurityConfig;
+import com.site.reon.global.jwt.TokenProvider;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,26 +19,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
+@Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
-//    private final TokenProvider tokenProvider;
-//    private final CorsFilter corsFilter;
-//    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-//    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-//
-//    public SecurityConfig(
-//            TokenProvider tokenProvider,
-//            CorsFilter corsFilter,
-//            JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
-//            JwtAccessDeniedHandler jwtAccessDeniedHandler
-//    ) {
-//        this.tokenProvider = tokenProvider;
-//        this.corsFilter = corsFilter;
-//        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-//        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-//    }
+    private final TokenProvider tokenProvider;
+    private final CorsFilter corsFilter;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,15 +37,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
-                .headers((headers) -> headers
-                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // //h2-console 사용을 위한 disable 처리
+                .csrf(AbstractHttpConfigurer::disable) // token 을 사용하므로 csrf disable
 
-//                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-//                .exceptionHandling(exceptionHandling -> exceptionHandling
-//                        .accessDeniedHandler(jwtAccessDeniedHandler)
-//                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-//                )
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .accessDeniedHandler(jwtAccessDeniedHandler)
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                )
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
                         .requestMatchers(
@@ -62,25 +52,25 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/img/**"),
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/vendor/**"),
-                                new AntPathRequestMatcher("/record/**"),
-                                new AntPathRequestMatcher("/h2-console/**")
+                                new AntPathRequestMatcher("/h2-console/**"),
+
+                                new AntPathRequestMatcher("/record/**")
                         ).permitAll()
                         .anyRequest().authenticated()
-                );
+                )
 
-//                // 세션을 사용하지 않기 때문에 STATELESS로 설정
-//                .sessionManagement(sessionManagement ->
-//                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                )
-//
-//                // enable h2-console
-//                .headers(headers ->
-//                        headers.frameOptions(options ->
-//                                options.sameOrigin()
-//                        )
-//                )
-//
-//                .apply(new JwtSecurityConfig(tokenProvider));
+                .sessionManagement(sessionManagement -> // 세션 미사용 설정
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                .headers(headers -> // h2 console 사용을 위한 설정
+                        headers.frameOptions(options ->
+                                options.sameOrigin()
+                        )
+                )
+
+                .apply(new JwtSecurityConfig(tokenProvider));
+
         return http.build();
     }
 }
