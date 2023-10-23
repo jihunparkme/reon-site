@@ -54,7 +54,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/vendor/**"),
 
-                                new AntPathRequestMatcher("/login/authenticate"),
+                                new AntPathRequestMatcher("/login/**"),
                                 new AntPathRequestMatcher("/record/**")
                         ).permitAll()
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
