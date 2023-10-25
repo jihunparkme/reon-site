@@ -38,6 +38,7 @@ out/
 
 ### Custom ###
 .DS_Store
+application-prod.yml
 application-oauth.yml
 application-mail.yml
 application-devdb.yml
