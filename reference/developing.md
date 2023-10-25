@@ -1,5 +1,20 @@
 # developing
 
+ing.
+- 서버 배포하기
+- 회원가입/로그인 폼 만들기
+- 시큐리티 테스트 코드 작성
+- 대표 메일로 SMTP 등록
+- 회원가입 시 이메일 인증 추가
+  - 인증하기 버튼 클릭 시 인증번호를 메일로 전송
+  - 인증번호를 파라미터로 가지고 있다가 입력한 값하고 비교해서 동일하면 가입 완료
+
+
+
+
+
+
+
 ## Docker.
 - [추석특집 도커 (Docker) 기초 강의 몰아보기](https://www.youtube.com/watch?v=IqnAiM1A0d8)
 - [가장 쉽게 배우는 도커](https://www.youtube.com/watch?v=hWPv9LMlme8)
@@ -40,6 +55,9 @@ jdbc:h2:tcp://localhost/~/databaseName (네트워크 모드)
 ```
 
 ## AWS.
+
+Github - EC2 - Jenkins - nginx - MariaDB
+
 - [생활코딩: 아마존 웹서비스와 클라우드](https://opentutorials.org/course/2717/11268)
 - [AWS EC2 & RDS 구축하기](https://jojoldu.tistory.com/259)
 - [Github, Jenkins, EC2](https://woodcock.tistory.com/20)
