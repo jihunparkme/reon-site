@@ -30,6 +30,7 @@ dependencies {
 
 	// data
 	runtimeOnly 'com.h2database:h2'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
 
 	// JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'

@@ -37,8 +37,8 @@ out/
 .vscode/
 
 ### Custom ###
-/gradle
 .DS_Store
+application-prod.yml
 application-oauth.yml
 application-mail.yml
 application-devdb.yml
