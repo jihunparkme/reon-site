@@ -1,0 +1,22 @@
+### SecurityContext 에 저장된 사용자 정보 조회(ADMIN)
+GET http://localhost:8080/member
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJleHAiOjE2OTgwNzQxNDV9.1GI8cTfLWV-h5aCUdvec-wHAJPGC6cAIafNWbHtMjoqoZNd0Y1rjb8SH461x7DUQEWeYea4-aPjhJO3Do4mryw
+
+### SecurityContext 에 저장된 사용자 정보 조회(USER)
+GET http://localhost:8080/member
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2OTgwNzUxMDl9.ReTLMfqQs_n0KjCVWsghCPzMsujz_Pd7JGeqRb4un2Cw4xhCRrPFyhJ1LZ6pGyutEdZgBtiZlwV0MSILSbc_4w
+
+
+
+
+### 회원 조회 성공(ADMIN 계정 로그인)
+GET http://localhost:8080/member/admin@gmail.com
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJleHAiOjE2OTgwNzQxNDV9.1GI8cTfLWV-h5aCUdvec-wHAJPGC6cAIafNWbHtMjoqoZNd0Y1rjb8SH461x7DUQEWeYea4-aPjhJO3Do4mryw
+
+### 회원 조회 성공(ADMIN 계정 로그인)
+GET http://localhost:8080/member/user@gmail.com
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJleHAiOjE2OTgwNzQxNDV9.1GI8cTfLWV-h5aCUdvec-wHAJPGC6cAIafNWbHtMjoqoZNd0Y1rjb8SH461x7DUQEWeYea4-aPjhJO3Do4mryw
+
+### 회원 조회 실패(USER 계정 로그인)
+GET http://localhost:8080/member/user@gmail.com
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2OTgwNzUxMDl9.ReTLMfqQs_n0KjCVWsghCPzMsujz_Pd7JGeqRb4un2Cw4xhCRrPFyhJ1LZ6pGyutEdZgBtiZlwV0MSILSbc_4w

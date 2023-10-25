@@ -1,28 +1,21 @@
-insert into notice (TITLE, CONTENTS, HITS, USER_ID, CREATED_DT)
-values ('제목1', '내용1', 0L, 2L, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+
+insert into MEMBER (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+
+insert into MEMBER (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwDS8O6intHWsCf7e14DbAxAUIB6Pba/B/50y', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
 
 
+insert into authority (authority_name) values ('ROLE_GUEST');
+insert into authority (authority_name) values ('ROLE_USER');
+insert into authority (authority_name) values ('ROLE_ADMIN');
+
+insert into member_authority (member_id, authority_name) values (1, 'ROLE_USER');
+insert into member_authority (member_id, authority_name) values (1, 'ROLE_ADMIN');
+insert into member_authority (member_id, authority_name) values (2, 'ROLE_USER');
 
 
-insert into VOICE (MEMBER_ID, NAME, CONTENTS, CREATED_DT)
-values (2L, 'admin', 'contents', PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
-
-
-
-
-insert into users (USER_TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, ROLE, PRD_CODE, PRO_SN, CREATED_DT)
-values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', 'admin', '010-1234-1234', null, null, 'ADMIN', 'admin', 'admin', PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
-
-insert into users (USER_TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, ROLE, PRD_CODE, PRO_SN, CREATED_DT)
-values ('PRIVATE', 'aaron', 'park', 'aaron@gmail.com', 'aaron', '010-1234-1234', null, null, 'USER', 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
-
-
-
-
-
-insert into NEWS_LETTER (TITLE, CONTENTS, HITS, MEMBER_ID, CREATED_DT)
-values ('제목1', '내용1', 0L, 2L, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
 
 

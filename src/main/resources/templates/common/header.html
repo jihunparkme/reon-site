@@ -1,6 +1,6 @@
 <header th:fragment="header (title)" id="header" class="fixed-top d-flex align-items-center">
   <div class="container d-flex align-items-center">
-    <h1 class="logo me-auto"><a href="index.html">RE:ON</a></h1>
+    <h1 class="logo me-auto"><a href="/">RE:ON</a></h1>
     <nav id="navbar" class="navbar">
       <ul>
         <li><a href="/" th:classappend="${title eq 'home' ? 'active' : ''}">Home</a></li>
@@ -17,7 +17,7 @@
         <li><a href="/blog" th:classappend="${title eq 'blog' ? 'active' : ''}">Blog</a></li>
         <li><a href="/contact" th:classappend="${title eq 'contact' ? 'active' : ''}">Contact</a></li>
         <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
-        <li><a href="/index" th:classappend="${title eq 'index' ? 'active' : ''}" class="getstarted">Login</a></li>
+        <li><a th:href="@{/login/member}" class="getstarted">Login</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>

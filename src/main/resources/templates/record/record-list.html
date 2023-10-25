@@ -1,6 +1,6 @@
-<div th:replace="/common/head :: head"></div>
+<div th:replace="~{common/head :: head('Record')}"></div>
 <body>
-<div th:replace="/common/header :: header('record')"></div>
+<div th:replace="~{/common/header :: header('record')}"></div>
 
 <main id="main">
     <section id="breadcrumbs" class="breadcrumbs">
@@ -19,7 +19,7 @@
         <input type="hidden" id="page" name="page" value="0"/>
     </form>
 
-    <section id="services" class="services">
+    <section id="records" class="records">
         <div class="container">
             <div class="row">
                 <div style="margin-bottom: 30px;">
@@ -41,7 +41,9 @@
                     <div class="icon-box" th:onclick="'location.href=\'' + @{/record/{id}(id=${record.id})} + '\''">
                         <i class="bi bi-bar-chart"></i>
                         <h4><a th:href="@{/record/{id}(id=${record.id})}">[(${record.title})]</a></h4>
-                        <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]</p>
+                        <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]
+                        <br/>
+                        Roaster S/N : [(${record.roasterSn})]</p>
                     </div>
                 </div>
 
@@ -53,12 +55,12 @@
         </div>
     </section>
 
-    <div th:replace="/common/footer :: footer"></div>
+    <div th:replace="~{/common/footer :: footer}"></div>
 </main>
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
-<div th:replace="/common/commonjs"></div>
+<div th:replace="~{/common/commonjs}"></div>
 <script type="text/javascript" th:src="@{/js/record/record.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
