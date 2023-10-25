@@ -37,6 +37,7 @@ out/
 .vscode/
 
 ### Custom ###
+/gradle
 .DS_Store
 application-oauth.yml
 application-mail.yml
