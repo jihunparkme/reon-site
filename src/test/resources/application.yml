@@ -1,0 +1,67 @@
+spring:
+  profiles:
+    active: test
+
+---
+spring:
+  profiles: test
+
+  session:
+    store-type: jdbc
+
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
+
+  thymeleaf:
+    cache: 'false'
+
+  datasource:
+    url: jdbc:h2:mem:reon;MODE=MARIADB;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    show-sql: true
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        default_batch_fetch_size: 100
+
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+  messages:
+    basename: messages,errors
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: TRACE
+        SQL: DEBUG
+
+jwt:
+  header: Authorization
+  secret: YWFyb24tdGVjaC1zcHJpbmctYm9vdC1qd3QtdHV0b3JpYWwtc2VjcmV0LWFhcm9uLXRlY2gtc3ByaW5nLWJvb3Qtand0LXR1dG9yaWFsLXNlY3JldAo=
+  token-validity-in-seconds: 86400
+
+file:
+  upload:
+    location: /Users/aaron/reon/uploadFiles/
