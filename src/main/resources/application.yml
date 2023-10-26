@@ -8,5 +8,5 @@ spring:
     active: test
     group:
       test: test,mail
-      develop: develop,mail,devdb
-      production: production,mail,proddb
+      dev: dev, mail, dev-db
+      prd: prd, mail, prd-db

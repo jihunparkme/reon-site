@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: develop
+      on-profile: dev
   session:
     store-type: jdbc
   servlet:
