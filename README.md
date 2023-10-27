@@ -129,6 +129,16 @@ Product  ("/management/product")
 
 .
 
+## Test.
+- JaCoCo > 테코드 커버리지
+
+## Monitoring
+- [ ] Prometheus
+- [ ] Grafana
+- [ ] 로그 파일 생성 규칙
+
+.
+
 ## TODO
 
 - [ ] 레시피 공유(레시피 업로드, 다운로드)
