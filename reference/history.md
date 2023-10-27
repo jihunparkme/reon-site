@@ -248,6 +248,7 @@ $ ./deploy.sh
 # 실행중인 프로세스 확인
 $ ps -ef | grep my-webservice
 ```
+.
 
 ### 외부에서 서비스 접속
 
@@ -258,6 +259,8 @@ AWS EC2 인스턴스 페이지 -> 보안그룹 -> 현재 프로젝트의 인스�
 - `퍼블릭 DNS(IPv4):8080` 주소로 접속
 
 > [EC2에 배포하기](https://jojoldu.tistory.com/263)
+
+.
 
 ## Docker & Jenkins 배포 자동화 구축
 
@@ -297,6 +300,7 @@ $ id
 $ docker pull jenkins/jenkins:lts
 ```
 
+.
 
 ### Install Jenkins
 
@@ -307,15 +311,22 @@ $ docker pull jenkins/jenkins:lts # docker image 가져오기
 $ docker images # 설치된 jenkins image 확인 
 
 # Create jenkins Container
-$ docker run -itd -p 8000:8000 --name jenkins jenkins/jenkins:lts
+$ docker run -itd -p 8000:8080 --name jenkins jenkins/jenkins:lts
 $ docker ps # 실행중인 docker 확인
 $ docker exec -it --user root 'Container ID' /bin/bash # jenkins container 진입
 
 # etc docker command
-$ docker attach 'Container NAME' # attach container
 $ docker stop 'Container ID' # Stop container
 $ docker container restart 'Container ID' # Restart container
 ```
+
+-p 8000:8080
+- 8080 포트는 webservice 에 이미 사용중이므로 8000 포트 사용 
+- 컨테이너 외부와 통신할 8000 포트와 내부적으로 사용할 8080 포트 설정
+
+8000 포트 번호도 외부에서 접근 가능하도록 설정 필요
+- AWS EC2 인스턴스 페이지 -> 보안그룹 -> 현재 프로젝트의 인스턴스 -> 인바운드 탭
+- 인바운드 편집 버튼을 클릭해서 사용자지정(TCP), 8000 포트를 추가
 
 exit Shell
 - exit : `Ctrl + d`
@@ -323,7 +334,7 @@ exit Shell
 
 > [docker run 커맨드 사용법](https://www.daleseo.com/docker-run/)
 
-### Setting Jenkins
+### Init Jenkins
 
 Jenkins 초기 패스워드 확인
 
@@ -331,6 +342,62 @@ Jenkins 초기 패스워드 확인
 cd /var/jenkins_home/secrets/
 cat initialAdminPassword
 ```
+
+`퍼블릭 DNS(IPv4):8000` 주소로 접속하여 Jenkins 설정 시작
+- 초기 화면에서 initialAdminPassword 에 저장된 초기 패스워드 입력
+- Install Suggested plugins 선택
+- 설치 진행..
+- Create First Admin User 설정
+
+### Jenkins 자동 배포 설정
+
+(1) GitHub Repository
+- Settings -> Webhooks -> Add webhook
+- Payload URL : http://퍼블릭 DNS(IPv4):8000/github-webhook/
+
+(3) Jenkins 설정
+- Jenkins 관리 -> Plugins -> Available plugins
+  - Publish Over SSH 검색 후 Install
+- Jenkins 관리 -> System -> GitHub -> GitHub Servers 
+
+
+
+
+
+
+> [Docker + Jenkins 자동 배포](https://velog.io/@wijoonwu/AWS-Jenkins-%EC%9E%90%EB%8F%99-%EB%B0%B0%ED%8F%AC)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
