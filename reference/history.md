@@ -2,7 +2,7 @@
 
 ## AWS EC2 & RDS 구축
 
-AWS EC2 & RDS 구축 방법은 [향로님의 블로그](https://jojoldu.tistory.com/259)에도 상세하게 설명이 되어 있고, (2023년 10월 기준 UI 약간 다르긴 하지만 기본적인 설정은 동일)
+AWS EC2 & RDS 구축 방법은 [향로님의 블로그](https://jojoldu.tistory.com/259) 에도 상세하게 설명이 되어 있고, (2023년 10월 기준 UI 약간 다르긴 하지만 기본적인 설정은 동일)
 
 많은 블로그에서 설명을 해주고 있으니 생략하는 것으로..
 
@@ -362,10 +362,14 @@ cat initialAdminPassword
 
 
 
-
+젠킨스 지우도 다시 처음부터................
 
 
 > [Docker + Jenkins 자동 배포](https://velog.io/@wijoonwu/AWS-Jenkins-%EC%9E%90%EB%8F%99-%EB%B0%B0%ED%8F%AC)
+
+
+
+
 
 
 
