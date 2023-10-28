@@ -85,22 +85,21 @@ $ ls -l /usr/bin/java # which java 경로
 $ readlink -f /usr/bin/java # 심볼릭 링크의 java 원본 위치
 
 # 환경변수 설정
-$ vi /etc/profile
+$ sudo vi /etc/profile
 
-export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto/bin/java
-export PATH=$JAVA_HOME/bin:$PATH
+export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto.x86_64
 
 $ source /etc/profile
 
 # 설정 확인
 $ echo $JAVA_HOME
-$ $JAVA_HOME/bin/java -version
+$ $JAVA_HOME -version
 ```
 
 - `/etc/profile` : 모든 사용자에 적용
 - `~/.bashrc` : 해당 사용자에게만 적용
 
-> [Linux JAVA 설치 및 환경변수 설정](https://velog.io/@hyeongbin/Linux-JAVA-%EC%84%A4%EC%B9%98-%EB%B0%8F-%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98-%EC%84%A4%EC%A0%95)
+> [EC2 Java 설치 및 JAVA_HOME 설정](https://happy-jjang-a.tistory.com/57)
 
 .
 
@@ -187,7 +186,7 @@ $ sudo vi /etc/fstab
 $ free -h
 ```
 
-> (AWS EC2 프리티어에서 메모리 부족현상 해결방법)[https://sundries-in-myidea.tistory.com/102]
+> [AWS EC2 프리티어에서 메모리 부족현상 해결방법](https://sundries-in-myidea.tistory.com/102)
 
 .
 
@@ -280,9 +279,13 @@ $ sudo systemctl start docker.service # docker 서비스 실행
 $ systemctl status docker.service # docker 서비스 상태 확인
 ```
 
-**docker pull 권한 에러 발생 시 권한 설정**
+.
 
-`ermission denied while trying to connect to the Docker daemon socket a...`
+### Install Jenkins
+
+**docker search, pull 권한 에러 발생 시 권한 설정**
+
+`permission denied while trying to connect to the Docker daemon socket at ...`
 
 [Got permission denied while trying to connect to the Docker daemon socket](https://technote.kr/369)
 
@@ -302,16 +305,21 @@ $ docker pull jenkins/jenkins:lts
 
 .
 
-### Install Jenkins
+Install jenkins image in docker
 
 ```shell
-# Install jenkins image in docker
 $ docker search jenkins # search image
 $ docker pull jenkins/jenkins:lts # docker image 가져오기
 $ docker images # 설치된 jenkins image 확인 
+```
 
-# Create jenkins Container
-$ docker run -itd -p 8000:8080 --name jenkins jenkins/jenkins:lts
+.
+
+Create jenkins Container
+
+```shell
+$ docker run -itd -p 8000:8080 -v /home/ec2-user/app/git:/var/app/git --name jenkins -u root jenkins/jenkins:lts
+
 $ docker ps # 실행중인 docker 확인
 $ docker exec -it --user root 'Container ID' /bin/bash # jenkins container 진입
 
@@ -319,6 +327,34 @@ $ docker exec -it --user root 'Container ID' /bin/bash # jenkins container 진�
 $ docker stop 'Container ID' # Stop container
 $ docker container restart 'Container ID' # Restart container
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -p 8000:8080
 - 8080 포트는 webservice 에 이미 사용중이므로 8000 포트 사용 
@@ -333,6 +369,11 @@ exit Shell
 - 백그라운드 종료 : `ctrl + p + q`
 
 > [docker run 커맨드 사용법](https://www.daleseo.com/docker-run/)
+
+
+
+$ docker run -itd -p 8000:8080 --name jenkins jenkins/jenkins:lts
+
 
 ### Init Jenkins
 
