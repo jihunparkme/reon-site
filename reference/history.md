@@ -75,7 +75,7 @@ EC2 배포 방법도 [향로님의 블로그](https://jojoldu.tistory.com/263)�
 ```shell
 # Install java
 $ yum list java*  # 설치 가능한 java 조회
-$ sudo yum install java-17-amazon-corretto
+$ sudo yum install java-17-amazon-corretto
 $ java -version
 
 # java 설치 위치 확인
