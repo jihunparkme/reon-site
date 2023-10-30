@@ -38,8 +38,7 @@ out/
 
 ### Custom ###
 .DS_Store
-application-prd.yml
+application-real.yml
+application-real-db.yml
 application-mail.yml
-application-dev-db.yml
-application-prd-db.yml
 /erd
