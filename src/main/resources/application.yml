@@ -9,4 +9,4 @@ spring:
     group:
       test: test,mail
       dev: dev, mail, dev-db
-      prd: prd, mail, prd-db
+      real: real, mail, real-db
