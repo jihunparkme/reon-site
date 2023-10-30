@@ -6,7 +6,7 @@ spring:
 spring:
   config:
     activate:
-       on-profile: test
+      on-profile: test
 
   session:
     store-type: jdbc
