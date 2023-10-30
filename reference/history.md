@@ -255,7 +255,7 @@ EC2 에 배포된 서비스의 포트 번호가 외부에서 접근 가능하도
 
 AWS EC2 인스턴스 페이지 -> 보안그룹 -> 현재 프로젝트의 인스턴스 -> 인바운드 탭
 - 인바운드 편집 버튼을 클릭해서 사용자지정(TCP), 8080 포트를 추가
-- `퍼블릭 DNS(IPv4):8080` 주소로 접속
+- `[퍼블릭 IPv4 DNS]:8080` 주소로 접속
 
 > [EC2에 배포하기](https://jojoldu.tistory.com/263)
 
@@ -296,7 +296,8 @@ $ ls -al /var/run/docker.sock
 # 현재 로그인한 사용자를 docker group 에 포함
 $ sudo usermod -a -G docker $USER 
 
-# EC2 인스턴스 재구동 후 해당 ID 에 docker group 권한 부여 확인
+# EC2 인스턴스 재구동 후 해당 ID 에 docker 
+# group 권한 부여 확인
 $ id
 
 # 다시 docker pull 시도
@@ -330,7 +331,7 @@ $ docker rm [Container ID]
 ```
 
 -p 8000:8080
-- 8080 포트는 webservice 에 이미 사용중이므로 8000 포트 사용 
+- 8080 포트는 webservice 에 이미 사용중이므로 8000 포트 사용
 - 컨테이너 외부와 통신할 8000 포트와 내부적으로 사용할 8080 포트 설정
 
 8000 포트 번호도 외부에서 접근 가능하도록 설정 필요
@@ -397,7 +398,7 @@ Install Publish Over SSH
 ![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/jenkins/10.png 'Result')
 
 Add Credentials
-- Jenkins 관리 -> System -> GitHub -> GitHub Servers -> Add GitHub Serves -> Add Credentials  
+- Jenkins 관리 -> System -> GitHub -> GitHub Servers -> Add GitHub Serves -> Add Credentials
 
 ![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/jenkins/6.png 'Result')
 
@@ -417,8 +418,11 @@ Publish over SSH
 SSH Servers
 - Name: `SSH Server Name`
 - Hostname: `ec2 서버 IP`
+  - 접속할 원격 서버 IP
 - Username : `ec2-user`
+  - 원격 서버의 user-name
 - Remote Directory: `/home/ec2-user`
+  - 원격서버 작업 디렉토리
 
 ### Add Jenkins Item
 
@@ -444,13 +448,14 @@ Build Steps
 - Send build artifacts over SSH
 - Name: SSH Server Name
 - Source files: `build/libs/*.jar`
-  - ec2 서버에 전달할 jar 파일 경로 
-  - jenkins 서버의 절대 경로는 /var/jenkins_home/workspace/REPOSITORY_NAME/build/libs
-  - REPOSITORY_NAME 이후부터 작성
+  - ec2 서버에 전달할 jar 파일 경로
+  - jenkins 서버에서 절대 경로는 /var/jenkins_home/workspace/REPOSITORY_NAME/build/libs
+  - Jenkins workspace 기준인 REPOSITORY_NAME 이후부터 작성
 - Remove prefix: `build/libs`
   - Source files 경로에서 .jar 파일을 제외한 prefix 를 제거한 경로
 - Remote directory: `/app/git/deploy`
   - jenkins 서버에서 빌드된 jar 파일을 받을 ec2 경로
+  - SSH Servers Remote Directory 경로 이후 경로 작성
 - Exec command: sh /home/ec2-user/app/git/jenkins-deploy.sh
   - jenkins -> ec2 로 jar 파일을 전달한 이후 ec2 에서 실행할 명령어
 
@@ -504,23 +509,66 @@ $ chmod 755 application-prd.yml
 ```
 
 다시 빌드해 보면 gitignore 에 등록된 파일이 적용된 상태로 빌드가 된다.
+- Send build artifacts over SSH 에 작성한 jenkins 서버의 `Source files` 경로에 있는 jar 파일들이 
+- ec2 서버의 `Remote directory` 경로로 잘 전달된 것을 볼 수 있다.
 
-Send build artifacts over SSH 에 작성한 
-
-jenkins 서버의 `Source files` 경로에 있는 jar 파일들이 
-
-ec2 서버의 `Remote directory` 경로로 잘 전달된 것을 볼 수 있다.
-
+```shell
+Auth fail for methods 'publickey,gssapi-keyex,gssapi-with-mic'
+```
+- 만일 Jenkins 에서 ec2 로 ssh 접근이 실패할 경우 아래 링크를 참고해보자.
+- [How to Fix SSH Failed Permission Denied (publickey,gssapi-keyex,gssapi-with-mic)](https://phoenixnap.com/kb/ssh-permission-denied-publickey)
+- [Failed to connect and initialize SSH connection Message [Auth fail]](https://stackoverflow.com/questions/65015826/jenkins-plugins-publish-over-bappublisherexception-failed-to-connect-and-initia/74567611#74567611)
 
 > [Docker + Jenkins 자동 배포](https://velog.io/@wijoonwu/AWS-Jenkins-%EC%9E%90%EB%8F%99-%EB%B0%B0%ED%8F%AC)
 
+## Nginx 무중단 배포
+
+### Install Nginx
+```shell
+# 도커 이미지 가져오기
+$ docker pull nginx
+
+# nginx 서버 기동
+$ docker run -itd -p 80:80 --name nginx -u root nginx
+
+# 가동 서비스 확인
+$ docker ps
+```
+
+[퍼블릭 IPv4 DNS] 로 접속을 하면 아래와 같이 nginx 가 우리를 반겨주고 있다.
+
+![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/nginx/1.png 'Result')
+
+```shell
+# nginx container 진입
+$ docker exec -it --user root [Container ID] /bin/bash 
+
+# 설정 파일인 nginx.conf 하단을 보면 아래 경로의 conf 파일들을 include 해주고 있다.
+# include /etc/nginx/conf.d/*.conf;
+$ vi /etc/nginx/nginx.conf
+
+# default.conf 파일 수정
+$ vi /etc/nginx/conf.d/default.conf
+
+# server 아래의 location / 부분을 찾아서 아래와 같이 추가
+proxy_pass http://[EC2_PUBLIC_DNS]:8080;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header Host $http_host;
+
+# 수정 후 docker 재시작
+$ docker container restart [Container ID]
+```
+
+![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/nginx/2.png 'Result')
+
+- proxy_pass: `/` 요청이 오면 `http://[EC2_PUBLIC_DNS]:8080` 로 전달
+- proxy_set_header XXX $xxx: 실제 요청 데이터를 header 각 항목에 할당 
+  - ex) proxy_set_header X-Real-IP $remote_addr: Request Header X-Real-IP 에 요청자 IP 저장
 
 
 
 
-Auth fail for methods 'publickey,gssapi-keyex,gssapi-with-mic'
-https://phoenixnap.com/kb/ssh-permission-denied-publickey
-https://stackoverflow.com/questions/65015826/jenkins-plugins-publish-over-bappublisherexception-failed-to-connect-and-initia/74567611#74567611
 
 
 
@@ -546,28 +594,9 @@ https://stackoverflow.com/questions/65015826/jenkins-plugins-publish-over-bappub
 
 
 
-
-
-
-
-
-
-
-
+> [Nginx를 활용한 무중단 배포 구축](https://jojoldu.tistory.com/267?category=635883)
 
 ---
-
-
-Jenkins 로 배포 자동화 구축 (수동 Test & Build를 자동화???)
-
-- [https://velog.io/@wijoonwu/AWS-Jenkins-자동-배포](https://velog.io/@wijoonwu/AWS-Jenkins-%EC%9E%90%EB%8F%99-%EB%B0%B0%ED%8F%AC)
-- https://woodcock.tistory.com/20
-- [https://velog.io/@sa1341/Jenkins에서-EC2로-배포하기](https://velog.io/@sa1341/Jenkins%EC%97%90%EC%84%9C-EC2%EB%A1%9C-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0)
-- https://thalals.tistory.com/430
-
-Nginx를 활용한 무중단 배포 구축
-
-- https://jojoldu.tistory.com/267?category=635883
 
 Gitlab + Jenkins + Nginx + Docker + AWS EC2 - 무중단 배포
 
