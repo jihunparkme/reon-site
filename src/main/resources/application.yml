@@ -10,3 +10,5 @@ spring:
       test: test,mail
       dev: dev, mail, dev-db
       real: real, mail, real-db
+      set1: set1, mail, real-db
+      set2: set2, mail, real-db
