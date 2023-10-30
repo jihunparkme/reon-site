@@ -54,6 +54,8 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/vendor/**"),
 
+                                new AntPathRequestMatcher("/profile"),
+
                                 new AntPathRequestMatcher("/login/**"),
                                 new AntPathRequestMatcher("/record/**")
                         ).permitAll()
