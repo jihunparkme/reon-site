@@ -59,6 +59,9 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/login/**"),
                                 new AntPathRequestMatcher("/record/**")
                         ).permitAll()
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/admin/**")
+                        ).hasAuthority("ROLE_ADMIN")
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
                 )
