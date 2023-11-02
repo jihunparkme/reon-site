@@ -2,13 +2,32 @@
 
 ## AWS EC2 & RDS 구축
 
-AWS EC2 & RDS 구축 방법은 [향로님의 블로그](https://jojoldu.tistory.com/259) 에도 상세하게 설명이 되어 있고, (2023년 10월 기준 UI 약간 다르긴 하지만 기본적인 설정은 동일)
+AWS EC2 & RDS 구축 방법은 [향로님의 블로그](https://jojoldu.tistory.com/259) 가 참고하기 좋은 것 같다. (2023년 10월 기준 UI 가 약간 다르긴 하지만 기본적인 설정은 동일)
 
-많은 블로그에서 설명을 해주고 있으니 생략하는 것으로..
+그밖에도 자세한 구축 방법은 많은 블로그에서 설명을 해주고 있으니 생략하는 것으로..
 
 .
 
-다만, 구축하는 과정에서 필요한 참고 내용들을 추가로 정리하고 넘어가보자.
+다만, 구축하는 과정에서 필요했던 참고 내용들을 정리해 보려고 한다.
+
+.
+
+### EC2 인스턴스 생성
+
+------------------> 대시보드 사진 첨부
+
+- EC2 OS : Amazon Linux
+- 인스턴스 유형: t2.micro
+- 네트워크, 서브넷: default
+- 불륨 크기 : 30GB (30GB 까지 프리티어로 사용 가능)
+- 보안 그룹 구성
+- 탄력적 IP 등록
+
+.
+
+### RDS 생성
+
+------------------> 대시보드 사진 첨부
 
 .
 
@@ -504,12 +523,12 @@ $ apt-get update
 $ apt-get install vim
 
 $ cd /var/jenkins_home/workspace/REPOSITORY_NAME/src/main/resources
-$ vi application-prd.yml
-$ chmod 755 application-prd.yml
+$ vi application-real.yml
+$ chmod 755 application-real.yml
 ```
 
 다시 빌드해 보면 gitignore 에 등록된 파일이 적용된 상태로 빌드가 된다.
-- Send build artifacts over SSH 에 작성한 jenkins 서버의 `Source files` 경로에 있는 jar 파일들이 
+- Send build artifacts over SSH 에 작성한 jenkins 서버의 `Source files` 경로에 있는 jar 파일들이
 - ec2 서버의 `Remote directory` 경로로 잘 전달된 것을 볼 수 있다.
 
 ```shell
@@ -563,8 +582,36 @@ $ docker container restart [Container ID]
 ![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/nginx/2.png 'Result')
 
 - proxy_pass: `/` 요청이 오면 `http://[EC2_PUBLIC_DNS]:8080` 로 전달
-- proxy_set_header XXX $xxx: 실제 요청 데이터를 header 각 항목에 할당 
-  - ex) proxy_set_header X-Real-IP $remote_addr: Request Header X-Real-IP 에 요청자 IP 저장
+- proxy_set_header XXX $xxx: 실제 요청 데이터를 header 각 항목에 할당
+  - proxy_set_header X-Real-IP $remote_addr: Request Header X-Real-IP 에 요청자 IP 저장
+
+### 배포 스크립트 작성
+
+무중단 배포를 위해 두 개의 서비스를 띄워야 한다.
+
+먼저, 무중단 배포에 필요한 Prifile 을 작성해 보자.
+
+```yml
+---
+spring:
+  profiles: set1
+server:
+  port: 8080
+
+---
+spring:
+  profiles: set2
+
+server:
+  port: 8081
+```
+
+.
+
+
+시간대 변경
+
+spring-boot-starter-actuator 의존성 추가
 
 
 
@@ -578,6 +625,158 @@ $ docker container restart [Container ID]
 
 
 
+다음으로 무중단 배포 준비를 해보자.
+
+```shell
+# 무중단 배포 관련 파일을 관리할 디렉토리
+$ mkdir ~/app/nonstop
+
+$ mkdir ~/app/nonstop/my-webservice
+$ mkdir ~/app/nonstop/my-webservice/build
+$ mkdir ~/app/nonstop/my-webservice/build/libs
+# jenkins docker container 와 마운팅된 디렉토리에서 jar 파일 복사
+$ cp ~/app/git/jenkins/build/build/libs/*.jar ~/app/nonstop/my-webservice/build/libs/
+```
+
+`무중단 배포 스프립트`
+- 스트립트 안에서 오류가 발생할 수도 있으니 전체를 실행하기 전에 커멘드 단위로 실행해 보자.
+
+```shell
+$ vi ~/app/nonstop/deploy.sh
+
+#!/bin/bash
+
+BASE_PATH=/home/ec2-user/app/nonstop
+BUILD_PATH=$(ls $BASE_PATH/deploy/*.jar)
+JAR_NAME=$(basename $BUILD_PATH)
+echo "> build file name: $JAR_NAME"
+
+echo "> Copy build file"
+DEPLOY_PATH=$BASE_PATH/jar/
+cp $BUILD_PATH $DEPLOY_PATH
+
+echo "> Check the currently running set"
+CURRENT_PROFILE=$(curl -s http://localhost/profile)
+echo "> $CURRENT_PROFILE"
+
+# Find a resting set
+if [ $CURRENT_PROFILE == set1 ]
+then
+  IDLE_PROFILE=set2
+  IDLE_PORT=8081
+elif [ $CURRENT_PROFILE == set2 ]
+then
+  IDLE_PROFILE=set1
+  IDLE_PORT=8080
+else
+  echo "> Not found Profile. Profile: $CURRENT_PROFILE"
+  echo "> assign set1. IDLE_PROFILE: set1"
+  IDLE_PROFILE=set1
+  IDLE_PORT=8080
+fi
+
+echo "> change application.jar"
+IDLE_APPLICATION=$IDLE_PROFILE-my-webservice.jar
+IDLE_APPLICATION_PATH=$DEPLOY_PATH$IDLE_APPLICATION
+
+ln -Tfs $DEPLOY_PATH$JAR_NAME $IDLE_APPLICATION_PATH
+
+echo "> Check the application PID running in $IDLE_PROFILE"
+IDLE_PID=$(pgrep -f $IDLE_APPLICATION)
+
+if [ -z $IDLE_PID ]
+then
+  echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다."
+else
+  echo "> kill -15 $IDLE_PID"
+  kill -15 $IDLE_PID
+  sleep 5
+fi
+
+echo "> Deploy $IDLE_PROFILE"
+nohup java -jar -Dspring.profiles.active=$IDLE_PROFILE $IDLE_APPLICATION_PATH &
+
+echo "> $IDLE_PROFILE 10초 후 Health check 시작"
+echo "> curl -s http://localhost:$IDLE_PORT/health "
+sleep 10
+
+for retry_count in {1..10}
+do
+  response=$(curl -s http://localhost:$IDLE_PORT/health)
+  up_count=$(echo $response | grep 'UP' | wc -l)
+
+  if [ $up_count -ge 1 ]
+  then # $up_count >= 1 ("UP" 문자열이 있는지 검증)
+      echo "> Health check 성공"
+      break
+  else
+      echo "> Health check 의 응답을 알 수 없거나 혹은 status 가 UP이 아닙니다."
+      echo "> Health check: ${response}"
+  fi
+
+  if [ $retry_count -eq 10 ]
+  then
+    echo "> Health check 실패. "
+    echo "> Nginx 에 연결하지 않고 배포를 종료합니다."
+    exit 1
+  fi
+
+  echo "> Health check 연결 실패. 재시도..."
+  sleep 10
+done
+```
+
+.
+
+`무중단 배포 스크립트 실행`
+
+```shell
+$ ~/app/nonstop/deploy.sh
+```
+
+.
+
+### 동적 프록시 설정
+
+배포가 완료되고 애플리케이션이 실행되면 Nginx 가 기존에 바라보던 Profile 의 반대를 보도록 변경해주자.
+
+```shell
+# nginx container 진입
+$ docker exec -it --user root [Container ID] /bin/bash 
+
+# service-url 관리 파일 생성
+$ sudo vi /etc/nginx/conf.d/service-url.inc
+
+set $service_url http://127.0.0.1:8080;
+
+# proxy_pass 수정
+$ vi /etc/nginx/conf.d/default.conf
+
+include /etc/nginx/conf.d/service-url.inc;
+
+location / {
+        proxy_pass $service_url;
+...
+
+# 수정 후 docker 재시작
+$ docker container restart [Container ID]
+
+# Nginx 로 요청해서 현재 Profile 확인
+$ curl -s localhost/profile
+```
+
+.
+
+`Nginx 스크립트 작성`
+
+```shell
+```
+
+.
+
+### Jenkins 에 적용
+
+~/app/nonstop/deploy.sh 를 실행하도록.
 
 
 
@@ -590,9 +789,7 @@ $ docker container restart [Container ID]
 
 
 
-
-
-
+nohup java -jar -Dspring.profiles.active=prd
 
 > [Nginx를 활용한 무중단 배포 구축](https://jojoldu.tistory.com/267?category=635883)
 
