@@ -81,6 +81,41 @@ $ sudo dnf install mysql-community-server
 
 .
 
+### Set Timezone
+
+**`EC2`**
+
+```shell
+# check timezone
+$ date
+
+# change timezone
+$ sudo rm /etc/localtime
+$ sudo ln -s /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+```
+
+최종 반영을 위해 재부팅을 해주자.
+
+**`RDS`**
+
+(1) RDS -> 파라미터 그룹 -> RDS 파라미터 그룹 선택 후 편집
+
+(2) 파라미터 필터에 `time_zone` 검색
+
+(3) time_zone 값을 `Asia/Seoul` 로 설정
+
+(4) 변경 사항 저장
+
+(5) DB 툴을 통해 아래 쿼리 수행
+
+  ```sql
+  select @@time_zone, now();
+  ```
+
+  - @@time_zone : Asia/Seoul
+
+.
+
 ## EC2에 배포하기
 
 EC2 배포 방법도 [향로님의 블로그](https://jojoldu.tistory.com/263)에 상세하게 설명이 되어 있다.
@@ -292,6 +327,7 @@ $ docker -v # 버전 확인
 
 # Setting
 $ sudo systemctl enable docker.service # 재부팅 시 docker 자동 실행 설정
+$ docker update --restart=always [Container ID]
 
 # Start
 $ sudo systemctl start docker.service # docker 서비스 실행
@@ -570,7 +606,7 @@ $ vi /etc/nginx/nginx.conf
 $ vi /etc/nginx/conf.d/default.conf
 
 # server 아래의 location / 부분을 찾아서 아래와 같이 추가
-proxy_pass http://[EC2_PUBLIC_DNS]:8080;
+proxy_pass http://[Elastic IP]:8080;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header Host $http_host;
