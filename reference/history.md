@@ -14,14 +14,37 @@ AWS EC2 & RDS 구축 방법은 [향로님의 블로그](https://jojoldu.tistory.
 
 ### EC2 인스턴스 생성
 
-------------------> 대시보드 사진 첨부
-
-- EC2 OS : Amazon Linux
+- EC2 OS : Amazon Linux(Amazon Linux 2023 AMI)
 - 인스턴스 유형: t2.micro
-- 네트워크, 서브넷: default
-- 불륨 크기 : 30GB (30GB 까지 프리티어로 사용 가능)
+
+![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/aws-ec2/1.png 'Result')
+
+.
+
+- 키 페어는 인스턴스에 접근하기 위해 필요하므로 조심한 보관이 필요하다.
+
+![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/aws-ec2/4.png 'Result')
+
+.
+
+- VPC, 서브넷: default
+- 퍼블릭 IP 자동 할당: 활성화
 - 보안 그룹 구성
-- 탄력적 IP 등록
+  - AWS EC2 터미널 접속을 위한 ssg 22 포트는 외부 접근 차단을 위해 내 IP 를 선택하자.
+  - 다른 장소에서 접속 시 해당 장소의 IP 를 다시 SSH 규칙에 추가하는 것이 안전
+  - HTTPS(443), HTTP(80) 는 외부에서 웹서비스 접근을 위해 사용하므로 포트를 열어두자.
+
+![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/aws-ec2/2.png 'Result')
+
+.
+
+- 불륨 크기 : 30GB (30GB 까지 프리티어로 사용 가능)
+
+![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/aws-ec2/2.png 'Result')
+
+.
+
+AWS EC2 고정 IP(Elastic IP) 등록, EC2 터미널 접속은 [향로님의 블로그](https://jojoldu.tistory.com/259)를 참고해 보자.
 
 .
 
