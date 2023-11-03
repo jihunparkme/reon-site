@@ -4,10 +4,10 @@ server:
 
 spring:
   profiles:
-    active: test
+    active: prod
     group:
       test: test,mail
       dev: dev, mail, dev-db
       prod: real-port, real, mail, real-db, management
-      set1: real-port, real, mail, real-db, management
+      set1: set1-port, real, mail, real-db, management
       set2: set2-port, real, mail, real-db, management
