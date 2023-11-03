@@ -8,6 +8,6 @@ spring:
     group:
       test: test,mail
       dev: dev, mail, dev-db
-      real: real, mail, real-db
-      set1: set1, mail, real-db
-      set2: set2, mail, real-db
+      real: real-port, real, mail, real-db
+      set1: real-port, real, mail, real-db
+      set2: set2-port, real, mail, real-db
