@@ -40,6 +40,8 @@ out/
 .DS_Store
 application-real.yml
 application-real-db.yml
+application-real-port.yml
+application-set2-port.yml
 application-mail.yml
 application-management.yml
 /erd
