@@ -55,13 +55,14 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/vendor/**"),
 
                                 new AntPathRequestMatcher("/profile"),
-                                new AntPathRequestMatcher("/health/**"),
+                                new AntPathRequestMatcher("/management/actuator/health"),
 
                                 new AntPathRequestMatcher("/login/**"),
                                 new AntPathRequestMatcher("/record/**")
                         ).permitAll()
                         .requestMatchers(
-                                new AntPathRequestMatcher("/admin/**")
+                                new AntPathRequestMatcher("/admin/**"),
+                                new AntPathRequestMatcher("/management/actuator/**")
                         ).hasAuthority("ROLE_ADMIN")
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
