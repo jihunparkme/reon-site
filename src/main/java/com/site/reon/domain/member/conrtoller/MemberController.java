@@ -6,15 +6,21 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
 
-    @PostMapping("/signup")
+    @GetMapping("/sign-in")
+    public String signIn() {
+        return "login/login";
+    }
+
+    @PostMapping("/sign-up")
     public ResponseEntity<MemberDto> signup(@Valid @RequestBody MemberDto memberDto) {
         return ResponseEntity.ok(memberService.signup(memberDto));
     }

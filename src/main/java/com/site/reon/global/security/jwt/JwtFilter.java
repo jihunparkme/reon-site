@@ -1,5 +1,7 @@
 package com.site.reon.global.security.jwt;
 
+import com.site.reon.domain.member.constant.AuthConst;
+import jakarta.servlet.http.Cookie;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -14,6 +16,8 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
 
 public class JwtFilter extends GenericFilterBean {
 
@@ -37,7 +41,7 @@ public class JwtFilter extends GenericFilterBean {
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
+            logger.debug("Security Context 에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
         } else {
             logger.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
         }
@@ -46,9 +50,15 @@ public class JwtFilter extends GenericFilterBean {
     }
 
     private String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        if (request.getCookies() == null) {
+            return null;
+        }
+
+        Optional<Cookie> cookieOptional = Arrays.stream(request.getCookies())
+                .filter(cookie -> cookie.getName().equals(AuthConst.ACCESS_TOKEN))
+                .findFirst();
+        if (cookieOptional.isPresent()) {
+            return cookieOptional.get().getValue();
         }
 
         return null;

@@ -17,7 +17,7 @@
         <li><a href="/blog" th:classappend="${title eq 'blog' ? 'active' : ''}">Blog</a></li>
         <li><a href="/contact" th:classappend="${title eq 'contact' ? 'active' : ''}">Contact</a></li>
         <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
-        <li><a th:href="@{/login/member}" class="getstarted">Login</a></li>
+        <li><a th:href="@{/member/sign-in}" class="getstarted">Login</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>

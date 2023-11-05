@@ -3,21 +3,21 @@ $('.message a').click(function(){
 });
 
 function login(){
-    console.log($("#login-email").val());
-    console.log($("#login-password").val());
-
-
-
+    let data = {
+        "email": $('#login-email').val(),
+        "password": $('#login-password').val()
+    };
+    console.log(data);
 
     $.ajax({
         type: 'POST',
-        url: "/notice/" + id,
+        url: "/login/authenticate",
         dataType: 'json',
+        data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8'
-    }).done(function() {
-        alert('공지사항이 삭제되었습니다.');
-        window.location.href = '/notice';
+    }).done(function(response) {
+        location.href = "/";
     }).fail(function (error) {
-        alert('공지사항 삭제를 실패하였습니다.\n관리자에게 문의해 주세요.');
+        alert('이메일 또는 비밀번호를 확인해 주세요.');
     });
 }

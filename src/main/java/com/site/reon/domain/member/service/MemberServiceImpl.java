@@ -49,7 +49,6 @@ public class MemberServiceImpl implements MemberService {
                 .activated(true)
                 .build();
 
-
         Member saveMember = MemberRepository.save(member);
         return MemberDto.from(saveMember);
     }
