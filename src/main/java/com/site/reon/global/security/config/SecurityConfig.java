@@ -1,5 +1,6 @@
 package com.site.reon.global.security.config;
 
+import com.site.reon.domain.member.constant.AuthConst;
 import com.site.reon.global.security.jwt.JwtAccessDeniedHandler;
 import com.site.reon.global.security.jwt.JwtAuthenticationEntryPoint;
 import com.site.reon.global.security.jwt.JwtSecurityConfig;
@@ -67,6 +68,17 @@ public class SecurityConfig {
                         ).hasAuthority("ROLE_ADMIN")
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
+                )
+
+                .formLogin(formLoginConfigurer -> formLoginConfigurer
+                        .loginPage("/member/sign-in")
+                        .successForwardUrl("/"))
+
+                .logout((logout) ->
+                        logout.deleteCookies(AuthConst.ACCESS_TOKEN)
+                                .invalidateHttpSession(false)
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
                 )
 
                 .sessionManagement(sessionManagement -> // 세션 미사용 설정
