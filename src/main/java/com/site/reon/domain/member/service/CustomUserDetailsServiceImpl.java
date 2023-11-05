@@ -29,7 +29,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(email + " : 회원 정보를 찾을 수 없습니다."));
     }
 
-    private User createUser(String email, Member member) {
+    private User createUser(final String email, final Member member) {
         if (!member.isActivated()) {
             throw new RuntimeException(email + " : 비활성 계정입니다.");
         }
@@ -38,6 +38,11 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
 
-        return new User(member.getEmail(), member.getPassword(), grantedAuthorities);
+        String username = email;
+        try {
+            username = member.getEmail().split("@")[0];
+        } catch (Exception e) {}
+        
+        return new User(username, member.getPassword(), grantedAuthorities);
     }
 }

@@ -17,8 +17,24 @@
         <li><a href="/blog" th:classappend="${title eq 'blog' ? 'active' : ''}">Blog</a></li>
         <li><a href="/contact" th:classappend="${title eq 'contact' ? 'active' : ''}">Contact</a></li>
         <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/logout" class="getstarted">Logout</a></li>
-        <li sec:authorize="isAnonymous()"><a th:href="@{/member/sign-in}" class="getstarted">Login</a></li>
+        <div sec:authorize="isAnonymous()">
+          <li><a th:href="@{/member/sign-in}" class="getstarted">Login</a></li>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+          <li class="dropdown">
+            <a href="#">
+              <span sec:authentication="principal.username"></span>
+              <i class="bi bi-chevron-down"></i>
+            </a>
+            <ul>
+              <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/admin/member}">회원정보</a>
+              </li>
+              <li><a th:href="@{/member/mypage}">내정보</a></li>
+              <li><a th:href="@{/member/sign-in}">Logout</a></li>
+            </ul>
+          </li>
+        </div>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
