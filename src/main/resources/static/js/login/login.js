@@ -12,7 +12,7 @@ function login() {
 
     $.ajax({
         type: 'POST',
-        url: "/login/authenticate",
+        url: "/member/authenticate",
         dataType: 'json',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8'
