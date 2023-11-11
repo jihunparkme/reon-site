@@ -3,17 +3,20 @@ create table roasting_record
     id          bigint        NOT NULL AUTO_INCREMENT,
     roaster_sn  varchar(100)  not null,
     member_id   bigint        not null,
-    title       varchar(100)  not null,
-    fan         varchar(3000) not null,
-    heater      varchar(3000) not null,
-    temp1       varchar(3000) not null,
-    temp2       varchar(3000) not null,
-    temp3       varchar(3000) not null,
-    temp4       varchar(3000) not null,
+    title       TEXT  not null,
+    fan         TEXT not null,
+    heater      TEXT not null,
+    temp1       TEXT not null,
+    temp2       TEXT not null,
+    temp3       TEXT not null,
+    temp4       TEXT not null,
     created_dt  timestamp(6),
     modified_dt timestamp(6),
     PRIMARY KEY (id)
 );
+
+-- show columns from roasting_record;
+-- alter table roasting_record MODIFY COLUMN fan TEXT;
 
 insert into roasting_record (TITLE, FAN, HEATER, TEMP1, TEMP2, TEMP3, TEMP4, ROASTER_SN, MEMBER_ID, CREATED_DT)
 values ('test roasting222',
