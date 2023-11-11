@@ -10,14 +10,15 @@
         <div class="login-row">
             <div class="login-card-body">
                 <div class="login-card-content">
-                    <h1>Login</h1>
+                    <h1 id="login-title">Login</h1>
                     <div class="login-page">
                         <div class="login-main-form">
-                            <form class="register-form transform-form" onsubmit="return false;">
-                                <input type="text" placeholder="name"/>
-                                <input type="password" placeholder="password"/>
-                                <input type="text" placeholder="email address"/>
-                                <button>create</button>
+                            <form class="register-form transform-form" id="register-form" onsubmit="return false;">
+                                <input id="sign-up-first-name" type="text" placeholder="first name"/>
+                                <input id="sign-up-last-name" type="text" placeholder="last name"/>
+                                <input id="sign-up-email" type="email" placeholder="email"/>
+                                <input id="sign-up-password" type="password" placeholder="password"/>
+                                <button>Sign Up</button>
                                 <p class="message">Already registered? <a href="#">Sign In</a></p>
                             </form>
                             <form class="login-form transform-form" onsubmit="return false;">
