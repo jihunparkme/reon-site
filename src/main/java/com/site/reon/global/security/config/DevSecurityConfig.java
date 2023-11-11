@@ -6,6 +6,7 @@ import com.site.reon.global.security.jwt.JwtAuthenticationEntryPoint;
 import com.site.reon.global.security.jwt.JwtSecurityConfig;
 import com.site.reon.global.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -26,8 +27,8 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
-@Profile("!test & !dev")
-public class SecurityConfig {
+@Profile("test | dev")
+public class DevSecurityConfig {
     private final TokenProvider tokenProvider;
     private final CorsFilter corsFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -69,6 +70,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/admin/**"),
                                 new AntPathRequestMatcher("/management/actuator/**")
                         ).hasAuthority("ROLE_ADMIN")
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -85,6 +87,12 @@ public class SecurityConfig {
 
                 .sessionManagement(sessionManagement -> // 세션 미사용 설정
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+
+                .headers(headers -> // h2 console 사용을 위한 설정
+                        headers.frameOptions(options ->
+                                options.sameOrigin()
+                        )
                 )
 
                 .apply(new JwtSecurityConfig(tokenProvider));
