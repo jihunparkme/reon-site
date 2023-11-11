@@ -38,9 +38,11 @@ out/
 
 ### Custom ###
 .DS_Store
-application-prod.yml
-application-oauth.yml
+application-real.yml
+application-real-db.yml
+application-real-port.yml
+application-set1-port.yml
+application-set2-port.yml
 application-mail.yml
-application-devdb.yml
-application-proddb.yml
+application-management.yml
 /erd

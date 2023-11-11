@@ -1,3 +1,26 @@
+### ADMIN
+POST http://localhost:8080/login/authenticate
+Content-Type: application/json
+
+{
+  "email" : "admin@gmail.com",
+  "password" : "admin"
+}
+
+
+### USER
+POST http://localhost:8080/login/authenticate
+Content-Type: application/json
+
+{
+  "email" : "user@gmail.com",
+  "password" : "user"
+}
+
+
+
+
+
 ### SecurityContext 에 저장된 사용자 정보 조회(ADMIN)
 GET http://localhost:8080/member
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJhdXRoIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJleHAiOjE2OTgwNzQxNDV9.1GI8cTfLWV-h5aCUdvec-wHAJPGC6cAIafNWbHtMjoqoZNd0Y1rjb8SH461x7DUQEWeYea4-aPjhJO3Do4mryw

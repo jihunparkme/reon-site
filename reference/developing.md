@@ -4,6 +4,7 @@ ing.
 - 서버 배포하기
 - 회원가입/로그인 폼 만들기
 - 시큐리티 테스트 코드 작성
+- security prd 용이랑 test 용 나누기
 - 대표 메일로 SMTP 등록
 - 회원가입 시 이메일 인증 추가
   - 인증하기 버튼 클릭 시 인증번호를 메일로 전송
@@ -54,28 +55,3 @@ jdbc:h2:~/databaseName (jsessionid 포함 - 파일 모드)
 jdbc:h2:tcp://localhost/~/databaseName (네트워크 모드)
 ```
 
-## AWS.
-
-Github - EC2 - Jenkins - nginx - MariaDB
-
-- [생활코딩: 아마존 웹서비스와 클라우드](https://opentutorials.org/course/2717/11268)
-- [AWS EC2 & RDS 구축하기](https://jojoldu.tistory.com/259)
-- [Github, Jenkins, EC2](https://woodcock.tistory.com/20)
-- [AWS EC2 Jenkins 구축](https://woodcock.tistory.com/20)
-- [EC2에 배포하기](https://jojoldu.tistory.com/263)
-- [Nginx를 활용한 무중단 배포 구축하기](https://jojoldu.tistory.com/267)
-- [도메인구매, HTTPS 연결, 타임존 수정](https://jojoldu.tistory.com/270)
-
-Gitlab + Jenkins + Nginx + Docker + AWS EC2 - 무중단 배포
-- https://gksdudrb922.tistory.com/236#EC-%--SSH%--%EC%--%B-%EA%B-%B-
-
-Jenkins EC2 연동.
-- https://velog.io/@sa1341/Jenkins%EC%97%90%EC%84%9C-EC2%EB%A1%9C-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0
-- https://thalals.tistory.com/430
-
-## Test.
-- JaCoCo > 테코드 커버리지
-
-## Monitoring
-- Prometheus 
-- Grafana

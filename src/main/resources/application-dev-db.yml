@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/reon?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: root
+  jpa:
+    database: mariadb

@@ -1,12 +1,13 @@
 server:
-  port: 8080
   tomcat:
     uri-encoding: UTF-8
 
 spring:
   profiles:
-    active: test
+    active: prod
     group:
       test: test,mail
-      develop: develop,mail,devdb
-      production: production,mail,proddb
+      dev: dev, mail, dev-db
+      prod: real-port, real, mail, real-db, management
+      set1: set1-port, real, mail, real-db, management
+      set2: set2-port, real, mail, real-db, management

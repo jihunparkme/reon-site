@@ -2,6 +2,7 @@ package com.site.reon.domain.member.service;
 
 import com.site.reon.domain.member.constant.Role;
 import com.site.reon.domain.member.dto.MemberDto;
+import com.site.reon.domain.member.dto.SignUpDto;
 import com.site.reon.domain.member.entity.Authority;
 import com.site.reon.domain.member.entity.Member;
 import com.site.reon.domain.member.repository.MemberRepository;
@@ -24,8 +25,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberDto signup(MemberDto memberDto) {
-        Member findMember = MemberRepository.findOneWithAuthoritiesByEmail(memberDto.getEmail()).orElse(null);
+    public void signup(SignUpDto signUpDto) {
+        Member findMember = MemberRepository.findOneWithAuthoritiesByEmail(signUpDto.getEmail()).orElse(null);
         if (findMember != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
         }
@@ -35,23 +36,15 @@ public class MemberServiceImpl implements MemberService {
                 .build();
 
         Member member = Member.builder()
-                .type(memberDto.getType())
-                .firstName(memberDto.getFirstName())
-                .lastName(memberDto.getLastName())
-                .email(memberDto.getEmail())
-                .password(passwordEncoder.encode(memberDto.getPassword()))
-                .phone(memberDto.getPhone())
-                .prdCode(memberDto.getPrdCode())
-                .roasterSn(memberDto.getRoasterSn())
+                .firstName(signUpDto.getFirstName())
+                .lastName(signUpDto.getLastName())
+                .email(signUpDto.getEmail())
+                .password(passwordEncoder.encode(signUpDto.getPassword()))
                 .authorities(Collections.singleton(authority))
-                .companyName(memberDto.getCompanyName())
-                .address(memberDto.getAddress())
                 .activated(true)
                 .build();
 
-
-        Member saveMember = MemberRepository.save(member);
-        return MemberDto.from(saveMember);
+        MemberRepository.save(member);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.site.reon.global.security.config;
 
+import com.site.reon.domain.member.constant.AuthConst;
 import com.site.reon.global.security.jwt.JwtAccessDeniedHandler;
 import com.site.reon.global.security.jwt.JwtAuthenticationEntryPoint;
 import com.site.reon.global.security.jwt.JwtSecurityConfig;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,6 +31,7 @@ public class SecurityConfig {
     private final CorsFilter corsFilter;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -38,6 +41,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .userDetailsService(userDetailsService)
                 .csrf(AbstractHttpConfigurer::disable) // token 을 사용하므로 csrf disable
 
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
@@ -54,11 +58,29 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/vendor/**"),
 
-                                new AntPathRequestMatcher("/login/**"),
+                                new AntPathRequestMatcher("/profile"),
+                                new AntPathRequestMatcher("/management/actuator/health"),
+
+                                new AntPathRequestMatcher("/member/**"),
                                 new AntPathRequestMatcher("/record/**")
                         ).permitAll()
+                        .requestMatchers(
+                                new AntPathRequestMatcher("/admin/**"),
+                                new AntPathRequestMatcher("/management/actuator/**")
+                        ).hasAuthority("ROLE_ADMIN")
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
+                )
+
+                .formLogin(formLoginConfigurer -> formLoginConfigurer
+                        .loginPage("/member/sign-in")
+                        .successForwardUrl("/"))
+
+                .logout((logout) ->
+                        logout.deleteCookies(AuthConst.ACCESS_TOKEN)
+                                .invalidateHttpSession(false)
+                                .logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
                 )
 
                 .sessionManagement(sessionManagement -> // 세션 미사용 설정

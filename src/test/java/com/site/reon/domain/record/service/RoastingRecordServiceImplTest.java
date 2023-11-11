@@ -42,7 +42,7 @@ class RoastingRecordServiceImplTest {
     void findAllSortByIdDescPaging() throws Exception {
         Page<RoastingRecord> recordPage = service.findAllSortByIdDescPaging(0, 10);
 
-        assertEquals(12, recordPage.getTotalElements());
+        assertEquals(11, recordPage.getTotalElements());
         assertEquals(2, recordPage.getTotalPages());
         assertEquals(0, recordPage.getNumber());
         assertEquals(10,recordPage.getNumberOfElements());

@@ -23,7 +23,7 @@ public class Member extends BaseTimeEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false)
+    @Column(length = 10)
     private MemberType type;
 
     @Column(length = 30, nullable = false)
@@ -38,7 +38,7 @@ public class Member extends BaseTimeEntity {
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String phone;
 
     @Column(length = 30)
@@ -47,10 +47,10 @@ public class Member extends BaseTimeEntity {
     @Column(length = 1000)
     private String address;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String prdCode;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100)
     private String roasterSn;
 
     @Column

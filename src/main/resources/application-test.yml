@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
 
   config:
@@ -48,6 +51,7 @@ spring:
 
 logging:
   level:
+    root: INFO
     org:
       hibernate:
         type:
@@ -63,3 +67,10 @@ jwt:
 file:
   upload:
     location: /Users/aaron/reon/uploadFiles/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /management/actuator
