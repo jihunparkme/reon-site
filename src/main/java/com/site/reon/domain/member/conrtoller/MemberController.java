@@ -1,9 +1,12 @@
 package com.site.reon.domain.member.conrtoller;
 
 import com.site.reon.domain.member.dto.MemberDto;
+import com.site.reon.domain.member.dto.SignUpDto;
 import com.site.reon.domain.member.service.MemberService;
+import com.site.reon.global.security.exception.DuplicateMemberException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -21,8 +24,15 @@ public class MemberController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<MemberDto> signup(@Valid @RequestBody MemberDto memberDto) {
-        return ResponseEntity.ok(memberService.signup(memberDto));
+    public ResponseEntity signup(@Valid @RequestBody SignUpDto signUpDto) {
+        try {
+            memberService.signup(signUpDto);
+            return ResponseEntity.ok(new MemberDto());
+        } catch (DuplicateMemberException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            return new ResponseEntity<>("회원가입을 실패하였습니다. 다시 시도해 주세요.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping

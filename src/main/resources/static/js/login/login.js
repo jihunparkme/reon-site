@@ -9,7 +9,6 @@ function login() {
         "email": $('#login-email').val(),
         "password": $('#login-password').val()
     };
-    console.log(data);
 
     $.ajax({
         type: 'POST',
@@ -19,8 +18,30 @@ function login() {
         contentType: 'application/json; charset=utf-8'
     }).done(function (response) {
         location.href = "/";
-    }).fail(function (error) {
+    }).fail(function () {
         alert('이메일 또는 비밀번호를 확인해 주세요.');
     });
 }
-ㅇ
+
+function signUp() {
+    let data = {
+        "firstName": $('#sign-up-first-name').val(),
+        "lastName": $('#sign-up-last-name').val(),
+        "email": $('#sign-up-email').val(),
+        "password": $('#sign-up-password').val()
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: "/member/sign-up",
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8'
+    }).done(function (response) {
+        alert('회원가입이 완료되었습니다. 다시 로그인해 주세요.');
+        location.href = "/";
+    }).fail(function (error) {
+        let errorMessage = error.responseText;
+        alert(errorMessage);
+    });
+}

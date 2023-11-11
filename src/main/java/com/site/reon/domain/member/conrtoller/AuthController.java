@@ -5,7 +5,6 @@ import com.site.reon.domain.member.dto.LoginDto;
 import com.site.reon.domain.member.dto.MemberDto;
 import com.site.reon.domain.member.service.MemberService;
 import com.site.reon.global.security.jwt.TokenProvider;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
