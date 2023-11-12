@@ -61,6 +61,13 @@ class RoastingRecordServiceImplTest {
     }
 
     @Test
+    void findRoastingRecordById_should_return_empty() throws Exception {
+        RoastingRecordResponse result = service.findRoastingRecordBy(10000L);
+
+        assertEquals(RoastingRecordResponse.EMPTY, result);
+    }
+
+    @Test
     void findRoastingRecordByRoasterSn() throws Exception {
         RoastingRecordResponse result = service.findRoastingRecordBy("AGBAG1241AFWADF");
 
@@ -69,5 +76,12 @@ class RoastingRecordServiceImplTest {
                 result.getFan());
         assertEquals("[100,105,125,130,130,130,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,125,135,155,155,155,155]",
                 result.getHeater());
+    }
+
+    @Test
+    void findRoastingRecordByRoasterSn_should_return_empty() throws Exception {
+        RoastingRecordResponse result = service.findRoastingRecordBy("XXX");
+
+        assertEquals(RoastingRecordResponse.EMPTY, result);
     }
 }
