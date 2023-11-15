@@ -29,7 +29,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(email + " : 회원 정보를 찾을 수 없습니다."));
     }
 
-    private User createUser(final String email, final Member member) {
+    User createUser(final String email, final Member member) {
         if (!member.isActivated()) {
             throw new RuntimeException(email + " : 비활성 계정입니다.");
         }
