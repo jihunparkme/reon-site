@@ -1,6 +1,6 @@
 package com.site.reon.global.security.jwt;
 
-import com.site.reon.domain.member.constant.AuthConst;
+import com.site.reon.aggregate.member.constant.AuthConst;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
