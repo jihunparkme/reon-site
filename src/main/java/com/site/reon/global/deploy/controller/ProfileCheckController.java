@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.index.controller;
+package com.site.reon.global.deploy.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 @RestController
 @AllArgsConstructor
-public class CommonController {
+public class ProfileCheckController {
 
     private Environment env;
 

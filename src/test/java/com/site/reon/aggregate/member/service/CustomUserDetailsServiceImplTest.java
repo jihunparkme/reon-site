@@ -1,10 +1,9 @@
-package com.site.reon.domain.member.service;
+package com.site.reon.aggregate.member.service;
 
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.CustomUserDetailsServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

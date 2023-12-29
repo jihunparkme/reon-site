@@ -1,4 +1,4 @@
-package com.site.reon.domain.index.web;
+package com.site.reon.global.deploy.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class CommonControllerTest {
+class ProfileCheckControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
