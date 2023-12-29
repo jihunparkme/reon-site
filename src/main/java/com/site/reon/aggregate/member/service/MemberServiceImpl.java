@@ -19,7 +19,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final com.site.reon.aggregate.member.repository.MemberRepository MemberRepository;
+    private final com.site.reon.aggregate.member.domain.repository.MemberRepository MemberRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override

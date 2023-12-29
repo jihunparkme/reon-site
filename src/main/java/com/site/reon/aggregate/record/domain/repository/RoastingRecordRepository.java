@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record.repository;
+package com.site.reon.aggregate.record.domain.repository;
 
 import com.site.reon.aggregate.record.domain.RoastingRecord;
 import org.springframework.data.jpa.repository.JpaRepository;

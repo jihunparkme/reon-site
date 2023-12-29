@@ -2,7 +2,7 @@ package com.site.reon.aggregate.record.service;
 
 import com.site.reon.aggregate.record.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.repository.RoastingRecordRepository;
+import com.site.reon.aggregate.record.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.domain.RoastingRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.repository.MemberRepository;
+import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
