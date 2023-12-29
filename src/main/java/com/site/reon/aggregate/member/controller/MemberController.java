@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.constant.AuthConst;
+import com.site.reon.global.common.constant.member.AuthConst;
 import com.site.reon.aggregate.member.dto.LoginDto;
 import com.site.reon.aggregate.member.dto.MemberDto;
 import com.site.reon.aggregate.member.dto.SignUpDto;

@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.constant;
+package com.site.reon.global.common.constant.member;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

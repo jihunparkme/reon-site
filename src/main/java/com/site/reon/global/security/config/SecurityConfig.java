@@ -1,6 +1,6 @@
 package com.site.reon.global.security.config;
 
-import com.site.reon.aggregate.member.constant.AuthConst;
+import com.site.reon.global.common.constant.member.AuthConst;
 import com.site.reon.global.security.jwt.JwtAccessDeniedHandler;
 import com.site.reon.global.security.jwt.JwtAuthenticationEntryPoint;
 import com.site.reon.global.security.jwt.JwtSecurityConfig;

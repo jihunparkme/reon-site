@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.entity;
+package com.site.reon.aggregate.member.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record.entity;
+package com.site.reon.aggregate.record.domain;
 
 import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;

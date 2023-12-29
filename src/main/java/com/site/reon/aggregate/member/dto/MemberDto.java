@@ -1,8 +1,8 @@
 package com.site.reon.aggregate.member.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.site.reon.aggregate.member.constant.MemberType;
-import com.site.reon.aggregate.member.entity.Member;
+import com.site.reon.global.common.constant.member.MemberType;
+import com.site.reon.aggregate.member.domain.Member;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

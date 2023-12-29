@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.record.dto;
 
-import com.site.reon.aggregate.record.entity.RoastingRecord;
+import com.site.reon.aggregate.record.domain.RoastingRecord;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

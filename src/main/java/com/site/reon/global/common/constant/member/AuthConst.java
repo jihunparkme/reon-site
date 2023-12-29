@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.constant;
+package com.site.reon.global.common.constant.member;
 
 public class AuthConst {
     private AuthConst() {}

@@ -2,7 +2,7 @@ package com.site.reon.aggregate.record.service;
 
 import com.site.reon.aggregate.record.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.entity.RoastingRecord;
+import com.site.reon.aggregate.record.domain.RoastingRecord;
 import org.springframework.data.domain.Page;
 
 public interface RoastingRecordService {

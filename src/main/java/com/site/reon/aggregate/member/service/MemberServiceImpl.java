@@ -1,10 +1,10 @@
 package com.site.reon.aggregate.member.service;
 
-import com.site.reon.aggregate.member.constant.Role;
+import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.aggregate.member.dto.MemberDto;
 import com.site.reon.aggregate.member.dto.SignUpDto;
-import com.site.reon.aggregate.member.entity.Authority;
-import com.site.reon.aggregate.member.entity.Member;
+import com.site.reon.aggregate.member.domain.Authority;
+import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.exception.NotFoundMemberException;
 import com.site.reon.global.security.util.SecurityUtil;

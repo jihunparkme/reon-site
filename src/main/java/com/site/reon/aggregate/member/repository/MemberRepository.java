@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.repository;
 
-import com.site.reon.aggregate.member.entity.Member;
+import com.site.reon.aggregate.member.domain.Member;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 

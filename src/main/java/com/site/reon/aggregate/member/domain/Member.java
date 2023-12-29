@@ -1,6 +1,6 @@
-package com.site.reon.aggregate.member.entity;
+package com.site.reon.aggregate.member.domain;
 
-import com.site.reon.aggregate.member.constant.MemberType;
+import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
