@@ -1,4 +1,4 @@
-package com.site.reon.domain.member.conrtoller;
+package com.site.reon.domain.member.controller;
 
 import com.site.reon.domain.member.constant.AuthConst;
 import com.site.reon.domain.member.dto.LoginDto;
