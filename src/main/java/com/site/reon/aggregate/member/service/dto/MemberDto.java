@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.dto;
+package com.site.reon.aggregate.member.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.site.reon.global.common.constant.member.MemberType;

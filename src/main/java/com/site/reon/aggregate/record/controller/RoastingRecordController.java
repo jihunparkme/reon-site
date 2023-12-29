@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.record.controller;
 
-import com.site.reon.aggregate.record.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.domain.RoastingRecord;
 import com.site.reon.aggregate.record.service.RoastingRecordService;
 import lombok.RequiredArgsConstructor;

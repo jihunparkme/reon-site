@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.service;
 
-import com.site.reon.aggregate.member.dto.MemberDto;
-import com.site.reon.aggregate.member.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.SignUpDto;
 
 public interface MemberService {
     void signup(SignUpDto memberDto);

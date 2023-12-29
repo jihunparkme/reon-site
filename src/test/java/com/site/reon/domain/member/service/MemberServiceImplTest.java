@@ -1,7 +1,7 @@
 package com.site.reon.domain.member.service;
 
-import com.site.reon.aggregate.member.dto.MemberDto;
-import com.site.reon.aggregate.member.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import org.junit.jupiter.api.Test;

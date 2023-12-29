@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.index.comtroller;
+package com.site.reon.aggregate.index.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;

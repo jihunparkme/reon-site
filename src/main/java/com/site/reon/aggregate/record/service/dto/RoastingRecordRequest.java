@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record.dto;
+package com.site.reon.aggregate.record.service.dto;
 
 import com.site.reon.aggregate.record.domain.RoastingRecord;
 import lombok.AllArgsConstructor;

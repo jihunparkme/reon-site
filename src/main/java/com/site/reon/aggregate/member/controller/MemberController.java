@@ -1,9 +1,9 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.global.common.constant.member.AuthConst;
-import com.site.reon.aggregate.member.dto.LoginDto;
-import com.site.reon.aggregate.member.dto.MemberDto;
-import com.site.reon.aggregate.member.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.jwt.TokenProvider;

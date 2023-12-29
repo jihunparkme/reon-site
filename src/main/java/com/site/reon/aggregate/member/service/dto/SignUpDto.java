@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.dto;
+package com.site.reon.aggregate.member.service.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
