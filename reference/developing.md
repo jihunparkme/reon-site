@@ -1,14 +1,3 @@
-# developing
-
-ing.
-- controller 테스트
-- JWT Refresh Token 적용
-- 대표 메일로 SMTP 등록 (mail SMTP 관리자 계정으로)
-- 회원가입 시 이메일 인증 추가
-  - 인증하기 버튼 클릭 시 인증번호를 메일로 전송
-  - 인증번호를 파라미터로 가지고 있다가 입력한 값하고 비교해서 동일하면 가입 완료
-- 비밀번호 찾기 (메일로 임시 비밀번호 전송하기)
-
 ## AWS
 
 - [생활코딩: 아마존 웹서비스와 클라우드](https://opentutorials.org/course/2717/11268)
