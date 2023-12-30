@@ -24,6 +24,7 @@ public class RoastingRecordResponse {
     private String temp2;
     private String temp3;
     private String temp4;
+    private String ror;
     private String roasterSn;
     private long memberId;
     private LocalDateTime createdDt;
@@ -39,6 +40,7 @@ public class RoastingRecordResponse {
                 .temp2(roastingRecord.getTemp2())
                 .temp3(roastingRecord.getTemp3())
                 .temp4(roastingRecord.getTemp4())
+                .ror(roastingRecord.getRor())
                 .roasterSn(roastingRecord.getRoasterSn())
                 .memberId(roastingRecord.getMemberId())
                 .createdDt(roastingRecord.getCreatedDt())

@@ -122,12 +122,16 @@
         }));
         cursor.lineY.set("visible", false);
 
-        let temp1Arr = JSON.parse([[${record.temp1}]]);
-        let temp2Arr = JSON.parse([[${record.temp2}]]);
-        let temp3Arr = JSON.parse([[${record.temp3}]]);
-        let temp4Arr = JSON.parse([[${record.temp4}]]);
+        let dataSize = 0;
+        if ([[${record.temp1}]] !== null) {
+            dataSize = JSON.parse([[${record.temp1}]]).length;
+        }
 
-        const dataSize = temp1Arr.length;
+        let temp1Arr = generateGraphData([[${record.temp1}]], dataSize);
+        let temp2Arr = generateGraphData([[${record.temp2}]], dataSize);
+        let temp3Arr = generateGraphData([[${record.temp3}]], dataSize);
+        let rorArr = generateGraphData([[${record.ror}]], dataSize);
+
         let data = [];
         for (let i = 0; i < dataSize; i++) {
             let min = parseInt((i + 1) / 60);
@@ -138,7 +142,7 @@
                     temp1: temp1Arr[i],
                     temp2: temp2Arr[i],
                     temp3: temp3Arr[i],
-                    temp4: temp4Arr[i]
+                    ror: rorArr[i]
                 }
             );
         }
@@ -184,7 +188,7 @@
         createSeries("Temp1", "temp1");
         createSeries("Temp2", "temp2");
         createSeries("Temp3", "temp3");
-        createSeries("Temp4", "temp4");
+        createSeries("ROR", "ror");
 
         // Add scrollbar
         chart.set("scrollbarX", am5.Scrollbar.new(root, {
@@ -249,6 +253,14 @@
         // Make stuff animate on load
         chart.appear(1000, 100);
     });
+
+    function generateGraphData(data, size) {
+        if (data === null) {
+            return Array(size).fill(0);
+        }
+
+        return JSON.parse(data);
+    }
 </script>
 </body>
 </html>
