@@ -125,7 +125,7 @@
         let temp1Arr = JSON.parse([[${record.temp1}]]);
         let temp2Arr = JSON.parse([[${record.temp2}]]);
         let temp3Arr = JSON.parse([[${record.temp3}]]);
-        let rorArr = JSON.parse([[${record.temp4}]]);
+        let temp4Arr = JSON.parse([[${record.temp4}]]);
 
         const dataSize = temp1Arr.length;
         let data = [];
@@ -138,7 +138,7 @@
                     temp1: temp1Arr[i],
                     temp2: temp2Arr[i],
                     temp3: temp3Arr[i],
-                    ror: rorArr[i]
+                    temp4: temp4Arr[i]
                 }
             );
         }
@@ -184,7 +184,7 @@
         createSeries("Temp1", "temp1");
         createSeries("Temp2", "temp2");
         createSeries("Temp3", "temp3");
-        createSeries("ROR", "ror");
+        createSeries("Temp4", "temp4");
 
         // Add scrollbar
         chart.set("scrollbarX", am5.Scrollbar.new(root, {
