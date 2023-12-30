@@ -1,7 +1,13 @@
 <div th:replace="~{common/head :: head('Record')}"></div>
 <body>
 <div th:replace="~{common/header :: header('record')}"></div>
-
+<style>
+#roastingChart {
+    width: 100%;
+    height: 500px;
+    max-width: 100%;
+}
+</style>
 <main id="main">
     <section id="breadcrumbs" class="breadcrumbs">
         <div class="container">
@@ -34,10 +40,7 @@
                         </div>
 
                         <div class="entry-content">
-                            <div style="padding-bottom: 70px;">
-                                <canvas id="roastingChart" width="1404" height="702"
-                                        style="display: block; box-sizing: border-box; height: 351px; width: 702px;"></canvas>
-                            </div>
+                            <div id="roastingChart"></div>
                         </div>
 
                         <div class="entry-footer">
@@ -66,90 +69,185 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 <div th:replace="~{common/commonjs}"></div>
-<script th:src="@{/js/library/chart-4.4.0.umd.js}"></script>
+<script th:src="@{/js/library/amcharts/index.js}"></script>
+<script th:src="@{/js/library/amcharts/xy.js}"></script>
+<script th:src="@{/js/library/amcharts/themes/Animated.js}"></script>
 <script type="text/javascript" th:inline="javascript">
-    const context = document
-        .getElementById('roastingChart')
-        .getContext('2d');
+    am5.ready(function() {
 
-    const size = [(${record.fan})].length;
-    let chartLabel = [];
-    for (let i = 0; i < size; i++) {
-        chartLabel[i] = i + 1;
-    }
+        // Create root element
+        let root = am5.Root.new("roastingChart");
+        const myTheme = am5.Theme.new(root);
 
-    const labels = chartLabel;
-    const data = {
-        labels: labels,
-        datasets: [
-            {
-                label: 'Heater',
-                data: [(${record.heater})],
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgb(255, 99, 132)',
-            },
-            {
-                label: 'Fan',
-                data: [(${record.fan})],
-                borderColor: 'rgb(54, 162, 235)',
-                backgroundColor: 'rgb(54, 162, 235)',
-            },
-            {
-                label: 'Temp1',
-                data: [(${record.temp1})],
-                borderColor: 'rgb(255, 159, 64)',
-                backgroundColor: 'rgb(255, 159, 64)',
-            },
-            {
-                label: 'Temp2',
-                data: [(${record.temp2})],
-                borderColor: 'rgb(255, 205, 86)',
-                backgroundColor: 'rgb(255, 205, 86)',
-            },
-            {
-                label: 'Temp3',
-                data: [(${record.temp3})],
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgb(75, 192, 192)',
-            },
-            {
-                label: 'Temp4',
-                data: [(${record.temp4})],
-                borderColor: 'rgb(153, 102, 255)',
-                backgroundColor: 'rgb(153, 102, 255)',
-            }
-        ]
-    };
+        myTheme.rule("AxisLabel", ["minor"]).setAll({
+            dy:1
+        });
 
-    new Chart(context, {
-        type: 'line',
-        data: data,
-        options: {
-            responsive: true,
-            interaction: {
-                mode: 'index',
-                intersect: false,
-            },
-            stacked: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: 'Roasting Record'
+        myTheme.rule("Grid", ["x"]).setAll({
+            strokeOpacity: 0.05
+        });
+
+        myTheme.rule("Grid", ["x", "minor"]).setAll({
+            strokeOpacity: 0.05
+        });
+
+        // Set themes
+        root.setThemes([
+            am5themes_Animated.new(root),
+            myTheme
+        ]);
+
+        // Create chart
+        let chart = root.container.children.push(
+            am5xy.XYChart.new(root, {
+                panX: true,
+                panY: true,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: root.verticalLayout,
+                pinchZoomX:true
+            })
+        );
+
+        chart.get("colors").set("colors", [
+            am5.color("#FF0000"),
+            am5.color("#0000FF"),
+            am5.color("#FFFF00"),
+            am5.color("#008000")
+        ]);
+
+        // Add cursor
+        let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+            behavior: "none"
+        }));
+        cursor.lineY.set("visible", false);
+
+        let temp1Arr = JSON.parse([[${record.temp1}]]);
+        let temp2Arr = JSON.parse([[${record.temp2}]]);
+        let temp3Arr = JSON.parse([[${record.temp3}]]);
+        let rorArr = JSON.parse([[${record.temp4}]]);
+
+        const dataSize = temp1Arr.length;
+        let data = [];
+        for (let i = 0; i < dataSize; i++) {
+            let min = parseInt((i + 1) / 60);
+            let sec = (min > 0 ? parseInt((i + 1) / 60) : "") + "′" + (i + 1) % 60;
+            data.push(
+                {
+                    second: sec,
+                    temp1: temp1Arr[i],
+                    temp2: temp2Arr[i],
+                    temp3: temp3Arr[i],
+                    ror: rorArr[i]
                 }
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Second.'
-                    }
-                },
-                y: {
-                    min: 0,
-                    max: 300,
+            );
+        }
+
+        // Create axes
+        let xAxis = chart.xAxes.push(
+            am5xy.CategoryAxis.new(root, {
+                categoryField: "second",
+                renderer: am5xy.AxisRendererX.new(root, {}),
+                tooltip: am5.Tooltip.new(root, {})
+            })
+        );
+
+        xAxis.data.setAll(data);
+
+        let yAxis = chart.yAxes.push(
+            am5xy.ValueAxis.new(root, {
+                maxPrecision: 0,
+                renderer: am5xy.AxisRendererY.new(root, {})
+            })
+        );
+
+        function createSeries(name, field) {
+            let series = chart.series.push(
+                am5xy.LineSeries.new(root, {
+                    name: name,
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueYField: field,
+                    categoryXField: "second",
+                    legendValueText: "{valueY}",
+                    tooltip: am5.Tooltip.new(root, {
+                        pointerOrientation: "horizontal",
+                        labelText: "[bold]{name}: {valueY}"
+                    })
+                })
+            );
+
+            series.data.setAll(data);
+            series.appear(1000);
+        }
+
+        createSeries("Temp1", "temp1");
+        createSeries("Temp2", "temp2");
+        createSeries("Temp3", "temp3");
+        createSeries("ROR", "ror");
+
+        // Add scrollbar
+        chart.set("scrollbarX", am5.Scrollbar.new(root, {
+            orientation: "horizontal"
+        }));
+
+        chart.set("scrollbarY", am5.Scrollbar.new(root, {
+            orientation: "vertical"
+        }));
+
+        // Add legend
+        let legend = chart.rightAxesContainer.children.push(am5.Legend.new(root, {
+            width: 200,
+            paddingLeft: 15,
+            height: am5.percent(100)
+        }));
+
+        // When legend item container is hovered, dim all the series except the hovered one
+        legend.itemContainers.template.events.on("pointerover", function(e) {
+            let itemContainer = e.target;
+
+            // As series list is data of a legend, dataContext is series
+            let series = itemContainer.dataItem.dataContext;
+
+            chart.series.each(function(chartSeries) {
+                if (chartSeries != series) {
+                    chartSeries.strokes.template.setAll({
+                        strokeOpacity: 0.15,
+                        stroke: am5.color(0x000000)
+                    });
+                } else {
+                    chartSeries.strokes.template.setAll({
+                        strokeWidth: 3
+                    });
                 }
-            }
-        },
+            })
+        })
+
+        // When legend item container is unhovered, make all series as they are
+        legend.itemContainers.template.events.on("pointerout", function(e) {
+            let itemContainer = e.target;
+            let series = itemContainer.dataItem.dataContext;
+
+            chart.series.each(function(chartSeries) {
+                chartSeries.strokes.template.setAll({
+                    strokeOpacity: 1,
+                    strokeWidth: 1,
+                    stroke: chartSeries.get("fill")
+                });
+            });
+        })
+
+        legend.itemContainers.template.set("width", am5.p100);
+        legend.valueLabels.template.setAll({
+            width: am5.p100,
+            textAlign: "right"
+        });
+
+        // It's is important to set legend data after all the events are set on template, otherwise events won't be copied
+        legend.data.setAll(chart.series.values);
+
+        // Make stuff animate on load
+        chart.appear(1000, 100);
     });
 </script>
 </body>
