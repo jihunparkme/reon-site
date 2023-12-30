@@ -39,6 +39,9 @@ public class RoastingRecord extends BaseTimeEntity {
     @Column(length = 20000, nullable = false)
     private String temp4;
 
+    @Column(length = 20000, nullable = false)
+    private String ror;
+
     @Column(length = 100, nullable = false)
     private String roasterSn;
 
