@@ -27,8 +27,9 @@ class RoastingRecordServiceImplTest {
         String temp2 = "temp2";
         String temp3 = "temp3";
         String temp4 = "temp4";
+        String ror = "RoR";
         String roasterSn = "roasterSn";
-        RoastingRecordRequest request = new RoastingRecordRequest(title, fan, heater, temp1, temp2, temp3, temp4, roasterSn);
+        RoastingRecordRequest request = new RoastingRecordRequest(title, fan, heater, temp1, temp2, temp3, temp4, ror, roasterSn);
         service.upload(request);
 
         RoastingRecordResponse result = service.findRoastingRecordBy(roasterSn);
