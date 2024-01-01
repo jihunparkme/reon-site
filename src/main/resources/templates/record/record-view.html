@@ -39,9 +39,12 @@
                             </ul>
                         </div>
 
-                        <h3>Temperature & RoR</h3>
                         <div class="entry-content">
+                            <h3>Temperature & RoR</h3>
                             <div id="temperatureChart"></div>
+
+                            <h3>Sensors</h3>
+                            <div id="sensorChart"></div>
                         </div>
 
                         <div class="entry-footer">
@@ -76,6 +79,9 @@
 <script type="text/javascript" th:inline="javascript">
     am5.ready(function() {
 
+        /**
+         * Temperature Chart
+         */
         // Create root element
         let root = am5.Root.new("temperatureChart");
         const myTheme = am5.Theme.new(root);
@@ -254,6 +260,180 @@
 
         // Make stuff animate on load
         chart.appear(1000, 100);
+
+
+        /**
+         * Sensor Chart
+         */
+        // Create root element
+        let rootOfSensor = am5.Root.new("sensorChart");
+        const myThemeOfSensor = am5.Theme.new(rootOfSensor);
+
+        myThemeOfSensor.rule("AxisLabel", ["minor"]).setAll({
+            dy:1
+        });
+
+        myThemeOfSensor.rule("Grid", ["x"]).setAll({
+            strokeOpacity: 0.05
+        });
+
+        myThemeOfSensor.rule("Grid", ["x", "minor"]).setAll({
+            strokeOpacity: 0.05
+        });
+
+        // Set themes
+        rootOfSensor.setThemes([
+            am5themes_Animated.new(rootOfSensor),
+            myThemeOfSensor
+        ]);
+
+        // Create chart
+        let chartOfSensor = rootOfSensor.container.children.push(
+            am5xy.XYChart.new(rootOfSensor, {
+                panX: true,
+                panY: true,
+                wheelX: "panX",
+                wheelY: "zoomX",
+                layout: rootOfSensor.verticalLayout,
+                pinchZoomX:true
+            })
+        );
+
+        // set chart color
+        chartOfSensor.get("colors").set("colors", [
+            am5.color("#FF7F00"),
+            am5.color("#8B00FF"),
+        ]);
+
+        // Add cursor
+        let cursorOfSensor = chartOfSensor.set("cursor", am5xy.XYCursor.new(rootOfSensor, {
+            behavior: "none"
+        }));
+        cursorOfSensor.lineY.set("visible", false);
+
+        let dataSizeOfSensor = 0;
+        if ([[${record.heater}]] !== null) {
+            dataSizeOfSensor = JSON.parse([[${record.heater}]]).length;
+        }
+
+        let heaterArr = generateGraphData([[${record.heater}]], dataSizeOfSensor);
+        let fanArr = generateGraphData([[${record.fan}]], dataSizeOfSensor);
+        console.log(heaterArr);
+        console.log(fanArr);
+
+        let dataOfSensor = [];
+        for (let i = 0; i < dataSizeOfSensor; i++) {
+            let minOfSensor = parseInt((i + 1) / 60);
+            let secOfSensor = (minOfSensor > 0 ? parseInt((i + 1) / 60) : "") + "′" + (i + 1) % 60;
+            dataOfSensor.push(
+                {
+                    second: secOfSensor,
+                    heater: heaterArr[i],
+                    fan: fanArr[i],
+                }
+            );
+        }
+
+        // Create axes
+        let xAxisOfSensor = chartOfSensor.xAxes.push(
+            am5xy.CategoryAxis.new(rootOfSensor, {
+                categoryField: "second",
+                renderer: am5xy.AxisRendererX.new(rootOfSensor, {}),
+                tooltip: am5.Tooltip.new(rootOfSensor, {})
+            })
+        );
+
+        xAxisOfSensor.data.setAll(dataOfSensor);
+
+        let yAxisOfSensor = chartOfSensor.yAxes.push(
+            am5xy.ValueAxis.new(rootOfSensor, {
+                maxPrecision: 0,
+                renderer: am5xy.AxisRendererY.new(rootOfSensor, {})
+            })
+        );
+
+        function createSeriesOfSensor(name, field) {
+            let seriesOfSensor = chartOfSensor.series.push(
+                am5xy.LineSeries.new(rootOfSensor, {
+                    name: name,
+                    xAxis: xAxisOfSensor,
+                    yAxis: yAxisOfSensor,
+                    valueYField: field,
+                    categoryXField: "second",
+                    legendValueText: "{valueY}",
+                    tooltip: am5.Tooltip.new(rootOfSensor, {
+                        pointerOrientation: "horizontal",
+                        labelText: "[bold]{name}: {valueY}"
+                    })
+                })
+            );
+
+            seriesOfSensor.data.setAll(dataOfSensor);
+            seriesOfSensor.appear(1000);
+        }
+
+        createSeriesOfSensor("Heater", "heater");
+        createSeriesOfSensor("Fan", "fan");
+
+        // Add scrollbar
+        chartOfSensor.set("scrollbarX", am5.Scrollbar.new(rootOfSensor, {
+            orientation: "horizontal"
+        }));
+
+        chartOfSensor.set("scrollbarY", am5.Scrollbar.new(rootOfSensor, {
+            orientation: "vertical"
+        }));
+
+        // Add legend
+        let legendOfSensor = chartOfSensor.rightAxesContainer.children.push(am5.Legend.new(rootOfSensor, {
+            width: 200,
+            paddingLeft: 15,
+            height: am5.percent(100)
+        }));
+
+        // When legend item container is hovered, dim all the series except the hovered one
+        legendOfSensor.itemContainers.template.events.on("pointerover", function(e) {
+            let itemContainerOfSensor = e.target;
+
+            // As series list is data of a legend, dataContext is series
+            let seriesOfSensor = itemContainerOfSensor.dataItem.dataContext;
+
+            chartOfSensor.series.each(function(chartSeries) {
+                if (chartSeries != seriesOfSensor) {
+                    chartSeries.strokes.template.setAll({
+                        strokeOpacity: 0.15,
+                        stroke: am5.color(0x000000)
+                    });
+                } else {
+                    chartSeries.strokes.template.setAll({
+                        strokeWidth: 3
+                    });
+                }
+            })
+        })
+
+        // When legend item container is unhovered, make all series as they are
+        legendOfSensor.itemContainers.template.events.on("pointerout", function(e) {
+            chartOfSensor.series.each(function(chartSeries) {
+                chartSeries.strokes.template.setAll({
+                    strokeOpacity: 1,
+                    strokeWidth: 1,
+                    stroke: chartSeries.get("fill")
+                });
+            });
+        })
+
+        legendOfSensor.itemContainers.template.set("width", am5.p100);
+        legendOfSensor.valueLabels.template.setAll({
+            width: am5.p100,
+            textAlign: "right"
+        });
+
+        // It's is important to set legend data after all the events are set on template, otherwise events won't be copied
+        legendOfSensor.data.setAll(chartOfSensor.series.values);
+
+        // Make stuff animate on load
+        chartOfSensor.appear(1000, 100);
     });
 
     function generateGraphData(data, size) {
