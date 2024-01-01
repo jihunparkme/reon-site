@@ -2,7 +2,7 @@
 <body>
 <div th:replace="~{common/header :: header('record')}"></div>
 <style>
-#temperatureChart {
+#temperatureChart, #sensorChart {
     width: 100%;
     height: 500px;
     max-width: 100%;
@@ -40,10 +40,8 @@
                         </div>
 
                         <div class="entry-content">
-                            <h3>Temperature & RoR</h3>
                             <div id="temperatureChart"></div>
 
-                            <h3>Sensors</h3>
                             <div id="sensorChart"></div>
                         </div>
 
@@ -124,6 +122,14 @@
             am5.color("#008000")
         ]);
 
+        chart.topAxesContainer.children.push(am5.Label.new(root, {
+            text: "Temperature & RoR",
+            fontSize: 20,
+            fontWeight: "400",
+            x: am5.p50,
+            centerX: am5.p50
+        }));
+
         // Add cursor
         let cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
             behavior: "none"
@@ -172,6 +178,32 @@
                 renderer: am5xy.AxisRendererY.new(root, {})
             })
         );
+
+        xAxis.children.push(
+            am5.Label.new(root, {
+                text: "seconds",
+                x: am5.p50,
+                centerX:am5.p50
+            })
+        );
+
+        yAxis.children.unshift(
+            am5.Label.new(root, {
+                rotation: -90,
+                text: "value",
+                y: am5.p50,
+                centerX: am5.p50
+            })
+        );
+
+        let yRenderer = yAxis.get("renderer");
+        yRenderer.ticks.template.setAll({
+            minPosition: 0.1,
+            visible: true
+        });
+        yRenderer.labels.template.setAll({
+            minPosition: 0.1
+        });
 
         function createSeries(name, field) {
             let series = chart.series.push(
@@ -305,6 +337,14 @@
             am5.color("#8B00FF"),
         ]);
 
+        chartOfSensor.topAxesContainer.children.push(am5.Label.new(rootOfSensor, {
+            text: "Sensors",
+            fontSize: 20,
+            fontWeight: "400",
+            x: am5.p50,
+            centerX: am5.p50
+        }));
+
         // Add cursor
         let cursorOfSensor = chartOfSensor.set("cursor", am5xy.XYCursor.new(rootOfSensor, {
             behavior: "none"
@@ -351,6 +391,32 @@
                 renderer: am5xy.AxisRendererY.new(rootOfSensor, {})
             })
         );
+
+        xAxisOfSensor.children.push(
+            am5.Label.new(rootOfSensor, {
+                text: "seconds",
+                x: am5.p50,
+                centerX:am5.p50
+            })
+        );
+
+        yAxisOfSensor.children.unshift(
+            am5.Label.new(rootOfSensor, {
+                rotation: -90,
+                text: "value",
+                y: am5.p50,
+                centerX: am5.p50
+            })
+        );
+
+        let yRendererOfSensor = yAxisOfSensor.get("renderer");
+        yRendererOfSensor.ticks.template.setAll({
+            minPosition: 0.1,
+            visible: true
+        });
+        yRendererOfSensor.labels.template.setAll({
+            minPosition: 0.1
+        });
 
         function createSeriesOfSensor(name, field) {
             let seriesOfSensor = chartOfSensor.series.push(
