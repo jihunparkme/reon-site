@@ -26,11 +26,14 @@
 ## developing
 
 ing.
-- [Google Search Console 등록](https://search.google.com/search-console/about)
-- 기존 코드 DDD 적용
 - Record
+- 기존 코드 DDD 적용할 부분 확인
+- 테스트 코드 미작성 부분 확인해서 작성
 - Sign In/Sign Up
+- 구글/카카오/네이버 로그인 기능 추가
 - Member
+- 로그 관리 -> 날짜별로 덮어쓰기
+- 도메인 등록하면, [Google Search Console 등록](https://search.google.com/search-console/about)
 
 ## Global
 
@@ -116,8 +119,9 @@ ing.
 - [x] 그래프 [chart.js](https://www.chartjs.org/) 적용해 보기
   - [cdnjs](https://cdnjs.com/libraries/Chart.js)
   - [documentation](https://www.chartjs.org/docs/latest/)
-- [ ] 그래프 [amcharts](https://www.amcharts.com/) 적용해 보기
+- [x] 그래프 [amcharts](https://www.amcharts.com/) 적용해 보기
   - [Highlighting Line Chart](https://www.amcharts.com/demos/highlighting-line-chart-series-on-legend-hover/)
+- [ ] 관리자는 로스팅 로그 추출 가능하도록 (csv..?)
 - [ ] 회원은 자신의 로그만 조회 가능, 관리자는 모든 로그 조회 가능
 - [ ] 회원번호, S/N, 날짜로 검색 기능
 
