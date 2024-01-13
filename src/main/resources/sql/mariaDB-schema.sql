@@ -29,3 +29,47 @@ values ('test roasting222',
         '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,49,48,47,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,20,21,20,19]',
         '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,49,48,47,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,20,21,20,19]',
         'ASFDASGAAS3512ASDGA', 2, STR_TO_DATE('2023-10-01 12:00:00', '%Y-%m-%d %H:%i:%S'));
+
+CREATE TABLE member
+(
+    id          bigint       NOT NULL AUTO_INCREMENT,
+    type        varchar(10),
+    first_name   varchar(30)  not null,
+    last_name    varchar(30)  not null,
+    email       varchar(50)  not null,
+    password    varchar(100) not null,
+    phone       varchar(20),
+    company_name varchar(30),
+    address     varchar(100),
+    prd_code     varchar(100),
+    roaster_sn   varchar(100),
+    activated   tinyint(1),
+    created_dt  timestamp(6),
+    modified_dt timestamp(6),
+    PRIMARY KEY (id)
+);
+
+create table authority (
+   authority_name varchar(50) not null,
+   primary key (authority_name)
+);
+
+create table member_authority (
+  member_id bigint not null,
+  authority_name varchar(50) not null,
+  primary key (member_id, authority_name)
+);
+
+insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', true, DATE_FORMAT('2023-10-01', '%y-%m-%d'));
+
+insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwDS8O6intHWsCf7e14DbAxAUIB6Pba/B/50y', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', true, DATE_FORMAT('2023-10-01 12:00:00','%y-%m-%d %H:%i:%s'));
+
+insert into authority (authority_name) values ('ROLE_GUEST');
+insert into authority (authority_name) values ('ROLE_USER');
+insert into authority (authority_name) values ('ROLE_ADMIN');
+
+insert into member_authority (member_id, authority_name) values (1, 'ROLE_USER');
+insert into member_authority (member_id, authority_name) values (1, 'ROLE_ADMIN');
+insert into member_authority (member_id, authority_name) values (2, 'ROLE_USER');
