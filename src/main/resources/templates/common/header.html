@@ -18,7 +18,7 @@
 <!--        <li><a href="/contact" th:classappend="${title eq 'contact' ? 'active' : ''}">Contact</a></li>-->
         <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
         <div sec:authorize="isAnonymous()">
-          <li><a th:href="@{/member/sign-in}" class="getstarted">Login</a></li>
+          <li><a th:href="@{/login}" class="getstarted">Login</a></li>
         </div>
         <div sec:authorize="isAuthenticated()">
           <li class="dropdown">

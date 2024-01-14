@@ -19,6 +19,29 @@
     display: flex;
 }
 
+.container-login .login-col {
+    position: relative;
+    max-width: 100%;
+    min-height: 1px;
+    width: 500px;
+}
+
+.container-login .login-card {
+    width: 100%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: #272b41;
+    font-size: 15px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum","tnum";
+    position: relative;
+    background: #fff;
+}
+
 .container-login .login-card .login-card-body {
     padding: 25px;
     position: relative;
@@ -118,4 +141,43 @@
 }
 .login-main-form .register-form {
     display: none;
+}
+
+.container-login .kakao{
+    cursor: pointer;
+    display: flex;
+    place-content: center;
+    height: 56px;
+    background-color: rgb(254, 229, 0);
+    color: rgb(24, 22, 0);
+    border-radius: 10px;
+}
+
+.container-login .apple{
+    cursor: pointer;
+    display: flex;
+    place-content: center;
+    height: 56px;
+    border: 2px solid rgb(204, 204, 204);
+    color: rgb(127, 127, 127);
+    border-radius: 10px;
+}
+
+.container-login .google{
+    cursor: pointer;
+    display: flex;
+    place-content: center;
+    height: 56px;
+    border: 2px solid rgb(204, 204, 204);
+    color: rgb(127, 127, 127);
+    border-radius: 10px;
+}
+.container-login .email{
+    cursor: pointer;
+    display: flex;
+    place-content: center;
+    height: 56px;
+    border: 2px solid rgb(204, 204, 204);
+    color: rgb(127, 127, 127);
+    border-radius: 10px;
 }
