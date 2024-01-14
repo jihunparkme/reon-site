@@ -22,11 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/sign-in")
-    public String signIn() {
-        return "login/login";
-    }
-
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
         ResponseCookie cookie = memberService.getCookie(loginDto);
