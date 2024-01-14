@@ -1,12 +1,11 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.global.common.constant.member.AuthConst;
+import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
-import com.site.reon.aggregate.member.service.MemberService;
+import com.site.reon.global.common.constant.member.AuthConst;
 import com.site.reon.global.security.exception.DuplicateMemberException;
-import com.site.reon.global.security.jwt.TokenProvider;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,10 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +21,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-    private final TokenProvider tokenProvider;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @GetMapping("/sign-in")
     public String signIn() {
@@ -36,22 +29,7 @@ public class MemberController {
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        String jwt = tokenProvider.createToken(authentication);
-
-        ResponseCookie cookie = ResponseCookie.from(AuthConst.ACCESS_TOKEN, jwt)
-                .httpOnly(true)
-                .secure(true)
-                .sameSite(AuthConst.NONE)
-                .path("/")
-                .build();
-
+        ResponseCookie cookie = memberService.getCookie(loginDto);
         MemberDto member = memberService.getMemberWithAuthorities(loginDto.getEmail());
 
         return ResponseEntity.ok()

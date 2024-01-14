@@ -1,5 +1,8 @@
 package com.site.reon.aggregate.member.service;
 
+import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.global.common.constant.member.AuthConst;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
@@ -7,8 +10,14 @@ import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.exception.NotFoundMemberException;
+import com.site.reon.global.security.jwt.TokenProvider;
 import com.site.reon.global.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +28,15 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final com.site.reon.aggregate.member.domain.repository.MemberRepository MemberRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenProvider tokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Override
     @Transactional
     public void signup(SignUpDto signUpDto) {
-        Member findMember = MemberRepository.findOneWithAuthoritiesByEmail(signUpDto.getEmail()).orElse(null);
+        Member findMember = memberRepository.findOneWithAuthoritiesByEmail(signUpDto.getEmail()).orElse(null);
         if (findMember != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
         }
@@ -43,7 +54,24 @@ public class MemberServiceImpl implements MemberService {
                 .activated(true)
                 .build();
 
-        MemberRepository.save(member);
+        memberRepository.save(member);
+    }
+
+    @Override
+    public ResponseCookie getCookie(LoginDto loginDto) {
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = tokenProvider.createToken(authentication);
+
+        return ResponseCookie.from(AuthConst.ACCESS_TOKEN, jwt)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite(AuthConst.NONE)
+                .path("/")
+                .build();
     }
 
     /**
@@ -52,7 +80,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public MemberDto getMemberWithAuthorities(String email) {
-        return MemberDto.from(MemberRepository.findOneWithAuthoritiesByEmail(email).orElse(null));
+        return MemberDto.from(memberRepository.findOneWithAuthoritiesByEmail(email).orElse(null));
     }
 
     /**
@@ -63,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
     public MemberDto getMyMemberWithAuthorities() {
         return MemberDto.from(
                 SecurityUtil.getCurrentEmail()
-                        .flatMap(MemberRepository::findOneWithAuthoritiesByEmail)
+                        .flatMap(memberRepository::findOneWithAuthoritiesByEmail)
                         .orElseThrow(() -> new NotFoundMemberException("Member not found"))
         );
     }
