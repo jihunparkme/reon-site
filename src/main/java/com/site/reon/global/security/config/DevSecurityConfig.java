@@ -63,6 +63,7 @@ public class DevSecurityConfig {
                                 new AntPathRequestMatcher("/profile"),
                                 new AntPathRequestMatcher("/management/actuator/health"),
 
+                                new AntPathRequestMatcher("/login/**"),
                                 new AntPathRequestMatcher("/member/**"),
                                 new AntPathRequestMatcher("/record/**")
                         ).permitAll()
@@ -75,7 +76,7 @@ public class DevSecurityConfig {
                 )
 
                 .formLogin(formLoginConfigurer -> formLoginConfigurer
-                        .loginPage("/member/sign-in")
+                        .loginPage("/login")
                         .successForwardUrl("/"))
 
                 .logout((logout) ->
