@@ -1,48 +1,20 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.service.MemberService;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
-import com.site.reon.aggregate.member.service.dto.SignUpDto;
-import com.site.reon.global.common.constant.member.AuthConst;
-import com.site.reon.global.security.exception.DuplicateMemberException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
-
-    @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-        ResponseCookie cookie = memberService.getCookie(loginDto);
-        MemberDto member = memberService.getMemberWithAuthorities(loginDto.getEmail());
-
-        return ResponseEntity.ok()
-                .header(AuthConst.SET_COOKIE, cookie.toString())
-                .body(member);
-    }
-
-    @PostMapping("/sign-up")
-    public ResponseEntity signup(@Valid @RequestBody SignUpDto signUpDto) {
-        try {
-            memberService.signup(signUpDto);
-            return ResponseEntity.ok(new MemberDto());
-        } catch (DuplicateMemberException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (Exception e) {
-            return new ResponseEntity<>("회원가입을 실패하였습니다. 다시 시도해 주세요.", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('USER','ADMIN')")

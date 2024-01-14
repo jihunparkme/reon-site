@@ -12,7 +12,7 @@ function login() {
 
     $.ajax({
         type: 'POST',
-        url: "/member/authenticate",
+        url: "/login/email/authenticate",
         dataType: 'json',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8'
@@ -33,7 +33,7 @@ function signUp() {
 
     $.ajax({
         type: 'POST',
-        url: "/member/sign-up",
+        url: "/login/email/sign-up",
         dataType: 'json',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8'
