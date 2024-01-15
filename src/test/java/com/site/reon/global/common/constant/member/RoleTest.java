@@ -3,8 +3,6 @@ package com.site.reon.global.common.constant.member;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class RoleTest {
     @Test
     void method() throws Exception {
