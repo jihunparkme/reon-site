@@ -27,9 +27,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
+	// commons
+	implementation 'org.apache.commons:commons-lang3'
+
+	// thymeleaf extra
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
+	// tool
 	compileOnly 'org.springframework.boot:spring-boot-devtools'
 
 	// lombok
