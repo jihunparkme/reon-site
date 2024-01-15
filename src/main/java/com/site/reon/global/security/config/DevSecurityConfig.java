@@ -1,10 +1,12 @@
 package com.site.reon.global.security.config;
 
 import com.site.reon.global.common.constant.member.AuthConst;
+import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.jwt.JwtAccessDeniedHandler;
 import com.site.reon.global.security.jwt.JwtAuthenticationEntryPoint;
 import com.site.reon.global.security.jwt.JwtSecurityConfig;
 import com.site.reon.global.security.jwt.TokenProvider;
+import com.site.reon.global.security.oauth2.service.CustomOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +36,7 @@ public class DevSecurityConfig {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final UserDetailsService userDetailsService;
+    private final CustomOauth2UserService customOauth2UserService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -70,7 +73,7 @@ public class DevSecurityConfig {
                         .requestMatchers(
                                 new AntPathRequestMatcher("/admin/**"),
                                 new AntPathRequestMatcher("/management/actuator/**")
-                        ).hasAuthority("ROLE_ADMIN")
+                        ).hasAuthority(Role.ADMIN.name())
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -85,6 +88,10 @@ public class DevSecurityConfig {
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
                 )
+
+                .oauth2Login(oauth2 -> // oauth2 로그인 기은 설정
+                        oauth2.userInfoEndpoint(userInfo -> // oauth2 로그인 성공 이후 사용자 정보 조회 설정
+                                userInfo.userService(customOauth2UserService))) // 사용자 정보 조회 이후 기능
 
                 .sessionManagement(sessionManagement -> // 세션 미사용 설정
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

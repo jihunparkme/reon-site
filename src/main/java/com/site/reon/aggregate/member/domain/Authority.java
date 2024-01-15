@@ -18,4 +18,10 @@ public class Authority {
     @Id
     @Column(name = "authority_name", length = 50)
     private String authorityName;
+
+    public static Authority generateAuthorityBy(String role) {
+        return Authority.builder()
+                .authorityName(role)
+                .build();
+    }
 }
