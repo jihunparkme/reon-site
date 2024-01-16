@@ -45,4 +45,6 @@ application-set1-port.yml
 application-set2-port.yml
 application-mail.yml
 application-management.yml
+application-dev-oauth.yml
+application-real-oauth.yml
 /erd
