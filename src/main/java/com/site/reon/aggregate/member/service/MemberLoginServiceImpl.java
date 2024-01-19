@@ -60,7 +60,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = tokenProvider.createToken(authentication);
+        String jwt = tokenProvider.createToken(authentication, loginDto.getEmail());
 
         return ResponseCookie.from(AuthConst.ACCESS_TOKEN, jwt)
                 .httpOnly(true)
