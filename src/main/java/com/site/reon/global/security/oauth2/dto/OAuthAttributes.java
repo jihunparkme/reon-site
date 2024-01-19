@@ -25,22 +25,22 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String picture;
-    private SocialServiceName socialServiceName;
+    private SocialLogin socialLogin;
 
     /**
-     * Map 타입의 OAtuh2User 정보를 OAuthAttributes 클래스로 변환
+     * OAtuh2User attributes 정보를 OAuthAttributes 클래스로 변환
      */
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
-        if ("kakao".equals(registrationId)) {
-            return ofKakao("id", attributes);
+    public static OAuthAttributes of(String registrationId, Map<String, Object> attributes) {
+        if (SocialLogin.isKakaoLogin(registrationId)) {
+            return ofKakao(SocialLogin.KAKAO.getNameAttributeName(), attributes);
         }
 
-        return ofGoogle(userNameAttributeName, attributes);
+        return ofGoogle(SocialLogin.GOOGLE.getNameAttributeName(), attributes);
     }
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
-        Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
-        Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
+        Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
+        Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
         return OAuthAttributes.builder()
                 .name((String) kakaoProfile.get("nickname"))
@@ -48,7 +48,7 @@ public class OAuthAttributes {
                 .picture((String) kakaoProfile.get("profile_image_url"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
-                .socialServiceName(SocialServiceName.KAKAO)
+                .socialLogin(SocialLogin.KAKAO)
                 .build();
     }
 
@@ -59,19 +59,20 @@ public class OAuthAttributes {
                 .picture((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
-                .socialServiceName(SocialServiceName.GOOGLE)
+                .socialLogin(SocialLogin.GOOGLE)
                 .build();
     }
 
-    public Member createOAuth2User() {
+    public Member toMember() {
         return Member.builder()
-                .firstName(name)
+                .firstName(this.name)
                 .lastName(StringUtils.EMPTY)
-                .email(email)
+                .email(this.email)
                 .password(StringUtils.EMPTY)
-                .picture(picture)
+                .picture(this.picture)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .socialServiceName(socialServiceName)
+                .socialLogin(this.socialLogin)
+                .activated(true)
                 .build();
     }
 }

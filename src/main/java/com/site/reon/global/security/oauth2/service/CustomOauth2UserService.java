@@ -1,11 +1,9 @@
 package com.site.reon.global.security.oauth2.service;
 
-import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.global.security.oauth2.dto.OAuthAttributes;
-import com.site.reon.global.security.oauth2.dto.SessionMember;
-import jakarta.servlet.http.HttpSession;
+import com.site.reon.global.common.constant.member.Role;
+import com.site.reon.global.security.oauth2.dto.SocialLogin;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -15,23 +13,26 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.Map;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-    private final MemberRepository memberRepository;
-    private final HttpSession httpSession;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
-        OAuth2User oAuth2User = delegate.loadUser(userRequest);
+        OAuth2User oAuth2User = delegate.loadUser(userRequest); // 소셜 인증 후 가져온 유저 정보
 
         // Oauth2 Login Service identification ID (kakao, naver, google..)
         String registrationId = userRequest
                 .getClientRegistration()
                 .getRegistrationId();
+
+        verifyOAuth2LoginServiceSupport(registrationId);
+
         // OAuth2 login key (primary Key). only google
         String userNameAttributeName = userRequest
                 .getClientRegistration()
@@ -40,24 +41,18 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getUserNameAttributeName();
 
         // OAuth2User attribute info
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-
-        Member member = saveOrUpdate(attributes);
-        httpSession.setAttribute("member", new SessionMember(member));
+        Map<String, Object> attributes = oAuth2User.getAttributes();
 
         return new DefaultOAuth2User(
-                member.getAuthorities().stream()
-                        .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
-                        .collect(Collectors.toList()),
-                attributes.getAttributes(),
-                attributes.getNameAttributeKey());
+                Collections.singleton(new SimpleGrantedAuthority(Role.USER.key())),
+                attributes,
+                userNameAttributeName);
     }
 
-    private Member saveOrUpdate(OAuthAttributes attributes) {
-        Member member = memberRepository.findByEmail(attributes.getEmail())
-                .map(entity -> entity.oAuth2UserUpdate(attributes.getName(), attributes.getPicture()))
-                .orElse(attributes.createOAuth2User());
-
-        return memberRepository.save(member);
+    private void verifyOAuth2LoginServiceSupport(String registrationId) throws OAuth2AuthenticationException {
+        if (SocialLogin.isNotSupport(registrationId)) {
+            log.error("unsupported OAuth2 login service. registrationId: {}", registrationId);
+            throw new OAuth2AuthenticationException("지원하지 않는 로그인 서비스입니다.");
+        }
     }
 }
