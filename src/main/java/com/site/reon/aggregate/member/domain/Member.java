@@ -2,7 +2,7 @@ package com.site.reon.aggregate.member.domain;
 
 import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.common.BaseTimeEntity;
-import com.site.reon.global.security.oauth2.dto.SocialServiceName;
+import com.site.reon.global.security.oauth2.dto.SocialLogin;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,7 +59,7 @@ public class Member extends BaseTimeEntity {
 
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
-    private SocialServiceName socialServiceName;
+    private SocialLogin socialLogin;
 
     @Column
     private boolean activated;
