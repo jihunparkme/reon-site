@@ -1,5 +1,6 @@
 package com.site.reon.global.security.jwt;
 
+import com.site.reon.global.common.constant.member.Role;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -47,7 +48,7 @@ public class TokenProvider implements InitializingBean {
     /**
      * Authentication 권한 정보를 바탕으로 토큰 생성
      */
-    public String createToken(Authentication authentication) {
+    public String createToken(Authentication authentication, String email) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -56,8 +57,20 @@ public class TokenProvider implements InitializingBean {
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
 
         return Jwts.builder()
-                .subject(authentication.getName())
+                .subject(email)
                 .claim(AUTHORITIES_KEY, authorities)
+                .signWith(key, Jwts.SIG.HS512)
+                .expiration(validity)
+                .compact();
+    }
+
+    public String createOAuth2Token(String email) {
+        long now = (new Date()).getTime();
+        Date validity = new Date(now + this.tokenValidityInMilliseconds);
+
+        return Jwts.builder()
+                .subject(email)
+                .claim(AUTHORITIES_KEY, Role.USER.key())
                 .signWith(key, Jwts.SIG.HS512)
                 .expiration(validity)
                 .compact();
