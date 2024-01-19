@@ -57,4 +57,9 @@ public class MemberLoginController {
                 .header(AuthConst.SET_COOKIE, cookie.toString())
                 .body(member);
     }
+
+    @GetMapping("/oauth2/fail")
+    public String oauth2Fail() {
+        return "login/oauth2-fail";
+    }
 }
