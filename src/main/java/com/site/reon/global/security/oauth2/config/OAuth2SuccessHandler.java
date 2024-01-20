@@ -37,15 +37,15 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         Member member = getMemberInfo(oAuthAttributes);
 
         String jwt = tokenProvider.createOAuth2Token(member.getEmail());
-        ResponseCookie cookie = ResponseCookie.from(AuthConst.ACCESS_TOKEN, jwt)
+        ResponseCookie cookie = ResponseCookie.from(AuthConst.ACCESS_TOKEN.key(), jwt)
                 .httpOnly(true)
                 .secure(true)
-                .sameSite(AuthConst.NONE)
+                .sameSite(AuthConst.NONE.key())
                 .path("/")
                 .build();
 
-        response.addHeader(AuthConst.SET_COOKIE, cookie.toString());
-        response.addHeader(AuthConst.AUTHORIZATION_HEADER, "Bearer " + cookie.getValue());
+        response.addHeader(AuthConst.SET_COOKIE.key(), cookie.toString());
+        response.addHeader(AuthConst.AUTHORIZATION_HEADER.key(), "Bearer " + cookie.getValue());
         response.sendRedirect("/");
     }
 

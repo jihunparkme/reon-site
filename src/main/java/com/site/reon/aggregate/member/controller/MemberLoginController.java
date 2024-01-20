@@ -54,8 +54,8 @@ public class MemberLoginController {
         MemberDto member = memberService.getMemberWithAuthorities(loginDto.getEmail());
 
         return ResponseEntity.ok()
-                .header(AuthConst.SET_COOKIE, cookie.toString())
-                .header(AuthConst.AUTHORIZATION_HEADER, "Bearer " + cookie.getValue())
+                .header(AuthConst.SET_COOKIE.key(), cookie.toString())
+                .header(AuthConst.AUTHORIZATION_HEADER.key(), "Bearer " + cookie.getValue())
                 .body(member);
     }
 

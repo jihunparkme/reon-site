@@ -52,7 +52,7 @@ public class JwtFilter extends GenericFilterBean {
         }
 
         Optional<Cookie> cookieOptional = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals(AuthConst.ACCESS_TOKEN))
+                .filter(cookie -> cookie.getName().equals(AuthConst.ACCESS_TOKEN.key()))
                 .findFirst();
         if (cookieOptional.isPresent()) {
             return cookieOptional.get().getValue();
