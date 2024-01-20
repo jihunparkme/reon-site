@@ -102,7 +102,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
 
         return http.build();
     }

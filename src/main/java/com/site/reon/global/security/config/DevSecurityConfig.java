@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -104,12 +105,10 @@ public class DevSecurityConfig {
                 )
 
                 .headers(headers -> // h2 console 사용을 위한 설정
-                        headers.frameOptions(options ->
-                                options.sameOrigin()
-                        )
+                        headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
                 )
 
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
 
         return http.build();
     }
