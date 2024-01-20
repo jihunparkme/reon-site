@@ -88,7 +88,7 @@ public class DevSecurityConfig {
                         .successForwardUrl("/"))
 
                 .logout((logout) ->
-                        logout.deleteCookies(AuthConst.ACCESS_TOKEN)
+                        logout.deleteCookies(AuthConst.ACCESS_TOKEN.key())
                                 .invalidateHttpSession(false)
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
