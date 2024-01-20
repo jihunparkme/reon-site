@@ -45,6 +45,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 .build();
 
         response.addHeader(AuthConst.SET_COOKIE, cookie.toString());
+        response.addHeader(AuthConst.AUTHORIZATION_HEADER, "Bearer " + cookie.getValue());
         response.sendRedirect("/");
     }
 

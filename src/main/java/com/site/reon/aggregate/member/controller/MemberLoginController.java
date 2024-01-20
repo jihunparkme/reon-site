@@ -55,6 +55,7 @@ public class MemberLoginController {
 
         return ResponseEntity.ok()
                 .header(AuthConst.SET_COOKIE, cookie.toString())
+                .header(AuthConst.AUTHORIZATION_HEADER, "Bearer " + cookie.getValue())
                 .body(member);
     }
 
