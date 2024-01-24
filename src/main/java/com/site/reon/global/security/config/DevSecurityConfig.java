@@ -1,13 +1,12 @@
 package com.site.reon.global.security.config;
 
-import com.site.reon.global.common.constant.member.AuthConst;
 import com.site.reon.global.common.constant.member.Role;
-import com.site.reon.global.security.jwt.JwtAccessDeniedHandler;
-import com.site.reon.global.security.jwt.JwtAuthenticationEntryPoint;
-import com.site.reon.global.security.jwt.JwtSecurityConfig;
-import com.site.reon.global.security.jwt.TokenProvider;
-import com.site.reon.global.security.oauth2.config.OAuth2SuccessHandler;
-import com.site.reon.global.security.oauth2.config.Oauth2FailureHandler;
+import com.site.reon.global.security.handler.CustomLoginSuccessHandler;
+import com.site.reon.global.security.jwt.CustomAccessDeniedHandler;
+import com.site.reon.global.security.jwt.CustomAuthenticationEntryPoint;
+import com.site.reon.global.security.jwt.CustomSecurityConfigurerAdapter;
+import com.site.reon.global.security.oauth2.handler.OAuth2SuccessHandler;
+import com.site.reon.global.security.oauth2.handler.Oauth2FailureHandler;
 import com.site.reon.global.security.oauth2.service.CustomOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -19,11 +18,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
@@ -34,10 +33,9 @@ import org.springframework.web.filter.CorsFilter;
 @RequiredArgsConstructor
 @Profile("test | dev")
 public class DevSecurityConfig {
-    private final TokenProvider tokenProvider;
     private final CorsFilter corsFilter;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final UserDetailsService userDetailsService;
     private final CustomOauth2UserService customOauth2UserService;
     private final OAuth2SuccessHandler oauth2SuccessHandler;
@@ -54,10 +52,14 @@ public class DevSecurityConfig {
                 .userDetailsService(userDetailsService)
                 .csrf(AbstractHttpConfigurer::disable) // token 을 사용하므로 csrf disable
 
+                .headers(headers -> // h2 console 사용을 위한 설정
+                        headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+                )
+
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exceptionHandling -> exceptionHandling
-                        .accessDeniedHandler(jwtAccessDeniedHandler)
-                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
                 )
 
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
@@ -85,11 +87,10 @@ public class DevSecurityConfig {
 
                 .formLogin(formLoginConfigurer -> formLoginConfigurer
                         .loginPage("/login")
-                        .successForwardUrl("/"))
+                        .successHandler(successHandler()))
 
                 .logout((logout) ->
-                        logout.deleteCookies(AuthConst.ACCESS_TOKEN.key())
-                                .invalidateHttpSession(false)
+                        logout.invalidateHttpSession(true)
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
                 )
@@ -100,16 +101,13 @@ public class DevSecurityConfig {
                                 .successHandler(oauth2SuccessHandler)
                                 .failureHandler(oauth2FailureHandler))
 
-                .sessionManagement(sessionManagement -> // 세션 미사용 설정
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                )
-
-                .headers(headers -> // h2 console 사용을 위한 설정
-                        headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
-                )
-
-                .with(new JwtSecurityConfig(tokenProvider), customizer -> {});
+                .with(new CustomSecurityConfigurerAdapter(), customizer -> {});
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new CustomLoginSuccessHandler("/");
     }
 }

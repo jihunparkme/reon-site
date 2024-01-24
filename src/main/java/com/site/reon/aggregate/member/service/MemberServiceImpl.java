@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.member.service;
 
+import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.global.security.exception.NotFoundMemberException;
@@ -18,8 +19,16 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     @Transactional(readOnly = true)
-    public MemberDto getMemberWithAuthorities(String email) {
-        return MemberDto.from(memberRepository.findOneWithAuthoritiesByEmail(email).orElse(null));
+    public Member getMemberWithAuthorities(String email) {
+        return memberRepository.findOneWithAuthoritiesByEmail(email)
+                .orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MemberDto getMemberDtoWithAuthorities(String email) {
+        return MemberDto.from(memberRepository.findOneWithAuthoritiesByEmail(email)
+                .orElse(null));
     }
 
     /**

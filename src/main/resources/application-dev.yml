@@ -2,15 +2,23 @@ server:
   port: 8080
 
 spring:
+
   config:
     activate:
       on-profile: dev
+
   session:
-    store-type: jdbc
+    store-type: redis
+    redis:
+      repository-type: indexed
+
   servlet:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 10MB
+    session:
+      timeout: 3600
+
   jpa:
     show-sql: true
     properties:
@@ -20,13 +28,21 @@ spring:
         default_batch_fetch_size: 100
     hibernate:
       ddl-auto: update
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   thymeleaf:
     cache: false
+
   devtools:
     restart:
       enabled: true
     livereload:
       enabled: true
+
   messages:
     basename: messages,errors
 

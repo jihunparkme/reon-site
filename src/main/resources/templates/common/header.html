@@ -23,7 +23,10 @@
         <div sec:authorize="isAuthenticated()">
           <li class="dropdown">
             <a href="#">
-              <span sec:authentication="principal.username"></span>
+              <div>
+                <span th:if="${not #strings.isEmpty(session.member.picture)}" class="login-picture"><img th:src="${session.member.picture}"></span>
+                <span>[[${session.member.name}]]</span>
+              </div>
               <i class="bi bi-chevron-down"></i>
             </a>
             <ul>

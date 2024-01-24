@@ -1,18 +1,25 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
-import com.site.reon.global.common.constant.member.AuthConst;
+import com.site.reon.global.common.constant.SessionConst;
+import com.site.reon.global.security.dto.SessionMember;
 import com.site.reon.global.security.exception.DuplicateMemberException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +32,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberLoginController {
     private final MemberService memberService;
     private final MemberLoginService memberLoginService;
+    private final HttpSession httpSession;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @GetMapping
-    public String login() {
+    public String login(HttpServletRequest request) {
+        request.getSession().setAttribute(SessionConst.LOGIN_PREV_PAGE, request.getHeader("Referer"));
         return "login/login";
     }
 
@@ -50,13 +60,16 @@ public class MemberLoginController {
 
     @PostMapping(value = "/email/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-        ResponseCookie cookie = memberLoginService.getCookie(loginDto);
-        MemberDto member = memberService.getMemberWithAuthorities(loginDto.getEmail());
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
 
-        return ResponseEntity.ok()
-                .header(AuthConst.SET_COOKIE.key(), cookie.toString())
-                .header(AuthConst.AUTHORIZATION_HEADER.key(), "Bearer " + cookie.getValue())
-                .body(member);
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Member member = memberService.getMemberWithAuthorities(loginDto.getEmail());
+        httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
+
+        return ResponseEntity.ok(MemberDto.from(member));
     }
 
     @GetMapping("/oauth2/fail")

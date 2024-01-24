@@ -25,6 +25,6 @@ public class MemberController {
     @GetMapping("/{email}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<MemberDto> getMemberInfo(@PathVariable String email) {
-        return ResponseEntity.ok(memberService.getMemberWithAuthorities(email));
+        return ResponseEntity.ok(MemberDto.from(memberService.getMemberWithAuthorities(email)));
     }
 }

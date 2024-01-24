@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.service;
 
-import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Transactional
 @SpringBootTest
@@ -32,7 +33,7 @@ class MemberLoginServiceImplTest {
 
         memberLoginService.signup(signUp);
 
-        MemberDto member = memberService.getMemberWithAuthorities(email);
+        Member member = memberService.getMemberWithAuthorities(email);
         assertEquals("aaron", member.getFirstName());
         assertEquals("park", member.getLastName());
         assertEquals(email, member.getEmail());
