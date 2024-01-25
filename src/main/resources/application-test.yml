@@ -58,6 +58,15 @@ spring:
   messages:
     basename: messages,errors
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: asfdsafdasffsadf
+            client-secret: asdfsafasdfdasdfas
+            scope: email, profile
+
 logging:
   level:
     root: INFO
