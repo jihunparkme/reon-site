@@ -1,5 +1,8 @@
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 43200 # 12h
 
 spring:
 
@@ -16,8 +19,6 @@ spring:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 10MB
-    session:
-      timeout: 3600
 
   thymeleaf:
     cache: 'false'
