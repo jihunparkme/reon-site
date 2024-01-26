@@ -39,7 +39,7 @@ out/
 ### Custom ###
 .DS_Store
 /erd
-**/resources/static/authKey
+**/resources/static/authKey/**
 
 ### application
 application-real.yml
