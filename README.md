@@ -32,7 +32,7 @@ Version.
 
 # System architecture
 
-![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/aws-ec2/system-architecture.png 'Result')
+![Result](https://raw.githubusercontent.com/jihunparkme/reon-site/master/reference/system-architecture.png 'Result')
 
 ---
 
