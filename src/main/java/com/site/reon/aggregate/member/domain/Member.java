@@ -2,6 +2,7 @@ package com.site.reon.aggregate.member.domain;
 
 import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.common.BaseTimeEntity;
+import com.site.reon.global.security.oauth2.dto.SocialLogin;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +54,13 @@ public class Member extends BaseTimeEntity {
     @Column(length = 100)
     private String roasterSn;
 
+    @Column(length = 100)
+    private String picture;
+
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private SocialLogin socialLogin;
+
     @Column
     private boolean activated;
 
@@ -62,4 +70,10 @@ public class Member extends BaseTimeEntity {
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
+
+    public Member oAuth2UserUpdate(String name, String picture) {
+        this.firstName = name;
+        this.picture = picture;
+        return this;
+    }
 }

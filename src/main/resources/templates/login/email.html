@@ -1,0 +1,60 @@
+<head><title>RE:ON | Login</title></head>
+<div th:replace="~{common/head :: head('Login')}"></div>
+<link th:href="@{/css/login/login.css}" rel="stylesheet"/>
+<body>
+<div th:replace="~{common/header :: header('login')}"></div>
+
+<main class="container-login">
+    <div class="block-top"></div>
+    <div class="login-box">
+        <div class="login-row">
+            <div class="login-col">
+                <div class="login-card" style="width: 100%; border-radius: 15px;">
+                    <div class="login-card-body">
+                        <div class="login-card-content">
+                            <h1>e-mail Login</h1>
+                            <div class="login-page">
+                                <form class="register-form transform-form" id="register-form" onsubmit="return false;">
+                                    <label>email</label>
+                                    <input id="sign-up-email" type="email" placeholder="email"/>
+
+                                    <label>first name</label>
+                                    <input id="sign-up-first-name" type="text" placeholder="first name"/>
+
+                                    <label>last name</label>
+                                    <input id="sign-up-last-name" type="text" placeholder="last name"/>
+
+                                    <label>password</label>
+                                    <input id="sign-up-password" type="password" placeholder="password"/>
+
+                                    <button th:onclick="'signUp()'">Sign Up</button>
+
+                                    <p class="message">Already registered? <a href="#">Sign In</a></p>
+                                </form>
+                                <form class="transform-form" onsubmit="return false;">
+                                    <label>email</label>
+                                    <input id="login-email" type="email" placeholder="email"/>
+
+                                    <label>password</label>
+                                    <input id="login-password" type="password" placeholder="password"/>
+
+                                    <button th:onclick="'login()'">login</button>
+
+                                    <p class="message">Not registered? <a href="#">Create an account</a></p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{common/footer :: footer}"></div>
+</main>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div th:replace="~{common/commonjs}"></div>
+<script type="text/javascript" th:src="@{/js/login/email.js}"></script>
+</body>
+</html>
