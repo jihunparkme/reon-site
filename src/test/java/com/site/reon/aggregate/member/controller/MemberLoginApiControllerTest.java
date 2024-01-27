@@ -114,9 +114,9 @@ class MemberLoginApiControllerTest {
 
         perform
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("email").value(email))
-                .andExpect(jsonPath("firstName").value("aaron"))
-                .andExpect(jsonPath("lastName").value("park"));
+                .andExpect(jsonPath("$.data.email").value(email))
+                .andExpect(jsonPath("$.data.firstName").value("aaron"))
+                .andExpect(jsonPath("$.data.lastName").value("park"));
     }
 
     @Test

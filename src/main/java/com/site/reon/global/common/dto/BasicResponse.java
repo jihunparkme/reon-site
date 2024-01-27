@@ -17,7 +17,7 @@ public class BasicResponse<T> {
     private String message;
 
     private Integer count;
-    private T result;
+    private T data;
 
     public static BasicResponse internalServerError(String message) {
         return BasicResponse.builder()
@@ -27,29 +27,29 @@ public class BasicResponse<T> {
                 .build();
     }
 
-    public static BasicResponse ok(boolean result) {
+    public static BasicResponse ok(boolean data) {
         return BasicResponse.builder()
                 .code(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
-                .result(result)
+                .data(data)
                 .build();
     }
 
-    public static <T> BasicResponse ok(T result) {
+    public static <T> BasicResponse ok(T data) {
         return BasicResponse.builder()
                 .code(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
                 .count(1)
-                .result(result)
+                .data(data)
                 .build();
     }
 
-    public static <T> BasicResponse ok(List<T> result) {
+    public static <T> BasicResponse ok(List<T> data) {
         return BasicResponse.builder()
                 .code(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
-                .count(result.size())
-                .result(result)
+                .count(data.size())
+                .data(data)
                 .build();
     }
 }
