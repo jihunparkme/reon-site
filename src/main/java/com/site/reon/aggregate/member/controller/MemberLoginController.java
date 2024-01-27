@@ -16,10 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +30,6 @@ public class MemberLoginController {
     private final MemberService memberService;
     private final MemberLoginService memberLoginService;
     private final HttpSession httpSession;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @GetMapping
     public String login(HttpServletRequest request) {
@@ -61,11 +56,7 @@ public class MemberLoginController {
 
     @PostMapping(value = "/email/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        memberLoginService.emailAuthenticate(loginDto);
 
         Member member = memberService.getMemberWithAuthorities(loginDto.getEmail());
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
