@@ -5,7 +5,7 @@ import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
-import com.site.reon.aggregate.member.service.dto.EmailVerifyDto;
+import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.global.common.constant.member.Role;
 import org.junit.jupiter.api.Test;
@@ -40,7 +40,7 @@ class MemberLoginApiControllerTest {
     @MockBean
     private MemberService memberService;
 
-    private EmailVerifyDto verifyDto = EmailVerifyDto.builder()
+    private ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
             .clientName("KAKAO")
             .email("")
             .token(null)

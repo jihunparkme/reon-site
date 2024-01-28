@@ -2,7 +2,7 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.dto.EmailVerifyDto;
+import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,7 +24,7 @@ class MemberLoginServiceImplUnitTest {
 
     @Test
     void verify_email_of_email_is_null() throws Exception {
-        EmailVerifyDto verifyDto = EmailVerifyDto.builder()
+        ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
                 .clientName("KAKAO")
                 .email(null)
                 .token(null)
@@ -39,7 +39,7 @@ class MemberLoginServiceImplUnitTest {
 
     @Test
     void verify_email_of_email_is_empty() throws Exception {
-        EmailVerifyDto verifyDto = EmailVerifyDto.builder()
+        ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
                 .clientName("KAKAO")
                 .email("")
                 .token(null)
@@ -55,7 +55,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void verify_email_of_kakao_login_should_be_return_true() throws Exception {
         String email = "user@gmail.com";
-        EmailVerifyDto verifyDto = EmailVerifyDto.builder()
+        ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
                 .clientName("KAKAO")
                 .email(email)
                 .token(null)
@@ -72,7 +72,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void verify_email_of_kakao_login_should_be_return_false() throws Exception {
         String email = "user@gmail.com";
-        EmailVerifyDto verifyDto = EmailVerifyDto.builder()
+        ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
                 .clientName("kakao")
                 .email(email)
                 .token(null)
@@ -87,7 +87,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void verify_email_of_google_login_should_be_return_true() throws Exception {
         String email = "user@gmail.com";
-        EmailVerifyDto verifyDto = EmailVerifyDto.builder()
+        ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
                 .clientName("google")
                 .email(email)
                 .token(null)
@@ -104,7 +104,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void verify_email_of_google_login_should_be_return_false() throws Exception {
         String email = "user@gmail.com";
-        EmailVerifyDto verifyDto = EmailVerifyDto.builder()
+        ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
                 .clientName("google")
                 .email(email)
                 .token(null)

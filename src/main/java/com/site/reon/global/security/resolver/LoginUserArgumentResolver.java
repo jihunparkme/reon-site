@@ -1,7 +1,7 @@
 package com.site.reon.global.security.resolver;
 
 import com.site.reon.global.common.constant.SessionConst;
-import com.site.reon.global.security.annotation.LoginMember;
+import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.security.dto.SessionMember;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
