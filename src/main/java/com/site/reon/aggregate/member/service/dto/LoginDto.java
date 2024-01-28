@@ -20,4 +20,11 @@ public class LoginDto {
     @NotNull
     @Size(min = 3, max = 100)
     private String password;
+
+    public static LoginDto from(ApiLoginDto apiLoginDto) {
+        return LoginDto.builder()
+                .email(apiLoginDto.getEmail())
+                .password(apiLoginDto.getPassword())
+                .build();
+    }
 }

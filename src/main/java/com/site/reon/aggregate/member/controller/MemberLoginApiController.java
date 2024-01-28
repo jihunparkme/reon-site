@@ -33,7 +33,7 @@ public class MemberLoginApiController {
     private final MemberService memberService;
 
     @PostMapping("/verify/email")
-    public BasicResponse verifyEmail(@Valid @RequestBody ApiEmailVerifyDto emailVerityDto,
+₩₩    public BasicResponse verifyEmail(@Valid @RequestBody ApiEmailVerifyDto apiEmailVerifyDto,
                                      BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -44,7 +44,7 @@ public class MemberLoginApiController {
         }
 
         try {
-            boolean result = memberLoginService.verifyEmail(emailVerityDto);
+            boolean result = memberLoginService.verifyEmail(apiEmailVerifyDto);
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.internalServerError(e.getMessage());
@@ -55,7 +55,7 @@ public class MemberLoginApiController {
     }
 
     @PostMapping("/email")
-    public BasicResponse loginEmail(@Valid @RequestBody ApiLoginDto loginDto,
+    public BasicResponse loginEmail(@Valid @RequestBody ApiLoginDto apiLoginDto,
                                     BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -66,8 +66,8 @@ public class MemberLoginApiController {
         }
 
         try {
-            memberLoginService.emailAuthenticate(loginDto);
-            Member member = memberService.getMemberWithAuthorities(loginDto.getEmail());
+            memberLoginService.emailAuthenticate(LoginDto.from(apiLoginDto));
+            Member member = memberService.getMemberWithAuthorities(apiLoginDto.getEmail());
             return BasicResponse.ok(MemberDto.from(member));
         } catch (BadCredentialsException e) {
             return BasicResponse.internalServerError(e.getMessage());
