@@ -1,4 +1,4 @@
-package com.site.reon.global.security.annotation;
+package com.site.reon.global.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
