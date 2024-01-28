@@ -33,7 +33,7 @@ public class MemberLoginApiController {
     private final MemberService memberService;
 
     @PostMapping("/verify/email")
-₩₩    public BasicResponse verifyEmail(@Valid @RequestBody ApiEmailVerifyDto apiEmailVerifyDto,
+    public BasicResponse verifyEmail(@Valid @RequestBody ApiEmailVerifyDto apiEmailVerifyDto,
                                      BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
