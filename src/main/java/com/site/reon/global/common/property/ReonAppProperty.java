@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "app.reon")
-public class AppReonProperty {
+public class ReonAppProperty {
     private String clientName;
     private String clientId;
 }

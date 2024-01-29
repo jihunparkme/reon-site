@@ -10,13 +10,14 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @Profile("test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class AppReonPropertyTest {
+class ReonAppPropertyTest {
 
-    @Autowired AppReonProperty appReonProperty;
+    @Autowired
+    ReonAppProperty reonAppProperty;
 
     @Test
     void method() throws Exception {
-        Assertions.assertEquals("reon", appReonProperty.getClientName());
-        Assertions.assertEquals("235df110-bd70-11ee-aa8b-e30685fde2fa", appReonProperty.getClientId());
+        Assertions.assertEquals("reon", reonAppProperty.getClientName());
+        Assertions.assertEquals("235df110-bd70-11ee-aa8b-e30685fde2fa", reonAppProperty.getClientId());
     }
 }

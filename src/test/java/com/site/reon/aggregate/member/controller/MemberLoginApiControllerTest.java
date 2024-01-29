@@ -8,6 +8,7 @@ import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.global.common.constant.member.Role;
+import com.site.reon.global.common.property.ReonAppProperty;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -39,6 +40,9 @@ class MemberLoginApiControllerTest {
 
     @MockBean
     private MemberService memberService;
+
+    @MockBean
+    private ReonAppProperty reonAppProperty;
 
     private ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
             .clientName("KAKAO")
