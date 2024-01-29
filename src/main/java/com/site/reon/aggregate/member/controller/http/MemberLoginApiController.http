@@ -1,0 +1,80 @@
+### should be return false
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "oAuth2ClientName": "kakao",
+  "email": "aaa@gmail.com"
+}
+
+### should be return true
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "oAuth2ClientName": "kakao",
+  "email": "user@gmail.com"
+}
+
+### should be return Invalid client id bad request
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "oAuth2ClientName": "kakao",
+  "email": "user@gmail.com"
+}
+
+### should be return Invalid client name id bad request
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "oAuth2ClientName": "kakao",
+  "email": "user@gmail.com"
+}
+
+
+
+
+
+
+
+### should be return member
+POST http://localhost:8080/api/login/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "password": "user"
+}
+
+### should be return null
+POST http://localhost:8080/api/login/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "password": "aaa"
+}
+
+### should be return null
+POST http://localhost:8080/api/login/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "aaa@gmail.com",
+  "password": "aaa"
+}

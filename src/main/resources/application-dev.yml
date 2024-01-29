@@ -49,5 +49,11 @@ spring:
   messages:
     basename: messages,errors
 
+app:
+  reon:
+    client-name: reon
+    client-id: 235df110-bd70-11ee-aa8b-e30685fde2fa
+
+
 file:
   directory: /Users/aaron/reon/uploadFiles/

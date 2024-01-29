@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.member.service.dto;
 
 import com.site.reon.global.common.annotation.ClientIdConstraint;
+import com.site.reon.global.common.annotation.ClientNameConstraint;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,8 @@ import lombok.NoArgsConstructor;
 public class ApiLoginDto {
     @ClientIdConstraint
     private String clientId;
+    @ClientNameConstraint
+    private String clientName;
 
     @NotNull
     @Size(min = 3, max = 50)

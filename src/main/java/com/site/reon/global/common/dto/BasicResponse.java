@@ -22,8 +22,8 @@ public class BasicResponse<T> {
 
     public static BasicResponse internalServerError(final String message) {
         return BasicResponse.builder()
-                .code(HttpStatus.BAD_REQUEST.value())
-                .httpStatusCode(HttpStatus.BAD_REQUEST)
+                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .httpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR)
                 .message(message)
                 .data(Result.FAIL)
                 .build();
@@ -31,8 +31,8 @@ public class BasicResponse<T> {
 
     public static BasicResponse clientError(final String message) {
         return BasicResponse.builder()
-                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .httpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR)
+                .code(HttpStatus.BAD_REQUEST.value())
+                .httpStatusCode(HttpStatus.BAD_REQUEST)
                 .message(message)
                 .data(Result.FAIL)
                 .build();
