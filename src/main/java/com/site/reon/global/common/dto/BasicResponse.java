@@ -1,6 +1,5 @@
 package com.site.reon.global.common.dto;
 
-import com.site.reon.global.common.constant.Result;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,7 @@ public class BasicResponse<T> {
 
     private int status;
     private HttpStatusCode httpStatusCode;
+    private boolean success;
 
     private String message;
 
@@ -24,8 +24,8 @@ public class BasicResponse<T> {
         return BasicResponse.builder()
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .httpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR)
+                .success(false)
                 .message(message)
-                .data(Result.FAIL)
                 .build();
     }
 
@@ -33,8 +33,8 @@ public class BasicResponse<T> {
         return BasicResponse.builder()
                 .status(HttpStatus.BAD_REQUEST.value())
                 .httpStatusCode(HttpStatus.BAD_REQUEST)
+                .success(false)
                 .message(message)
-                .data(Result.FAIL)
                 .build();
     }
 
@@ -42,6 +42,7 @@ public class BasicResponse<T> {
         return BasicResponse.builder()
                 .status(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
+                .success(true)
                 .data(data)
                 .build();
     }
@@ -50,6 +51,7 @@ public class BasicResponse<T> {
         return BasicResponse.builder()
                 .status(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
+                .success(true)
                 .count(1)
                 .data(data)
                 .build();
@@ -59,6 +61,7 @@ public class BasicResponse<T> {
         return BasicResponse.builder()
                 .status(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
+                .success(true)
                 .count(data.size())
                 .data(data)
                 .build();
