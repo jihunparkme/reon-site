@@ -12,6 +12,8 @@ import com.site.reon.global.common.dto.BasicResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
@@ -33,47 +35,47 @@ public class MemberLoginApiController {
     private final MemberService memberService;
 
     @PostMapping("/verify/email")
-    public BasicResponse verifyEmail(@Valid @RequestBody ApiEmailVerifyDto apiEmailVerifyDto,
-                                     BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+    public ResponseEntity verifyEmail(@Valid @RequestBody ApiEmailVerifyDto apiEmailVerifyDto,
+                                      BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             if (!CollectionUtils.isEmpty(allErrors)) {
-                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
+                return new ResponseEntity<>(BasicResponse.clientError(allErrors.get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
             }
-            return BasicResponse.clientError(Result.FAIL.message());
+            return new ResponseEntity<>(BasicResponse.clientError(Result.FAIL.message()), HttpStatus.BAD_REQUEST);
         }
 
         try {
             boolean result = memberLoginService.verifyEmail(apiEmailVerifyDto);
-            return BasicResponse.ok(result);
+            return ResponseEntity.ok(BasicResponse.ok(result));
         } catch (IllegalArgumentException e) {
-            return BasicResponse.internalServerError(e.getMessage());
+            return new ResponseEntity<>(BasicResponse.clientError(e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("MemberLoginApiController.verifyEmail Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
+            return new ResponseEntity<>(BasicResponse.internalServerError(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/email")
-    public BasicResponse loginEmail(@Valid @RequestBody ApiLoginDto apiLoginDto,
-                                    BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+    public ResponseEntity loginEmail(@Valid @RequestBody ApiLoginDto apiLoginDto,
+                                     BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             if (!CollectionUtils.isEmpty(allErrors)) {
-                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
+                return new ResponseEntity<>(BasicResponse.clientError(allErrors.get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
             }
-            return BasicResponse.clientError(Result.FAIL.message());
+            return new ResponseEntity<>(BasicResponse.clientError(Result.FAIL.message()), HttpStatus.BAD_REQUEST);
         }
 
         try {
             memberLoginService.emailAuthenticate(LoginDto.from(apiLoginDto));
             Member member = memberService.getMemberWithAuthorities(apiLoginDto.getEmail());
-            return BasicResponse.ok(MemberDto.from(member));
+            return ResponseEntity.ok(BasicResponse.ok(MemberDto.from(member)));
         } catch (BadCredentialsException e) {
-            return BasicResponse.internalServerError(e.getMessage());
+            return new ResponseEntity<>(BasicResponse.clientError(e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("MemberLoginApiController.loginEmail Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
+            return new ResponseEntity<>(BasicResponse.internalServerError(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
