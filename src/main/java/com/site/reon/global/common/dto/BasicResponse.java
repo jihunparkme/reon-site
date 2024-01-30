@@ -12,17 +12,17 @@ import java.util.List;
 @SuperBuilder
 public class BasicResponse<T> {
 
-    private Integer code;
+    private int status;
     private HttpStatusCode httpStatusCode;
 
     private String message;
 
-    private Integer count;
+    private int count;
     private T data;
 
     public static BasicResponse internalServerError(final String message) {
         return BasicResponse.builder()
-                .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
                 .httpStatusCode(HttpStatus.INTERNAL_SERVER_ERROR)
                 .message(message)
                 .data(Result.FAIL)
@@ -31,7 +31,7 @@ public class BasicResponse<T> {
 
     public static BasicResponse clientError(final String message) {
         return BasicResponse.builder()
-                .code(HttpStatus.BAD_REQUEST.value())
+                .status(HttpStatus.BAD_REQUEST.value())
                 .httpStatusCode(HttpStatus.BAD_REQUEST)
                 .message(message)
                 .data(Result.FAIL)
@@ -40,7 +40,7 @@ public class BasicResponse<T> {
 
     public static BasicResponse ok(final boolean data) {
         return BasicResponse.builder()
-                .code(HttpStatus.OK.value())
+                .status(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
                 .data(data)
                 .build();
@@ -48,7 +48,7 @@ public class BasicResponse<T> {
 
     public static <T> BasicResponse ok(final T data) {
         return BasicResponse.builder()
-                .code(HttpStatus.OK.value())
+                .status(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
                 .count(1)
                 .data(data)
@@ -57,7 +57,7 @@ public class BasicResponse<T> {
 
     public static <T> BasicResponse ok(final List<T> data) {
         return BasicResponse.builder()
-                .code(HttpStatus.OK.value())
+                .status(HttpStatus.OK.value())
                 .httpStatusCode(HttpStatus.OK)
                 .count(data.size())
                 .data(data)
