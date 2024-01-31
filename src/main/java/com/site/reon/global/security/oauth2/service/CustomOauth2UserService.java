@@ -1,7 +1,7 @@
 package com.site.reon.global.security.oauth2.service;
 
 import com.site.reon.global.common.constant.member.Role;
-import com.site.reon.global.security.oauth2.dto.SocialLogin;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -50,7 +50,7 @@ public class CustomOauth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private void verifyOAuth2LoginServiceSupport(String registrationId) throws OAuth2AuthenticationException {
-        if (SocialLogin.isNotSupport(registrationId)) {
+        if (OAuth2Client.isNotSupport(registrationId)) {
             log.error("unsupported OAuth2 login service. registrationId: {}", registrationId);
             throw new OAuth2AuthenticationException("지원하지 않는 로그인 서비스입니다.");
         }

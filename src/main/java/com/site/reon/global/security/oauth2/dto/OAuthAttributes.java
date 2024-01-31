@@ -25,17 +25,17 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String picture;
-    private SocialLogin socialLogin;
+    private OAuth2Client oAuth2Client;
 
     /**
      * OAtuh2User attributes 정보를 OAuthAttributes 클래스로 변환
      */
     public static OAuthAttributes of(String registrationId, Map<String, Object> attributes) {
-        if (SocialLogin.isKakaoLogin(registrationId)) {
-            return ofKakao(SocialLogin.KAKAO.getNameAttributeName(), attributes);
+        if (OAuth2Client.isKakaoLogin(registrationId)) {
+            return ofKakao(OAuth2Client.KAKAO.getNameAttributeName(), attributes);
         }
 
-        return ofGoogle(SocialLogin.GOOGLE.getNameAttributeName(), attributes);
+        return ofGoogle(OAuth2Client.GOOGLE.getNameAttributeName(), attributes);
     }
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
@@ -48,7 +48,7 @@ public class OAuthAttributes {
                 .picture((String) kakaoProfile.get("profile_image_url"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
-                .socialLogin(SocialLogin.KAKAO)
+                .oAuth2Client(OAuth2Client.KAKAO)
                 .build();
     }
 
@@ -59,7 +59,7 @@ public class OAuthAttributes {
                 .picture((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
-                .socialLogin(SocialLogin.GOOGLE)
+                .oAuth2Client(OAuth2Client.GOOGLE)
                 .build();
     }
 
@@ -71,7 +71,7 @@ public class OAuthAttributes {
                 .password(StringUtils.EMPTY)
                 .picture(this.picture)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .socialLogin(this.socialLogin)
+                .oAuth2Client(this.oAuth2Client)
                 .activated(true)
                 .build();
     }

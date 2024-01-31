@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 @Getter
 @RequiredArgsConstructor
-public enum SocialLogin {
+public enum OAuth2Client {
 
     KAKAO("Kakao", "kakao", "id"),
     GOOGLE("Google", "google", "sub"),
@@ -19,7 +19,7 @@ public enum SocialLogin {
     private final String registrationId;
     private final String nameAttributeName;
 
-    public static SocialLogin of(String registrationId) {
+    public static OAuth2Client of(String registrationId) {
         return Arrays.stream(values())
                 .filter(social -> social.registrationId.equals(registrationId))
                 .findFirst()

@@ -9,7 +9,7 @@ import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.exception.DuplicateMemberException;
-import com.site.reon.global.security.oauth2.dto.SocialLogin;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -55,8 +55,9 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     public boolean verifyEmail(ApiEmailVerifyDto emailVerityDto) {
-        SocialLogin socialLogin = SocialLogin.of(emailVerityDto.getClientName().toLowerCase());
-        if (SocialLogin.APPLE == socialLogin) {
+        OAuth2Client oAuth2Client = OAuth2Client.of(emailVerityDto.getOAuth2ClientName().toLowerCase());
+        if (OAuth2Client.APPLE == oAuth2Client) {
+            verifyAppleEmail(emailVerityDto.getToken());
             // 토큰 분리해서 이메일 확인
 
             return true;
