@@ -6,11 +6,12 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.aggregate.member.service.dto.ApiLoginDto;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -28,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@EnableConfigurationProperties(ReonAppProperty.class)
 @WebMvcTest(MemberLoginApiController.class)
 @WithMockUser(username = "user@gmail.com", password = "user")
 class MemberLoginApiControllerTest {
@@ -41,11 +43,21 @@ class MemberLoginApiControllerTest {
     @MockBean
     private MemberService memberService;
 
-    @MockBean
-    private ReonAppProperty reonAppProperty;
+    private String CLIENT_NAME = "reon";
+    private String CLIENT_ID = "235df110-bd70-11ee-aa8b-e30685fde2fa";
 
     private ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-            .clientName("KAKAO")
+            .clientId(CLIENT_ID)
+            .clientName(CLIENT_NAME)
+            .oAuth2ClientName("KAKAO")
+            .email("")
+            .token(null)
+            .build();
+
+    private ApiEmailVerifyDto invalidClient = ApiEmailVerifyDto.builder()
+            .clientId("aaaa")
+            .clientName("bbbbbbbbbbbbbbbbb")
+            .oAuth2ClientName("KAKAO")
             .email("")
             .token(null)
             .build();
@@ -53,21 +65,22 @@ class MemberLoginApiControllerTest {
     private String email = "user@gmail.com";
     private Member member = Optional.of(Member.builder()
             .email(email)
-                    .firstName("aaron")
-                    .lastName("park")
+            .firstName("aaron")
+            .lastName("park")
             .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
             .build()).get();
 
-    private LoginDto loginDto = LoginDto.builder()
+    private ApiLoginDto apiLoginDto = ApiLoginDto.builder()
+            .clientId(CLIENT_ID)
+            .clientName(CLIENT_NAME)
             .email(email)
             .password("user")
             .build();
-    
+
     @Test
     void verifyEmail_should_be_return_true() throws Exception {
         given(memberLoginService.verifyEmail(any()))
                 .willReturn(true);
-
 
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(verifyDto);
@@ -103,12 +116,31 @@ class MemberLoginApiControllerTest {
     }
 
     @Test
+    void verifyEmail_should_be_response_400() throws Exception {
+        given(memberLoginService.verifyEmail(any()))
+                .willReturn(false);
+
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(invalidClient);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/verify/email")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     void loginEmail_should_be_return_member() throws Exception {
         given(memberService.getMemberWithAuthorities(any()))
                 .willReturn(member);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(loginDto);
+        String json = objectMapper.writeValueAsString(apiLoginDto);
 
         ResultActions perform = mockMvc
                 .perform(post("/api/login/email")
@@ -129,7 +161,7 @@ class MemberLoginApiControllerTest {
                 .willReturn(null);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(loginDto);
+        String json = objectMapper.writeValueAsString(apiLoginDto);
 
         ResultActions perform = mockMvc
                 .perform(post("/api/login/email")
@@ -139,5 +171,23 @@ class MemberLoginApiControllerTest {
 
         perform
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void loginEmail_should_be_respnose_400() throws Exception {
+        given(memberService.getMemberWithAuthorities(any()))
+                .willReturn(null);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(invalidClient);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/email")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().is4xxClientError());
     }
 }
