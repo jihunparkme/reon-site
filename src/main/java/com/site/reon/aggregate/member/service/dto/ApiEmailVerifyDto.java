@@ -16,6 +16,7 @@ public class ApiEmailVerifyDto {
     private String clientId;
     @ClientNameConstraint
     private String clientName;
+
     private String oAuth2ClientName;
     private String email;
     private String token;

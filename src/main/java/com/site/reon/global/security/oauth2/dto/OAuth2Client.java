@@ -11,7 +11,7 @@ public enum OAuth2Client {
 
     KAKAO("Kakao", "kakao", "id"),
     GOOGLE("Google", "google", "sub"),
-    APPLE("Apple", "", ""),
+    APPLE("Apple", "apple", ""),
     EMPTY("", "", ""),
     ;
 
