@@ -7,11 +7,11 @@ import java.util.Arrays;
 
 @Getter
 @RequiredArgsConstructor
-public enum SocialLogin {
+public enum OAuth2Client {
 
     KAKAO("Kakao", "kakao", "id"),
     GOOGLE("Google", "google", "sub"),
-    APPLE("Apple", "", ""),
+    APPLE("Apple", "apple", ""),
     EMPTY("", "", ""),
     ;
 
@@ -19,7 +19,7 @@ public enum SocialLogin {
     private final String registrationId;
     private final String nameAttributeName;
 
-    public static SocialLogin of(String registrationId) {
+    public static OAuth2Client of(String registrationId) {
         return Arrays.stream(values())
                 .filter(social -> social.registrationId.equals(registrationId))
                 .findFirst()
@@ -28,10 +28,6 @@ public enum SocialLogin {
 
     public static boolean isKakaoLogin(String registrationId) {
         return KAKAO == of(registrationId);
-    }
-
-    public static boolean isGoogleLogin(String registrationId) {
-        return GOOGLE == of(registrationId);
     }
 
     public static boolean isNotSupport(String registrationId) {

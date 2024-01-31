@@ -38,6 +38,10 @@ out/
 
 ### Custom ###
 .DS_Store
+/erd
+**/resources/static/authKey/**
+
+### application
 application-real.yml
 application-real-db.yml
 application-real-port.yml
@@ -47,4 +51,3 @@ application-mail.yml
 application-management.yml
 application-dev-oauth.yml
 application-real-oauth.yml
-/erd

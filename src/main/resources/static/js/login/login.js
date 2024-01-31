@@ -1,8 +1,4 @@
 $(function() {
-    $('.naver').click(function () {
-        loginNaver();
-    });
-
     $('.kakao').click(function () {
         loginKakao();
     });
@@ -11,14 +7,14 @@ $(function() {
         loginGoogle();
     });
 
+    $('.apple').click(function () {
+        loginApple();
+    });
+
     $('.email').click(function () {
         loginEmail();
     });
 });
-
-function loginNaver() {
-    location.href = "/oauth2/authorization/naver"
-}
 
 function loginKakao() {
     location.href = "/oauth2/authorization/kakao"
@@ -26,6 +22,10 @@ function loginKakao() {
 
 function loginGoogle() {
     location.href = "/oauth2/authorization/google"
+}
+
+function loginApple() {
+    location.href = "/oauth2/authorization/apple"
 }
 
 function loginEmail() {
