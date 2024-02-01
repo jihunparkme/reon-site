@@ -25,7 +25,7 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String picture;
-    private OAuth2Client oAuth2Client;
+    private OAuth2Client oAuthClient;
 
     /**
      * OAtuh2User attributes 정보를 OAuthAttributes 클래스로 변환
@@ -48,7 +48,7 @@ public class OAuthAttributes {
                 .picture((String) kakaoProfile.get("profile_image_url"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
-                .oAuth2Client(OAuth2Client.KAKAO)
+                .oAuthClient(OAuth2Client.KAKAO)
                 .build();
     }
 
@@ -59,7 +59,7 @@ public class OAuthAttributes {
                 .picture((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
-                .oAuth2Client(OAuth2Client.GOOGLE)
+                .oAuthClient(OAuth2Client.GOOGLE)
                 .build();
     }
 
@@ -71,7 +71,7 @@ public class OAuthAttributes {
                 .password(StringUtils.EMPTY)
                 .picture(this.picture)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .oAuth2Client(this.oAuth2Client)
+                .oAuthClient(this.oAuthClient)
                 .activated(true)
                 .build();
     }

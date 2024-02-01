@@ -12,6 +12,15 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
+@Table(
+        name = "member",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "email_oAuthClient_unique",
+                        columnNames = {"email", "oAuthClient"}
+                )
+        }
+)
 @Getter
 @Builder
 @NoArgsConstructor
@@ -33,7 +42,7 @@ public class Member extends BaseTimeEntity {
     @Column(length = 30, nullable = false)
     private String lastName;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false)
     private String email;
 
     @Column(length = 100, nullable = false)
@@ -45,7 +54,7 @@ public class Member extends BaseTimeEntity {
     @Column(length = 30)
     private String companyName;
 
-    @Column(length = 1000)
+    @Column(length = 100)
     private String address;
 
     @Column(length = 100)
@@ -59,7 +68,7 @@ public class Member extends BaseTimeEntity {
 
     @Column(length = 10)
     @Enumerated(EnumType.STRING)
-    private OAuth2Client oAuth2Client;
+    private OAuth2Client oAuthClient;
 
     @Column
     private boolean activated;
