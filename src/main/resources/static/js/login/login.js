@@ -25,7 +25,8 @@ function loginGoogle() {
 }
 
 function loginApple() {
-    location.href = "/oauth2/authorization/apple"
+    alert('준비중입니다.');
+    // location.href = "/oauth2/authorization/apple"
 }
 
 function loginEmail() {
