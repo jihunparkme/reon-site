@@ -58,7 +58,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     public boolean verifyEmail(ApiEmailVerifyDto emailVerityDto) {
-        OAuth2Client oAuth2Client = OAuth2Client.of(emailVerityDto.getOAuth2ClientName().toLowerCase());
+        OAuth2Client oAuth2Client = OAuth2Client.of(emailVerityDto.getAuthClientName().toLowerCase());
         if (OAuth2Client.APPLE == oAuth2Client) {
             return verifyAppleEmail(emailVerityDto.getToken());
         }
