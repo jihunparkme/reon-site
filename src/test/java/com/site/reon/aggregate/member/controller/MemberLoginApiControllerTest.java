@@ -49,7 +49,7 @@ class MemberLoginApiControllerTest {
     private ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
             .clientId(CLIENT_ID)
             .clientName(CLIENT_NAME)
-            .oAuth2ClientName("KAKAO")
+            .authClientName("KAKAO")
             .email("")
             .token(null)
             .build();
@@ -57,7 +57,7 @@ class MemberLoginApiControllerTest {
     private ApiEmailVerifyDto invalidClient = ApiEmailVerifyDto.builder()
             .clientId("aaaa")
             .clientName("bbbbbbbbbbbbbbbbb")
-            .oAuth2ClientName("KAKAO")
+            .authClientName("KAKAO")
             .email("")
             .token(null)
             .build();

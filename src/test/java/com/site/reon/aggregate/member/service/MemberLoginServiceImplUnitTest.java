@@ -26,7 +26,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void verify_email_of_email_is_null() throws Exception {
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("KAKAO")
+                .authClientName("KAKAO")
                 .email(null)
                 .token(null)
                 .build();
@@ -41,7 +41,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void verify_email_of_email_is_empty() throws Exception {
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("KAKAO")
+                .authClientName("KAKAO")
                 .email("")
                 .token(null)
                 .build();
@@ -56,7 +56,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void verify_email_of_token_is_empty() throws Exception {
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("Apple")
+                .authClientName("Apple")
                 .email("")
                 .token(null)
                 .build();
@@ -72,7 +72,7 @@ class MemberLoginServiceImplUnitTest {
     void verify_email_of_kakao_login_should_be_return_true() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("KAKAO")
+                .authClientName("KAKAO")
                 .email(email)
                 .token(null)
                 .build();
@@ -89,7 +89,7 @@ class MemberLoginServiceImplUnitTest {
     void verify_email_of_kakao_login_should_be_return_false() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("kakao")
+                .authClientName("kakao")
                 .email(email)
                 .token(null)
                 .build();
@@ -104,7 +104,7 @@ class MemberLoginServiceImplUnitTest {
     void verify_email_of_google_login_should_be_return_true() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("google")
+                .authClientName("google")
                 .email(email)
                 .token(null)
                 .build();
@@ -121,7 +121,7 @@ class MemberLoginServiceImplUnitTest {
     void verify_email_of_google_login_should_be_return_false() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("google")
+                .authClientName("google")
                 .email(email)
                 .token(null)
                 .build();
@@ -136,7 +136,7 @@ class MemberLoginServiceImplUnitTest {
     void verify_email_of_apple_login_should_be_return_true() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("apple")
+                .authClientName("apple")
                 .email(null)
                 .token(APPLE_LOGIN_TOKEN)
                 .build();
@@ -153,7 +153,7 @@ class MemberLoginServiceImplUnitTest {
     void verify_email_of_apple_login_should_be_return_false() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
-                .oAuth2ClientName("apple")
+                .authClientName("apple")
                 .email(null)
                 .token(APPLE_LOGIN_TOKEN)
                 .build();
