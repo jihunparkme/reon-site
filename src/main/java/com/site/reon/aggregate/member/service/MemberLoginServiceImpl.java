@@ -50,6 +50,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
                 .email(signUpDto.getEmail())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
                 .authorities(Collections.singleton(authority))
+                .oAuthClient(OAuth2Client.EMPTY)
                 .activated(true)
                 .build();
 
