@@ -9,6 +9,7 @@ import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.global.common.constant.SessionConst;
 import com.site.reon.global.security.dto.SessionMember;
 import com.site.reon.global.security.exception.DuplicateMemberException;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -58,7 +59,7 @@ public class MemberLoginController {
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
         memberLoginService.emailAuthenticate(loginDto);
 
-        Member member = memberService.getMemberWithAuthorities(loginDto.getEmail());
+        Member member = memberService.getMemberWithAuthorities(loginDto.getEmail(), OAuth2Client.EMPTY);
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
         httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, loginDto.getEmail());
 

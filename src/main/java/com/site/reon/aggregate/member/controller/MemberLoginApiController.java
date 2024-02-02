@@ -9,6 +9,7 @@ import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.global.common.constant.Result;
 import com.site.reon.global.common.dto.BasicResponse;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +70,7 @@ public class MemberLoginApiController {
 
         try {
             memberLoginService.emailAuthenticate(LoginDto.from(apiLoginDto));
-            Member member = memberService.getMemberWithAuthorities(apiLoginDto.getEmail());
+            Member member = memberService.getMemberWithAuthorities(apiLoginDto.getEmail(), OAuth2Client.EMPTY);
             return ResponseEntity.ok(BasicResponse.ok(MemberDto.from(member)));
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(BasicResponse.clientError(e.getMessage()), HttpStatus.BAD_REQUEST);

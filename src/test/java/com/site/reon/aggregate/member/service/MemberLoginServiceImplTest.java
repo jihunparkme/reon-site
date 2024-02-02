@@ -34,7 +34,7 @@ class MemberLoginServiceImplTest {
 
         memberLoginService.signup(signUp);
 
-        Member member = memberService.getMemberWithAuthorities(email);
+        Member member = memberService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
         assertEquals("aaron", member.getFirstName());
         assertEquals("park", member.getLastName());
         assertEquals(email, member.getEmail());

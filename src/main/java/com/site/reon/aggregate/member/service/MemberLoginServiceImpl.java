@@ -35,7 +35,9 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     @Override
     @Transactional
     public void signup(SignUpDto signUpDto) {
-        Member findMember = memberRepository.findOneWithAuthoritiesByEmail(signUpDto.getEmail()).orElse(null);
+        Member findMember = memberRepository.findOneWithAuthoritiesByEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY)
+                .orElse(null);
+
         if (findMember != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
         }

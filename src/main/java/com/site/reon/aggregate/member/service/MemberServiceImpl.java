@@ -2,45 +2,29 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.dto.MemberDto;
-import com.site.reon.global.security.exception.NotFoundMemberException;
-import com.site.reon.global.security.util.SecurityUtil;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
-    /**
-     * E-mail 기준으로 회원 조회
-     */
     @Override
     @Transactional(readOnly = true)
-    public Member getMemberWithAuthorities(String email) {
+    public List<Member> getMemberWithAuthorities(String email) {
         return memberRepository.findOneWithAuthoritiesByEmail(email)
                 .orElse(null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberDto getMemberDtoWithAuthorities(String email) {
-        return MemberDto.from(memberRepository.findOneWithAuthoritiesByEmail(email)
-                .orElse(null));
-    }
-
-    /**
-     * SecurityContext 에 저장된 기준으로 회원 조회
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public MemberDto getMyMemberWithAuthorities() {
-        return MemberDto.from(
-                SecurityUtil.getCurrentEmail()
-                        .flatMap(memberRepository::findOneWithAuthoritiesByEmail)
-                        .orElseThrow(() -> new NotFoundMemberException("Member not found"))
-        );
+    public Member getMemberWithAuthorities(String email, OAuth2Client oAuthClient) {
+        return memberRepository.findOneWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient)
+                .orElse(null);
     }
 }
