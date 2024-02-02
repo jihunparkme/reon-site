@@ -21,6 +21,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "WHERE member.email=:email " +
             "AND member.oAuthClient=:oAuthClient")
     @EntityGraph(attributePaths = "authorities")
-    Optional<Member> findOneWithAuthoritiesByEmailAndOAuthClient(@Param("email") String email, @Param("oAuthClient") OAuth2Client oAuthClient);
+    Optional<Member> findWithAuthoritiesByEmailAndOAuthClient(@Param("email") String email, @Param("oAuthClient") OAuth2Client oAuthClient);
 
 }

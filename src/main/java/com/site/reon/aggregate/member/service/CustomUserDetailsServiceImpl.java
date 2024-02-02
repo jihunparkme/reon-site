@@ -25,7 +25,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String email) {
-        return memberRepository.findOneWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY)
+        return memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY)
                 .map(member -> createUser(email, member))
                 .orElseThrow(() -> new UsernameNotFoundException(email + " : 회원 정보를 찾을 수 없습니다."));
     }

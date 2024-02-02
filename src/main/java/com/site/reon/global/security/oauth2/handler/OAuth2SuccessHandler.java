@@ -43,7 +43,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     }
 
     private Member getMemberInfo(OAuthAttributes oAuthAttributes) {
-        Optional<Member> memberOpt = memberRepository.findByEmail(oAuthAttributes.getEmail());
+        Optional<Member> memberOpt = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(
+                oAuthAttributes.getEmail(), oAuthAttributes.getOAuthClient());
         if (memberOpt.isPresent()) {
             Member member = memberOpt.get();
             member.oAuth2UserUpdate(oAuthAttributes.getName(), oAuthAttributes.getPicture());

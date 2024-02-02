@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional(readOnly = true)
     public Member getMemberWithAuthorities(String email, OAuth2Client oAuthClient) {
-        return memberRepository.findOneWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient)
+        return memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient)
                 .orElse(null);
     }
 }

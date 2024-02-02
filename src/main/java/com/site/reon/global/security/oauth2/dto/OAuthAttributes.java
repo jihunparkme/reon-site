@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * OAuth2UserService 를 통해 가져온 OAuth2User attribute 를 담는 클래스
@@ -68,7 +69,7 @@ public class OAuthAttributes {
                 .firstName(this.name)
                 .lastName(StringUtils.EMPTY)
                 .email(this.email)
-                .password(StringUtils.EMPTY)
+                .password(UUID.randomUUID().toString())
                 .picture(this.picture)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
                 .oAuthClient(this.oAuthClient)
