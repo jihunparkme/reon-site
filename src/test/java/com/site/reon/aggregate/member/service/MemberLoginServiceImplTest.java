@@ -3,6 +3,7 @@ package com.site.reon.aggregate.member.service;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.global.security.exception.DuplicateMemberException;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,9 +26,9 @@ class MemberLoginServiceImplTest {
     void signup_is_success() throws Exception {
         String email = "aaron@gmail.com";
         SignUpDto signUp = SignUpDto.builder()
+                .email(email)
                 .firstName("aaron")
                 .lastName("park")
-                .email(email)
                 .password("aaron")
                 .build();
 
@@ -37,6 +38,8 @@ class MemberLoginServiceImplTest {
         assertEquals("aaron", member.getFirstName());
         assertEquals("park", member.getLastName());
         assertEquals(email, member.getEmail());
+        assertEquals(OAuth2Client.EMPTY, member.getOAuthClient());
+        assertEquals(true, member.isActivated());
     }
 
     @Test
