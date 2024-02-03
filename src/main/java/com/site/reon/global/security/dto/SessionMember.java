@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SessionMember implements Serializable {
-    public static final SessionMember EMPTY = new SessionMember();
-
     private Long id;
     private String name;
     private String email;
@@ -26,7 +24,7 @@ public class SessionMember implements Serializable {
 
     public static SessionMember from(Member member) {
         if (member == null) {
-            return EMPTY;
+            return null;
         }
 
         return SessionMember.builder()

@@ -101,11 +101,11 @@ values ('test roasting222',
         '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,49,48,47,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,26,25,24,23,22,20,21,20,19]', 'ASFDASGAAS3512ASDGA', 2L, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
 
-insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
-values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, O_AUTH_CLIENT, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', 'EMPTY', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
-insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
-values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwDS8O6intHWsCf7e14DbAxAUIB6Pba/B/50y', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, O_AUTH_CLIENT, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwDS8O6intHWsCf7e14DbAxAUIB6Pba/B/50y', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', 'EMPTY', true, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
 insert into authority (authority_name) values ('ROLE_GUEST');
 insert into authority (authority_name) values ('ROLE_USER');

@@ -9,6 +9,7 @@ import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
 import com.site.reon.aggregate.member.service.dto.ApiLoginDto;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -136,7 +137,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void loginEmail_should_be_return_member() throws Exception {
-        given(memberService.getMemberWithAuthorities(any()))
+        given(memberService.getMemberWithAuthorities(any(), any()))
                 .willReturn(member);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -157,7 +158,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void loginEmail_should_be_return_null() throws Exception {
-        given(memberService.getMemberWithAuthorities(any()))
+        given(memberService.getMemberWithAuthorities(any(), any()))
                 .willReturn(null);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -175,7 +176,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void loginEmail_should_be_respnose_400() throws Exception {
-        given(memberService.getMemberWithAuthorities(any()))
+        given(memberService.getMemberWithAuthorities(any(), any()))
                 .willReturn(null);
 
         ObjectMapper objectMapper = new ObjectMapper();

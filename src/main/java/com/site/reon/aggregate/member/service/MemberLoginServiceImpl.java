@@ -35,7 +35,9 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     @Override
     @Transactional
     public void signup(SignUpDto signUpDto) {
-        Member findMember = memberRepository.findOneWithAuthoritiesByEmail(signUpDto.getEmail()).orElse(null);
+        Member findMember = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY)
+                .orElse(null);
+
         if (findMember != null) {
             throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
         }
@@ -50,6 +52,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
                 .email(signUpDto.getEmail())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
                 .authorities(Collections.singleton(authority))
+                .oAuthClient(OAuth2Client.EMPTY)
                 .activated(true)
                 .build();
 
@@ -60,10 +63,10 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     public boolean verifyEmail(ApiEmailVerifyDto emailVerityDto) {
         OAuth2Client oAuth2Client = OAuth2Client.of(emailVerityDto.getAuthClientName().toLowerCase());
         if (OAuth2Client.APPLE == oAuth2Client) {
-            return verifyAppleEmail(emailVerityDto.getToken());
+            return verifyAppleEmail(emailVerityDto.getToken(), oAuth2Client);
         }
 
-        return verifyKakaoAndGoogleEmail(emailVerityDto.getEmail());
+        return verifyKakaoAndGoogleEmail(emailVerityDto.getEmail(), oAuth2Client);
     }
 
     @Override
@@ -75,7 +78,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    private boolean verifyAppleEmail(String token) {
+    private boolean verifyAppleEmail(String token, OAuth2Client oAuth2Client) {
         if (StringUtils.isBlank(token)) {
             throw new IllegalArgumentException("Token is required for Apple login.");
         }
@@ -87,19 +90,19 @@ public class MemberLoginServiceImpl implements MemberLoginService {
             throw new IllegalArgumentException("The token information is invalid.");
         }
 
-        return getOAuth2EmailMember(email);
+        return getOAuth2EmailMember(email, oAuth2Client);
     }
 
-    private boolean verifyKakaoAndGoogleEmail(String email) {
+    private boolean verifyKakaoAndGoogleEmail(String email, OAuth2Client oAuth2Client) {
         if (StringUtils.isBlank(email)) {
             throw new IllegalArgumentException("Email is required for Kakao, Google login.");
         }
 
-        return getOAuth2EmailMember(email);
+        return getOAuth2EmailMember(email, oAuth2Client);
     }
 
-    private boolean getOAuth2EmailMember(String email) {
-        Optional<Member> memberOpt = memberRepository.findByEmail(email);
+    private boolean getOAuth2EmailMember(String email, OAuth2Client oAuthClient) {
+        Optional<Member> memberOpt = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient);
         if (memberOpt.isPresent()) {
             return true;
         }

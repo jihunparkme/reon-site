@@ -9,10 +9,10 @@ import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.global.common.constant.Result;
 import com.site.reon.global.common.dto.BasicResponse;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.util.CollectionUtils;
@@ -40,19 +40,19 @@ public class MemberLoginApiController {
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             if (!CollectionUtils.isEmpty(allErrors)) {
-                return new ResponseEntity<>(BasicResponse.clientError(allErrors.get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
+                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
             }
-            return new ResponseEntity<>(BasicResponse.clientError(Result.FAIL.message()), HttpStatus.BAD_REQUEST);
+            return BasicResponse.clientError(Result.FAIL.message());
         }
 
         try {
             boolean result = memberLoginService.verifyEmail(apiEmailVerifyDto);
-            return ResponseEntity.ok(BasicResponse.ok(result));
+            return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(BasicResponse.clientError(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             log.error("MemberLoginApiController.verifyEmail Exception: ", e);
-            return new ResponseEntity<>(BasicResponse.internalServerError(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return BasicResponse.internalServerError(e.getMessage());
         }
     }
 
@@ -62,20 +62,20 @@ public class MemberLoginApiController {
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             if (!CollectionUtils.isEmpty(allErrors)) {
-                return new ResponseEntity<>(BasicResponse.clientError(allErrors.get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
+                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
             }
-            return new ResponseEntity<>(BasicResponse.clientError(Result.FAIL.message()), HttpStatus.BAD_REQUEST);
+            return BasicResponse.clientError(Result.FAIL.message());
         }
 
         try {
             memberLoginService.emailAuthenticate(LoginDto.from(apiLoginDto));
-            Member member = memberService.getMemberWithAuthorities(apiLoginDto.getEmail());
-            return ResponseEntity.ok(BasicResponse.ok(MemberDto.from(member)));
+            Member member = memberService.getMemberWithAuthorities(apiLoginDto.getEmail(), OAuth2Client.EMPTY);
+            return BasicResponse.ok(MemberDto.from(member));
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(BasicResponse.clientError(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             log.error("MemberLoginApiController.loginEmail Exception: ", e);
-            return new ResponseEntity<>(BasicResponse.internalServerError(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return BasicResponse.internalServerError(e.getMessage());
         }
     }
 }

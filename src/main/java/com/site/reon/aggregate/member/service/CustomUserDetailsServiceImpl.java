@@ -2,6 +2,7 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String email) {
-        return memberRepository.findOneWithAuthoritiesByEmail(email)
+        return memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY)
                 .map(member -> createUser(email, member))
                 .orElseThrow(() -> new UsernameNotFoundException(email + " : 회원 정보를 찾을 수 없습니다."));
     }
