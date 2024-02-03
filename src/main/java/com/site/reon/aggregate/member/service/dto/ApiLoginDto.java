@@ -2,8 +2,7 @@ package com.site.reon.aggregate.member.service.dto;
 
 import com.site.reon.global.common.annotation.ClientIdConstraint;
 import com.site.reon.global.common.annotation.ClientNameConstraint;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +18,9 @@ public class ApiLoginDto {
     @ClientNameConstraint
     private String clientName;
 
-    @NotNull
-    @Size(min = 3, max = 50)
+    @NotBlank(message = "email is required.")
     private String email;
-    @NotNull
-    @Size(min = 3, max = 100)
+
+    @NotBlank(message = "password is required.")
     private String password;
 }

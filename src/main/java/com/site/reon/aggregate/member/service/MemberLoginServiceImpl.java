@@ -4,9 +4,7 @@ import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
-import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.*;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.AppleOAuth2Token;
@@ -28,6 +26,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MemberLoginServiceImpl implements MemberLoginService {
+
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -61,7 +60,10 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     public boolean verifyEmail(ApiEmailVerifyDto emailVerityDto) {
-        OAuth2Client oAuth2Client = OAuth2Client.of(emailVerityDto.getAuthClientName().toLowerCase());
+        String authClientName = emailVerityDto.getAuthClientName().toLowerCase();
+        OAuth2Client.validateClientName(authClientName);
+
+        OAuth2Client oAuth2Client = OAuth2Client.of(authClientName);
         if (OAuth2Client.APPLE == oAuth2Client) {
             return verifyAppleEmail(emailVerityDto.getToken(), oAuth2Client);
         }
@@ -76,6 +78,14 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Override
+    public MemberDto oAuth2SignUp(ApiOAuth2SignUp apiOAuth2SignUp) {
+        OAuth2Client.validateClientName(apiOAuth2SignUp.getAuthClientName().toLowerCase());
+
+        Member member = apiOAuth2SignUp.toMember();
+        return MemberDto.from(memberRepository.save(member));
     }
 
     private boolean verifyAppleEmail(String token, OAuth2Client oAuth2Client) {
