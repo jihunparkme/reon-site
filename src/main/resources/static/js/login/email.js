@@ -31,6 +31,26 @@ function signUp() {
         "password": $('#sign-up-password').val()
     };
 
+    if (data.email.length == 0) {
+        alert("email is required.");
+        return;
+    }
+
+    if (data.firstName.length == 0) {
+        alert("firstName is required.");
+        return;
+
+    }
+    if (data.lastName.length == 0) {
+        alert("lastName is required.");
+        return;
+    }
+
+    if (data.password.length == 0) {
+        alert("password is required.");
+        return;
+    }
+
     $.ajax({
         type: 'POST',
         url: "/login/email/sign-up",
@@ -41,7 +61,7 @@ function signUp() {
         alert('회원가입이 완료되었습니다. 다시 로그인해 주세요.');
         location.href = "/";
     }).fail(function (error) {
-        let errorMessage = error.responseText;
-        alert(errorMessage);
+        let responseJson = error.responseJSON;
+        alert(responseJson.message);
     });
 }

@@ -6,7 +6,9 @@ import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.global.common.constant.Result;
 import com.site.reon.global.common.constant.SessionConst;
+import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.dto.SessionMember;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -19,10 +21,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/login")
@@ -44,14 +51,22 @@ public class MemberLoginController {
     }
 
     @PostMapping("/email/sign-up")
-    public ResponseEntity signup(@Valid @RequestBody SignUpDto signUpDto) {
+    public ResponseEntity signup(@Valid @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            if (!CollectionUtils.isEmpty(allErrors)) {
+                return new ResponseEntity<>(BasicResponse.clientError(allErrors.get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(BasicResponse.clientError(Result.FAIL.message()), HttpStatus.BAD_REQUEST);
+        }
+
         try {
             memberLoginService.signup(signUpDto);
             return ResponseEntity.ok(new MemberDto());
         } catch (DuplicateMemberException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(BasicResponse.internalServerError(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            return new ResponseEntity<>("회원가입을 실패하였습니다. 다시 시도해 주세요.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(BasicResponse.internalServerError("회원가입을 실패하였습니다. 다시 시도해 주세요."), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
