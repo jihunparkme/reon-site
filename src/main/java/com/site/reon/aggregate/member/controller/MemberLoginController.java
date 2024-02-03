@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.session.FindByIndexNameSessionRepository;
@@ -55,18 +54,18 @@ public class MemberLoginController {
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
             if (!CollectionUtils.isEmpty(allErrors)) {
-                return new ResponseEntity<>(BasicResponse.clientError(allErrors.get(0).getDefaultMessage()), HttpStatus.BAD_REQUEST);
+                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
             }
-            return new ResponseEntity<>(BasicResponse.clientError(Result.FAIL.message()), HttpStatus.BAD_REQUEST);
+            return BasicResponse.clientError(Result.FAIL.message());
         }
 
         try {
             memberLoginService.signup(signUpDto);
             return ResponseEntity.ok(new MemberDto());
         } catch (DuplicateMemberException e) {
-            return new ResponseEntity<>(BasicResponse.internalServerError(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return BasicResponse.internalServerError(e.getMessage());
         } catch (Exception e) {
-            return new ResponseEntity<>(BasicResponse.internalServerError("회원가입을 실패하였습니다. 다시 시도해 주세요."), HttpStatus.INTERNAL_SERVER_ERROR);
+            return BasicResponse.internalServerError("회원가입을 실패하였습니다. 다시 시도해 주세요.");
         }
     }
 
