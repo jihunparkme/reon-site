@@ -7,6 +7,8 @@ import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
 import com.site.reon.aggregate.member.service.dto.ApiLoginDto;
+import com.site.reon.aggregate.member.service.dto.ApiOAuth2SignUp;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -76,6 +78,16 @@ class MemberLoginApiControllerTest {
             .clientName(CLIENT_NAME)
             .email(email)
             .password("user")
+            .build();
+
+    private ApiOAuth2SignUp apiOAuth2SignUp = ApiOAuth2SignUp.builder()
+            .clientId(CLIENT_ID)
+            .clientName(CLIENT_NAME)
+            .roasterSn("asfdasfeasfdsasdfas")
+            .email(email)
+            .firstName("aaron")
+            .picture("safddsafdsafs")
+            .authClientName("kakao")
             .build();
 
     @Test
@@ -175,7 +187,7 @@ class MemberLoginApiControllerTest {
     }
 
     @Test
-    void loginEmail_should_be_respnose_400() throws Exception {
+    void loginEmail_should_be_response_400() throws Exception {
         given(memberService.getMemberWithAuthorities(any(), any()))
                 .willReturn(null);
 
@@ -184,6 +196,49 @@ class MemberLoginApiControllerTest {
 
         ResultActions perform = mockMvc
                 .perform(post("/api/login/email")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void oAuth2SignUp_should_be_success() throws Exception {
+        given(memberLoginService.oAuth2SignUp(any()))
+                .willReturn(MemberDto.from(apiOAuth2SignUp.toMember()));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(apiOAuth2SignUp);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/oauth2/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.email").value(email))
+                .andExpect(jsonPath("$.data.firstName").value("aaron"))
+                .andExpect(jsonPath("$.data.roasterSn").value("asfdasfeasfdsasdfas"))
+                .andExpect(jsonPath("$.data.picture").value("safddsafdsafs"))
+                .andExpect(jsonPath("$.data.oauthClient").value("KAKAO"));
+    }
+
+    @Test
+    void oAuth2SignUp_should_be_IllegalArgumentException() throws Exception {
+        ApiOAuth2SignUp failJson = ApiOAuth2SignUp.builder()
+                .clientId(CLIENT_ID)
+                .clientName(CLIENT_NAME)
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(failJson);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/oauth2/sign-up")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
                         .with(csrf()));
