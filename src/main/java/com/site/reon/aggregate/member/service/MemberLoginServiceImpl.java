@@ -5,6 +5,8 @@ import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.*;
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpDto;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.AppleOAuth2Token;
@@ -77,7 +79,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     @Override
-    public MemberDto oAuth2SignUp(ApiOAuth2SignUp apiOAuth2SignUp) {
+    public MemberDto oAuth2SignUp(ApiOAuth2SignUpDto apiOAuth2SignUp) {
         String authClientName = apiOAuth2SignUp.getAuthClientName().toLowerCase();
         OAuth2Client.validateClientName(authClientName);
         validateEmailAndOAuthClient(apiOAuth2SignUp.getEmail(), OAuth2Client.of(authClientName));

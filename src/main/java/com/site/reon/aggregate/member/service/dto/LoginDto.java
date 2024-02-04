@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.member.service.dto;
 
+import com.site.reon.aggregate.member.service.dto.api.ApiLoginDto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

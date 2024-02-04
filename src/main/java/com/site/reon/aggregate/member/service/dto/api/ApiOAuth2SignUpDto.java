@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto;
+package com.site.reon.aggregate.member.service.dto.api;
 
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiOAuth2SignUp {
+public class ApiOAuth2SignUpDto {
     @ClientIdConstraint
     private String clientId;
     @ClientNameConstraint

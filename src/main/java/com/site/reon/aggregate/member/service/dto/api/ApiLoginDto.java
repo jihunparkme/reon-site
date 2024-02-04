@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto;
+package com.site.reon.aggregate.member.service.dto.api;
 
 import com.site.reon.global.common.annotation.ClientIdConstraint;
 import com.site.reon.global.common.annotation.ClientNameConstraint;
@@ -10,16 +10,17 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class ApiEmailVerifyDto {
+@AllArgsConstructor
+public class ApiLoginDto {
     @ClientIdConstraint
     private String clientId;
     @ClientNameConstraint
     private String clientName;
 
-    @NotBlank(message = "authClientName is required.")
-    private String authClientName;
+    @NotBlank(message = "email is required.")
     private String email;
-    private String token;
+
+    @NotBlank(message = "password is required.")
+    private String password;
 }
