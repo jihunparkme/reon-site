@@ -57,7 +57,16 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "신규 소셜 가입", notes = "앱에서 신규로 소셜 가입을 합니다.")
     @PostMapping("/oauth2/sign-up")
-    public ResponseEntity oAuth2SignUp(@Valid @RequestBody ApiOAuth2SignUp apiOAuth2SignUp) {
+    public ResponseEntity oAuth2SignUp(@Valid @RequestBody ApiOAuth2SignUp apiOAuth2SignUp,
+                                       BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            if (!CollectionUtils.isEmpty(allErrors)) {
+                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
+            }
+            return BasicResponse.clientError(Result.FAIL.message());
+        }
+
         try {
             MemberDto member = memberLoginService.oAuth2SignUp(apiOAuth2SignUp);
             return BasicResponse.ok(member);

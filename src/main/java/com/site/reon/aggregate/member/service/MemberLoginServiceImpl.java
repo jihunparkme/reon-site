@@ -34,12 +34,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     @Override
     @Transactional
     public void signup(SignUpDto signUpDto) {
-        Member findMember = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY)
-                .orElse(null);
-
-        if (findMember != null) {
-            throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
-        }
+        validateEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY);
 
         Authority authority = Authority.builder()
                 .authorityName(Role.USER.key())
@@ -82,7 +77,9 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     public MemberDto oAuth2SignUp(ApiOAuth2SignUp apiOAuth2SignUp) {
-        OAuth2Client.validateClientName(apiOAuth2SignUp.getAuthClientName().toLowerCase());
+        String authClientName = apiOAuth2SignUp.getAuthClientName().toLowerCase();
+        OAuth2Client.validateClientName(authClientName);
+        validateEmailAndOAuthClient(apiOAuth2SignUp.getEmail(), OAuth2Client.of(authClientName));
 
         Member member = apiOAuth2SignUp.toMember();
         return MemberDto.from(memberRepository.save(member));
@@ -100,7 +97,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
             throw new IllegalArgumentException("The token information is invalid.");
         }
 
-        return getOAuth2EmailMember(email, oAuth2Client);
+        return isExistMember(email, oAuth2Client);
     }
 
     private boolean verifyKakaoAndGoogleEmail(String email, OAuth2Client oAuth2Client) {
@@ -108,10 +105,17 @@ public class MemberLoginServiceImpl implements MemberLoginService {
             throw new IllegalArgumentException("Email is required for Kakao, Google login.");
         }
 
-        return getOAuth2EmailMember(email, oAuth2Client);
+        return isExistMember(email, oAuth2Client);
     }
 
-    private boolean getOAuth2EmailMember(String email, OAuth2Client oAuthClient) {
+    private void validateEmailAndOAuthClient(String email, OAuth2Client oAuthClient) {
+        Optional<Member> memberOpt = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient);
+        if (memberOpt.isPresent()) {
+            throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
+        }
+    }
+
+    private boolean isExistMember(String email, OAuth2Client oAuthClient) {
         Optional<Member> memberOpt = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient);
         if (memberOpt.isPresent()) {
             return true;

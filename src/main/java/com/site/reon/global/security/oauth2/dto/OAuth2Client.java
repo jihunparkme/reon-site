@@ -36,7 +36,7 @@ public enum OAuth2Client {
 
     public static void validateClientName(String registrationId) {
         if (isNotSupport(registrationId)) {
-            throw new IllegalArgumentException("This is unsupported OAuth2 Client service. Please check authClientName field");
+            throw new IllegalArgumentException("This is unsupported OAuth2 Client service. Please check authClientName field.");
         }
     }
 }

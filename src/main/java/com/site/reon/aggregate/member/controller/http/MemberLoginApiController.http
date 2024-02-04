@@ -78,3 +78,36 @@ Content-Type: application/json
   "email": "aaa@gmail.com",
   "password": "aaa"
 }
+
+
+
+
+
+
+
+### should be return member
+POST http://localhost:8080/api/login/oauth2/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "roasterSn": "asdfasdfasfsadfasfsafs",
+  "email": "user@gmail.com",
+  "firstName": "user",
+  "picture": "adfasfadafad",
+  "authClientName": "kakao"
+}
+
+### BAD_REQUEST
+POST http://localhost:8080/api/login/oauth2/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "firstName": "user",
+  "picture": "adfasfadafad",
+  "authClientName": "kakao"
+}
