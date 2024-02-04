@@ -5,13 +5,9 @@ import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
-import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
-import com.site.reon.aggregate.member.service.dto.ApiLoginDto;
-import com.site.reon.aggregate.member.service.dto.ApiOAuth2SignUp;
-import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.*;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
-import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -245,5 +241,29 @@ class MemberLoginApiControllerTest {
 
         perform
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void signUpEmail() throws Exception {
+        String email = "aaron@gmail.com";
+        SignUpDto signUp = SignUpDto.builder()
+                .email(email)
+                .firstName("aaron")
+                .lastName("park")
+                .password("aaron123!@#")
+                .roasterSn("afdsafdasfas")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(signUp);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/email/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().isOk());
     }
 }

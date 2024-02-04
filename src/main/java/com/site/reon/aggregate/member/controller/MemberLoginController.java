@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+import static com.site.reon.global.common.constant.Result.SUCCESS;
+
 @Controller
 @RequestMapping("/login")
 @RequiredArgsConstructor
@@ -61,7 +63,7 @@ public class MemberLoginController {
 
         try {
             memberLoginService.signup(signUpDto);
-            return ResponseEntity.ok(new MemberDto());
+            return ResponseEntity.ok(SUCCESS);
         } catch (DuplicateMemberException e) {
             return BasicResponse.internalServerError(e.getMessage());
         } catch (Exception e) {
