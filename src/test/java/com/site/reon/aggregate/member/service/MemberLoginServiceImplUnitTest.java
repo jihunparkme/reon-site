@@ -2,8 +2,8 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
-import com.site.reon.aggregate.member.service.dto.ApiOAuth2SignUp;
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Assertions;
@@ -171,7 +171,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void oAuth2SignUp_success() throws Exception {
         String email = "user@gmail.com";
-        ApiOAuth2SignUp apiOAuth2SignUp = ApiOAuth2SignUp.builder()
+        ApiOAuth2SignUpDto apiOAuth2SignUp = ApiOAuth2SignUpDto.builder()
                 .roasterSn("asfdasfeasfdsasdfas")
                 .email(email)
                 .firstName("aaron")
@@ -192,7 +192,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void oAuth2SignUp_fail() throws Exception {
         String email = "user@gmail.com";
-        ApiOAuth2SignUp apiOAuth2SignUp = ApiOAuth2SignUp.builder()
+        ApiOAuth2SignUpDto apiOAuth2SignUp = ApiOAuth2SignUpDto.builder()
                 .roasterSn("asfdasfeasfdsasdfas")
                 .email(email)
                 .firstName("aaron")

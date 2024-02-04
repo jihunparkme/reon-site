@@ -4,6 +4,10 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.*;
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiLoginDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiSignUpDto;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -55,7 +59,7 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "신규 소셜 가입", notes = "앱에서 신규로 소셜 가입을 합니다.")
     @PostMapping("/oauth2/sign-up")
-    public ResponseEntity signUpOAuth2(@Valid @RequestBody ApiOAuth2SignUp apiOAuth2SignUp,
+    public ResponseEntity signUpOAuth2(@Valid @RequestBody ApiOAuth2SignUpDto apiOAuth2SignUp,
                                        BindingResult bindingResult) {
         ResponseEntity allErrors = validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
@@ -73,7 +77,7 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 가입", notes = "앱에서 이메일로 가입합니다.")
     @PostMapping("/email/sign-up")
-    public ResponseEntity signUpEmail(@Valid @RequestBody SignUpDto signUpDto,
+    public ResponseEntity signUpEmail(@Valid @RequestBody ApiSignUpDto signUpDto,
                                      BindingResult bindingResult) {
         ResponseEntity allErrors = validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;

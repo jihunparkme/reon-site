@@ -6,6 +6,10 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.*;
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiLoginDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiSignUpDto;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
 import org.junit.jupiter.api.Test;
@@ -76,7 +80,7 @@ class MemberLoginApiControllerTest {
             .password("user")
             .build();
 
-    private ApiOAuth2SignUp apiOAuth2SignUp = ApiOAuth2SignUp.builder()
+    private ApiOAuth2SignUpDto apiOAuth2SignUp = ApiOAuth2SignUpDto.builder()
             .clientId(CLIENT_ID)
             .clientName(CLIENT_NAME)
             .roasterSn("asfdasfeasfdsasdfas")
@@ -225,7 +229,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void oAuth2SignUp_should_be_IllegalArgumentException() throws Exception {
-        ApiOAuth2SignUp failJson = ApiOAuth2SignUp.builder()
+        ApiOAuth2SignUpDto failJson = ApiOAuth2SignUpDto.builder()
                 .clientId(CLIENT_ID)
                 .clientName(CLIENT_NAME)
                 .build();
@@ -246,7 +250,9 @@ class MemberLoginApiControllerTest {
     @Test
     void signUpEmail() throws Exception {
         String email = "aaron@gmail.com";
-        SignUpDto signUp = SignUpDto.builder()
+        ApiSignUpDto signUp = ApiSignUpDto.builder()
+                .clientId(CLIENT_ID)
+                .clientName(CLIENT_NAME)
                 .email(email)
                 .firstName("aaron")
                 .lastName("park")
