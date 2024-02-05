@@ -6,10 +6,10 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.*;
-import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyDto;
-import com.site.reon.aggregate.member.service.dto.api.ApiLoginDto;
-import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpDto;
-import com.site.reon.aggregate.member.service.dto.api.ApiSignUpDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiLoginRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiSignUpRequest;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ class MemberLoginApiControllerTest {
     private String CLIENT_NAME = "reon";
     private String CLIENT_ID = "235df110-bd70-11ee-aa8b-e30685fde2fa";
 
-    private ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
+    private ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
             .clientId(CLIENT_ID)
             .clientName(CLIENT_NAME)
             .authClientName("KAKAO")
@@ -57,7 +57,7 @@ class MemberLoginApiControllerTest {
             .token(null)
             .build();
 
-    private ApiEmailVerifyDto invalidClient = ApiEmailVerifyDto.builder()
+    private ApiEmailVerifyRequest invalidClient = ApiEmailVerifyRequest.builder()
             .clientId("aaaa")
             .clientName("bbbbbbbbbbbbbbbbb")
             .authClientName("KAKAO")
@@ -73,14 +73,14 @@ class MemberLoginApiControllerTest {
             .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
             .build()).get();
 
-    private ApiLoginDto apiLoginDto = ApiLoginDto.builder()
+    private ApiLoginRequest apiLoginDto = ApiLoginRequest.builder()
             .clientId(CLIENT_ID)
             .clientName(CLIENT_NAME)
             .email(email)
             .password("user")
             .build();
 
-    private ApiOAuth2SignUpDto apiOAuth2SignUp = ApiOAuth2SignUpDto.builder()
+    private ApiOAuth2SignUpRequest apiOAuth2SignUp = ApiOAuth2SignUpRequest.builder()
             .clientId(CLIENT_ID)
             .clientName(CLIENT_NAME)
             .roasterSn("asfdasfeasfdsasdfas")
@@ -229,7 +229,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void oAuth2SignUp_should_be_IllegalArgumentException() throws Exception {
-        ApiOAuth2SignUpDto failJson = ApiOAuth2SignUpDto.builder()
+        ApiOAuth2SignUpRequest failJson = ApiOAuth2SignUpRequest.builder()
                 .clientId(CLIENT_ID)
                 .clientName(CLIENT_NAME)
                 .build();
@@ -250,7 +250,7 @@ class MemberLoginApiControllerTest {
     @Test
     void signUpEmail() throws Exception {
         String email = "aaron@gmail.com";
-        ApiSignUpDto signUp = ApiSignUpDto.builder()
+        ApiSignUpRequest signUp = ApiSignUpRequest.builder()
                 .clientId(CLIENT_ID)
                 .clientName(CLIENT_NAME)
                 .email(email)

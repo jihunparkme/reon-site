@@ -2,30 +2,24 @@ package com.site.reon.aggregate.member.service.dto.api;
 
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.global.common.annotation.ClientIdConstraint;
-import com.site.reon.global.common.annotation.ClientNameConstraint;
 import com.site.reon.global.common.constant.member.Role;
+import com.site.reon.global.common.dto.ApiRequest;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collections;
 import java.util.UUID;
 
 @Getter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiOAuth2SignUpDto {
-    @ClientIdConstraint
-    private String clientId;
-    @ClientNameConstraint
-    private String clientName;
-
+public class ApiOAuth2SignUpRequest extends ApiRequest {
     @NotBlank(message = "roasterSn is required.")
     private String roasterSn;
 

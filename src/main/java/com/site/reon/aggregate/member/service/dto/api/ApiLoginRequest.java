@@ -1,23 +1,17 @@
 package com.site.reon.aggregate.member.service.dto.api;
 
-import com.site.reon.global.common.annotation.ClientIdConstraint;
-import com.site.reon.global.common.annotation.ClientNameConstraint;
+import com.site.reon.global.common.dto.ApiRequest;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiLoginDto {
-    @ClientIdConstraint
-    private String clientId;
-    @ClientNameConstraint
-    private String clientName;
-
+public class ApiLoginRequest extends ApiRequest {
     @NotBlank(message = "email is required.")
     private String email;
 

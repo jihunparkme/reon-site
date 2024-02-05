@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.service.dto;
 
-import com.site.reon.aggregate.member.service.dto.api.ApiLoginDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiLoginRequest;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,10 +19,10 @@ public class LoginDto {
     @NotBlank(message = "password is required.")
     private String password;
 
-    public static LoginDto from(ApiLoginDto apiLoginDto) {
+    public static LoginDto from(ApiLoginRequest request) {
         return LoginDto.builder()
-                .email(apiLoginDto.getEmail())
-                .password(apiLoginDto.getPassword())
+                .email(request.getEmail())
+                .password(request.getPassword())
                 .build();
     }
 }

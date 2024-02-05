@@ -4,10 +4,10 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.*;
-import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyDto;
-import com.site.reon.aggregate.member.service.dto.api.ApiLoginDto;
-import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpDto;
-import com.site.reon.aggregate.member.service.dto.api.ApiSignUpDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiLoginRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiSignUpRequest;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -41,13 +41,13 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
     @PostMapping("/verify/email")
-    public ResponseEntity verifyEmail(@Valid @RequestBody ApiEmailVerifyDto apiEmailVerifyDto,
+    public ResponseEntity verifyEmail(@Valid @RequestBody ApiEmailVerifyRequest request,
                                       BindingResult bindingResult) {
         ResponseEntity allErrors = validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            boolean result = memberLoginService.verifyEmail(apiEmailVerifyDto);
+            boolean result = memberLoginService.verifyEmail(request);
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
@@ -59,13 +59,13 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "신규 소셜 가입", notes = "앱에서 신규로 소셜 가입을 합니다.")
     @PostMapping("/oauth2/sign-up")
-    public ResponseEntity signUpOAuth2(@Valid @RequestBody ApiOAuth2SignUpDto apiOAuth2SignUp,
+    public ResponseEntity signUpOAuth2(@Valid @RequestBody ApiOAuth2SignUpRequest request,
                                        BindingResult bindingResult) {
         ResponseEntity allErrors = validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            MemberDto member = memberLoginService.oAuth2SignUp(apiOAuth2SignUp);
+            MemberDto member = memberLoginService.oAuth2SignUp(request);
             return BasicResponse.ok(member);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
@@ -77,13 +77,13 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 가입", notes = "앱에서 이메일로 가입합니다.")
     @PostMapping("/email/sign-up")
-    public ResponseEntity signUpEmail(@Valid @RequestBody ApiSignUpDto signUpDto,
+    public ResponseEntity signUpEmail(@Valid @RequestBody ApiSignUpRequest request,
                                      BindingResult bindingResult) {
         ResponseEntity allErrors = validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            memberLoginService.signup(signUpDto);
+            memberLoginService.signup(request);
             return BasicResponse.ok(SUCCESS);
         } catch (DuplicateMemberException e) {
             return BasicResponse.internalServerError(e.getMessage());
@@ -94,14 +94,14 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 로그인", notes = "앱에서 이메일로 로그인합니다.")
     @PostMapping("/email")
-    public ResponseEntity loginEmail(@Valid @RequestBody ApiLoginDto apiLoginDto,
+    public ResponseEntity loginEmail(@Valid @RequestBody ApiLoginRequest request,
                                      BindingResult bindingResult) {
         ResponseEntity allErrors = validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            memberLoginService.emailAuthenticate(LoginDto.from(apiLoginDto));
-            Member member = memberService.getMemberWithAuthorities(apiLoginDto.getEmail(), OAuth2Client.EMPTY);
+            memberLoginService.emailAuthenticate(LoginDto.from(request));
+            Member member = memberService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
             return BasicResponse.ok(MemberDto.from(member));
         } catch (BadCredentialsException e) {
             return BasicResponse.clientError(e.getMessage());

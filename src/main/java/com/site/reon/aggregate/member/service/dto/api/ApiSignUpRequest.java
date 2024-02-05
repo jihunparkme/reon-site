@@ -12,8 +12,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiSignUpDto extends SignUpDto {
-
+public class ApiSignUpRequest extends SignUpDto {
     @ClientIdConstraint
     private String clientId;
     @ClientNameConstraint
