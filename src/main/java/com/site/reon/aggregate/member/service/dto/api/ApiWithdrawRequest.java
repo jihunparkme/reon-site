@@ -15,6 +15,5 @@ public class ApiWithdrawRequest extends ApiRequest {
     @NotBlank(message = "email is required.")
     private String email;
 
-    @NotBlank(message = "authClientName is required.")
     private String authClientName;
 }

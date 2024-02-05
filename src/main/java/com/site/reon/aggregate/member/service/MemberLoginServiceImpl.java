@@ -7,6 +7,7 @@ import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.*;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.AppleOAuth2Token;
@@ -88,6 +89,33 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         return MemberDto.from(memberRepository.save(member));
     }
 
+    @Override
+    @Transactional
+    public boolean withdraw(ApiWithdrawRequest request) {
+        String email = request.getEmail();
+        String authClientName = request.getAuthClientName().toLowerCase();
+        if (StringUtils.isBlank(authClientName)) {
+            return memberDeleteResult(email, OAuth2Client.EMPTY);
+        }
+
+        OAuth2Client.validateClientName(authClientName);
+        return memberDeleteResult(email, OAuth2Client.of(authClientName));
+    }
+
+    private boolean memberDeleteResult(String email, OAuth2Client oAuth2Client) {
+        boolean existMember = isExistMember(email, oAuth2Client);
+        if (!existMember) {
+            throw new IllegalArgumentException("No registered member information.");
+        }
+
+        int deleteCount = memberRepository.deleteByEmailAndOAuthClient(email, oAuth2Client);
+        if (deleteCount > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     private boolean verifyAppleEmail(String token, OAuth2Client oAuth2Client) {
         if (StringUtils.isBlank(token)) {
             throw new IllegalArgumentException("Token is required for Apple login.");
@@ -119,7 +147,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     private boolean isExistMember(String email, OAuth2Client oAuthClient) {
-        Optional<Member> memberOpt = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient);
+        Optional<Member> memberOpt = memberRepository.findByEmailAndOAuthClient(email, oAuthClient);
         if (memberOpt.isPresent()) {
             return true;
         }

@@ -4,10 +4,7 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.*;
-import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiLoginRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiSignUpRequest;
+import com.site.reon.aggregate.member.service.dto.api.*;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -107,6 +104,24 @@ public class MemberLoginApiController {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             log.error("MemberLoginApiController.loginEmail Exception: ", e);
+            return BasicResponse.internalServerError(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "회원 탈퇴", notes = "앱에서 회원을 탈퇴합니다.")
+    @PostMapping("/withdraw")
+    public ResponseEntity withdraw(@Valid @RequestBody ApiWithdrawRequest request,
+                                      BindingResult bindingResult) {
+        ResponseEntity allErrors = validateBindingResult(bindingResult);
+        if (allErrors != null) return allErrors;
+
+        try {
+            boolean result = memberLoginService.withdraw(request);
+            return BasicResponse.ok(result);
+        } catch (IllegalArgumentException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            log.error("MemberLoginApiController.withdraw Exception: ", e);
             return BasicResponse.internalServerError(e.getMessage());
         }
     }

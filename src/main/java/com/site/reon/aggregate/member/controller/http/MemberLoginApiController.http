@@ -111,3 +111,32 @@ Content-Type: application/json
   "picture": "adfasfadafad",
   "authClientName": "kakao"
 }
+
+
+
+
+
+
+
+
+### should be return member
+POST http://localhost:8080/api/login/withdraw
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "authClientName": ""
+}
+
+### should be return member
+POST http://localhost:8080/api/login/withdraw
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "contact@myreon.net",
+  "authClientName": "google"
+}
