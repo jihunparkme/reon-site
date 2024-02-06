@@ -5,6 +5,7 @@ import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -80,12 +81,13 @@ class MemberLoginServiceImplUnitTest {
                 .email(email)
                 .token(null)
                 .build();
-        given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.KAKAO))
+        given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.KAKAO))
                 .willReturn(Optional.of(Member.builder()
                         .email(email)
                         .build()));
 
         boolean result = memberLoginService.verifyEmail(verifyDto);
+
         Assertions.assertTrue(result);
     }
 
@@ -97,7 +99,7 @@ class MemberLoginServiceImplUnitTest {
                 .email(email)
                 .token(null)
                 .build();
-        given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.KAKAO))
+        given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.KAKAO))
                 .willReturn(Optional.empty());
 
         boolean result = memberLoginService.verifyEmail(verifyDto);
@@ -112,7 +114,7 @@ class MemberLoginServiceImplUnitTest {
                 .email(email)
                 .token(null)
                 .build();
-        given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.GOOGLE))
+        given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.GOOGLE))
                 .willReturn(Optional.of(Member.builder()
                         .email(email)
                         .build()));
@@ -129,7 +131,7 @@ class MemberLoginServiceImplUnitTest {
                 .email(email)
                 .token(null)
                 .build();
-        given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.GOOGLE))
+        given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.GOOGLE))
                 .willReturn(Optional.empty());
 
         boolean result = memberLoginService.verifyEmail(verifyDto);
@@ -144,7 +146,7 @@ class MemberLoginServiceImplUnitTest {
                 .email(null)
                 .token(APPLE_LOGIN_TOKEN)
                 .build();
-        given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.APPLE))
+        given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.APPLE))
                 .willReturn(Optional.of(Member.builder()
                         .email(email)
                         .build()));
@@ -161,7 +163,7 @@ class MemberLoginServiceImplUnitTest {
                 .email(null)
                 .token(APPLE_LOGIN_TOKEN)
                 .build();
-        given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.APPLE))
+        given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.APPLE))
                 .willReturn(Optional.empty());
 
         boolean result = memberLoginService.verifyEmail(verifyDto);
