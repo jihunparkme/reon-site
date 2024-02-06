@@ -5,11 +5,8 @@ import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
-import com.site.reon.aggregate.member.service.dto.*;
-import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiLoginRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiSignUpRequest;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.api.*;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
 import org.junit.jupiter.api.Test;
@@ -248,7 +245,7 @@ class MemberLoginApiControllerTest {
     }
 
     @Test
-    void signUpEmail() throws Exception {
+    void signUpEmail_success() throws Exception {
         String email = "aaron@gmail.com";
         ApiSignUpRequest signUp = ApiSignUpRequest.builder()
                 .clientId(CLIENT_ID)
@@ -265,6 +262,32 @@ class MemberLoginApiControllerTest {
 
         ResultActions perform = mockMvc
                 .perform(post("/api/login/email/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void withdraw_email_success() throws Exception {
+        given(memberLoginService.withdraw(any()))
+                .willReturn(true);
+
+        String email = "aaron@gmail.com";
+        ApiWithdrawRequest signUp = ApiWithdrawRequest.builder()
+                .clientId(CLIENT_ID)
+                .clientName(CLIENT_NAME)
+                .email(email)
+                .authClientName("")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(signUp);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/withdraw")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json)
                         .with(csrf()));
