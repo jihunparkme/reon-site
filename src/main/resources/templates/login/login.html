@@ -1,4 +1,4 @@
-<head><title>RE:ON | SignIn</title></head>
+<head><title>RE:ON | Login</title></head>
 <div th:replace="~{common/head :: head('Login')}"></div>
 <link th:href="@{/css/login/login.css}" rel="stylesheet"/>
 <body>
@@ -8,25 +8,37 @@
     <div class="block-top"></div>
     <div class="login-box">
         <div class="login-row">
-            <div class="login-card-body">
-                <div class="login-card-content">
-                    <h1 id="login-title">Login</h1>
-                    <div class="login-page">
-                        <div class="login-main-form">
-                            <form class="register-form transform-form" id="register-form" onsubmit="return false;">
-                                <input id="sign-up-first-name" type="text" placeholder="first name"/>
-                                <input id="sign-up-last-name" type="text" placeholder="last name"/>
-                                <input id="sign-up-email" type="email" placeholder="email"/>
-                                <input id="sign-up-password" type="password" placeholder="password"/>
-                                <button th:onclick="'signUp()'">Sign Up</button>
-                                <p class="message">Already registered? <a href="#">Sign In</a></p>
-                            </form>
-                            <form class="login-form transform-form" onsubmit="return false;">
-                                <input id="login-email" type="email" placeholder="email"/>
-                                <input id="login-password" type="password" placeholder="password"/>
-                                <button th:onclick="'login()'">login</button>
-                                <p class="message">Not registered? <a href="#">Create an account</a></p>
-                            </form>
+            <div class="login-col">
+                <div class="login-card" style="width: 100%; border-radius: 15px;">
+                    <div class="login-card-body">
+                        <div class="login-card-content">
+                            <h1>로그인</h1>
+                            <h2>간편하게 로그인하고<br>서비스를 이용하세요.</h2>
+                            <ul>
+                                <li>
+                                    <div class="kakao">
+                                        <img width="24" height="24" th:src="@{/img/login/kakao-logo.png}" alt="kakao_logo">
+                                        <span>카카오 계정으로 시작하기</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="google">
+                                        <img width="24" height="24" th:src="@{/img/login/google-logo.png}" alt="google_logo">
+                                        <span>구글 계정으로 시작하기</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="apple">
+                                        <img width="24" height="24" th:src="@{/img/login/apple-logo.png}" alt="apple_logo">
+                                        <span>애플 계정으로 시작하기</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="email">
+                                        <span>이메일로 시작하기</span>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

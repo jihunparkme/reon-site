@@ -1,39 +1,50 @@
 # re-on-site
 
+Version.
+
 ```text
-> SpringBoot: 3.1.4
+> SpringBoot: 3.2.0
 > Java: jdk 17
 > Gradle
 ```
 
 ```text
-> 개발: Java, Spring
-> Version Control: Github
-> Server: Amazon EC2(t2.micro)
+> Backend
+  - Java
+  - Spring
+  - Spring Data Jpa
+  - Spring Security
+  - Spring OAuth2
+> DataBase
+  - MariaDB
+  - Redis
+> DevOps
+  - AWS RDS (db.t2.micro)
+  - AWS EC2 (t2.micro)
   - Docker
-  - CI/CD: Jenkins
-  - nginx
-> RDB Server
-  - Amazon RDS for MariaDB(db.t2.micro)
+  - Jenkins
+  - Nginx
+> Front
+  - thymeleaf
+> Test
+  - Junit
 ```
 
 # System architecture
 
-![Result](https://raw.githubusercontent.com/jihunparkme/blog/main/img/aws-ec2/system-architecture.png 'Result')
+![Result](https://raw.githubusercontent.com/jihunparkme/reon-site/master/reference/system-architecture.png 'Result')
 
 ---
 
 ## developing
 
 ing.
-- Record
-- 기존 코드 DDD 적용할 부분 확인
-- 테스트 코드 미작성 부분 확인해서 작성
 - Sign In/Sign Up
-- 구글/카카오/네이버 로그인 기능 추가
+- Record
 - Member
 - 로그 관리 -> 날짜별로 덮어쓰기
-- 도메인 등록하면, [Google Search Console 등록](https://search.google.com/search-console/about)
+- 도메인 등록
+  - [Google Search Console 등록](https://search.google.com/search-console/about)
 
 ## Global
 
@@ -81,14 +92,28 @@ ing.
 .
 
 **Sign In/Sign Up** 🏃🏻‍
+- 소셜(카카오, 구글, 애플) 및 이메일 로그인
+- Redis 로 Spring Session 관리
+
+- [ ] 소셜 로그인
+  - [x] 카카오 로그인
+  - [x] 구글 로그인 (앱 게시)
+  - [ ] 애플 로그인
+  - [ ] 소셜 로그인 필드 추가. picture, socialLogin
+  - [ ] App 에서 로그인, 로그아웃, 탈퇴 시 API
+  - [ ] 탈퇴 요청 시 소셜 연결 끊기
+  
+- [ ] <이메일, 소셜 로그인 여부>를 기본키로
+  - [ ] 일반 로그인은 소셜 로그인 여부 확인
+  - [ ] 소셜 로그인은 초기 비밀번호 어렵게 하고, 소셜로그인 필드로 서비스 구분
 - [ ] 가입하기
-  - [x] first name, last name, email, password
-  - [ ] 비밀번호 검증(ex. 비밀번호는 8~30 자리이면서 1개 이상의 알파벳, 숫자, 특수문자를 포함)
+  - [x] email, first name, last name, 비밀번호 
+  - [ ] 비밀번호 확인, 비밀번호 검증(ex. 영문 대소문자, 숫자, 특수문자를 3가지 이상으로 조합해 8자 이상 16자 이하로 입력해주세요.)
   - [ ] 가입 시 이메일 인증 기능.
     - [ ] 대표 메일 SMTP 등록
     - [ ] 인증하기 버튼 클릭 시 인증번호를 메일로 전송
     - [ ] 인증번호를 가지고 있다가 입력한 값하고 비교
-- [ ] JWT Refresh Token 적용
+  - [ ] 이메일 로그인 코드너리 참고
 - [ ] 비밀번호 찾기 (메일로 비밀번호 변경 링크 전달)
 
 .
@@ -116,14 +141,15 @@ ing.
 
 **Record** (`/record`) 🏃🏻‍
 - [x] 로스팅 로그 조회
-- [x] 그래프 [chart.js](https://www.chartjs.org/) 적용해 보기
+- [x] [chart.js](https://www.chartjs.org/) 적용해 보기 ❌
   - [cdnjs](https://cdnjs.com/libraries/Chart.js)
   - [documentation](https://www.chartjs.org/docs/latest/)
 - [x] 그래프 [amcharts](https://www.amcharts.com/) 적용해 보기
   - [Highlighting Line Chart](https://www.amcharts.com/demos/highlighting-line-chart-series-on-legend-hover/)
-- [ ] 관리자는 로스팅 로그 추출 가능하도록 (csv..?)
+- [x] 관리자는 로스팅 로그 추출 가능하도록 (csv..?) ❌
 - [ ] 회원은 자신의 로그만 조회 가능, 관리자는 모든 로그 조회 가능
 - [ ] 회원번호, S/N, 날짜로 검색 기능
+- [ ] amcharts.com 결제
 
 .
 

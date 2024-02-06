@@ -1,8 +1,9 @@
 package com.site.reon.aggregate.member.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.global.common.constant.member.MemberType;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -62,6 +63,10 @@ public class MemberDto {
     @Size(min = 3, max = 1000)
     private String address;
 
+    private String picture;
+
+    private OAuth2Client oAuthClient;
+
     public static MemberDto from(Member member) {
         if (member == null) {
             return null;
@@ -84,6 +89,8 @@ public class MemberDto {
                                 .authorityName(authority.getAuthorityName())
                                 .build())
                         .collect(Collectors.toSet()))
+                .picture(member.getPicture())
+                .oAuthClient(member.getOAuthClient())
                 .build();
     }
 }

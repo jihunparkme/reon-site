@@ -1,9 +1,18 @@
 package com.site.reon.global.common.constant.member;
 
-public class AuthConst {
-    private AuthConst() {}
+import lombok.AllArgsConstructor;
 
-    public static final String SET_COOKIE = "Set-Cookie";
-    public static final String ACCESS_TOKEN = "Access-Token";
-    public static final String NONE = "None";
+@AllArgsConstructor
+public enum AuthConst {
+    AUTHORIZATION_HEADER("Authorization"),
+    SET_COOKIE("Set-Cookie"),
+    ACCESS_TOKEN("Access-Token"),
+    NONE("None"),
+    ;
+
+    private String key;
+
+    public String key() {
+        return key;
+    }
 }

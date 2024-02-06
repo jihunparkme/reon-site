@@ -32,7 +32,7 @@ values ('test roasting222',
 
 CREATE TABLE member
 (
-    id          bigint       NOT NULL AUTO_INCREMENT,
+    member_id   bigint(20)  NOT NULL AUTO_INCREMENT,
     type        varchar(10),
     first_name   varchar(30)  not null,
     last_name    varchar(30)  not null,
@@ -43,10 +43,13 @@ CREATE TABLE member
     address     varchar(100),
     prd_code     varchar(100),
     roaster_sn   varchar(100),
+    o_auth_client varchar(10),
+    picture TEXT,
     activated   tinyint(1),
     created_dt  timestamp(6),
     modified_dt timestamp(6),
-    PRIMARY KEY (id)
+    PRIMARY KEY (member_id),
+    constraint email_oAuthClient_unique unique (email, o_auth_client)
 );
 
 create table authority (
@@ -60,11 +63,12 @@ create table member_authority (
   primary key (member_id, authority_name)
 );
 
-insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
-values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', true, DATE_FORMAT('2023-10-01', '%y-%m-%d'));
 
-insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, ACTIVATED, CREATED_DT)
-values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwDS8O6intHWsCf7e14DbAxAUIB6Pba/B/50y', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', true, DATE_FORMAT('2023-10-01 12:00:00','%y-%m-%d %H:%i:%s'));
+insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, O_AUTH_CLIENT, PICTURE, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', 'EMPTY', null, true, DATE_FORMAT('2023-10-01', '%y-%m-%d'));
+
+insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, O_AUTH_CLIENT, PICTURE, ACTIVATED, CREATED_DT)
+values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwDS8O6intHWsCf7e14DbAxAUIB6Pba/B/50y', '010-1234-1234', null, null, 'ASGFDSAGASGDAS', 'ASDFSAF4352qADFASF345251', 'EMPTY', null, true, DATE_FORMAT('2023-10-01 12:00:00','%y-%m-%d %H:%i:%s'));
 
 insert into authority (authority_name) values ('ROLE_GUEST');
 insert into authority (authority_name) values ('ROLE_USER');

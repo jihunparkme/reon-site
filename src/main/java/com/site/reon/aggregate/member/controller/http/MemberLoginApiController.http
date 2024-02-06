@@ -1,0 +1,283 @@
+### 앱에서 소셜 로그인 가입 여부를 확인합니다. (return false)
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "authClientName": "kakao",
+  "email": "aaa@gmail.com"
+}
+
+### 앱에서 소셜 로그인 가입 여부를 확인합니다. (return true)
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "authClientName": "kakao",
+  "email": "user@gmail.com"
+}
+
+### 앱에서 소셜 로그인 가입 여부를 확인합니다. BAD_REQUEST (Invalid client id.)
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "authClientName": "kakao",
+  "email": "user@gmail.com"
+}
+
+### 앱에서 소셜 로그인 가입 여부를 확인합니다. BAD_REQUEST (Invalid client name.)
+POST http://localhost:8080/api/login/verify/email
+Content-Type: application/json
+
+{
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "authClientName": "kakao",
+  "email": "user@gmail.com"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 앱에서 신규로 소셜 가입을 합니다. (kakao, google, apple)
+POST http://localhost:8080/api/login/oauth2/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "authClientName": "kakao",
+  "email": "user@gmail.com",
+  "firstName": "user",
+  "picture": "adfasfadafad",
+  "roasterSn": "asdfasdfasfsadfasfsafs"
+}
+
+### 앱에서 신규로 소셜 가입을 합니다. BAD_REQUEST (roasterSn is required.)
+POST http://localhost:8080/api/login/oauth2/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "firstName": "user",
+  "picture": "adfasfadafad",
+  "authClientName": "kakao"
+}
+
+### 앱에서 신규로 소셜 가입을 합니다. BAD_REQUEST (This is unsupported OAuth2 Client service. Please check authClientName field.)
+POST http://localhost:8080/api/login/oauth2/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "authClientName": "xxx",
+  "email": "user@gmail.com",
+  "firstName": "user",
+  "picture": "adfasfadafad",
+  "roasterSn": "asdfasdfasfsadfasfsafs"
+}
+
+### 앱에서 신규로 소셜 가입을 합니다. BAD_REQUEST (이미 가입되어 있는 이메일입니다.)
+POST http://localhost:8080/api/login/oauth2/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "authClientName": "kakao",
+  "email": "user@gmail.com",
+  "firstName": "user",
+  "picture": "adfasfadafad",
+  "roasterSn": "asdfasdfasfsadfasfsafs"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 앱에서 이메일로 가입합니다. SUCCESS
+POST http://localhost:8080/api/login/email/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "xxx@gmail.com",
+  "firstName": "aaron",
+  "lastName": "park",
+  "password": "park123!@#",
+  "roasterSn": "avdas-vadsavd-asvdsavd-avda"
+}
+
+### 앱에서 이메일로 가입합니다. BAD_REQUEST (이미 가입되어 있는 이메일입니다.)
+POST http://localhost:8080/api/login/email/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "firstName": "aaron",
+  "lastName": "park",
+  "password": "park123!@#",
+  "roasterSn": "avdas-vadsavd-asvdsavd-avda"
+}
+
+### 앱에서 이메일로 가입합니다. BAD_REQUEST (비밀번호는 최소 8자에서 50자까지, 영문자, 숫자 및 특수 문자를 포함해야 합니다.)
+POST http://localhost:8080/api/login/email/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "firstName": "aaron",
+  "lastName": "park",
+  "password": "park",
+  "roasterSn": "avdas-vadsavd-asvdsavd-avda"
+}
+
+### 앱에서 이메일로 가입합니다. BAD_REQUEST (이메일 형식을 확인해 주세요.)
+POST http://localhost:8080/api/login/email/sign-up
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "xxx",
+  "firstName": "aaron",
+  "lastName": "park",
+  "password": "park123!@#",
+  "roasterSn": "avdas-vadsavd-asvdsavd-avda"
+}
+
+
+
+
+
+
+
+
+
+
+
+### 앱에서 이메일로 로그인합니다.
+POST http://localhost:8080/api/login/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "password": "user"
+}
+
+### 앱에서 이메일로 로그인합니다. BAD_REQUEST (자격 증명에 실패하였습니다.)
+POST http://localhost:8080/api/login/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "password": "aaa"
+}
+
+### 앱에서 이메일로 로그인합니다. BAD_REQUEST (password is required.)
+POST http://localhost:8080/api/login/email
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "aaa@gmail.com",
+  "password": ""
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 앱에서 회원을 탈퇴합니다. (이메일)
+POST http://localhost:8080/api/login/withdraw
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "authClientName": ""
+}
+
+### 앱에서 회원을 탈퇴합니다. (소셜: kakao, google, apple)
+POST http://localhost:8080/api/login/withdraw
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "contact@myreon.net",
+  "authClientName": "google"
+}
+
+### 앱에서 회원을 탈퇴합니다. BAD_REQUEST (No registered member information.)
+POST http://localhost:8080/api/login/withdraw
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "authClientName": ""
+}
+
+### 앱에서 회원을 탈퇴합니다. BAD_REQUEST (This is unsupported OAuth2 Client service. Please check authClientName field.)
+POST http://localhost:8080/api/login/withdraw
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "user@gmail.com",
+  "authClientName": "xxx"
+}

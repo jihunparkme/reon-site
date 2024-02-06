@@ -2,6 +2,7 @@ package com.site.reon.aggregate.member.domain;
 
 import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.common.BaseTimeEntity;
+import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,15 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
+@Table(
+        name = "member",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "email_oAuthClient_unique",
+                        columnNames = {"email", "oAuthClient"}
+                )
+        }
+)
 @Getter
 @Builder
 @NoArgsConstructor
@@ -32,7 +42,7 @@ public class Member extends BaseTimeEntity {
     @Column(length = 30, nullable = false)
     private String lastName;
 
-    @Column(length = 50, nullable = false, unique = true)
+    @Column(length = 50, nullable = false)
     private String email;
 
     @Column(length = 100, nullable = false)
@@ -44,7 +54,7 @@ public class Member extends BaseTimeEntity {
     @Column(length = 30)
     private String companyName;
 
-    @Column(length = 1000)
+    @Column(length = 100)
     private String address;
 
     @Column(length = 100)
@@ -52,6 +62,13 @@ public class Member extends BaseTimeEntity {
 
     @Column(length = 100)
     private String roasterSn;
+
+    @Column(length = 2000)
+    private String picture;
+
+    @Column(length = 10)
+    @Enumerated(EnumType.STRING)
+    private OAuth2Client oAuthClient;
 
     @Column
     private boolean activated;
@@ -62,4 +79,10 @@ public class Member extends BaseTimeEntity {
             joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
+
+    public Member oAuth2UserUpdate(String name, String picture) {
+        this.firstName = name;
+        this.picture = picture;
+        return this;
+    }
 }

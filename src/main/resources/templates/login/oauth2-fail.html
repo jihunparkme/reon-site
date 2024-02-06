@@ -1,0 +1,15 @@
+<head><title>RE:ON | SignIn</title></head>
+<div th:replace="~{common/head :: head('Login')}"></div>
+<link th:href="@{/css/login/login.css}" rel="stylesheet"/>
+<body>
+<div th:replace="~{common/header :: header('login')}"></div>
+
+<main class="container-login">
+</main>
+
+<script type="text/javascript" th:inline="javascript">
+    alert("로그인에 실패하였습니다. 다시 시도해 주세요.");
+    location.href = "/login";
+</script>
+</body>
+</html>

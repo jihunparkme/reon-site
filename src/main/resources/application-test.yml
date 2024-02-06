@@ -1,5 +1,8 @@
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 43200 # 12h
 
 spring:
 
@@ -8,7 +11,9 @@ spring:
       on-profile: test
 
   session:
-    store-type: jdbc
+    store-type: redis
+    redis:
+      repository-type: indexed
 
   servlet:
     multipart:
@@ -39,6 +44,10 @@ spring:
         show_sql: true
         default_batch_fetch_size: 100
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
 
   devtools:
     restart:
@@ -48,6 +57,15 @@ spring:
 
   messages:
     basename: messages,errors
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: asfdsafdasffsadf
+            client-secret: asdfsafasdfdasdfas
+            scope: email, profile
 
 logging:
   level:
@@ -59,10 +77,10 @@ logging:
             sql: TRACE
         SQL: DEBUG
 
-jwt:
-  header: Authorization
-  secret: YWFyb24tdGVjaC1zcHJpbmctYm9vdC1qd3QtdHV0b3JpYWwtc2VjcmV0LWFhcm9uLXRlY2gtc3ByaW5nLWJvb3Qtand0LXR1dG9yaWFsLXNlY3JldAo=
-  token-validity-in-seconds: 86400
+app:
+  reon:
+    client-name: reon
+    client-id: 235df110-bd70-11ee-aa8b-e30685fde2fa
 
 file:
   upload:

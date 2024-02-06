@@ -1,16 +1,27 @@
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 43200 # 12h
 
 spring:
+
   config:
     activate:
       on-profile: dev
+
   session:
-    store-type: jdbc
+    store-type: redis
+    redis:
+      repository-type: indexed
+
   servlet:
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 10MB
+    session:
+      timeout: 3600
+
   jpa:
     show-sql: true
     properties:
@@ -20,15 +31,29 @@ spring:
         default_batch_fetch_size: 100
     hibernate:
       ddl-auto: update
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
   thymeleaf:
     cache: false
+
   devtools:
     restart:
       enabled: true
     livereload:
       enabled: true
+
   messages:
     basename: messages,errors
+
+app:
+  reon:
+    client-name: reon
+    client-id: 235df110-bd70-11ee-aa8b-e30685fde2fa
+
 
 file:
   directory: /Users/aaron/reon/uploadFiles/
