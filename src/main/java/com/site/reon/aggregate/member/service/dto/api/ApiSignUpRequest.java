@@ -1,28 +1,20 @@
-package com.site.reon.aggregate.member.service.dto;
+package com.site.reon.aggregate.member.service.dto.api;
 
+import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.global.common.annotation.ClientIdConstraint;
 import com.site.reon.global.common.annotation.ClientNameConstraint;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiLoginDto {
+public class ApiSignUpRequest extends SignUpDto {
     @ClientIdConstraint
     private String clientId;
     @ClientNameConstraint
     private String clientName;
-
-    @NotNull
-    @Size(min = 3, max = 50)
-    private String email;
-    @NotNull
-    @Size(min = 3, max = 100)
-    private String password;
 }

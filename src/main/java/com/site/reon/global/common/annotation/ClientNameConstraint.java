@@ -16,7 +16,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 @Target({ FIELD, PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ClientNameConstraint {
-    String message() default "Invalid client name";
+    String message() default "Invalid client name.";
 
     Class<?>[] groups() default {};
 

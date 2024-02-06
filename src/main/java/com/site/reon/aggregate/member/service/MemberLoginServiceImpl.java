@@ -4,9 +4,12 @@ import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.AppleOAuth2Token;
@@ -28,6 +31,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MemberLoginServiceImpl implements MemberLoginService {
+
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -35,12 +39,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     @Override
     @Transactional
     public void signup(SignUpDto signUpDto) {
-        Member findMember = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY)
-                .orElse(null);
-
-        if (findMember != null) {
-            throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
-        }
+        validateEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY);
 
         Authority authority = Authority.builder()
                 .authorityName(Role.USER.key())
@@ -51,6 +50,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
                 .lastName(signUpDto.getLastName())
                 .email(signUpDto.getEmail())
                 .password(passwordEncoder.encode(signUpDto.getPassword()))
+                .roasterSn(signUpDto.getRoasterSn())
                 .authorities(Collections.singleton(authority))
                 .oAuthClient(OAuth2Client.EMPTY)
                 .activated(true)
@@ -60,13 +60,16 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     @Override
-    public boolean verifyEmail(ApiEmailVerifyDto emailVerityDto) {
-        OAuth2Client oAuth2Client = OAuth2Client.of(emailVerityDto.getAuthClientName().toLowerCase());
+    public boolean verifyEmail(ApiEmailVerifyRequest request) {
+        String authClientName = request.getAuthClientName().toLowerCase();
+        OAuth2Client.validateClientName(authClientName);
+
+        OAuth2Client oAuth2Client = OAuth2Client.of(authClientName);
         if (OAuth2Client.APPLE == oAuth2Client) {
-            return verifyAppleEmail(emailVerityDto.getToken(), oAuth2Client);
+            return verifyAppleEmail(request.getToken(), oAuth2Client);
         }
 
-        return verifyKakaoAndGoogleEmail(emailVerityDto.getEmail(), oAuth2Client);
+        return verifyKakaoAndGoogleEmail(request.getEmail(), oAuth2Client);
     }
 
     @Override
@@ -76,6 +79,43 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Override
+    public MemberDto oAuth2SignUp(ApiOAuth2SignUpRequest request) {
+        String authClientName = request.getAuthClientName().toLowerCase();
+        OAuth2Client.validateClientName(authClientName);
+        validateEmailAndOAuthClient(request.getEmail(), OAuth2Client.of(authClientName));
+
+        Member member = request.toMember();
+        return MemberDto.from(memberRepository.save(member));
+    }
+
+    @Override
+    @Transactional
+    public boolean withdraw(ApiWithdrawRequest request) {
+        String email = request.getEmail();
+        String authClientName = request.getAuthClientName().toLowerCase();
+        if (StringUtils.isBlank(authClientName)) {
+            return memberDeleteResult(email, OAuth2Client.EMPTY);
+        }
+
+        OAuth2Client.validateClientName(authClientName);
+        return memberDeleteResult(email, OAuth2Client.of(authClientName));
+    }
+
+    private boolean memberDeleteResult(String email, OAuth2Client oAuth2Client) {
+        boolean existMember = isExistMember(email, oAuth2Client);
+        if (!existMember) {
+            throw new IllegalArgumentException("No registered member information.");
+        }
+
+        int deleteCount = memberRepository.deleteByEmailAndOAuthClient(email, oAuth2Client);
+        if (deleteCount > 0) {
+            return true;
+        }
+
+        throw new IllegalArgumentException("Failed to delete member.");
     }
 
     private boolean verifyAppleEmail(String token, OAuth2Client oAuth2Client) {
@@ -90,7 +130,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
             throw new IllegalArgumentException("The token information is invalid.");
         }
 
-        return getOAuth2EmailMember(email, oAuth2Client);
+        return isExistMember(email, oAuth2Client);
     }
 
     private boolean verifyKakaoAndGoogleEmail(String email, OAuth2Client oAuth2Client) {
@@ -98,11 +138,18 @@ public class MemberLoginServiceImpl implements MemberLoginService {
             throw new IllegalArgumentException("Email is required for Kakao, Google login.");
         }
 
-        return getOAuth2EmailMember(email, oAuth2Client);
+        return isExistMember(email, oAuth2Client);
     }
 
-    private boolean getOAuth2EmailMember(String email, OAuth2Client oAuthClient) {
-        Optional<Member> memberOpt = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient);
+    private void validateEmailAndOAuthClient(String email, OAuth2Client oAuthClient) {
+        Optional<Member> memberOpt = memberRepository.findByEmailAndOAuthClient(email, oAuthClient);
+        if (memberOpt.isPresent()) {
+            throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
+        }
+    }
+
+    private boolean isExistMember(String email, OAuth2Client oAuthClient) {
+        Optional<Member> memberOpt = memberRepository.findByEmailAndOAuthClient(email, oAuthClient);
         if (memberOpt.isPresent()) {
             return true;
         }

@@ -63,7 +63,7 @@ public class Member extends BaseTimeEntity {
     @Column(length = 100)
     private String roasterSn;
 
-    @Column(length = 100)
+    @Column(length = 2000)
     private String picture;
 
     @Column(length = 10)

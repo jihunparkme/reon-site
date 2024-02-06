@@ -5,11 +5,10 @@ import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
-import com.site.reon.aggregate.member.service.dto.ApiEmailVerifyDto;
-import com.site.reon.aggregate.member.service.dto.ApiLoginDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.api.*;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.property.ReonAppProperty;
-import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -47,7 +46,7 @@ class MemberLoginApiControllerTest {
     private String CLIENT_NAME = "reon";
     private String CLIENT_ID = "235df110-bd70-11ee-aa8b-e30685fde2fa";
 
-    private ApiEmailVerifyDto verifyDto = ApiEmailVerifyDto.builder()
+    private ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
             .clientId(CLIENT_ID)
             .clientName(CLIENT_NAME)
             .authClientName("KAKAO")
@@ -55,7 +54,7 @@ class MemberLoginApiControllerTest {
             .token(null)
             .build();
 
-    private ApiEmailVerifyDto invalidClient = ApiEmailVerifyDto.builder()
+    private ApiEmailVerifyRequest invalidClient = ApiEmailVerifyRequest.builder()
             .clientId("aaaa")
             .clientName("bbbbbbbbbbbbbbbbb")
             .authClientName("KAKAO")
@@ -71,11 +70,21 @@ class MemberLoginApiControllerTest {
             .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
             .build()).get();
 
-    private ApiLoginDto apiLoginDto = ApiLoginDto.builder()
+    private ApiLoginRequest apiLoginDto = ApiLoginRequest.builder()
             .clientId(CLIENT_ID)
             .clientName(CLIENT_NAME)
             .email(email)
             .password("user")
+            .build();
+
+    private ApiOAuth2SignUpRequest apiOAuth2SignUp = ApiOAuth2SignUpRequest.builder()
+            .clientId(CLIENT_ID)
+            .clientName(CLIENT_NAME)
+            .roasterSn("asfdasfeasfdsasdfas")
+            .email(email)
+            .firstName("aaron")
+            .picture("safddsafdsafs")
+            .authClientName("kakao")
             .build();
 
     @Test
@@ -175,7 +184,7 @@ class MemberLoginApiControllerTest {
     }
 
     @Test
-    void loginEmail_should_be_respnose_400() throws Exception {
+    void loginEmail_should_be_response_400() throws Exception {
         given(memberService.getMemberWithAuthorities(any(), any()))
                 .willReturn(null);
 
@@ -190,5 +199,100 @@ class MemberLoginApiControllerTest {
 
         perform
                 .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void oAuth2SignUp_should_be_success() throws Exception {
+        given(memberLoginService.oAuth2SignUp(any()))
+                .willReturn(MemberDto.from(apiOAuth2SignUp.toMember()));
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(apiOAuth2SignUp);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/oauth2/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.email").value(email))
+                .andExpect(jsonPath("$.data.firstName").value("aaron"))
+                .andExpect(jsonPath("$.data.roasterSn").value("asfdasfeasfdsasdfas"))
+                .andExpect(jsonPath("$.data.picture").value("safddsafdsafs"))
+                .andExpect(jsonPath("$.data.oauthClient").value("KAKAO"));
+    }
+
+    @Test
+    void oAuth2SignUp_should_be_IllegalArgumentException() throws Exception {
+        ApiOAuth2SignUpRequest failJson = ApiOAuth2SignUpRequest.builder()
+                .clientId(CLIENT_ID)
+                .clientName(CLIENT_NAME)
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(failJson);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/oauth2/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void signUpEmail_success() throws Exception {
+        String email = "aaron@gmail.com";
+        ApiSignUpRequest signUp = ApiSignUpRequest.builder()
+                .clientId(CLIENT_ID)
+                .clientName(CLIENT_NAME)
+                .email(email)
+                .firstName("aaron")
+                .lastName("park")
+                .password("aaron123!@#")
+                .roasterSn("afdsafdasfas")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(signUp);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/email/sign-up")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void withdraw_email_success() throws Exception {
+        given(memberLoginService.withdraw(any()))
+                .willReturn(true);
+
+        String email = "aaron@gmail.com";
+        ApiWithdrawRequest signUp = ApiWithdrawRequest.builder()
+                .clientId(CLIENT_ID)
+                .clientName(CLIENT_NAME)
+                .email(email)
+                .authClientName("")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(signUp);
+
+        ResultActions perform = mockMvc
+                .perform(post("/api/login/withdraw")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().isOk());
     }
 }
