@@ -28,6 +28,11 @@ class MemberLoginServiceImplUnitTest {
     private MemberLoginService memberLoginService = new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder);
     private final static String APPLE_LOGIN_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiYWFyb24ucGFyayIsImV4cCI6MTcwNjQ0NTUyOSwiaWF0IjoxNzA2MzU5MTI5LCJzdWIiOiIwMDAzODUuMDQ3c2dmNjZhYnM2NGQ2MGE0MDZkNWQ0YjNiNHgydjIuMTk5MyIsImNfaGFzaCI6IkYyWWRiN0R2RUJZaE9vUElHdGhEb0ciLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOiJ0cnVlIiwiYXV0aF90aW1lIjoxNzA2MzU5MTI5LCJub25jZV9zdXBwb3J0ZWQiOnRydWV9.8DWNWY3PkDRdXzAjmrcaWH9p0tvjmg3ieOH4MZXz7Gs";
 
+    private String email = "user@gmail.com";
+    private Optional<Member> memberOpt = Optional.of(Member.builder()
+            .email(email)
+            .build());
+
     @Test
     void verify_email_of_email_is_null() throws Exception {
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
@@ -82,9 +87,7 @@ class MemberLoginServiceImplUnitTest {
                 .token(null)
                 .build();
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.KAKAO))
-                .willReturn(Optional.of(Member.builder()
-                        .email(email)
-                        .build()));
+                .willReturn(memberOpt);
 
         boolean result = memberLoginService.verifyEmail(verifyDto);
 
@@ -115,9 +118,7 @@ class MemberLoginServiceImplUnitTest {
                 .token(null)
                 .build();
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.GOOGLE))
-                .willReturn(Optional.of(Member.builder()
-                        .email(email)
-                        .build()));
+                .willReturn(memberOpt);
 
         boolean result = memberLoginService.verifyEmail(verifyDto);
         Assertions.assertTrue(result);
@@ -147,9 +148,7 @@ class MemberLoginServiceImplUnitTest {
                 .token(APPLE_LOGIN_TOKEN)
                 .build();
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.APPLE))
-                .willReturn(Optional.of(Member.builder()
-                        .email(email)
-                        .build()));
+                .willReturn(memberOpt);
 
         boolean result = memberLoginService.verifyEmail(verifyDto);
         Assertions.assertTrue(result);
@@ -208,5 +207,56 @@ class MemberLoginServiceImplUnitTest {
         );
 
         assertEquals("This is unsupported OAuth2 Client service. Please check authClientName field.", exception.getMessage());
+    }
+
+    @Test
+    void withdraw_success() throws Exception {
+        String email = "user@gmail.com";
+        ApiWithdrawRequest request = ApiWithdrawRequest.builder()
+                .email(email)
+                .authClientName("")
+                .build();
+
+        given(memberRepository.findByEmailAndOAuthClient(any(), any()))
+                .willReturn(memberOpt);
+        given(memberRepository.deleteByEmailAndOAuthClient(any(), any()))
+                .willReturn(1);
+
+        boolean result = memberLoginService.withdraw(request);
+
+        Assertions.assertTrue(result);
+    }
+
+    @Test
+    void withdraw_fail_invalid_client_name() throws Exception {
+        String email = "user@gmail.com";
+        ApiWithdrawRequest request = ApiWithdrawRequest.builder()
+                .email(email)
+                .authClientName("XXX")
+                .build();
+
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                memberLoginService.withdraw(request)
+        );
+
+        assertEquals("This is unsupported OAuth2 Client service. Please check authClientName field.", exception.getMessage());
+    }
+
+    @Test
+    void withdraw_fail_not_exist_member() throws Exception {
+        String email = "xxx@gmail.com";
+        ApiWithdrawRequest request = ApiWithdrawRequest.builder()
+                .email(email)
+                .authClientName("google")
+                .build();
+        given(memberRepository.findByEmailAndOAuthClient(any(), any()))
+                .willReturn(Optional.empty());
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                memberLoginService.withdraw(request)
+        );
+
+        assertEquals("No registered member information.", exception.getMessage());
     }
 }
