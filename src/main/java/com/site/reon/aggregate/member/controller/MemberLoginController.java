@@ -65,7 +65,7 @@ public class MemberLoginController {
             memberLoginService.signup(signUpDto);
             return ResponseEntity.ok(SUCCESS);
         } catch (DuplicateMemberException e) {
-            return BasicResponse.internalServerError(e.getMessage());
+            return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             return BasicResponse.internalServerError("회원가입을 실패하였습니다. 다시 시도해 주세요.");
         }
