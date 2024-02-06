@@ -4,7 +4,9 @@ import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.dto.*;
+import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
@@ -113,7 +115,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
             return true;
         }
 
-        return false;
+        throw new IllegalArgumentException("Failed to delete member.");
     }
 
     private boolean verifyAppleEmail(String token, OAuth2Client oAuth2Client) {
