@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
-    public ResponseEntity<MemberDto> getMyMemberInfo() {
-        return ResponseEntity.ok(memberService.getMyMemberWithAuthorities());
-    }
-
-    @GetMapping("/{email}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<MemberDto> getMemberInfo(@PathVariable String email) {
-        return ResponseEntity.ok(MemberDto.from(memberService.getMemberWithAuthorities(email)));
-    }
+//    @GetMapping
+//    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+//    public ResponseEntity<MemberDto> getMyMemberInfo() {
+//        return ResponseEntity.ok(memberService.getMyMemberWithAuthorities());
+//    }
+//
+//    @GetMapping("/{email}")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+//    public ResponseEntity<MemberDto> getMemberInfo(@PathVariable String email) {
+//        return ResponseEntity.ok(MemberDto.from(memberService.getMemberWithAuthorities(email)));
+//    }
 }
