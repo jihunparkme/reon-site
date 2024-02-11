@@ -1,0 +1,165 @@
+<div th:replace="~{common/head :: head('mypage')}"></div>
+<link th:href="@{/css/login/login.css}" rel="stylesheet"/>
+<body>
+<div th:replace="~{common/header :: header('mypage')}"></div>
+<style>
+.container-login input {
+    background-color: rgb(241, 243, 245);
+}
+.required {
+    color: rgb(250, 82, 82);
+}
+</style>
+
+<main class="container-login">
+    <div class="block-top"></div>
+    <div class="login-box">
+        <div class="login-row">
+            <div class="login-col">
+                <div class="login-card" style="width: 100%; border-radius: 15px;">
+                    <div class="login-card-body">
+                        <div class="login-card-content">
+                            <h1>회원 정보</h1>
+                            <div style="margin-top: 25px; margin-bottom: 50px;">
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="type">
+                                        <div class="my-page-label-text">Type.</div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="type" th:value="${member.type}" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="email">
+                                        <div class="my-page-label-text">Email. <span class="required">*</span> </div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="email" th:value="${member.email}" class="form-control" readonly disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="firstName">
+                                        <div class="my-page-label-text">First name. <span class="required">*</span></div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="firstName" th:value="${member.firstName}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="lastName">
+                                        <div class="my-page-label-text">Last name.</div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="lastName" th:value="${member.lastName}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="phone">
+                                        <div class="my-page-label-text">Phone.</div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="phone" th:value="${member.phone}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="prdCode">
+                                        <div class="my-page-label-text">Product Code.</div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="prdCode" th:value="${member.prdCode}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="roasterSn">
+                                        <div class="my-page-label-text">Roaster S/N.</div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="roasterSn" th:value="${member.roasterSn}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="companyName">
+                                        <div class="my-page-label-text">Company Name.</div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="companyName" th:value="${member.companyName}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="my-page-field">
+                                    <label class="my-page-label" for="address">
+                                        <div class="my-page-label-text">Address.</div>
+                                    </label>
+                                    <div class="my-page-input-field-out">
+                                        <div class="my-page-input-field-in">
+                                            <input type="text" id="address" th:value="${member.address}" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="float: right;">
+                                    <div style="display: inline-block">
+                                        <button type="submit" class="btn btn-success">수정</button>
+                                    </div>
+                                    <div style="display: inline-block">
+                                        <button type="button" id="btn-withdraw" class="btn btn-danger">회원탈퇴</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{common/footer :: footer}"></div>
+</main>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div th:replace="~{common/commonjs}"></div>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    $(function() {
+        $('#btn-check').click(function () {
+            window.history.back();
+        });
+
+        $('#btn-withdraw').click(function () {
+            if (confirm("정말로 탈퇴하시겠습니까?")) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/mypage/withdraw",
+                    dataType: 'json',
+                    contentType: 'application/json; charset=UTF-8',
+                    data : JSON.stringify({"email": $('#email').val()}),
+                    accept: "application/json"
+                }).done(function(result) {
+                    alert(result['message']);
+                    window.location.href = '/logout';
+                }).fail(function (error) {
+                    alert("회원 탈퇴를 실패하였습니다. 관리자에게 문의해 주세요.\n(" + error['responseJSON']['message'] + ")");
+                });
+            }
+        });
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

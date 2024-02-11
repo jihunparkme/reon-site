@@ -2,6 +2,7 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,12 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberWithAuthorities(String email, OAuth2Client oAuthClient) {
         return memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient)
                 .orElse(null);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MemberDto getMember(long id) {
+        return MemberDto.from(memberRepository.findById(id)
+                .orElse(null));
     }
 }
