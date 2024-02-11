@@ -21,105 +21,93 @@
                         <div class="login-card-content">
                             <h1>회원 정보</h1>
                             <div style="margin-top: 25px; margin-bottom: 50px;">
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="type">
+                                <form th:action="edit" th:object="${member}" method="post">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Type.</div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="type" th:value="${member.type}" class="form-control" readonly>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <select th:field="${member.type}" th:value="${member.type}" class="form-select">
+                                                    <option value="">=== 타입 선택 ===</option>
+                                                    <option th:value="'PRIVATE'" th:text="개인회원"></option>
+                                                    <option th:value="'COMPANY'" th:text="기업회원"></option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="email">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Email. <span class="required">*</span> </div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="email" th:value="${member.email}" class="form-control" readonly disabled>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{email}" class="form-control" readonly disabled>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="firstName">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">First name. <span class="required">*</span></div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="firstName" th:value="${member.firstName}" class="form-control">
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{firstName}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="lastName">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Last name.</div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="lastName" th:value="${member.lastName}" class="form-control">
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{lastName}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="phone">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Phone.</div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="phone" th:value="${member.phone}" class="form-control">
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{phone}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="prdCode">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Product Code.</div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="prdCode" th:value="${member.prdCode}" class="form-control">
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{prdCode}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="roasterSn">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Roaster S/N.</div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="roasterSn" th:value="${member.roasterSn}" class="form-control">
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{roasterSn}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="companyName">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Company Name.</div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="companyName" th:value="${member.companyName}" class="form-control">
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{companyName}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="my-page-field">
-                                    <label class="my-page-label" for="address">
+                                    <div class="my-page-field">
                                         <div class="my-page-label-text">Address.</div>
-                                    </label>
-                                    <div class="my-page-input-field-out">
-                                        <div class="my-page-input-field-in">
-                                            <input type="text" id="address" th:value="${member.address}" class="form-control">
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{address}" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div style="float: right;">
-                                    <div style="display: inline-block">
-                                        <button type="submit" class="btn btn-success">수정</button>
+                                    <div style="float: right;">
+                                        <div style="display: inline-block">
+                                            <button type="submit" class="btn btn-success">수정</button>
+                                        </div>
+                                        <div style="display: inline-block">
+                                            <button type="button" id="btn-withdraw" class="btn btn-danger">회원탈퇴</button>
+                                        </div>
                                     </div>
-                                    <div style="display: inline-block">
-                                        <button type="button" id="btn-withdraw" class="btn btn-danger">회원탈퇴</button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                             </div>
                         </div>
