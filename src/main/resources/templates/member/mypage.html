@@ -9,7 +9,12 @@
 .required {
     color: rgb(250, 82, 82);
 }
+.social-login {
+    align-self: center;
+    margin-left: 20px;
+}
 </style>
+
 
 <main class="container-login">
     <div class="block-top"></div>
@@ -20,8 +25,29 @@
                     <div class="login-card-body">
                         <div class="login-card-content">
                             <h1>회원 정보</h1>
-                            <div style="margin-top: 25px; margin-bottom: 50px;">
-                                <form th:action="edit" th:object="${member}" method="post">
+                            <form th:action="edit" th:object="${member}" method="post">
+                                <div th:switch="${member.oAuthClient.name()}">
+                                    <div th:case="'GOOGLE'">
+                                        <div class="google" style="cursor: default;">
+                                            <img width="24" height="24" th:src="@{/img/login/google-logo.png}" alt="google_logo">
+                                            <span class="social-login">구글 계정으로 로그인</span>
+                                        </div>
+                                    </div>
+                                    <div th:case="'KAKAO'">
+                                        <div class="kakao" style="cursor: default;">
+                                            <img width="24" height="24" th:src="@{/img/login/kakao-logo.png}" alt="kakao_logo">
+                                            <span class="social-login">카카오 계정으로 로그인</span>
+                                        </div>
+                                    </div>
+                                    <div th:case="'APPLE'">
+                                        <div class="apple" style="cursor: default;">>
+                                            <img width="24" height="24" th:src="@{/img/login/apple-logo.png}" alt="apple_logo">
+                                            <span class="social-login">애플 계정으로 로그인</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 25px; margin-bottom: 50px;">
                                     <div class="my-page-field">
                                         <div class="my-page-label-text">Type.</div>
                                         <div class="my-page-input-field-out">
@@ -107,9 +133,8 @@
                                             <button type="button" id="btn-withdraw" class="btn btn-danger">회원탈퇴</button>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
