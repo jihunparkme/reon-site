@@ -1,9 +1,9 @@
 <div th:replace="~{common/head :: head('mypage')}"></div>
-<link th:href="@{/css/login/login.css}" rel="stylesheet"/>
+<link th:href="@{/css/member/member.css}" rel="stylesheet"/>
 <body>
 <div th:replace="~{common/header :: header('mypage')}"></div>
 <style>
-.container-login input {
+.container-member input {
     background-color: rgb(241, 243, 245);
 }
 .required {
@@ -16,17 +16,21 @@
 </style>
 
 
-<main class="container-login">
+<main class="container-member">
     <div class="block-top"></div>
-    <div class="login-box">
-        <div class="login-row">
-            <div class="login-col">
-                <div class="login-card" style="width: 100%; border-radius: 15px;">
-                    <div class="login-card-body">
-                        <div class="login-card-content">
+    <div class="member-box">
+        <div class="member-row">
+            <div class="member-col">
+                <div class="member-card" style="width: 100%; border-radius: 15px;">
+                    <div class="member-card-body">
+                        <div th:if="${param.status}" class="save-success">
+                            저장이 완료되었습니다.
+                        </div>
+
+                        <div class="member-card-content">
                             <h1>회원 정보</h1>
-                            <form th:action="edit" th:object="${member}" method="post">
-                                <div th:switch="${member.oAuthClient.name()}">
+                            <form th:action="@{/member/mypage/edit}" th:object="${member}" method="post">
+                                <div th:switch="${member?.oAuthClient?.name()}">
                                     <div th:case="'GOOGLE'">
                                         <div class="google" style="cursor: default;">
                                             <img width="24" height="24" th:src="@{/img/login/google-logo.png}" alt="google_logo">
@@ -64,7 +68,7 @@
                                         <div class="my-page-label-text">Email. <span class="required">*</span> </div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{email}" class="form-control" readonly disabled>
+                                                <input type="text" th:field="*{email}" class="form-control" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +76,8 @@
                                         <div class="my-page-label-text">First name. <span class="required">*</span></div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{firstName}" class="form-control">
+                                                <div class="field-error" th:errors="*{firstName}">firstName error</div>
+                                                <input type="text" id="firstName" th:field="*{firstName}" th:errorclass="field-error-input" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -105,6 +110,7 @@
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
                                                 <input type="text" th:field="*{roasterSn}" class="form-control">
+                                                <div class="field-error" th:errors="*{roasterSn}">Roaster S/N error</div>
                                             </div>
                                         </div>
                                     </div>

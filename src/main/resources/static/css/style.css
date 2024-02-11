@@ -2245,3 +2245,22 @@ html, body {
   height: 100%;
   object-fit: cover;
 }
+
+/*--------------------------------------------------------------
+# common
+--------------------------------------------------------------*/
+
+.field-error-input {
+  border-color: #dc3545; !important;
+}
+
+.field-error {
+  color: #dc3545; !important;
+}
+
+.save-success {
+  margin-bottom: 20px;
+  font-weight: bold;
+  border-color: #0e5ff1;
+  color: #0e5ff1;
+}
