@@ -42,7 +42,7 @@ public class RoastingRecordController {
     }
 
     @GetMapping("{id}")
-    public String view(@PathVariable Long id, Model model) {
+    public String view(@PathVariable(name = "id") Long id, Model model) {
         model.addAttribute("record", recordService.findRoastingRecordBy(id));
         return "record/record-view";
     }
