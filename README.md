@@ -11,8 +11,8 @@ Version.
 ```text
 > Backend
   - Java
-  - Spring
-  - Spring Data Jpa
+  - Spring Boot
+  - Spring Data JPA, REDIS
   - Spring Security
   - Spring OAuth2
 > DataBase
@@ -28,6 +28,7 @@ Version.
   - thymeleaf
 > Test
   - Junit
+  - mockito
 ```
 
 # System architecture
