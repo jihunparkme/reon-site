@@ -119,20 +119,15 @@ ing.
 
 ## Member
 
-**Member** (`/member`)
-
 ![Result](./reference/mypage.png 'Result')
 
 - [x] 회원 정보 조회 및 수정
   - [x] 소셜 로그인이면 소설 마크 노출
   - [x] 이메일 가입자만 First name 변경 가능
-  - [x] 글로벌 에러 처리 
 - [ ] 비밀번호 변경은 별도 페이지에서 관리
 - [ ] 회원탈퇴
 
 ## Record
-
-**Record** (`/record`)
 
 **Record List**
 
