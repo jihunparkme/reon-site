@@ -1,0 +1,189 @@
+<div th:replace="~{common/head :: head('mypage')}"></div>
+<link th:href="@{/css/member/member.css}" rel="stylesheet"/>
+<body>
+<div th:replace="~{common/header :: header('mypage')}"></div>
+<style>
+.container-member input {
+    background-color: rgb(241, 243, 245);
+}
+.required {
+    color: rgb(250, 82, 82);
+}
+.social-login {
+    align-self: center;
+    margin-left: 20px;
+}
+</style>
+
+
+<main class="container-member">
+    <div class="block-top"></div>
+    <div class="member-box">
+        <div class="member-row">
+            <div class="member-col">
+                <div class="member-card" style="width: 100%; border-radius: 15px;">
+                    <div class="member-card-body">
+                        <div th:if="${param.status}" class="save-success">
+                            <button class="btn btn-outline-success">저장이 완료되었습니다.</button>
+                        </div>
+
+                        <div class="member-card-content">
+                            <h1>회원 정보</h1>
+                            <form th:action="@{/member/mypage/edit}" th:object="${member}" method="post">
+                                <div th:if="${#fields.hasGlobalErrors()}" class="global-error">
+                                    <button class="btn btn-outline-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></button>
+                                </div>
+
+
+                                <div th:switch="${member?.oAuthClient?.name()}">
+                                    <div th:case="'GOOGLE'">
+                                        <div class="google" style="cursor: default;">
+                                            <img width="24" height="24" th:src="@{/img/login/google-logo.png}" alt="google_logo">
+                                            <span class="social-login">구글 계정으로 로그인</span>
+                                        </div>
+                                    </div>
+                                    <div th:case="'KAKAO'">
+                                        <div class="kakao" style="cursor: default;">
+                                            <img width="24" height="24" th:src="@{/img/login/kakao-logo.png}" alt="kakao_logo">
+                                            <span class="social-login">카카오 계정으로 로그인</span>
+                                        </div>
+                                    </div>
+                                    <div th:case="'APPLE'">
+                                        <div class="apple" style="cursor: default;">>
+                                            <img width="24" height="24" th:src="@{/img/login/apple-logo.png}" alt="apple_logo">
+                                            <span class="social-login">애플 계정으로 로그인</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 25px; margin-bottom: 50px;">
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Type.</div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <select th:field="${member.type}" th:value="${member.type}" class="form-select">
+                                                    <option value="">=== 타입 선택 ===</option>
+                                                    <option th:value="'PRIVATE'" th:text="개인회원"></option>
+                                                    <option th:value="'COMPANY'" th:text="기업회원"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Email. <span class="required">*</span> </div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{email}" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">First name. <span class="required">*</span></div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <div class="field-error" th:errors="*{firstName}">firstName error</div>
+                                                <input type="text" id="firstName" th:field="*{firstName}" th:errorclass="field-error-input" class="form-control" th:readonly="${member?.oAuthClient?.name() != 'EMPTY'}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Last name.</div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{lastName}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Phone.</div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="tel" th:field="*{phone}" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" title="올바른 전화번호 형식을 입력해 주세요." placeholder="010-0000-0000" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Product Code.</div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{prdCode}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Roaster S/N.</div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{roasterSn}" class="form-control">
+                                                <div class="field-error" th:errors="*{roasterSn}">Roaster S/N error</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Company Name.</div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{companyName}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="my-page-field">
+                                        <div class="my-page-label-text">Address.</div>
+                                        <div class="my-page-input-field-out">
+                                            <div class="my-page-input-field-in">
+                                                <input type="text" th:field="*{address}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="float: right;">
+                                        <div style="display: inline-block">
+                                            <button type="submit" class="btn btn-success">수정</button>
+                                        </div>
+                                        <div style="display: inline-block">
+                                            <button type="button" id="btn-withdraw" class="btn btn-danger">회원탈퇴</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{common/footer :: footer}"></div>
+</main>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<div th:replace="~{common/commonjs}"></div>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    $(function() {
+        $('#btn-check').click(function () {
+            window.history.back();
+        });
+
+        $('#btn-withdraw').click(function () {
+            if (confirm("정말로 탈퇴하시겠습니까?")) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/mypage/withdraw",
+                    dataType: 'json',
+                    contentType: 'application/json; charset=UTF-8',
+                    data : JSON.stringify({"email": $('#email').val()}),
+                    accept: "application/json"
+                }).done(function(result) {
+                    alert(result['message']);
+                    window.location.href = '/logout';
+                }).fail(function (error) {
+                    alert("회원 탈퇴를 실패하였습니다. 관리자에게 문의해 주세요.\n(" + error['responseJSON']['message'] + ")");
+                });
+            }
+        });
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -1,7 +1,8 @@
 package com.site.reon.aggregate.member.domain;
 
-import com.site.reon.global.common.constant.member.MemberType;
+import com.site.reon.aggregate.member.service.dto.MemberEditRequest;
 import com.site.reon.global.common.BaseTimeEntity;
+import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -84,5 +85,16 @@ public class Member extends BaseTimeEntity {
         this.firstName = name;
         this.picture = picture;
         return this;
+    }
+
+    public void update(MemberEditRequest memberEditRequest) {
+        this.type = memberEditRequest.getType();
+        this.firstName = memberEditRequest.getFirstName();
+        this.lastName = memberEditRequest.getLastName();
+        this.phone = memberEditRequest.getPhone();
+        this.prdCode = memberEditRequest.getPrdCode();
+        this.roasterSn = memberEditRequest.getRoasterSn();
+        this.companyName = memberEditRequest.getCompanyName();
+        this.address = memberEditRequest.getAddress();
     }
 }
