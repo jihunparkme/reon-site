@@ -35,13 +35,14 @@ public class MemberController {
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public String edit(@Valid @ModelAttribute("member") MemberEditRequest request,
                        BindingResult bindingResult,
+                       @LoginMember SessionMember session,
                        RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             return "member/mypage";
         }
 
-        memberService.update(request);
+        memberService.update(request, session.getId());
 
         redirectAttributes.addAttribute("status", true);
         return "redirect:/member/mypage";

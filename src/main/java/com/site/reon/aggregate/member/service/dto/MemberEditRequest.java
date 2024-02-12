@@ -14,8 +14,9 @@ import lombok.*;
 public class MemberEditRequest {
 
     private OAuth2Client oAuthClient;
-    private MemberType type;
     private String email;
+
+    private MemberType type;
 
     @NotNull(message = "firstName is required.")
     @Size(min = 1, max = 30, message = "firstName size must be between 1 and 30.")
@@ -33,7 +34,6 @@ public class MemberEditRequest {
     @Size(max = 100)
     private String roasterSn;
 
-    // COMPANY
     @Size(max = 30)
     private String companyName;
 

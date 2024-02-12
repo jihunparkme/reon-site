@@ -4,12 +4,14 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.MemberEditRequest;
+import com.site.reon.global.security.exception.NotFoundMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +41,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void update(MemberEditRequest memberEditRequest) {
-        return;
+    public void update(MemberEditRequest memberEditRequest, Long id) {
+        Optional<Member> memberOpt = memberRepository.findById(id);
+        if (memberOpt.isEmpty()) {
+            throw new NotFoundMemberException("not found member");
+        }
+
+        Member member = memberOpt.get();
+        member.update(memberEditRequest);
+        memberRepository.save(member);
     }
 }

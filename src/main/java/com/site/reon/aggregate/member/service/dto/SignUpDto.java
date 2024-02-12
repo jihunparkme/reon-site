@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 public class SignUpDto {
 
     @NotBlank(message = "email is required.")
-    @Pattern(regexp = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "이메일 형식을 확인해 주세요.")
+    @Pattern(regexp = "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}", message = "이메일 형식을 확인해 주세요.")
     @Size(min = 3, max = 50)
     private String email;
 

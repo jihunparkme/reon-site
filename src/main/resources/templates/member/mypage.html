@@ -93,7 +93,7 @@
                                         <div class="my-page-label-text">Phone.</div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{phone}" class="form-control">
+                                                <input type="tel" th:field="*{phone}" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" title="올바른 전화번호 형식을 입력해 주세요." placeholder="010-0000-0000" class="form-control">
                                             </div>
                                         </div>
                                     </div>

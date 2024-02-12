@@ -11,5 +11,5 @@ public interface MemberService {
     List<Member> getMemberWithAuthorities(String email);
     Member getMemberWithAuthorities(String email, OAuth2Client oAuthClient);
     MemberDto getMember(long id);
-    void update(MemberEditRequest memberEditRequest);
+    void update(MemberEditRequest memberEditRequest, Long id);
 }
