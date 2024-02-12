@@ -5,6 +5,7 @@ import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.MemberEditRequest;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.security.dto.SessionMember;
+import com.site.reon.global.security.exception.NotFoundMemberException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,7 +43,12 @@ public class MemberController {
             return "member/mypage";
         }
 
-        memberService.update(request, session.getId());
+        try {
+            memberService.update(request, session.getId());
+        } catch (NotFoundMemberException e) {
+            bindingResult.reject("global.error", e.getMessage());
+            return "member/mypage";
+        }
 
         redirectAttributes.addAttribute("status", true);
         return "redirect:/member/mypage";

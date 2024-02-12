@@ -24,12 +24,17 @@
                 <div class="member-card" style="width: 100%; border-radius: 15px;">
                     <div class="member-card-body">
                         <div th:if="${param.status}" class="save-success">
-                            <button type="button" class="btn btn-outline-success">저장이 완료되었습니다.</button>
+                            <button class="btn btn-outline-success">저장이 완료되었습니다.</button>
                         </div>
 
                         <div class="member-card-content">
                             <h1>회원 정보</h1>
                             <form th:action="@{/member/mypage/edit}" th:object="${member}" method="post">
+                                <div th:if="${#fields.hasGlobalErrors()}" class="global-error">
+                                    <button class="btn btn-outline-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></button>
+                                </div>
+
+
                                 <div th:switch="${member?.oAuthClient?.name()}">
                                     <div th:case="'GOOGLE'">
                                         <div class="google" style="cursor: default;">

@@ -2263,6 +2263,11 @@ html, body {
   pointer-events : none;
 }
 
+.global-error {
+  margin-bottom: 20px;
+  pointer-events : none;
+}
+
 .save-success button {
   width: 100%;
 }
