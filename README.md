@@ -32,33 +32,34 @@ Version.
 
 # System architecture
 
-![Result](https://raw.githubusercontent.com/jihunparkme/reon-site/master/reference/system-architecture.png 'Result')
+![Result](./reference/system-architecture.png 'Result')
 
 ---
 
-## developing
+# developing
 
 ing.
 - Sign In/Sign Up
 - Record
-- Member
+- Member -> 회원 정보 수정
+- 5xx, 4xx 에러 페이지 만들기
 - 로그 관리 -> 날짜별로 덮어쓰기
 - 도메인 등록
   - [Google Search Console 등록](https://search.google.com/search-console/about)
 
-## Global
+# Global
 
 - TDD, DDD 적용
 - 단순 조회가 아닌 수정이 일어날 경우, DTO 로 리턴하기.
 
-## Plan
+# Domain
 
-### 전체 접근 권한 페이지
+## Main
 
 **Main.** (`/`)
 - [ ] 소개
 
-.
+## Notice
 
 **Notice.** (`/notice`)
 - [ ] All permit
@@ -67,7 +68,7 @@ ing.
 - [ ] 관리자만 작성/수정/삭제 버튼 노출 및 권한 예외 처리
 - [ ] 기본 회원은 조회만 가능
 
-.
+## News Letter
 
 **News Letter** (`/new-letter`)
 - [ ] 뉴스레터 기본 기능
@@ -75,12 +76,12 @@ ing.
 - [ ] 관리자만 작성/수정/삭제 버튼 노출 및 권한 예외 처리
 - [ ] 기본 회원은 조회만 가능
 
-.
+## Contact us
 
 **Contact us** (`/contact`)
 - [ ] 관리자 메일로 문의 내용 발송
 
-.
+## Voice
 
 **Voice** (`/voice`)
 - [ ] 고객의 소리 기본 기능
@@ -89,9 +90,12 @@ ing.
 - [ ] 수정/삭제 시 작성자와 요청자 검증 필요
 - [ ] 작성/수정 완료 시 관리자 메일로 알림
 
-.
+## Sign In/Sign Up
 
-**Sign In/Sign Up** 🏃🏻‍
+**Sign In/Sign Up**
+
+![Result](./reference/login.png 'Result')
+
 - 소셜(카카오, 구글, 애플) 및 이메일 로그인
 - Redis 로 Spring Session 관리
 - 로그인, 로그아웃, 탈퇴
@@ -104,6 +108,7 @@ ing.
   
 - [ ] 가입하기
   - [x] email, first name, last name, 비밀번호
+  - 비밀번호 재확인
   - [ ] 가입 시 이메일 인증 기능.
     - [ ] 대표 메일 SMTP 등록
     - [ ] 인증하기 버튼 클릭 시 인증번호를 메일로 전송
@@ -111,44 +116,41 @@ ing.
 - [ ] 비밀번호 찾기 (메일로 비밀번호 변경 링크 전달)
 - [ ] 이메일 찾기
 
-.
+## Member
 
-**Member** (`/member`) 🏃🏻‍
-```
-- 공통
-  - 타입(개인/기업)
-  - 구매자 이름
-  - 이메일
-  - 비밀번호
-  - 전화번호
-  - 상품코드
-  - 제품 일련번호(S/N)
-- 기업
-  - 상호명
-  - 대표자 이름
-  - 주소
-```
+**Member** (`/member`)
 
-- [ ] 회원 정보 조회
-- [ ] 회원 정보 수정(비밀번호 변경은 별도 페이지에서)
+![Result](./reference/mypage.png 'Result')
 
-.
+- [x] 회원 정보 조회 및 수정
+  - [x] 소셜 로그인이면 소설 마크 노출
+  - [x] 이메일 가입자만 First name 변경 가능
+  - [x] 글로벌 에러 처리 
+- [ ] 비밀번호 변경은 별도 페이지에서 관리
+- [ ] 회원탈퇴
 
-**Record** (`/record`) 🏃🏻‍
+## Record
+
+**Record** (`/record`)
+
+**Record List**
+
+![Result](./reference/record-list.png 'Result')
+
+**Record View**
+
+![Result](./reference/record-view.png 'Result')
+
 - [x] 로스팅 로그 조회
-- [x] [chart.js](https://www.chartjs.org/) 적용해 보기 ❌
-  - [cdnjs](https://cdnjs.com/libraries/Chart.js)
-  - [documentation](https://www.chartjs.org/docs/latest/)
-- [x] 그래프 [amcharts](https://www.amcharts.com/) 적용해 보기
+- [x] [amcharts](https://www.amcharts.com/) 적용
   - [Highlighting Line Chart](https://www.amcharts.com/demos/highlighting-line-chart-series-on-legend-hover/)
-- [x] 관리자는 로스팅 로그 추출 가능하도록 (csv..?) ❌
+- [ ] 로스팅 로그 추출 기능(csv?) 
 - [ ] 회원은 자신의 로그만 조회 가능, 관리자는 모든 로그 조회 가능
 - [ ] 회원번호, S/N, 날짜로 검색 기능
-- [ ] amcharts.com 결제
 
 .
 
-### 관리자 권한
+## Admin
 
 **management** (`/management`)
 
@@ -180,6 +182,7 @@ ing.
 
 - [ ] 레시피 공유(레시피 업로드, 다운로드)
 - [ ] 레시피 명예의 전당
+- [ ] amcharts.com 결제
 
 ## Refactor
 
