@@ -60,7 +60,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     @Override
-    public boolean verifyEmail(ApiEmailVerifyRequest request) {
+    public boolean verifySocialEmail(ApiEmailVerifyRequest request) {
         String authClientName = request.getAuthClientName().toLowerCase();
         OAuth2Client.validateClientName(authClientName);
 
