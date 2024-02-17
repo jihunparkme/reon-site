@@ -89,7 +89,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void verifyEmail_should_be_return_true() throws Exception {
-        given(memberLoginService.verifyEmail(any()))
+        given(memberLoginService.verifySocialEmail(any()))
                 .willReturn(true);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -108,7 +108,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void verifyEmail_should_be_return_false() throws Exception {
-        given(memberLoginService.verifyEmail(any()))
+        given(memberLoginService.verifySocialEmail(any()))
                 .willReturn(false);
 
 
@@ -127,7 +127,7 @@ class MemberLoginApiControllerTest {
 
     @Test
     void verifyEmail_should_be_response_400() throws Exception {
-        given(memberLoginService.verifyEmail(any()))
+        given(memberLoginService.verifySocialEmail(any()))
                 .willReturn(false);
 
 
