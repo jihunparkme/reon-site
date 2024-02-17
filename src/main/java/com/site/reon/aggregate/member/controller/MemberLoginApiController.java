@@ -44,7 +44,7 @@ public class MemberLoginApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            boolean result = memberLoginService.verifyEmail(request);
+            boolean result = memberLoginService.verifySocialEmail(request);
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
