@@ -11,8 +11,8 @@ Version.
 ```text
 > Backend
   - Java
-  - Spring
-  - Spring Data Jpa
+  - Spring Boot
+  - Spring Data JPA/REDIS
   - Spring Security
   - Spring OAuth2
 > DataBase
@@ -26,8 +26,10 @@ Version.
   - Nginx
 > Front
   - thymeleaf
+  - JavaScript
 > Test
   - Junit
+  - mockito
 ```
 
 # System architecture
@@ -108,30 +110,23 @@ ing.
   
 - [ ] 가입하기
   - [x] email, first name, last name, 비밀번호
-  - 비밀번호 재확인
-  - [ ] 가입 시 이메일 인증 기능.
-    - [ ] 대표 메일 SMTP 등록
-    - [ ] 인증하기 버튼 클릭 시 인증번호를 메일로 전송
-    - [ ] 인증번호를 가지고 있다가 입력한 값하고 비교
+  - [ ] 비밀번호 재확인
+  - [ ] 가입 시 이메일 인증
+    - [ ] 인증하기 버튼 클릭 시 인증번호를 메일로 전송(인증번호는 Redis에서 관리)
 - [ ] 비밀번호 찾기 (메일로 비밀번호 변경 링크 전달)
 - [ ] 이메일 찾기
 
 ## Member
-
-**Member** (`/member`)
 
 ![Result](./reference/mypage.png 'Result')
 
 - [x] 회원 정보 조회 및 수정
   - [x] 소셜 로그인이면 소설 마크 노출
   - [x] 이메일 가입자만 First name 변경 가능
-  - [x] 글로벌 에러 처리 
 - [ ] 비밀번호 변경은 별도 페이지에서 관리
 - [ ] 회원탈퇴
 
 ## Record
-
-**Record** (`/record`)
 
 **Record List**
 

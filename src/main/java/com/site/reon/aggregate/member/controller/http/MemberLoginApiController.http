@@ -281,3 +281,75 @@ Content-Type: application/json
   "email": "user@gmail.com",
   "authClientName": "xxx"
 }
+
+
+
+
+
+
+
+
+
+
+
+### 앱에서 이메일로 가입 시 인증번호를 발송합니다.
+POST http://localhost:8080/api/login/email/auth-code
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "purpose": "회원가입",
+  "email": "contact@myreon.net"
+}
+
+### 앱에서 이메일로 가입 시 인증번호를 발송합니다. BAD_REQUEST (purpose is required.)
+POST http://localhost:8080/api/login/email/auth-code
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "contact@myreon.net"
+}
+
+
+
+
+
+
+
+
+
+### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다.
+POST http://localhost:8080/api/login/email/auth-code/verify
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "contact@myreon.net",
+  "authCode": "111111"
+}
+
+### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다. BAD_REQUEST (인증번호 입력 가능 시간을 초과하였습니다. 다시 시도해 주세요.)
+POST http://localhost:8080/api/login/email/auth-code/verify
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "contact@myreon.net",
+  "authCode": "111111"
+}
+
+### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다. BAD_REQUEST (인증번호가 올바르지 않습니다. 다시 입력해 주세요.)
+POST http://localhost:8080/api/login/email/auth-code/verify
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "contact@myreon.net",
+  "authCode": "111111"
+}

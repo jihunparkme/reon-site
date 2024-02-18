@@ -51,3 +51,4 @@ application-mail.yml
 application-management.yml
 application-dev-oauth.yml
 application-real-oauth.yml
+**/src/test/resources/application.yml

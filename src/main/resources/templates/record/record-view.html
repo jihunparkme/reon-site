@@ -103,6 +103,16 @@
         ]);
 
         // Create chart
+        let gradient = am5.LinearGradient.new(root, { // chart background color
+            stops: [{
+                color: am5.color(0x000000)
+            }, {
+                color: am5.color(0x000000)
+            }, {
+                color: am5.color(0x000000)
+            }]
+        });
+
         let chart = root.container.children.push(
             am5xy.XYChart.new(root, {
                 panX: true,
@@ -110,7 +120,10 @@
                 wheelX: "panX",
                 wheelY: "zoomX",
                 layout: root.verticalLayout,
-                pinchZoomX:true
+                pinchZoomX:true,
+                background: am5.Rectangle.new(root, {
+                    fillGradient: gradient
+                })
             })
         );
 
@@ -122,10 +135,11 @@
             am5.color("#008000")
         ]);
 
-        chart.topAxesContainer.children.push(am5.Label.new(root, {
+        chart.topAxesContainer.children.push(am5.Label.new(root, { // chart title
             text: "Temperature & RoR",
             fontSize: 20,
             fontWeight: "400",
+            fill: am5.color(0xFFFFFF), // chart title color
             x: am5.p50,
             centerX: am5.p50
         }));
@@ -135,6 +149,13 @@
             behavior: "none"
         }));
         cursor.lineY.set("visible", false);
+
+        cursor.lineY.setAll({ // mouse over line y color
+            stroke: am5.color(0xFFFFFF)
+        });
+        cursor.lineX.setAll({ // mouse over line x color
+            stroke: am5.color(0xFFFFFF)
+        });
 
         let dataSize = 0;
         if ([[${record.temp1}]] !== null) {
@@ -179,30 +200,50 @@
             })
         );
 
-        xAxis.children.push(
+        xAxis.children.push( // xAxis title
             am5.Label.new(root, {
                 text: "seconds",
                 x: am5.p50,
-                centerX:am5.p50
+                centerX:am5.p50,
+                fill: am5.color(0xFFFFFF)
             })
         );
 
-        yAxis.children.unshift(
+        yAxis.children.unshift(  // yAxis title
             am5.Label.new(root, {
                 rotation: -90,
                 text: "value",
                 y: am5.p50,
-                centerX: am5.p50
+                centerX: am5.p50,
+                fill: am5.color(0xFFFFFF)
             })
         );
 
-        let yRenderer = yAxis.get("renderer");
+        let xRenderer = xAxis.get("renderer"); // X Axis number info
+        xRenderer.labels.template.setAll({
+            fill: am5.color(0xffffff),
+        });
+
+        xAxis.get("renderer").grid.template.setAll({ // x축 눈금색
+            stroke: am5.color(0xFFFFFF),
+            strokeWidth: 1,
+            strokeOpacity: 0.3
+        });
+
+        let yRenderer = yAxis.get("renderer"); // X Axis number info
         yRenderer.ticks.template.setAll({
             minPosition: 0.1,
-            visible: true
+            visible: true,
+            fill: am5.color(0xffffff),
         });
         yRenderer.labels.template.setAll({
-            minPosition: 0.1
+            minPosition: 0.1,
+            fill: am5.color(0xffffff),
+        });
+        yRenderer.grid.template.setAll({ // y축 눈금색
+            stroke: am5.color(0xFFFFFF),
+            strokeWidth: 1,
+            strokeOpacity: 0.3
         });
 
         function createSeries(name, field) {
@@ -245,6 +286,10 @@
             paddingLeft: 15,
             height: am5.percent(100)
         }));
+
+        legend.labels.template.setAll({ // 목차 생상 설정
+            fill: am5.color(0xFFFFFF)
+        });
 
         // When legend item container is hovered, dim all the series except the hovered one
         legend.itemContainers.template.events.on("pointerover", function(e) {
@@ -319,6 +364,16 @@
             myThemeOfSensor
         ]);
 
+        let gradientOfChart = am5.LinearGradient.new(rootOfSensor, {
+            stops: [{
+                color: am5.color(0x000000)
+            }, {
+                color: am5.color(0x000000)
+            }, {
+                color: am5.color(0x000000)
+            }]
+        });
+
         // Create chart
         let chartOfSensor = rootOfSensor.container.children.push(
             am5xy.XYChart.new(rootOfSensor, {
@@ -327,7 +382,10 @@
                 wheelX: "panX",
                 wheelY: "zoomX",
                 layout: rootOfSensor.verticalLayout,
-                pinchZoomX:true
+                pinchZoomX:true,
+                background: am5.Rectangle.new(rootOfSensor, {
+                    fillGradient: gradientOfChart
+                })
             })
         );
 
@@ -341,6 +399,7 @@
             text: "Sensors",
             fontSize: 20,
             fontWeight: "400",
+            fill: am5.color(0xFFFFFF),
             x: am5.p50,
             centerX: am5.p50
         }));
@@ -350,6 +409,13 @@
             behavior: "none"
         }));
         cursorOfSensor.lineY.set("visible", false);
+
+        cursorOfSensor.lineY.setAll({
+            stroke: am5.color(0xFFFFFF)
+        });
+        cursorOfSensor.lineX.setAll({
+            stroke: am5.color(0xFFFFFF)
+        });
 
         let dataSizeOfSensor = 0;
         if ([[${record.heater}]] !== null) {
@@ -396,7 +462,8 @@
             am5.Label.new(rootOfSensor, {
                 text: "seconds",
                 x: am5.p50,
-                centerX:am5.p50
+                centerX:am5.p50,
+                fill: am5.color(0xFFFFFF)
             })
         );
 
@@ -405,17 +472,36 @@
                 rotation: -90,
                 text: "value",
                 y: am5.p50,
-                centerX: am5.p50
+                centerX: am5.p50,
+                fill: am5.color(0xFFFFFF)
             })
         );
+
+        let xRendererOfSensor = xAxisOfSensor.get("renderer");
+        xRendererOfSensor.labels.template.setAll({
+            fill: am5.color(0xffffff),
+        });
+
+        xAxisOfSensor.get("renderer").grid.template.setAll({
+            stroke: am5.color(0xFFFFFF),
+            strokeWidth: 1,
+            strokeOpacity: 0.3
+        });
 
         let yRendererOfSensor = yAxisOfSensor.get("renderer");
         yRendererOfSensor.ticks.template.setAll({
             minPosition: 0.1,
-            visible: true
+            visible: true,
+            fill: am5.color(0xffffff)
         });
         yRendererOfSensor.labels.template.setAll({
-            minPosition: 0.1
+            minPosition: 0.1,
+            fill: am5.color(0xffffff)
+        });
+        yRendererOfSensor.grid.template.setAll({
+            stroke: am5.color(0xFFFFFF),
+            strokeWidth: 1,
+            strokeOpacity: 0.3
         });
 
         function createSeriesOfSensor(name, field) {
@@ -456,6 +542,10 @@
             paddingLeft: 15,
             height: am5.percent(100)
         }));
+
+        legendOfSensor.labels.template.setAll({
+            fill: am5.color(0xFFFFFF)
+        });
 
         // When legend item container is hovered, dim all the series except the hovered one
         legendOfSensor.itemContainers.template.events.on("pointerover", function(e) {

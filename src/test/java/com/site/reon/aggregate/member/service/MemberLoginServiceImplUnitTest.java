@@ -42,7 +42,7 @@ class MemberLoginServiceImplUnitTest {
                 .build();
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                memberLoginService.verifyEmail(verifyDto)
+                memberLoginService.verifySocialEmail(verifyDto)
         );
 
         assertEquals("Email is required for Kakao, Google login.", exception.getMessage());
@@ -57,7 +57,7 @@ class MemberLoginServiceImplUnitTest {
                 .build();
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                memberLoginService.verifyEmail(verifyDto)
+                memberLoginService.verifySocialEmail(verifyDto)
         );
 
         assertEquals("Email is required for Kakao, Google login.", exception.getMessage());
@@ -72,7 +72,7 @@ class MemberLoginServiceImplUnitTest {
                 .build();
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                memberLoginService.verifyEmail(verifyDto)
+                memberLoginService.verifySocialEmail(verifyDto)
         );
 
         assertEquals("Token is required for Apple login.", exception.getMessage());
@@ -89,7 +89,7 @@ class MemberLoginServiceImplUnitTest {
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.KAKAO))
                 .willReturn(memberOpt);
 
-        boolean result = memberLoginService.verifyEmail(verifyDto);
+        boolean result = memberLoginService.verifySocialEmail(verifyDto);
 
         Assertions.assertTrue(result);
     }
@@ -105,7 +105,7 @@ class MemberLoginServiceImplUnitTest {
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.KAKAO))
                 .willReturn(Optional.empty());
 
-        boolean result = memberLoginService.verifyEmail(verifyDto);
+        boolean result = memberLoginService.verifySocialEmail(verifyDto);
         Assertions.assertFalse(result);
     }
 
@@ -120,7 +120,7 @@ class MemberLoginServiceImplUnitTest {
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.GOOGLE))
                 .willReturn(memberOpt);
 
-        boolean result = memberLoginService.verifyEmail(verifyDto);
+        boolean result = memberLoginService.verifySocialEmail(verifyDto);
         Assertions.assertTrue(result);
     }
 
@@ -135,7 +135,7 @@ class MemberLoginServiceImplUnitTest {
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.GOOGLE))
                 .willReturn(Optional.empty());
 
-        boolean result = memberLoginService.verifyEmail(verifyDto);
+        boolean result = memberLoginService.verifySocialEmail(verifyDto);
         Assertions.assertFalse(result);
     }
 
@@ -150,7 +150,7 @@ class MemberLoginServiceImplUnitTest {
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.APPLE))
                 .willReturn(memberOpt);
 
-        boolean result = memberLoginService.verifyEmail(verifyDto);
+        boolean result = memberLoginService.verifySocialEmail(verifyDto);
         Assertions.assertTrue(result);
     }
 
@@ -165,7 +165,7 @@ class MemberLoginServiceImplUnitTest {
         given(memberRepository.findByEmailAndOAuthClient(email, OAuth2Client.APPLE))
                 .willReturn(Optional.empty());
 
-        boolean result = memberLoginService.verifyEmail(verifyDto);
+        boolean result = memberLoginService.verifySocialEmail(verifyDto);
         Assertions.assertFalse(result);
     }
 
