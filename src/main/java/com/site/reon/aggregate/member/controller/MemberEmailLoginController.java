@@ -31,14 +31,14 @@ import java.util.List;
 import static com.site.reon.global.common.constant.Result.SUCCESS;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/login/email")
 @RequiredArgsConstructor
-public class MemberLoginController {
+public class MemberEmailLoginController {
     private final MemberService memberService;
     private final MemberLoginService memberLoginService;
     private final HttpSession httpSession;
 
-    @PostMapping("/email/sign-up")
+    @PostMapping("/sign-up")
     public ResponseEntity signup(@Valid @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> allErrors = bindingResult.getAllErrors();
@@ -58,7 +58,7 @@ public class MemberLoginController {
         }
     }
 
-    @PostMapping(value = "/email/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
         memberLoginService.emailAuthenticate(loginDto);
 
