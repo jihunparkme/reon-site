@@ -8,7 +8,7 @@ public enum MailSubject {
     INQUIRY("문의 등록 안내"),
     ;
 
-    public final String title;
+    private final String title;
 
     public String title() {
         return title;
