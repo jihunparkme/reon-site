@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.service.MemberAuthCodeService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
@@ -32,6 +33,7 @@ public class MemberLoginApiController {
 
     private final MemberLoginService memberLoginService;
     private final MemberService memberService;
+    private final MemberAuthCodeService memberAuthCodeService;
 
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
     @PostMapping("/verify/email")
@@ -83,6 +85,23 @@ public class MemberLoginApiController {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             return BasicResponse.internalServerError("회원가입을 실패하였습니다. 다시 시도해 주세요.");
+        }
+    }
+
+    @ApiOperation(value = "이메일 인증번호 발송", notes = "앱에서 이메일로 가입 시 인증번호를 발송합니다.")
+    @PostMapping("/email/auth-code")
+    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody EmailAuthCodeRequest request,
+                                      BindingResult bindingResult) {
+        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+        if (allErrors != null) return allErrors;
+
+        try {
+            memberAuthCodeService.sendAuthenticationCodeByEmail(request.getPurpose(), request.getEmail());
+            return BasicResponse.ok(SUCCESS);
+        } catch (IllegalArgumentException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            return BasicResponse.internalServerError("이메일 인증번호 발송을 실패하였습니다. 다시 시도해 주세요.");
         }
     }
 
