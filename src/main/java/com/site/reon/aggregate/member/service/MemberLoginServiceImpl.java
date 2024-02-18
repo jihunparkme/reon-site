@@ -14,6 +14,7 @@ import com.site.reon.global.common.constant.mail.MailSubject;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.event.Events;
 import com.site.reon.global.common.util.AuthCodeUtil;
+import com.site.reon.global.common.util.infra.RedisUtilService;
 import com.site.reon.global.common.util.mail.dto.SendMailEvent;
 import com.site.reon.global.common.util.mail.service.MailTemplate;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -41,6 +42,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final RedisUtilService redisUtilService;
 
     @Override
     @Transactional
@@ -113,10 +115,12 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     @Override
     public void sendAuthCode(String purpose, String email) {
         log.info("[Event] send Auth Code Mail Event. purpose: {}, email: {}", purpose, email);
-        // TODO: 인증번호 생성 후 Redis 에 email, authCode 로 저장
+        String authCode = AuthCodeUtil.generateAuthCodeString();
+        redisUtilService.setValueExpire(email, authCode, 5L);
+
         Events.raise(SendMailEvent.builder()
                 .subject(MailSubject.AUTH_CODE.title())
-                .contents(MailTemplate.generateAuthCodeTemplate(purpose, AuthCodeUtil.generateAuthCodeString()))
+                .contents(MailTemplate.generateAuthCodeTemplate(purpose, authCode))
                 .addressList(Optional.of(Arrays.asList(email)))
                 .build());
     }
