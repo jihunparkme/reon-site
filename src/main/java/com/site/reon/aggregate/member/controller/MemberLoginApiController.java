@@ -3,9 +3,11 @@ package com.site.reon.aggregate.member.controller;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
-import com.site.reon.aggregate.member.service.dto.*;
+import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.api.*;
 import com.site.reon.global.common.dto.BasicResponse;
+import com.site.reon.global.common.util.BindingResultUtil;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import io.swagger.annotations.ApiOperation;
@@ -14,17 +16,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-import static com.site.reon.global.common.constant.Result.FAIL;
 import static com.site.reon.global.common.constant.Result.SUCCESS;
 
 @Slf4j
@@ -40,7 +37,7 @@ public class MemberLoginApiController {
     @PostMapping("/verify/email")
     public ResponseEntity verifyEmail(@Valid @RequestBody ApiEmailVerifyRequest request,
                                       BindingResult bindingResult) {
-        ResponseEntity allErrors = validateBindingResult(bindingResult);
+        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -58,7 +55,7 @@ public class MemberLoginApiController {
     @PostMapping("/oauth2/sign-up")
     public ResponseEntity signUpOAuth2(@Valid @RequestBody ApiOAuth2SignUpRequest request,
                                        BindingResult bindingResult) {
-        ResponseEntity allErrors = validateBindingResult(bindingResult);
+        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -76,7 +73,7 @@ public class MemberLoginApiController {
     @PostMapping("/email/sign-up")
     public ResponseEntity signUpEmail(@Valid @RequestBody ApiSignUpRequest request,
                                      BindingResult bindingResult) {
-        ResponseEntity allErrors = validateBindingResult(bindingResult);
+        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -93,7 +90,7 @@ public class MemberLoginApiController {
     @PostMapping("/email")
     public ResponseEntity loginEmail(@Valid @RequestBody ApiLoginRequest request,
                                      BindingResult bindingResult) {
-        ResponseEntity allErrors = validateBindingResult(bindingResult);
+        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -112,7 +109,7 @@ public class MemberLoginApiController {
     @PostMapping("/withdraw")
     public ResponseEntity withdraw(@Valid @RequestBody ApiWithdrawRequest request,
                                       BindingResult bindingResult) {
-        ResponseEntity allErrors = validateBindingResult(bindingResult);
+        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -124,16 +121,5 @@ public class MemberLoginApiController {
             log.error("MemberLoginApiController.withdraw Exception: ", e);
             return BasicResponse.internalServerError(e.getMessage());
         }
-    }
-
-    private ResponseEntity validateBindingResult(BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            List<ObjectError> allErrors = bindingResult.getAllErrors();
-            if (!CollectionUtils.isEmpty(allErrors)) {
-                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
-            }
-            return BasicResponse.clientError(FAIL.message());
-        }
-        return null;
     }
 }
