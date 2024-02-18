@@ -4,7 +4,6 @@ import com.site.reon.global.common.event.Events;
 import com.site.reon.global.common.util.mail.dto.SendMailEvent;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
@@ -14,10 +13,7 @@ import java.util.Optional;
 
 @Disabled
 @SpringBootTest
-class MailUtilServiceTest {
-
-    @Autowired
-    private MailUtilService mailUtilService;
+class MailUtilServiceEventTest {
 
     @Test
     void sendAuthCodeMailEvent() throws Exception {
