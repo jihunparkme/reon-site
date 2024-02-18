@@ -20,7 +20,6 @@ class MailUtilServiceTest {
     private MailUtilService mailUtilService;
 
     @Test
-    @Disabled
     void sendAuthCodeMailEvent() throws Exception {
         String subject = "TEST: 인증번호 발송";
         String purpose = "회원가입";
@@ -33,7 +32,6 @@ class MailUtilServiceTest {
     }
 
     @Test
-    @Disabled
     void sendContentsEvent() throws Exception {
         String subject = "TEST: 문의 등록 안내";
         String title = "문의 등록 안내";
