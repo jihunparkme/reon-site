@@ -7,6 +7,7 @@ import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.api.*;
+import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -96,12 +97,29 @@ public class MemberLoginApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            memberAuthCodeService.sendAuthenticationCodeByEmail(request.getPurpose(), request.getEmail());
+            memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, request.getPurpose(), request.getEmail());
             return BasicResponse.ok(SUCCESS);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             return BasicResponse.internalServerError("이메일 인증번호 발송을 실패하였습니다. 다시 시도해 주세요.");
+        }
+    }
+
+    @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 인증번호를 검증합니다.")
+    @PostMapping("/email/auth-code/verify")
+    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody EmailAuthCodeVerifyRequest request,
+                                                        BindingResult bindingResult) {
+        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+        if (allErrors != null) return allErrors;
+
+        try {
+            memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
+            return BasicResponse.ok(SUCCESS);
+        } catch (IllegalArgumentException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            return BasicResponse.internalServerError("이메일 인증번호 검증을 실패하였습니다. 다시 시도해 주세요.");
         }
     }
 
