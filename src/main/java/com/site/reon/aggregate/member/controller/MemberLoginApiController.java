@@ -106,7 +106,7 @@ public class MemberLoginApiController {
         }
     }
 
-    @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 인증번호를 검증합니다.")
+    @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다.")
     @PostMapping("/email/auth-code/verify")
     public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody EmailAuthCodeVerifyRequest request,
                                                         BindingResult bindingResult) {
