@@ -1,6 +1,8 @@
 package com.site.reon.aggregate.member.service;
 
-import com.site.reon.aggregate.member.service.dto.*;
+import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
@@ -30,9 +32,4 @@ public interface MemberLoginService {
      * 회원 탈퇴
      */
     boolean withdraw(ApiWithdrawRequest request);
-
-    /**
-     * 인증번호 전송
-     */
-    void sendAuthCode(String purpose, String email);
 }
