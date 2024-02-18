@@ -30,4 +30,9 @@ public interface MemberLoginService {
      * 회원 탈퇴
      */
     boolean withdraw(ApiWithdrawRequest request);
+
+    /**
+     * 인증번호 전송
+     */
+    void sendAuthCode(String purpose, String email);
 }

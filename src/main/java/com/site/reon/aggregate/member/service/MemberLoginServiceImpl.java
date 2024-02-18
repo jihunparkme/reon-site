@@ -10,7 +10,12 @@ import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
+import com.site.reon.global.common.constant.mail.MailSubject;
 import com.site.reon.global.common.constant.member.Role;
+import com.site.reon.global.common.event.Events;
+import com.site.reon.global.common.util.AuthCodeUtil;
+import com.site.reon.global.common.util.mail.dto.SendMailEvent;
+import com.site.reon.global.common.util.mail.service.MailTemplate;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.AppleOAuth2Token;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -24,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -102,6 +108,17 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
         OAuth2Client.validateClientName(authClientName);
         return memberDeleteResult(email, OAuth2Client.of(authClientName));
+    }
+
+    @Override
+    public void sendAuthCode(String purpose, String email) {
+        log.info("[Event] send Auth Code Mail Event. purpose: {}, email: {}", purpose, email);
+        // TODO: 인증번호 생성 후 Redis 에 email, authCode 로 저장
+        Events.raise(SendMailEvent.builder()
+                .subject(MailSubject.AUTH_CODE.title())
+                .contents(MailTemplate.generateAuthCodeTemplate(purpose, AuthCodeUtil.generateAuthCodeString()))
+                .addressList(Optional.of(Arrays.asList(email)))
+                .build());
     }
 
     private boolean memberDeleteResult(String email, OAuth2Client oAuth2Client) {
