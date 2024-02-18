@@ -342,3 +342,14 @@ Content-Type: application/json
   "email": "contact@myreon.net",
   "authCode": "111111"
 }
+
+### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다. BAD_REQUEST (인증번호가 올바르지 않습니다. 다시 입력해 주세요.)
+POST http://localhost:8080/api/login/email/auth-code/verify
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "email": "contact@myreon.net",
+  "authCode": "111111"
+}
