@@ -25,7 +25,7 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/mypage")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public String view(@LoginMember SessionMember session, Model model) {
         MemberDto findMember = memberService.getMember(session.getId());
         model.addAttribute("member", findMember);
@@ -33,7 +33,7 @@ public class MemberController {
     }
 
     @PostMapping("/mypage/edit")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("isAuthenticated()")
     public String edit(@Valid @ModelAttribute("member") MemberEditRequest request,
                        BindingResult bindingResult,
                        @LoginMember SessionMember session,
