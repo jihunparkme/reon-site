@@ -28,7 +28,8 @@ function signUp() {
         "firstName": $('#sign-up-first-name').val(),
         "lastName": $('#sign-up-last-name').val(),
         "email": $('#sign-up-email').val(),
-        "password": $('#sign-up-password').val()
+        "password": $('#sign-up-password').val(),
+        "confirmPassword": $('#sign-up-confirm-password').val()
     };
 
     if (data.email.length == 0) {
@@ -46,8 +47,20 @@ function signUp() {
         return;
     }
 
-    if (data.password.length == 0) {
+    const password = data.password;
+    if (password.length == 0) {
         alert("password is required.");
+        return;
+    }
+
+    const confirmPassword = data.confirmPassword;
+    if (confirmPassword.length == 0) {
+        alert("confirm password is required.");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("password and confirm-password are different.");
         return;
     }
 
