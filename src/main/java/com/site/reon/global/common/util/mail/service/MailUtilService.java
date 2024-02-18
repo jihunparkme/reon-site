@@ -52,7 +52,7 @@ public class MailUtilService {
         try {
             message.setSubject(MAIL_TITLE_PREFIX + subject);
             setMailRecipient(message, addressList);
-            message.setFrom(new InternetAddress(senderAddress, MimeUtility.encodeText("RE:ON", "UTF-8", "B")));
+            message.setFrom(new InternetAddress(senderAddress, MimeUtility.encodeText("REONAI", "UTF-8", "B")));
             message.setContent(contents, "text/html;charset=UTF-8");
         } catch (Exception e) {
             log.error("[MailUtilService.getMimeMessage] exception.");
