@@ -53,10 +53,4 @@ public class MemberController {
         redirectAttributes.addAttribute("status", true);
         return "redirect:/member/mypage";
     }
-
-//    @GetMapping("/{email}")
-//    @PreAuthorize("hasAnyRole('ADMIN')")
-//    public ResponseEntity<MemberDto> getMemberInfo(@PathVariable String email) {
-//        return ResponseEntity.ok(MemberDto.from(memberService.getMemberWithAuthorities(email)));
-//    }
 }

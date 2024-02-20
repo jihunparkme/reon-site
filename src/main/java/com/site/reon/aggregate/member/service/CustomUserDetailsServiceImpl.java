@@ -27,12 +27,12 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String email) {
         return memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY)
                 .map(member -> createUser(email, member))
-                .orElseThrow(() -> new UsernameNotFoundException(email + " : 회원 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new UsernameNotFoundException(email + " : Member information cannot be found."));
     }
 
     User createUser(final String email, final Member member) {
         if (!member.isActivated()) {
-            throw new RuntimeException(email + " : 비활성 계정입니다.");
+            throw new RuntimeException(email + " : The account is inactive.");
         }
 
         List<GrantedAuthority> grantedAuthorities = member.getAuthorities().stream()

@@ -85,7 +85,7 @@ public class MemberLoginApiController {
         } catch (DuplicateMemberException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
-            return BasicResponse.internalServerError("회원가입을 실패하였습니다. 다시 시도해 주세요.");
+            return BasicResponse.internalServerError("Registration failed. Please try again.");
         }
     }
 
@@ -102,7 +102,7 @@ public class MemberLoginApiController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
-            return BasicResponse.internalServerError("이메일 인증번호 발송을 실패하였습니다. 다시 시도해 주세요.");
+            return BasicResponse.internalServerError("Failed to send email authentication code. Please try again.");
         }
     }
 
@@ -119,7 +119,7 @@ public class MemberLoginApiController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
-            return BasicResponse.internalServerError("이메일 인증번호 검증을 실패하였습니다. 다시 시도해 주세요.");
+            return BasicResponse.internalServerError("Email authentication code validation failed. Please try again.");
         }
     }
 
