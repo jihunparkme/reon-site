@@ -55,9 +55,6 @@ spring:
     livereload:
       enabled: true
 
-  messages:
-    basename: messages,errors
-
   security:
     oauth2:
       client:
