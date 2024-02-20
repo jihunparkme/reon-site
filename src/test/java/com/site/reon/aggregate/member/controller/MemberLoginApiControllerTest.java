@@ -3,6 +3,7 @@ package com.site.reon.aggregate.member.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.service.MemberAuthCodeService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
@@ -42,6 +43,9 @@ class MemberLoginApiControllerTest {
 
     @MockBean
     private MemberService memberService;
+
+    @MockBean
+    private MemberAuthCodeService memberAuthCodeService;
 
     private String CLIENT_NAME = "reon";
     private String CLIENT_ID = "235df110-bd70-11ee-aa8b-e30685fde2fa";
