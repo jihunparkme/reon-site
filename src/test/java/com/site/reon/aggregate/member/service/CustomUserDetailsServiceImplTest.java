@@ -46,12 +46,12 @@ class CustomUserDetailsServiceImplTest {
         assertThatThrownBy(() -> {
             service.loadUserByUsername(email);
         }).isInstanceOf(UsernameNotFoundException.class)
-                .hasMessageContaining("회원 정보를 찾을 수 없습니다.");
+                .hasMessageContaining("Member information cannot be found.");
 
         UsernameNotFoundException exception = assertThrows(UsernameNotFoundException.class, () ->
                 service.loadUserByUsername(email)
         );
-        assertEquals(email + " : 회원 정보를 찾을 수 없습니다.", exception.getMessage());
+        assertEquals(email + " : Member information cannot be found.", exception.getMessage());
     }
 
     @Test
@@ -64,7 +64,7 @@ class CustomUserDetailsServiceImplTest {
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 service.createUser(email, member)
         );
-        assertEquals(email + " : 비활성 계정입니다.", exception.getMessage());
+        assertEquals(email + " : The account is inactive.", exception.getMessage());
     }
 
     @Test

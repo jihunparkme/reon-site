@@ -56,6 +56,6 @@ class MemberLoginServiceImplTest {
                 memberLoginService.signup(signUp)
         );
 
-        assertEquals("이미 가입되어 있는 이메일입니다.", exception.getMessage());
+        assertEquals("This email is already registered.", exception.getMessage());
     }
 }

@@ -11,3 +11,5 @@ spring:
       prod: real-port, real, mail, real-db, management, real-oauth
       set1: set1-port, real, mail, real-db, management, real-oauth
       set2: set2-port, real, mail, real-db, management, real-oauth
+  messages:
+    basename: messages,errors

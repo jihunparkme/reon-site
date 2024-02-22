@@ -35,11 +35,11 @@ public class MemberAuthCodeService {
     public boolean verifyAuthenticationCode(KeyPrefix keyPrefix, String email, String authCode) {
         Optional<String> authCodeOpt = redisUtilService.getValueOf(keyPrefix.prefix() + email);
         if (authCodeOpt.isEmpty()) {
-            throw new IllegalArgumentException("인증번호 입력 가능 시간을 초과하였습니다. 다시 시도해 주세요.");
+            throw new IllegalArgumentException("The time limit for entering the authentication code has been exceeded. Please try again.");
         }
 
         if (!authCode.equals(authCodeOpt.get())) {
-            throw new IllegalArgumentException("인증번호가 올바르지 않습니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException("The authentication code is incorrect. Please enter it again.");
         }
 
         return true;

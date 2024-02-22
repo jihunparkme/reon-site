@@ -15,20 +15,20 @@ import lombok.experimental.SuperBuilder;
 public class SignUpDto {
 
     @NotBlank(message = "email is required.")
-    @Pattern(regexp = "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}", message = "이메일 형식을 확인해 주세요.")
-    @Size(min = 3, max = 50)
+    @Pattern(regexp = "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{2,3}", message = "Please check the email format.")
+    @Size(min = 3, max = 50, message = "The email length must be between 3 and 50 characters.")
     private String email;
 
     @NotBlank(message = "firstName is required.")
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 30, message = "The first name length must be between 1 and 30 characters.")
     private String firstName;
 
     @NotBlank(message = "lastName is required.")
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 30, message = "The last name length must be between 1 and 30 characters.")
     private String lastName;
 
     @NotBlank(message = "password is required.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,50}$", message = "비밀번호는 최소 8자에서 50자까지, 영문자, 숫자 및 특수 문자를 포함해야 합니다.")
+    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*?_]).{8,50}$", message = "The password must be between 8 and 50 characters long and include letters, numbers, and special characters.")
     private String password;
 
     private String roasterSn;

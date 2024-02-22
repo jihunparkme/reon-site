@@ -144,7 +144,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     private void validateEmailAndOAuthClient(String email, OAuth2Client oAuthClient) {
         Optional<Member> memberOpt = memberRepository.findByEmailAndOAuthClient(email, oAuthClient);
         if (memberOpt.isPresent()) {
-            throw new DuplicateMemberException("이미 가입되어 있는 이메일입니다.");
+            throw new DuplicateMemberException("This email is already registered.");
         }
     }
 

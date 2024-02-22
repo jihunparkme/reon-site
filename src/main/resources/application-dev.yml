@@ -46,9 +46,6 @@ spring:
     livereload:
       enabled: true
 
-  messages:
-    basename: messages,errors
-
 app:
   reon:
     client-name: reon

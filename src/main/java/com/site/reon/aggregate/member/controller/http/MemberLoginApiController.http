@@ -98,7 +98,7 @@ Content-Type: application/json
   "roasterSn": "asdfasdfasfsadfasfsafs"
 }
 
-### 앱에서 신규로 소셜 가입을 합니다. BAD_REQUEST (이미 가입되어 있는 이메일입니다.)
+### 앱에서 신규로 소셜 가입을 합니다. BAD_REQUEST (This email is already registered.)
 POST http://localhost:8080/api/login/oauth2/sign-up
 Content-Type: application/json
 
@@ -141,7 +141,7 @@ Content-Type: application/json
   "roasterSn": "avdas-vadsavd-asvdsavd-avda"
 }
 
-### 앱에서 이메일로 가입합니다. BAD_REQUEST (이미 가입되어 있는 이메일입니다.)
+### 앱에서 이메일로 가입합니다. BAD_REQUEST (This email is already registered.)
 POST http://localhost:8080/api/login/email/sign-up
 Content-Type: application/json
 
@@ -169,7 +169,7 @@ Content-Type: application/json
   "roasterSn": "avdas-vadsavd-asvdsavd-avda"
 }
 
-### 앱에서 이메일로 가입합니다. BAD_REQUEST (이메일 형식을 확인해 주세요.)
+### 앱에서 이메일로 가입합니다. BAD_REQUEST (Please check the email format.)
 POST http://localhost:8080/api/login/email/sign-up
 Content-Type: application/json
 
@@ -332,7 +332,7 @@ Content-Type: application/json
   "authCode": "111111"
 }
 
-### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다. BAD_REQUEST (인증번호 입력 가능 시간을 초과하였습니다. 다시 시도해 주세요.)
+### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다. BAD_REQUEST (The time limit for entering the authentication code has been exceeded. Please try again.)
 POST http://localhost:8080/api/login/email/auth-code/verify
 Content-Type: application/json
 
@@ -343,7 +343,7 @@ Content-Type: application/json
   "authCode": "111111"
 }
 
-### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다. BAD_REQUEST (인증번호가 올바르지 않습니다. 다시 입력해 주세요.)
+### 앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다. BAD_REQUEST (The authentication code is incorrect. Please enter it again.)
 POST http://localhost:8080/api/login/email/auth-code/verify
 Content-Type: application/json
 
