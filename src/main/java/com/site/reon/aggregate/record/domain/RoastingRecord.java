@@ -47,4 +47,28 @@ public class RoastingRecord extends BaseTimeEntity {
 
     @Column(nullable = false)
     private long memberId;
+
+    @Column(length = 100)
+    private String crackPoint;
+
+    @Column(length = 100)
+    private String crackPointTime;
+
+    @Column(length = 100)
+    private String turningPointTemp;
+
+    @Column(length = 100)
+    private String turningPointTime;
+
+    @Column
+    private Float preheatTemp;
+
+    @Column(length = 100)
+    private String disposeTemp;
+
+    @Column(length = 100)
+    private String disposeTime;
+
+    @Column
+    private Integer inputCapacity;
 }
