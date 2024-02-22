@@ -27,6 +27,8 @@ create table roasting_record
 -- show columns from roasting_record;
 -- alter table roasting_record MODIFY COLUMN fan TEXT;
 
+-- ALTER TABLE TABLE_NAME ADD ADD_COLUMN VARCHAR(1) DEFAULT NULL COMMENT 'XXX';
+
 insert into roasting_record (TITLE, FAN, HEATER, TEMP1, TEMP2, TEMP3, TEMP4, ROR,
                              CRACK_POINT, CRACK_POINT_TIME, TURNING_POINT_TEMP, TURNING_POINT_TIME, PREHEAT_TEMP, DISPOSE_TEMP, DISPOSE_TIME, INPUT_CAPACITY,
                              ROASTER_SN, MEMBER_ID, CREATED_DT)
