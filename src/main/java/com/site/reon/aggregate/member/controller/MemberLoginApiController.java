@@ -91,7 +91,7 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 인증번호 발송", notes = "앱에서 이메일로 가입 시 인증번호를 발송합니다.")
     @PostMapping("/email/auth-code")
-    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody EmailAuthCodeRequest request,
+    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody ApiEmailAuthCodeRequest request,
                                       BindingResult bindingResult) {
         ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
@@ -108,7 +108,7 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다.")
     @PostMapping("/email/auth-code/verify")
-    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody EmailAuthCodeVerifyRequest request,
+    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody ApiEmailAuthCodeVerifyRequest request,
                                                         BindingResult bindingResult) {
         ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;

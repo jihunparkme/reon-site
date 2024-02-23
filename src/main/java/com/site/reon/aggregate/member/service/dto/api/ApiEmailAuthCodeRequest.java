@@ -11,10 +11,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAuthCodeVerifyRequest extends ApiRequest {
+public class ApiEmailAuthCodeRequest extends ApiRequest {
+    @NotBlank(message = "purpose is required.")
+    private String purpose;
+
     @NotBlank(message = "email is required.")
     private String email;
-
-    @NotBlank(message = "authCode is required.")
-    private String authCode;
 }
