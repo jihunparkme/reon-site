@@ -98,7 +98,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     public boolean withdraw(WithdrawRequest request) {
         String email = request.getEmail();
         String authClientName = request.getAuthClientName().toLowerCase();
-        if (StringUtils.isBlank(authClientName)) {
+        if (isEmailMember(authClientName)) {
             return memberDeleteResult(email, OAuth2Client.EMPTY);
         }
 
@@ -157,5 +157,9 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         }
 
         return false;
+    }
+
+    private boolean isEmailMember(String authClientName) {
+        return StringUtils.isBlank(authClientName) || "empty".equals(authClientName);
     }
 }
