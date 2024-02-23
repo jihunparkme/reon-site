@@ -42,6 +42,14 @@ public class MemberAuthCodeService {
             throw new IllegalArgumentException("The authentication code is incorrect. Please enter it again.");
         }
 
+        redisUtilService.setValueExpire(keyPrefix.verifyPrefix() + email, "true", 300L);
         return true;
+    }
+
+    public void checkEmailVerificationStatus(KeyPrefix keyPrefix, String email) {
+        Optional<String> authCodeOpt = redisUtilService.getValueOf(keyPrefix.verifyPrefix() + email);
+        if (authCodeOpt.isEmpty()) {
+            throw new IllegalArgumentException("Your email has not been verified. Please try again.");
+        }
     }
 }

@@ -15,20 +15,37 @@
                             <h1>e-mail Login</h1>
                             <div class="login-page">
                                 <form class="register-form transform-form" id="register-form" onsubmit="return false;">
-                                    <label>email</label>
-                                    <input id="sign-up-email" type="email" placeholder="email"/>
-
                                     <label>first name</label>
-                                    <input id="sign-up-first-name" type="text" placeholder="first name"/>
+                                    <input id="sign-up-first-name" type="text" placeholder="first name" required/>
 
                                     <label>last name</label>
-                                    <input id="sign-up-last-name" type="text" placeholder="last name"/>
+                                    <input id="sign-up-last-name" type="text" placeholder="last name" required/>
+
+                                    <label>email</label>
+                                    <div class="clearfix">
+                                        <div class="box1">
+                                            <input id="sign-up-email" type="email" placeholder="email" required/>
+                                        </div>
+                                        <div class="box2">
+                                            <button type="button" class="btn btn-warning" th:onclick="'sendAuthCode()'">발송</button>
+                                        </div>
+                                    </div>
+
+                                    <label>auth code</label>
+                                    <div class="clearfix">
+                                        <div class="box1">
+                                            <input id="email-auth-code" type="text" placeholder="000000" required/>
+                                        </div>
+                                        <div class="box2">
+                                            <button type="button" class="btn btn-warning" th:onclick="'verifyAuthCode()'">인증</button>
+                                        </div>
+                                    </div>
 
                                     <label>password</label>
-                                    <input id="sign-up-password" type="password" placeholder="password"/>
+                                    <input id="sign-up-password" type="password" placeholder="password" required/>
 
                                     <label>confirm password</label>
-                                    <input id="sign-up-confirm-password" type="password" placeholder="confirm password"/>
+                                    <input id="sign-up-confirm-password" type="password" placeholder="confirm password" required/>
 
                                     <button type="button" class="btn btn-warning" th:onclick="'signUp()'">SIGN UP</button>
 

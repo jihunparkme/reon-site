@@ -82,7 +82,7 @@ public class MemberLoginApiController {
         try {
             memberLoginService.signup(request);
             return BasicResponse.ok(SUCCESS);
-        } catch (DuplicateMemberException e) {
+        } catch (DuplicateMemberException | IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             return BasicResponse.internalServerError("Registration failed. Please try again.");
