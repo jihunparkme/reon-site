@@ -15,6 +15,7 @@ import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.session.FindByIndexNameSessionRepository;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import static com.site.reon.global.common.constant.Result.SUCCESS;
 
+@Slf4j
 @Controller
 @RequestMapping("/login/email")
 @RequiredArgsConstructor
@@ -55,6 +57,7 @@ public class MemberEmailLoginController {
         } catch (DuplicateMemberException | IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberEmailLoginController.signup Exception: ", e);
             return BasicResponse.internalServerError("Registration failed. Please try again.");
         }
     }
@@ -78,6 +81,7 @@ public class MemberEmailLoginController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberEmailLoginController.sendAuthenticationCodeByEmail Exception: ", e);
             return BasicResponse.internalServerError("Failed to send email authentication code. Please try again.");
         }
     }
@@ -90,6 +94,7 @@ public class MemberEmailLoginController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberEmailLoginController.verifyAuthenticationCode Exception: ", e);
             return BasicResponse.internalServerError("Email authentication code validation failed. Please try again.");
         }
     }
