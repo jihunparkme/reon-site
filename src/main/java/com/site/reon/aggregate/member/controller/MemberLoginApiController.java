@@ -85,6 +85,7 @@ public class MemberLoginApiController {
         } catch (DuplicateMemberException | IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberLoginApiController.signUpEmail Exception: ", e);
             return BasicResponse.internalServerError("Registration failed. Please try again.");
         }
     }
@@ -102,6 +103,7 @@ public class MemberLoginApiController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberLoginApiController.sendAuthenticationCodeByEmail Exception: ", e);
             return BasicResponse.internalServerError("Failed to send email authentication code. Please try again.");
         }
     }
@@ -119,6 +121,7 @@ public class MemberLoginApiController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberLoginApiController.verifyAuthenticationCode Exception: ", e);
             return BasicResponse.internalServerError("Email authentication code validation failed. Please try again.");
         }
     }
