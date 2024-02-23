@@ -19,14 +19,18 @@ Version.
   - MariaDB
   - Redis
 > DevOps
-  - AWS RDS (db.t2.micro)
+  - AWS RDS (db.t3.micro)
   - AWS EC2 (t2.micro)
+  - AWS Route 53
   - Docker
   - Jenkins
   - Nginx
 > Front
   - thymeleaf
   - JavaScript
+> SSL
+  - Certbot
+  - Let’s encrypt
 > Test
   - Junit
   - mockito
@@ -98,23 +102,28 @@ ing.
 
 ![Result](./reference/login.png 'Result')
 
-- 소셜(카카오, 구글, 애플) 및 이메일 로그인
-- Redis 로 Spring Session 관리
-- 로그인, 로그아웃, 탈퇴
+<p align="center" width="100%">
+    <img src="./reference/email-login.png" width="40%">
+    <img src="./reference/email-signup.png" width="40%">
+</p>
+
+- 소셜(카카오, 구글, 애플) 계정
+- 이메일 계정
+  - 이메일 가입 시 인증번호 발송 및 검증
+  - 인증번호 및 인증 상태는 Redis 에서 관리
+- 세션은 spring-session-data-redis 활용
+- 로그인/로그아웃/개인정보 수정/탈퇴
 
 - [ ] 소셜 로그인
   - [x] 카카오 로그인
-  - [x] 구글 로그인 (앱 게시)
+  - [x] 구글 로그인 (앱 게시 필요)
   - [ ] 애플 로그인
   - [ ] 소셜 가입 탈퇴 요청 시 소셜 연결 끊기 API 연동 후 세션 제거
   
-- [ ] 가입하기
-  - [x] email, first name, last name, 비밀번호
-  - [ ] 비밀번호 재확인
-  - [ ] 가입 시 이메일 인증
-    - [ ] 인증하기 버튼 클릭 시 인증번호를 메일로 전송(인증번호는 Redis에서 관리)
-- [ ] 비밀번호 찾기 (메일로 비밀번호 변경 링크 전달)
-- [ ] 이메일 찾기
+- [ ] 이메일로 가입하기
+  - [ ] 탈퇴 
+  - [ ] 비밀번호 찾기 (메일로 비밀번호 변경 링크 전달)
+  - [ ] 이메일 찾기
 
 ## Member
 
@@ -142,6 +151,11 @@ ing.
 - [ ] 로스팅 로그 추출 기능(csv?) 
 - [ ] 회원은 자신의 로그만 조회 가능, 관리자는 모든 로그 조회 가능
 - [ ] 회원번호, S/N, 날짜로 검색 기능
+- [ ] 글쓰기(ckeditor) 기능 
+  - https://ckeditor.com/
+  - https://ckeditor.com/ckeditor-5/download/ 
+- [ ] 프로파일 레시피(ag-grid) 기능
+  - https://www.ag-grid.com/
 
 .
 
