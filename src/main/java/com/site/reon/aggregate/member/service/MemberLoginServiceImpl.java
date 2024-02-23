@@ -7,9 +7,9 @@ import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -95,7 +95,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     @Transactional
-    public boolean withdraw(ApiWithdrawRequest request) {
+    public boolean withdraw(WithdrawRequest request) {
         String email = request.getEmail();
         String authClientName = request.getAuthClientName().toLowerCase();
         if (StringUtils.isBlank(authClientName)) {

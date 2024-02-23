@@ -2,10 +2,10 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.MemberDto;
-import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -213,7 +213,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void withdraw_success() throws Exception {
         String email = "user@gmail.com";
-        ApiWithdrawRequest request = ApiWithdrawRequest.builder()
+        WithdrawRequest request = WithdrawRequest.builder()
                 .email(email)
                 .authClientName("")
                 .build();
@@ -231,7 +231,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void withdraw_fail_invalid_client_name() throws Exception {
         String email = "user@gmail.com";
-        ApiWithdrawRequest request = ApiWithdrawRequest.builder()
+        WithdrawRequest request = WithdrawRequest.builder()
                 .email(email)
                 .authClientName("XXX")
                 .build();
@@ -247,7 +247,7 @@ class MemberLoginServiceImplUnitTest {
     @Test
     void withdraw_fail_not_exist_member() throws Exception {
         String email = "xxx@gmail.com";
-        ApiWithdrawRequest request = ApiWithdrawRequest.builder()
+        WithdrawRequest request = WithdrawRequest.builder()
                 .email(email)
                 .authClientName("google")
                 .build();

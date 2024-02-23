@@ -153,7 +153,7 @@ public class MemberLoginApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            boolean result = memberLoginService.withdraw(request);
+            boolean result = memberLoginService.withdraw(request.toBaseRequest());
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
