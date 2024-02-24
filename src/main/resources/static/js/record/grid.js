@@ -4,13 +4,14 @@ $(function() {
     const gridOptions = {
         rowData: rowData,
         columnDefs: [
-            { field: 'time' },
-            { field: 'temp1' },
-            { field: 'temp2' },
-            { field: 'temp3' },
-            { field: 'ror' },
-            { field: 'heater' },
-            { field: 'fan' },
+            { field: 'time', width: 100 },
+            { field: 'temp1', width: 100 },
+            { field: 'temp2', width: 100 },
+            { field: 'temp3', width: 100 },
+            { field: 'ror', width: 100 },
+            { field: 'heater', width: 100 },
+            { field: 'fan', width: 100 },
+            { field: 'note', width: 100 },
         ],
         suppressColumnVirtualisation: true,
         suppressRowVirtualisation: true,
@@ -31,6 +32,7 @@ function getRowData() {
             ror: rorArr[i],
             heater: heaterArr[i],
             fan: fanArr[i],
+            note: '',
         };
         rowData.push(row);
     }
