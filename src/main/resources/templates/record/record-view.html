@@ -46,7 +46,7 @@
 
                             <h2 style="margin-top: 50px;">Profile Details</h2>
                             <div style="height: 1000px; margin-top: 20px; box-sizing: border-box">
-                                <div id="myGrid" class="ag-theme-quartz"></div>
+                                <div id="myGrid" class="ag-theme-quartz-dark"></div>
                             </div>
                         </div>
 
@@ -97,7 +97,7 @@
     const temp1Arr = generateGraphData(record.temp1, dataSize);
     const temp2Arr = generateGraphData(record.temp2, dataSize);
     const temp3Arr = generateGraphData(record.temp3, dataSize);
-    const rorArr = generateGraphData(record.ror, dataSize);
+    const rorArr = stringToFloatTwoDecimals(generateGraphData(record.ror, dataSize));
     const heaterArr = generateGraphData(record.heater, dataSize);
     const fanArr = generateGraphData(record.fan, dataSize);
 
@@ -125,6 +125,16 @@
         const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
 
         return `${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    function stringToFloatTwoDecimals(data) {
+        const result = [];
+        data.forEach(str => {
+            const floatNum = parseFloat(str);
+            const twoDecimal = parseFloat(floatNum.toFixed(2));
+            result.push(twoDecimal);
+        });
+        return result;
     }
     /*]]>*/
 </script>
