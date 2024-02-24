@@ -347,8 +347,6 @@ am5.ready(function() {
 
     let heaterArr = generateGraphData(record.heater, dataSizeOfSensor);
     let fanArr = generateGraphData(record.fan, dataSizeOfSensor);
-    console.log(heaterArr);
-    console.log(fanArr);
 
     let dataOfSensor = [];
     for (let i = 0; i < dataSizeOfSensor; i++) {
