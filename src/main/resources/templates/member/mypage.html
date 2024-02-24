@@ -161,24 +161,31 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     $(function() {
-        $('#btn-check').click(function () {
-            window.history.back();
-        });
-
         $('#btn-withdraw').click(function () {
-            if (confirm("정말로 탈퇴하시겠습니까?")) {
+            const member = [[${member}]];
+            let data = {
+                "email": member.email,
+                "authClientName": member.oauthClient
+            };
+
+            if (confirm("Are you sure you want to withdraw?")) {
                 $.ajax({
                     type: 'POST',
-                    url: "/mypage/withdraw",
+                    url: "/member/withdraw",
                     dataType: 'json',
                     contentType: 'application/json; charset=UTF-8',
-                    data : JSON.stringify({"email": $('#email').val()}),
+                    data : JSON.stringify(data),
                     accept: "application/json"
-                }).done(function(result) {
-                    alert(result['message']);
-                    window.location.href = '/logout';
+                }).done(function(response) {
+                    if (response.success) {
+                        alert("You have successfully withdrawn.");
+                        window.location.href = '/logout';
+                        return;
+                    }
+                    alert("Failed to withdraw member. Please try again.");
                 }).fail(function (error) {
-                    alert("회원 탈퇴를 실패하였습니다. 관리자에게 문의해 주세요.\n(" + error['responseJSON']['message'] + ")");
+                    let responseJson = error.responseJSON;
+                    alert("Failed to withdraw member. Please contact the administrator.\n(" + responseJson.message + ")");
                 });
             }
         });

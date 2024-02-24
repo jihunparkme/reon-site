@@ -82,16 +82,17 @@ public class MemberLoginApiController {
         try {
             memberLoginService.signup(request);
             return BasicResponse.ok(SUCCESS);
-        } catch (DuplicateMemberException e) {
+        } catch (DuplicateMemberException | IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberLoginApiController.signUpEmail Exception: ", e);
             return BasicResponse.internalServerError("Registration failed. Please try again.");
         }
     }
 
     @ApiOperation(value = "이메일 인증번호 발송", notes = "앱에서 이메일로 가입 시 인증번호를 발송합니다.")
     @PostMapping("/email/auth-code")
-    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody EmailAuthCodeRequest request,
+    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody ApiEmailAuthCodeRequest request,
                                       BindingResult bindingResult) {
         ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
@@ -102,13 +103,14 @@ public class MemberLoginApiController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberLoginApiController.sendAuthenticationCodeByEmail Exception: ", e);
             return BasicResponse.internalServerError("Failed to send email authentication code. Please try again.");
         }
     }
 
     @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다.")
     @PostMapping("/email/auth-code/verify")
-    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody EmailAuthCodeVerifyRequest request,
+    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody ApiEmailAuthCodeVerifyRequest request,
                                                         BindingResult bindingResult) {
         ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
@@ -119,6 +121,7 @@ public class MemberLoginApiController {
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
+            log.error("MemberLoginApiController.verifyAuthenticationCode Exception: ", e);
             return BasicResponse.internalServerError("Email authentication code validation failed. Please try again.");
         }
     }
@@ -150,7 +153,7 @@ public class MemberLoginApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            boolean result = memberLoginService.withdraw(request);
+            boolean result = memberLoginService.withdraw(request.toBaseRequest());
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());

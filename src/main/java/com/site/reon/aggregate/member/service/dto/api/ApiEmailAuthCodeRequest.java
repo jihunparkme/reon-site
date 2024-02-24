@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmailAuthCodeRequest extends ApiRequest {
+public class ApiEmailAuthCodeRequest extends ApiRequest {
     @NotBlank(message = "purpose is required.")
     private String purpose;
 

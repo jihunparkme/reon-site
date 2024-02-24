@@ -3,9 +3,9 @@ package com.site.reon.aggregate.member.service;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
 
 public interface MemberLoginService {
     /**
@@ -31,5 +31,5 @@ public interface MemberLoginService {
     /**
      * 회원 탈퇴
      */
-    boolean withdraw(ApiWithdrawRequest request);
+    boolean withdraw(WithdrawRequest request);
 }

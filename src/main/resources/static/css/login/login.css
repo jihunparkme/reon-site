@@ -200,3 +200,20 @@
     color: rgb(127, 127, 127);
     border-radius: 10px;
 }
+.clearfix {
+    display: flex;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.box1 {
+    display: inline-block;
+    width: 70%;
+}
+.box2 {
+    display: inline-block;
+    width: 30%;
+    margin-left: 5px;
+}

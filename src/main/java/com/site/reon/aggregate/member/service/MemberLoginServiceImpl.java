@@ -7,10 +7,11 @@ import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiWithdrawRequest;
 import com.site.reon.global.common.constant.member.Role;
+import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.AppleOAuth2Token;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -31,14 +32,15 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MemberLoginServiceImpl implements MemberLoginService {
-
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final MemberAuthCodeService memberAuthCodeService;
 
     @Override
     @Transactional
     public void signup(SignUpDto signUpDto) {
+        memberAuthCodeService.checkEmailVerificationStatus(KeyPrefix.SIGN_UP, signUpDto.getEmail());
         validateEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY);
 
         Authority authority = Authority.builder()
@@ -93,10 +95,10 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     @Transactional
-    public boolean withdraw(ApiWithdrawRequest request) {
+    public boolean withdraw(WithdrawRequest request) {
         String email = request.getEmail();
         String authClientName = request.getAuthClientName().toLowerCase();
-        if (StringUtils.isBlank(authClientName)) {
+        if (isEmailMember(authClientName)) {
             return memberDeleteResult(email, OAuth2Client.EMPTY);
         }
 
@@ -155,5 +157,9 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         }
 
         return false;
+    }
+
+    private boolean isEmailMember(String authClientName) {
+        return StringUtils.isBlank(authClientName) || "empty".equals(authClientName);
     }
 }

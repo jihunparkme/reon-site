@@ -19,7 +19,7 @@ function login() {
     }).done(function (response) {
         location.href = "/";
     }).fail(function () {
-        alert('이메일 또는 비밀번호를 확인해 주세요.');
+        alert('Please check your email or password.');
     });
 }
 
@@ -71,8 +71,55 @@ function signUp() {
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8'
     }).done(function (response) {
-        alert('회원가입이 완료되었습니다. 다시 로그인해 주세요.');
-        location.href = "/";
+        alert('Your registration has been completed. Please login again.');
+        location.href = "/login/email";
+    }).fail(function (error) {
+        let responseJson = error.responseJSON;
+        alert(responseJson.message);
+    });
+}
+
+function sendAuthCode() {
+    let data = {
+        "email": $('#sign-up-email').val()
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: "/login/email/auth-code",
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8'
+    }).done(function (response) {
+        if (response.success) {
+            alert('The authentication code has been sent.');
+            return;
+        }
+        alert('The authentication code sending failed. Please try again.');
+    }).fail(function (error) {
+        let responseJson = error.responseJSON;
+        alert(responseJson.message);
+    });
+}
+
+function verifyAuthCode() {
+    let data = {
+        "email": $('#sign-up-email').val(),
+        "authCode": $('#email-auth-code').val()
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: "/login/email/auth-code/verify",
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8'
+    }).done(function (response) {
+        if (response.success) {
+            alert('Your email has been verified.');
+            return;
+        }
+        alert('Your email verification has failed. Please try again.');
     }).fail(function (error) {
         let responseJson = error.responseJSON;
         alert(responseJson.message);

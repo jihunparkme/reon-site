@@ -28,6 +28,18 @@ public class RoastingRecordRequest {
     private String disposeTime; //배출 시간. [2024-02-20 15:00:18 +0000]
     private int inputCapacity; // 용량(g). 40
 
+    public RoastingRecordRequest(String title, String fan, String heater, String temp1, String temp2, String temp3, String temp4, String ror, String roasterSn) {
+        this.title = title;
+        this.fan = fan;
+        this.heater = heater;
+        this.temp1 = temp1;
+        this.temp2 = temp2;
+        this.temp3 = temp3;
+        this.temp4 = temp4;
+        this.ror = ror;
+        this.roasterSn = roasterSn;
+    }
+
     public RoastingRecord toEntity(long memberId) {
         return RoastingRecord.builder()
                 .title(this.title)
