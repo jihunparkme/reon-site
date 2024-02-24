@@ -7,6 +7,7 @@
     height: 500px;
     max-width: 100%;
 }
+
 </style>
 <main id="main">
     <section id="breadcrumbs" class="breadcrumbs">
@@ -41,8 +42,12 @@
 
                         <div class="entry-content">
                             <div id="temperatureChart"></div>
-
                             <div id="sensorChart"></div>
+
+                            <h2 style="margin-top: 50px;">Profile Details</h2>
+                            <div style="height: 1000px; margin-top: 20px; box-sizing: border-box">
+                                <div id="myGrid" class="ag-theme-quartz"></div>
+                            </div>
                         </div>
 
                         <div class="entry-footer">
@@ -58,7 +63,6 @@
                                 </button>
                             </div>
                         </div>
-
                     </article>
                 </div>
             </div>
@@ -71,10 +75,15 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 <div th:replace="~{common/commonjs}"></div>
+
 <script th:src="@{/js/library/amcharts/index.js}"></script>
 <script th:src="@{/js/library/amcharts/xy.js}"></script>
 <script th:src="@{/js/library/amcharts/themes/Animated.js}"></script>
+
+<script th:src="@{/js/library/agGrid/ag-grid-community.min.js}"></script>
+
 <script th:src="@{/js/record/chart.js}"></script>
+<script th:src="@{/js/record/grid.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     const record = [[${record}]];
