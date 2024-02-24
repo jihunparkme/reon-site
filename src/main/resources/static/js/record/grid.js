@@ -13,8 +13,6 @@ $(function() {
             { field: 'fan', width: 100 },
             { field: 'note', width: 100 },
         ],
-        suppressColumnVirtualisation: true,
-        suppressRowVirtualisation: true,
     };
 
     // Create Grid: Create new grid within the #myGrid div, using the Grid Options object
