@@ -85,11 +85,6 @@ am5.ready(function() {
         dataSize = JSON.parse(record.temp1).length;
     }
 
-    let temp1Arr = generateGraphData(record.temp1, dataSize);
-    let temp2Arr = generateGraphData(record.temp2, dataSize);
-    let temp3Arr = generateGraphData(record.temp3, dataSize);
-    let rorArr = generateGraphData(record.ror, dataSize);
-
     let data = [];
     for (let i = 0; i < dataSize; i++) {
         let min = parseInt((i + 1) / 60);
@@ -345,9 +340,6 @@ am5.ready(function() {
         dataSizeOfSensor = JSON.parse(record.heater).length;
     }
 
-    let heaterArr = generateGraphData(record.heater, dataSizeOfSensor);
-    let fanArr = generateGraphData(record.fan, dataSizeOfSensor);
-
     let dataOfSensor = [];
     for (let i = 0; i < dataSizeOfSensor; i++) {
         let minOfSensor = parseInt((i + 1) / 60);
@@ -512,11 +504,3 @@ am5.ready(function() {
     // Make stuff animate on load
     chartOfSensor.appear(1000, 100);
 });
-
-function generateGraphData(data, size) {
-    if (data === null) {
-        return Array(size).fill(0);
-    }
-
-    return JSON.parse(data);
-}

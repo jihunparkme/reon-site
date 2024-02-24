@@ -21,18 +21,6 @@ $(function() {
 })
 
 function getRowData() {
-    let dataSize = 0;
-    if (record.temp1 !== null) {
-        dataSize = JSON.parse(record.temp1).length;
-    }
-
-    const temp1Arr = generateGraphData(record.temp1, dataSize);
-    const temp2Arr = generateGraphData(record.temp2, dataSize);
-    const temp3Arr = generateGraphData(record.temp3, dataSize);
-    const rorArr = generateGraphData(record.ror, dataSize);
-    const heaterArr = generateGraphData(record.heater, dataSize);
-    const fanArr = generateGraphData(record.fan, dataSize);
-
     let rowData = [];
     for (let i = 0; i < dataSize; i++) {
         let row = {
@@ -47,14 +35,6 @@ function getRowData() {
         rowData.push(row);
     }
     return rowData;
-}
-
-function generateGraphData(data, size) {
-    if (data === null) {
-        return Array(size).fill(0);
-    }
-
-    return JSON.parse(data);
 }
 
 function secondsToMMSS(seconds) {
