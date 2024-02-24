@@ -93,6 +93,7 @@
         dataSize = JSON.parse(record.temp1).length;
     }
 
+    const timeArr = generateTimeArr(dataSize);
     const temp1Arr = generateGraphData(record.temp1, dataSize);
     const temp2Arr = generateGraphData(record.temp2, dataSize);
     const temp3Arr = generateGraphData(record.temp3, dataSize);
@@ -106,6 +107,24 @@
         }
 
         return JSON.parse(data);
+    }
+
+    function generateTimeArr(dataSize) {
+        let result = [];
+        for (let i = 0; i < dataSize; i++) {
+            result.push(secondsToMMSS(i));
+        }
+        return result;
+    }
+
+    function secondsToMMSS(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+
+        return `${formattedMinutes}:${formattedSeconds}`;
     }
     /*]]>*/
 </script>

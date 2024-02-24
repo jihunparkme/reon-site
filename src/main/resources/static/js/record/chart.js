@@ -87,11 +87,9 @@ am5.ready(function() {
 
     let data = [];
     for (let i = 0; i < dataSize; i++) {
-        let min = parseInt((i + 1) / 60);
-        let sec = (min > 0 ? parseInt((i + 1) / 60) : "") + "′" + (i + 1) % 60;
         data.push(
             {
-                second: sec,
+                second: timeArr[i],
                 temp1: temp1Arr[i],
                 temp2: temp2Arr[i],
                 temp3: temp3Arr[i],
@@ -342,11 +340,9 @@ am5.ready(function() {
 
     let dataOfSensor = [];
     for (let i = 0; i < dataSizeOfSensor; i++) {
-        let minOfSensor = parseInt((i + 1) / 60);
-        let secOfSensor = (minOfSensor > 0 ? parseInt((i + 1) / 60) : "") + "′" + (i + 1) % 60;
         dataOfSensor.push(
             {
-                second: secOfSensor,
+                second: timeArr[i],
                 heater: heaterArr[i],
                 fan: fanArr[i],
             }
