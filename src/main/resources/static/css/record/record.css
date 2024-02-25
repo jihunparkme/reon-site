@@ -1,0 +1,12 @@
+#temperatureChart, #sensorChart {
+    width: 100%;
+    height: 500px;
+    max-width: 100%;
+}
+.profile-info {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.profile-info p {
+    line-height: 20px !important;
+}
