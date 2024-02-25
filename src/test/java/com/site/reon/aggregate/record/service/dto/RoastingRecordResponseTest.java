@@ -3,6 +3,7 @@ package com.site.reon.aggregate.record.service.dto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -80,6 +81,72 @@ class RoastingRecordResponseTest {
         List<String> result = record.convertToMMSSTimeList(input);
 
         List<String> expect = Collections.emptyList();
+        Assertions.assertEquals(expect, result);
+    }
+
+    @Test
+    void resizeFloatList_add_new_value() throws Exception {
+        List<Float> result = new ArrayList<>();
+        result.add(0.1F);
+
+        record.resizeFloatList(result, 2);
+
+        List<Float> expect = Arrays.asList(0.1F, 0F);
+        Assertions.assertEquals(expect, result);
+    }
+
+    @Test
+    void resizeFloatList_same_size() throws Exception {
+        List<Float> result = new ArrayList<>();
+        result.add(0.1F);
+        result.add(0.2F);
+
+        record.resizeFloatList(result, 2);
+
+        List<Float> expect = Arrays.asList(0.1F, 0.2F);
+        Assertions.assertEquals(expect, result);
+    }
+
+    @Test
+    void resizeFloatList_empty_list() throws Exception {
+        List<Float> result = new ArrayList<>();
+
+        record.resizeFloatList(result, 2);
+
+        List<Float> expect = Arrays.asList(0F, 0F);
+        Assertions.assertEquals(expect, result);
+    }
+
+    @Test
+    void resizeStringList_add_new_value() throws Exception {
+        List<String> result = new ArrayList<>();
+        result.add("00:00");
+
+        record.resizeStringList(result, 2);
+
+        List<String> expect = Arrays.asList("00:00", "");
+        Assertions.assertEquals(expect, result);
+    }
+
+    @Test
+    void resizeStringList_same_size() throws Exception {
+        List<String> result = new ArrayList<>();
+        result.add("00:03");
+        result.add("00:04");
+
+        record.resizeStringList(result, 2);
+
+        List<String> expect = Arrays.asList("00:03", "00:04");
+        Assertions.assertEquals(expect, result);
+    }
+
+    @Test
+    void resizeStringList_empty_list() throws Exception {
+        List<String> result = new ArrayList<>();
+
+        record.resizeStringList(result, 2);
+
+        List<String> expect = Arrays.asList("", "");
         Assertions.assertEquals(expect, result);
     }
 }

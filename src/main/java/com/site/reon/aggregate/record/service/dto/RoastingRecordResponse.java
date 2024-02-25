@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -39,22 +38,15 @@ public class RoastingRecordResponse {
     private LocalDateTime createdDt;
     private LocalDateTime modifiedDt;
 
-    private float firstCrackPointTemp;
-    private String firstCrackPointTime;
-    private float secondCrackPointTemp;
-    private String secondCrackPointTime;
-    private float turningPointTemp; // 터닝 포인트 온도. [30.3]
-    private String turningPointTime; // 터닝 포인트 시간. [2024-02-20 15:00:18 +0000]
-    private float preheatTemp; // 예열 온도. 100.3
-    private float disposeTemp; // 배출 온도. [95.3]
-    private String disposeTime; //배출 시간. [2024-02-20 15:00:18 +0000]
-    private int inputCapacity; // 용량(g). 40
+    private CreakInfo creakInfo;
+    private float turningPointTemp;
+    private String turningPointTime;
+    private float preheatTemp;
+    private float disposeTemp;
+    private String disposeTime;
+    private int inputCapacity;
 
     public static RoastingRecordResponse of(RoastingRecord roastingRecord) {
-
-//        String crackPoint; // 크랙 포인트(1차, 2차). [30.3, 50.3]
-//        String crackPointTime; // 크랙 시간(1차, 2차). [2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]
-
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
                 .title(roastingRecord.getTitle())
@@ -67,10 +59,7 @@ public class RoastingRecordResponse {
                 .ror(roastingRecord.getRor())
                 .roasterSn(roastingRecord.getRoasterSn())
                 .memberId(roastingRecord.getMemberId())
-//                .firstCrackPointTemp()
-//                .firstCrackPointTime()
-//                .secondCrackPointTemp()
-//                .secondCrackPointTime()
+                .creakInfo(generateCrackInfo(roastingRecord.getCrackPoint(), roastingRecord.getCrackPointTime()))
                 .turningPointTemp(getSingleTemp(roastingRecord.getTurningPointTemp()))
                 .turningPointTime(getSingleTime(roastingRecord.getTurningPointTime()))
                 .preheatTemp(roastingRecord.getPreheatTemp())
@@ -80,6 +69,38 @@ public class RoastingRecordResponse {
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
                 .build();
+    }
+
+    /**
+     * generate CrackInfo object
+     * @param crackPointTemps [30.3, 50.3]
+     * @param crackPointTimes [2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]
+     * @return
+     */
+    private static CreakInfo generateCrackInfo(String crackPointTemps, String crackPointTimes) {
+        List<Float> temps = convertToFloatList(crackPointTemps);
+        List<String> times = convertToMMSSTimeList(crackPointTimes);
+        resizeFloatList(temps, 2);
+        resizeStringList(times, 2);
+
+        return CreakInfo.builder()
+                .firstCrackPointTemp(temps.get(0))
+                .firstCrackPointTime(times.get(0))
+                .secondCrackPointTemp(temps.get(1))
+                .secondCrackPointTime(times.get(1))
+                .build();
+    }
+
+    static void resizeFloatList(List<Float> list, int size) {
+        while (list.size() < size) {
+            list.add(0F);
+        }
+    }
+
+    static void resizeStringList(List<String> list, int size) {
+        while (list.size() < size) {
+            list.add("");
+        }
     }
 
     private static float getSingleTemp(String temp) {
@@ -106,7 +127,7 @@ public class RoastingRecordResponse {
      */
     static List<Float> convertToFloatList(String input) {
         if (StringUtils.isBlank(input) || "[]".equals(input)) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         input = input.substring(1, input.length() - 1);
@@ -126,7 +147,7 @@ public class RoastingRecordResponse {
      */
     static List<String> convertToMMSSTimeList(String input) {
         if (StringUtils.isBlank(input) || "[]".equals(input)) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         input = input.substring(1, input.length() - 1);
@@ -143,5 +164,18 @@ public class RoastingRecordResponse {
     private static String getHHSSTime(String item) {
         ZonedDateTime dateTime = ZonedDateTime.parse(item, DATE_TIME_FORMATTER);
         return dateTime.format(TIME_FORMATTER);
+    }
+
+    @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CreakInfo {
+        public final static CreakInfo EMPTY = new CreakInfo();
+
+        private float firstCrackPointTemp;
+        private String firstCrackPointTime;
+        private float secondCrackPointTemp;
+        private String secondCrackPointTime;
     }
 }
