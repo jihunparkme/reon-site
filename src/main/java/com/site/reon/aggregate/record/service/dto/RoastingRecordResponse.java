@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.record.service.dto;
 
+import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.site.reon.aggregate.record.domain.RoastingRecord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Builder
@@ -30,16 +34,24 @@ public class RoastingRecordResponse {
     private LocalDateTime createdDt;
     private LocalDateTime modifiedDt;
 
-    private String crackPoint; // 크랙 포인트(1차, 2차). [30.3, 50.3]
-    private String crackPointTime; // 크랙 시간(1차, 2차). [2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]
-    private String turningPointTemp; // 터닝 포인트 온도. [30.3]
+    private float firstCrackPointTemp;
+    private String firstCrackPointTime;
+    private float secondCrackPointTemp;
+    private String secondCrackPointTime;
+    private float turningPointTemp; // 터닝 포인트 온도. [30.3]
     private String turningPointTime; // 터닝 포인트 시간. [2024-02-20 15:00:18 +0000]
     private float preheatTemp; // 예열 온도. 100.3
-    private String disposeTemp; // 배출 온도. [95.3]
+    private float disposeTemp; // 배출 온도. [95.3]
     private String disposeTime; //배출 시간. [2024-02-20 15:00:18 +0000]
     private int inputCapacity; // 용량(g). 40
 
     public static RoastingRecordResponse of(RoastingRecord roastingRecord) {
+
+//        String crackPoint; // 크랙 포인트(1차, 2차). [30.3, 50.3]
+//        String crackPointTime; // 크랙 시간(1차, 2차). [2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]
+//        String turningPointTime; // 터닝 포인트 시간. [2024-02-20 15:00:18 +0000]
+//        String disposeTime; //배출 시간. [2024-02-20 15:00:18 +0000]
+
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
                 .title(roastingRecord.getTitle())
@@ -52,16 +64,47 @@ public class RoastingRecordResponse {
                 .ror(roastingRecord.getRor())
                 .roasterSn(roastingRecord.getRoasterSn())
                 .memberId(roastingRecord.getMemberId())
-                .crackPoint(roastingRecord.getCrackPoint())
-                .crackPointTime(roastingRecord.getCrackPointTime())
-                .turningPointTemp(roastingRecord.getTurningPointTemp())
-                .turningPointTime(roastingRecord.getTurningPointTime())
+//                .firstCrackPointTemp()
+//                .firstCrackPointTime()
+//                .secondCrackPointTemp()
+//                .secondCrackPointTime()
+                .turningPointTemp(getSingleTemp(roastingRecord.getTurningPointTemp()))
+//                .turningPointTime(roastingRecord.getTurningPointTime())
                 .preheatTemp(roastingRecord.getPreheatTemp())
-                .disposeTemp(roastingRecord.getDisposeTemp())
-                .disposeTime(roastingRecord.getDisposeTime())
+                .disposeTemp(getSingleTemp(roastingRecord.getDisposeTemp()))
+//                .disposeTime(roastingRecord.getDisposeTime())
                 .inputCapacity(roastingRecord.getInputCapacity())
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
                 .build();
+    }
+
+    private static float getSingleTemp(String turningPointTemp) {
+        List<Float> temps = convertToFloatList(turningPointTemp);
+        if (temps.isEmpty()) {
+            return 0F;
+        }
+
+        return temps.get(0);
+    }
+
+    /**
+     * convert string to float list
+     * [30.3] -> 30.3
+     */
+    static List<Float> convertToFloatList(String input) {
+        if (StringUtils.isBlank(input) || "[]".equals(input)) {
+            return Collections.emptyList();
+        }
+
+        input = input.substring(1, input.length() - 1);
+
+        List<Float> result = new ArrayList<>();
+        String[] items = input.split(",");
+        for (String item : items) {
+            result.add(Float.parseFloat(item.trim()));
+        }
+
+        return result;
     }
 }
