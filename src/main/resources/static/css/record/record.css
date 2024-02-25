@@ -7,6 +7,6 @@
     margin-top: 20px;
     margin-bottom: 30px;
 }
-.profile-info p {
-    line-height: 20px !important;
+.table th {
+    width: 200px;
 }
