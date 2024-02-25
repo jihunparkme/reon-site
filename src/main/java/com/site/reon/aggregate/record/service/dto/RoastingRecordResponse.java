@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,6 +21,9 @@ import java.util.List;
 public class RoastingRecordResponse {
 
     public static final RoastingRecordResponse EMPTY = new RoastingRecordResponse();
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("mm:ss");
 
     private Long id;
     private String title;
@@ -49,8 +54,6 @@ public class RoastingRecordResponse {
 
 //        String crackPoint; // 크랙 포인트(1차, 2차). [30.3, 50.3]
 //        String crackPointTime; // 크랙 시간(1차, 2차). [2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]
-//        String turningPointTime; // 터닝 포인트 시간. [2024-02-20 15:00:18 +0000]
-//        String disposeTime; //배출 시간. [2024-02-20 15:00:18 +0000]
 
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
@@ -69,23 +72,32 @@ public class RoastingRecordResponse {
 //                .secondCrackPointTemp()
 //                .secondCrackPointTime()
                 .turningPointTemp(getSingleTemp(roastingRecord.getTurningPointTemp()))
-//                .turningPointTime(roastingRecord.getTurningPointTime())
+                .turningPointTime(getSingleTime(roastingRecord.getTurningPointTime()))
                 .preheatTemp(roastingRecord.getPreheatTemp())
                 .disposeTemp(getSingleTemp(roastingRecord.getDisposeTemp()))
-//                .disposeTime(roastingRecord.getDisposeTime())
+                .disposeTime(getSingleTime(roastingRecord.getDisposeTime()))
                 .inputCapacity(roastingRecord.getInputCapacity())
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
                 .build();
     }
 
-    private static float getSingleTemp(String turningPointTemp) {
-        List<Float> temps = convertToFloatList(turningPointTemp);
+    private static float getSingleTemp(String temp) {
+        List<Float> temps = convertToFloatList(temp);
         if (temps.isEmpty()) {
             return 0F;
         }
 
         return temps.get(0);
+    }
+
+    private static String getSingleTime(String time) {
+        List<String> times = convertToMMSSTimeList(time);
+        if (times.isEmpty()) {
+            return "";
+        }
+
+        return times.get(0);
     }
 
     /**
@@ -106,5 +118,30 @@ public class RoastingRecordResponse {
         }
 
         return result;
+    }
+
+    /**
+     * convert time string to MM:SS string list
+     * [2024-02-20 15:00:18 +0000] -> 00:18
+     */
+    static List<String> convertToMMSSTimeList(String input) {
+        if (StringUtils.isBlank(input) || "[]".equals(input)) {
+            return Collections.emptyList();
+        }
+
+        input = input.substring(1, input.length() - 1);
+
+        List<String> result = new ArrayList<>();
+        String[] items = input.split(",");
+        for (String item : items) {
+            result.add(getHHSSTime(item.trim()));
+        }
+
+        return result;
+    }
+
+    private static String getHHSSTime(String item) {
+        ZonedDateTime dateTime = ZonedDateTime.parse(item, DATE_TIME_FORMATTER);
+        return dateTime.format(TIME_FORMATTER);
     }
 }
