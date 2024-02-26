@@ -17,7 +17,7 @@ values ('test roasting',
         '[95.3]',
         '[2024-02-20 15:00:18 +0000]',
         40,
-        'ASFDASGAAS3512ASDGA', 2, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
+        'AGBAG1241AFWADF', 2, PARSEDATETIME('2023-10-01 12:00:00','yyyy-MM-dd hh:mm:ss'));
 
 insert into roasting_record (TITLE, FAN, HEATER, TEMP1, TEMP2, TEMP3, TEMP4, ROR,
                              CRACK_POINT, CRACK_POINT_TIME, TURNING_POINT_TEMP, TURNING_POINT_TIME, PREHEAT_TEMP, DISPOSE_TEMP, DISPOSE_TIME, INPUT_CAPACITY,
