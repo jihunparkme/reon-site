@@ -20,34 +20,34 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Member> getMemberWithAuthorities(String email) {
+    public List<Member> getMemberWithAuthorities(final String email) {
         return memberRepository.findOneWithAuthoritiesByEmail(email)
                 .orElse(null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Member getMemberWithAuthorities(String email, OAuth2Client oAuthClient) {
+    public Member getMemberWithAuthorities(final String email, final OAuth2Client oAuthClient) {
         return memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, oAuthClient)
                 .orElse(null);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public MemberDto getMember(long id) {
+    public MemberDto getMember(final long id) {
         return MemberDto.from(memberRepository.findById(id)
                 .orElse(null));
     }
 
     @Override
     @Transactional
-    public void update(MemberEditRequest memberEditRequest, Long id) {
-        Optional<Member> memberOpt = memberRepository.findById(id);
+    public void update(final MemberEditRequest memberEditRequest, final Long id) {
+        final Optional<Member> memberOpt = memberRepository.findById(id);
         if (memberOpt.isEmpty()) {
             throw new NotFoundMemberException("Not Found Member");
         }
 
-        Member member = memberOpt.get();
+        final Member member = memberOpt.get();
         member.update(memberEditRequest);
         memberRepository.save(member);
     }

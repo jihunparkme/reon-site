@@ -30,17 +30,17 @@ public class MemberController {
 
     @GetMapping("/mypage")
     @PreAuthorize("isAuthenticated()")
-    public String view(@LoginMember SessionMember session, Model model) {
-        MemberDto findMember = memberService.getMember(session.getId());
+    public String view(@LoginMember final SessionMember session, Model model) {
+        final MemberDto findMember = memberService.getMember(session.getId());
         model.addAttribute("member", findMember);
         return "member/mypage";
     }
 
     @PostMapping("/mypage/edit")
     @PreAuthorize("isAuthenticated()")
-    public String edit(@Valid @ModelAttribute("member") MemberEditRequest request,
-                       BindingResult bindingResult,
-                       @LoginMember SessionMember session,
+    public String edit(@Valid @ModelAttribute("member") final MemberEditRequest request,
+                       final BindingResult bindingResult,
+                       @LoginMember final SessionMember session,
                        RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
@@ -59,9 +59,9 @@ public class MemberController {
     }
 
     @PostMapping("/withdraw")
-    public ResponseEntity withdraw(@Valid @RequestBody WithdrawRequest request) {
+    public ResponseEntity withdraw(@Valid @RequestBody final WithdrawRequest request) {
         try {
-            boolean result = memberLoginService.withdraw(request);
+            final boolean result = memberLoginService.withdraw(request);
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());

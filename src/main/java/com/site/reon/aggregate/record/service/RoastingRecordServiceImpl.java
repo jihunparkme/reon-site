@@ -20,25 +20,25 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
     private final RoastingRecordRepository recordRepository;
 
     @Override
-    public void upload(RoastingRecordRequest request) {
+    public void upload(final RoastingRecordRequest request) {
         // TODO: S/N 로 memberId 검색
-        long memberId = 2L;
-        RoastingRecord roastingRecord = request.toEntity(memberId);
+        final long memberId = 2L;
+        final RoastingRecord roastingRecord = request.toEntity(memberId);
 
         recordRepository.save(roastingRecord);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<RoastingRecord> findAllSortByIdDescPaging(int page, int size) {
-        PageRequest pageable = PageRequest.of(page, size, Sort.by("id").descending());
+    public Page<RoastingRecord> findAllSortByIdDescPaging(final int page, final int size) {
+        final PageRequest pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return recordRepository.findAll(pageable);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public RoastingRecordResponse findRoastingRecordBy(Long id) {
-        Optional<RoastingRecord> roastingRecordOpt = recordRepository.findById(id);
+    public RoastingRecordResponse findRoastingRecordBy(final Long id) {
+        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findById(id);
         if (roastingRecordOpt.isEmpty()) {
             return RoastingRecordResponse.EMPTY;
         }
@@ -48,8 +48,8 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
 
     @Override
     @Transactional(readOnly = true)
-    public RoastingRecordResponse findRoastingRecordBy(String roasterSn) {
-        Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByRoasterSn(roasterSn);
+    public RoastingRecordResponse findRoastingRecordBy(final String roasterSn) {
+        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByRoasterSn(roasterSn);
         if (roastingRecordOpt.isEmpty()) {
             return RoastingRecordResponse.EMPTY;
         }

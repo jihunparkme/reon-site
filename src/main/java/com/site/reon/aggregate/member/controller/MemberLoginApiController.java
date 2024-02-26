@@ -38,13 +38,13 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
     @PostMapping("/verify/email")
-    public ResponseEntity verifyEmail(@Valid @RequestBody ApiEmailVerifyRequest request,
-                                      BindingResult bindingResult) {
-        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+    public ResponseEntity verifyEmail(@Valid @RequestBody final ApiEmailVerifyRequest request,
+                                      final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            boolean result = memberLoginService.verifySocialEmail(request);
+            final boolean result = memberLoginService.verifySocialEmail(request);
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
@@ -56,13 +56,13 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "신규 소셜 가입", notes = "앱에서 신규로 소셜 가입을 합니다.")
     @PostMapping("/oauth2/sign-up")
-    public ResponseEntity signUpOAuth2(@Valid @RequestBody ApiOAuth2SignUpRequest request,
-                                       BindingResult bindingResult) {
-        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+    public ResponseEntity signUpOAuth2(@Valid @RequestBody final ApiOAuth2SignUpRequest request,
+                                       final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            MemberDto member = memberLoginService.oAuth2SignUp(request);
+            final MemberDto member = memberLoginService.oAuth2SignUp(request);
             return BasicResponse.ok(member);
         } catch (DuplicateMemberException | IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
@@ -74,9 +74,9 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 가입", notes = "앱에서 이메일로 가입합니다.")
     @PostMapping("/email/sign-up")
-    public ResponseEntity signUpEmail(@Valid @RequestBody ApiSignUpRequest request,
-                                     BindingResult bindingResult) {
-        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+    public ResponseEntity signUpEmail(@Valid @RequestBody final ApiSignUpRequest request,
+                                      final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -92,9 +92,9 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 인증번호 발송", notes = "앱에서 이메일로 가입 시 인증번호를 발송합니다.")
     @PostMapping("/email/auth-code")
-    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody ApiEmailAuthCodeRequest request,
-                                      BindingResult bindingResult) {
-        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody final ApiEmailAuthCodeRequest request,
+                                                        final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -110,9 +110,9 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다.")
     @PostMapping("/email/auth-code/verify")
-    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody ApiEmailAuthCodeVerifyRequest request,
-                                                        BindingResult bindingResult) {
-        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody final ApiEmailAuthCodeVerifyRequest request,
+                                                   final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
@@ -128,14 +128,14 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "이메일 로그인", notes = "앱에서 이메일로 로그인합니다.")
     @PostMapping("/email")
-    public ResponseEntity loginEmail(@Valid @RequestBody ApiLoginRequest request,
-                                     BindingResult bindingResult) {
-        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+    public ResponseEntity loginEmail(@Valid @RequestBody final ApiLoginRequest request,
+                                     final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
             memberLoginService.emailAuthenticate(LoginDto.from(request));
-            Member member = memberService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
+            final Member member = memberService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
             return BasicResponse.ok(MemberDto.from(member));
         } catch (BadCredentialsException e) {
             return BasicResponse.clientError(e.getMessage());
@@ -147,13 +147,13 @@ public class MemberLoginApiController {
 
     @ApiOperation(value = "회원 탈퇴", notes = "앱에서 회원을 탈퇴합니다.")
     @PostMapping("/withdraw")
-    public ResponseEntity withdraw(@Valid @RequestBody ApiWithdrawRequest request,
-                                      BindingResult bindingResult) {
-        ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+    public ResponseEntity withdraw(@Valid @RequestBody final ApiWithdrawRequest request,
+                                   final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            boolean result = memberLoginService.withdraw(request.toBaseRequest());
+            final boolean result = memberLoginService.withdraw(request.toBaseRequest());
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());

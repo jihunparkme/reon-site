@@ -42,9 +42,9 @@ public class MemberEmailLoginController {
     private final MemberAuthCodeService memberAuthCodeService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity signup(@Valid @RequestBody SignUpDto signUpDto, BindingResult bindingResult) {
+    public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto, final BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            final List<ObjectError> allErrors = bindingResult.getAllErrors();
             if (!CollectionUtils.isEmpty(allErrors)) {
                 return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
             }
@@ -63,10 +63,10 @@ public class MemberEmailLoginController {
     }
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MemberDto> authorize(@Valid @RequestBody LoginDto loginDto) {
+    public ResponseEntity<MemberDto> authorize(@Valid @RequestBody final LoginDto loginDto) {
         memberLoginService.emailAuthenticate(loginDto);
 
-        Member member = memberService.getMemberWithAuthorities(loginDto.getEmail(), OAuth2Client.EMPTY);
+        final Member member = memberService.getMemberWithAuthorities(loginDto.getEmail(), OAuth2Client.EMPTY);
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
         httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, loginDto.getEmail());
 
@@ -74,7 +74,7 @@ public class MemberEmailLoginController {
     }
 
     @PostMapping("/auth-code")
-    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody EmailAuthCodeRequest request) {
+    public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody final EmailAuthCodeRequest request) {
         try {
             memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, KeyPrefix.SIGN_UP.purpose(), request.getEmail());
             return BasicResponse.ok(SUCCESS);
@@ -87,7 +87,7 @@ public class MemberEmailLoginController {
     }
 
     @PostMapping("/auth-code/verify")
-    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody EmailAuthCodeVerifyRequest request) {
+    public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody final EmailAuthCodeVerifyRequest request) {
         try {
             memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
             return BasicResponse.ok(SUCCESS);
