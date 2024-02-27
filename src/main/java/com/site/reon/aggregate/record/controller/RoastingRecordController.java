@@ -33,7 +33,7 @@ public class RoastingRecordController {
 
         // TODO: 회원번호, 날짜로 검색
 
-        final Page<RoastingRecord> roastingRecordListPage = recordService.findAllSortByIdDescPaging(page, size);
+        final var roastingRecordListPage = recordService.findAllSortByIdDescPaging(page, size);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", page);

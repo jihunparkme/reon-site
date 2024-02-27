@@ -46,7 +46,7 @@ public class RoastingRecordResponse {
     private String disposeTime;
     private int inputCapacity;
 
-    public static RoastingRecordResponse of(RoastingRecord roastingRecord) {
+    public static RoastingRecordResponse of(final RoastingRecord roastingRecord) {
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
                 .title(roastingRecord.getTitle())
@@ -77,9 +77,9 @@ public class RoastingRecordResponse {
      * @param crackPointTimes [2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]
      * @return
      */
-    private static CreakInfo generateCrackInfo(String crackPointTemps, String crackPointTimes) {
-        List<Float> temps = convertToFloatList(crackPointTemps);
-        List<String> times = convertToMMSSTimeList(crackPointTimes);
+    private static CreakInfo generateCrackInfo(final String crackPointTemps, final String crackPointTimes) {
+        var temps = convertToFloatList(crackPointTemps);
+        var times = convertToMMSSTimeList(crackPointTimes);
         resizeFloatList(temps, 2);
         resizeStringList(times, 2);
 
@@ -91,20 +91,20 @@ public class RoastingRecordResponse {
                 .build();
     }
 
-    static void resizeFloatList(List<Float> list, int size) {
+    static void resizeFloatList(final List<Float> list, int size) {
         while (list.size() < size) {
             list.add(0F);
         }
     }
 
-    static void resizeStringList(List<String> list, int size) {
+    static void resizeStringList(final List<String> list, int size) {
         while (list.size() < size) {
             list.add("");
         }
     }
 
-    private static float getSingleTemp(String temp) {
-        List<Float> temps = convertToFloatList(temp);
+    private static float getSingleTemp(final String temp) {
+        var temps = convertToFloatList(temp);
         if (temps.isEmpty()) {
             return 0F;
         }
@@ -112,8 +112,8 @@ public class RoastingRecordResponse {
         return temps.get(0);
     }
 
-    private static String getSingleTime(String time) {
-        List<String> times = convertToMMSSTimeList(time);
+    private static String getSingleTime(final String time) {
+        var times = convertToMMSSTimeList(time);
         if (times.isEmpty()) {
             return "";
         }
@@ -125,15 +125,14 @@ public class RoastingRecordResponse {
      * convert string to float list
      * [30.3] -> 30.3
      */
-    static List<Float> convertToFloatList(String input) {
+    static List<Float> convertToFloatList(final String input) {
         if (StringUtils.isBlank(input) || "[]".equals(input)) {
             return new ArrayList<>();
         }
 
-        input = input.substring(1, input.length() - 1);
-
-        List<Float> result = new ArrayList<>();
-        String[] items = input.split(",");
+        final var inputContents = input.substring(1, input.length() - 1);
+        final List<Float> result = new ArrayList<>();
+        final var items = inputContents.split(",");
         for (String item : items) {
             result.add(Float.parseFloat(item.trim()));
         }
@@ -145,15 +144,15 @@ public class RoastingRecordResponse {
      * convert time string to MM:SS string list
      * [2024-02-20 15:00:18 +0000] -> 00:18
      */
-    static List<String> convertToMMSSTimeList(String input) {
+    static List<String> convertToMMSSTimeList(final String input) {
         if (StringUtils.isBlank(input) || "[]".equals(input)) {
             return new ArrayList<>();
         }
 
-        input = input.substring(1, input.length() - 1);
+        final var inputContents = input.substring(1, input.length() - 1);
 
-        List<String> result = new ArrayList<>();
-        String[] items = input.split(",");
+        final List<String> result = new ArrayList<>();
+        final var items = inputContents.split(",");
         for (String item : items) {
             result.add(getHHSSTime(item.trim()));
         }
@@ -161,8 +160,8 @@ public class RoastingRecordResponse {
         return result;
     }
 
-    private static String getHHSSTime(String item) {
-        ZonedDateTime dateTime = ZonedDateTime.parse(item, DATE_TIME_FORMATTER);
+    private static String getHHSSTime(final String item) {
+        final var dateTime = ZonedDateTime.parse(item, DATE_TIME_FORMATTER);
         return dateTime.format(TIME_FORMATTER);
     }
 
