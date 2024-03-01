@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -130,14 +132,9 @@ public class RoastingRecordResponse {
             return new ArrayList<>();
         }
 
-        final var inputContents = input.substring(1, input.length() - 1);
-        final List<Float> result = new ArrayList<>();
-        final var items = inputContents.split(",");
-        for (String item : items) {
-            result.add(Float.parseFloat(item.trim()));
-        }
-
-        return result;
+        return Arrays.stream(input.substring(1, input.length() - 1).split(","))
+                .map(Float::parseFloat)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -149,15 +146,9 @@ public class RoastingRecordResponse {
             return new ArrayList<>();
         }
 
-        final var inputContents = input.substring(1, input.length() - 1);
-
-        final List<String> result = new ArrayList<>();
-        final var items = inputContents.split(",");
-        for (String item : items) {
-            result.add(getHHSSTime(item.trim()));
-        }
-
-        return result;
+        return Arrays.stream(input.substring(1, input.length() - 1).split(","))
+                .map(time -> getHHSSTime(time.trim()))
+                .collect(Collectors.toList());
     }
 
     private static String getHHSSTime(final String item) {
