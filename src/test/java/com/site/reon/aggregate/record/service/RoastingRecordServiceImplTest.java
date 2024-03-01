@@ -23,10 +23,10 @@ class RoastingRecordServiceImplTest {
         String title = "title";
         String fan = "fan";
         String heater = "heater";
-        String temp1 = "temp1";
-        String temp2 = "temp2";
-        String temp3 = "temp3";
-        String temp4 = "temp4";
+        String temp1 = "[0,1,2]";
+        String temp2 = "[0,1,2]";
+        String temp3 = "[0,1,2]";
+        String temp4 = "[0,1,2]";
         String ror = "RoR";
         String roasterSn = "roasterSn";
         RoastingRecordRequest request = new RoastingRecordRequest(title, fan, heater, temp1, temp2, temp3, temp4, ror, roasterSn);

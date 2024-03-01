@@ -93,6 +93,7 @@ am5.ready(function() {
                 temp1: temp1Arr[i],
                 temp2: temp2Arr[i],
                 temp3: temp3Arr[i],
+                temp4: temp4Arr[i],
                 ror: rorArr[i]
             }
         );
@@ -182,9 +183,10 @@ am5.ready(function() {
         series.appear(1000);
     }
 
-    createSeries("Temp1", "temp1");
-    createSeries("Temp2", "temp2");
-    createSeries("Temp3", "temp3");
+    createSeries("Drum Bottom Temp", "temp1");
+    createSeries("Drum Top Temp", "temp2");
+    createSeries("Exhaust Temp", "temp3");
+    createSeries("Board Temp", "temp4");
     createSeries("ROR", "ror");
 
     // Add scrollbar

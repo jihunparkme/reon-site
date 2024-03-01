@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "roasting_record")
 @Getter
 @Builder
 @NoArgsConstructor

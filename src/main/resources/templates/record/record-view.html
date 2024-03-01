@@ -33,7 +33,7 @@
                                 </li>
                             </ul>
                         </div>
-r
+
                         <div class="entry-content">
                             <div id="temperatureChart"></div>
                             <div id="sensorChart"></div>
@@ -44,6 +44,10 @@ r
                                 <table class="table table-hover">
                                     <tbody>
                                     <tr>
+                                        <th scope="row">Total Roasting Time</th>
+                                        <td id="totalRoastingTime"></td>
+                                    </tr>
+                                    <tr>
                                         <th scope="row">Input Capacity</th>
                                         <td>[(${record.inputCapacity})] g</td>
                                     </tr>
@@ -53,19 +57,23 @@ r
                                     </tr>
                                     <tr>
                                         <th scope="row">Dispose</th>
-                                        <td>[(${record.disposeTime})] / [(${record.disposeTemp})] &#8451;</td>
+                                        <td>[(${record.disposeTime})] / [(${record.disposeTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Turning Point</th>
-                                        <td>[(${record.turningPointTime})] / [(${record.turningPointTemp})] &#8451;</td>
+                                        <td>[(${record.turningPointTime})] / [(${record.turningPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">First Crack</th>
-                                        <td>[(${record.creakInfo.firstCrackPointTime})] / [(${record.creakInfo.firstCrackPointTemp})] &#8451;</td>
+                                        <td>[(${record.creakInfo.firstCrackPointTime})] / [(${record.creakInfo.firstCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Second Crack</th>
-                                        <td>[(${record.creakInfo.secondCrackPointTime})] / [(${record.creakInfo.secondCrackPointTemp})] &#8451;</td>
+                                        <td>[(${record.creakInfo.secondCrackPointTime})] / [(${record.creakInfo.secondCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">DTR</th>
+                                        <td>[(${record.dtr})] &#37;</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -119,10 +127,14 @@ r
         dataSize = JSON.parse(record.temp1).length;
     }
 
+    const totalRoastingTime = secondsToMMSS(record.totalRoastingSecondsTime);
+    document.getElementById('totalRoastingTime').textContent = totalRoastingTime;
+
     const timeArr = generateTimeArr(dataSize);
     const temp1Arr = generateGraphData(record.temp1, dataSize);
     const temp2Arr = generateGraphData(record.temp2, dataSize);
     const temp3Arr = generateGraphData(record.temp3, dataSize);
+    const temp4Arr = generateGraphData(record.temp4, dataSize);
     const rorArr = stringToFloatTwoDecimals(generateGraphData(record.ror, dataSize));
     const heaterArr = generateGraphData(record.heater, dataSize);
     const fanArr = generateGraphData(record.fan, dataSize);

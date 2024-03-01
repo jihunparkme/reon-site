@@ -5,9 +5,10 @@ $(function() {
         rowData: rowData,
         columnDefs: [
             { field: 'time', width: 100 },
-            { field: 'temp1', width: 100 },
-            { field: 'temp2', width: 100 },
-            { field: 'temp3', width: 100 },
+            { field: 'DrumBottom', width: 130 },
+            { field: 'DrumTop', width: 120 },
+            { field: 'Exhaust', width: 120 },
+            { field: 'Board', width: 120 },
             { field: 'ror', width: 100 },
             { field: 'heater', width: 100 },
             { field: 'fan', width: 100 },
@@ -24,9 +25,10 @@ function getRowData() {
     for (let i = 0; i < dataSize; i++) {
         let row = {
             time: timeArr[i],
-            temp1: temp1Arr[i],
-            temp2: temp2Arr[i],
-            temp3: temp3Arr[i],
+            DrumBottom: temp1Arr[i],
+            DrumTop: temp2Arr[i],
+            Exhaust: temp3Arr[i],
+            Board: temp4Arr[i],
             ror: rorArr[i],
             heater: heaterArr[i],
             fan: fanArr[i],

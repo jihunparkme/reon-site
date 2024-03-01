@@ -25,15 +25,15 @@ public class RoastingRecordController {
 
     @GetMapping
     public String list(
-            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") final int size,
             Model model) {
 
         // TODO: 로그인 정보 확인해서 관리자면 전체 조회, 일반 회원이면 회원 정보만 조회
 
         // TODO: 회원번호, 날짜로 검색
 
-        Page<RoastingRecord> roastingRecordListPage = recordService.findAllSortByIdDescPaging(page, size);
+        final var roastingRecordListPage = recordService.findAllSortByIdDescPaging(page, size);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", page);
@@ -42,14 +42,14 @@ public class RoastingRecordController {
     }
 
     @GetMapping("{id}")
-    public String view(@PathVariable(name = "id") Long id, Model model) {
+    public String view(@PathVariable(name = "id") final Long id, Model model) {
         model.addAttribute("record", recordService.findRoastingRecordBy(id));
         return "record/record-view";
     }
 
     @ResponseBody
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestBody RoastingRecordRequest request){
+    public ResponseEntity<?> uploadFile(@RequestBody final RoastingRecordRequest request){
         try {
             recordService.upload(request);
             return ResponseEntity.ok(SUCCESS);

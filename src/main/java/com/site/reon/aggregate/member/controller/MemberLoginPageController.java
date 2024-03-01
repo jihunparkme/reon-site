@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberLoginPageController {
 
     @GetMapping
-    public String loginMainPage(HttpServletRequest request) {
+    public String loginMainPage(final HttpServletRequest request) {
         request.getSession().setAttribute(SessionConst.LOGIN_PREV_PAGE, request.getHeader("Referer"));
         return "login/login";
     }

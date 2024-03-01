@@ -28,7 +28,16 @@ public class RoastingRecordRequest {
     private String disposeTime; //배출 시간. [2024-02-20 15:00:18 +0000]
     private int inputCapacity; // 용량(g). 40
 
-    public RoastingRecordRequest(String title, String fan, String heater, String temp1, String temp2, String temp3, String temp4, String ror, String roasterSn) {
+    public RoastingRecordRequest(
+            final String title,
+            final String fan,
+            final String heater,
+            final String temp1,
+            final String temp2,
+            final String temp3,
+            final String temp4,
+            final String ror,
+            final String roasterSn) {
         this.title = title;
         this.fan = fan;
         this.heater = heater;
@@ -40,7 +49,7 @@ public class RoastingRecordRequest {
         this.roasterSn = roasterSn;
     }
 
-    public RoastingRecord toEntity(long memberId) {
+    public RoastingRecord toEntity(final long memberId) {
         return RoastingRecord.builder()
                 .title(this.title)
                 .fan(this.fan)

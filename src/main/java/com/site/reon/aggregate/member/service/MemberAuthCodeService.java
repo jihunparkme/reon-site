@@ -20,8 +20,8 @@ import java.util.Optional;
 public class MemberAuthCodeService {
     private final RedisUtilService redisUtilService;
 
-    public void sendAuthenticationCodeByEmail(KeyPrefix keyPrefix, String purpose, String email) {
-        String authCode = AuthCodeUtil.generateAuthCodeString();
+    public void sendAuthenticationCodeByEmail(final KeyPrefix keyPrefix, final String purpose, final String email) {
+        final String authCode = AuthCodeUtil.generateAuthCodeString();
         redisUtilService.setValueExpire(keyPrefix.prefix() + email, authCode, 180L);
 
         log.info("[Event] send Auth Code Mail Event. purpose: {}, email: {}", purpose, email);
@@ -32,8 +32,8 @@ public class MemberAuthCodeService {
                 .build());
     }
 
-    public boolean verifyAuthenticationCode(KeyPrefix keyPrefix, String email, String authCode) {
-        Optional<String> authCodeOpt = redisUtilService.getValueOf(keyPrefix.prefix() + email);
+    public boolean verifyAuthenticationCode(final KeyPrefix keyPrefix, final String email, final String authCode) {
+        final Optional<String> authCodeOpt = redisUtilService.getValueOf(keyPrefix.prefix() + email);
         if (authCodeOpt.isEmpty()) {
             throw new IllegalArgumentException("The time limit for entering the authentication code has been exceeded. Please try again.");
         }
@@ -46,8 +46,8 @@ public class MemberAuthCodeService {
         return true;
     }
 
-    public void checkEmailVerificationStatus(KeyPrefix keyPrefix, String email) {
-        Optional<String> authCodeOpt = redisUtilService.getValueOf(keyPrefix.verifyPrefix() + email);
+    public void checkEmailVerificationStatus(final KeyPrefix keyPrefix, final String email) {
+        final Optional<String> authCodeOpt = redisUtilService.getValueOf(keyPrefix.verifyPrefix() + email);
         if (authCodeOpt.isEmpty()) {
             throw new IllegalArgumentException("Your email has not been verified. Please try again.");
         }

@@ -35,7 +35,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
             throw new RuntimeException(email + " : The account is inactive.");
         }
 
-        List<GrantedAuthority> grantedAuthorities = member.getAuthorities().stream()
+        final List<GrantedAuthority> grantedAuthorities = member.getAuthorities().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
 
