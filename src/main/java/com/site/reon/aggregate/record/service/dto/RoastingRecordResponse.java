@@ -168,6 +168,7 @@ public class RoastingRecordResponse {
     static float calculateDevelopmentTimeRatio(final int totalRoastingSecondsTime, final String firstCrackPointTime) {
         try {
             final float firstCrackPointSecondsTime = getHHSSTimeToSeconds(firstCrackPointTime);
+            // 발현 시간: 첫 번째 크랙이 시작된 후부터 로스팅이 완료될 때까지의 시간
             final float developmentSecondsTime = totalRoastingSecondsTime - firstCrackPointSecondsTime;
             final float dtr = (developmentSecondsTime / totalRoastingSecondsTime) * 100;
             return (float) (Math.round(dtr * 100.0) / 100.0);
