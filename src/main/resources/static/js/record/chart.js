@@ -182,9 +182,9 @@ am5.ready(function() {
         series.appear(1000);
     }
 
-    createSeries("Temp1", "temp1");
-    createSeries("Temp2", "temp2");
-    createSeries("Temp3", "temp3");
+    createSeries("Drum Bottom Temp", "temp1");
+    createSeries("Drum Top Temp", "temp2");
+    createSeries("Exhaust Temp", "temp3");
     createSeries("ROR", "ror");
 
     // Add scrollbar
