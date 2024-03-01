@@ -1,6 +1,5 @@
 package com.site.reon.aggregate.member.service;
 
-import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
@@ -17,6 +16,7 @@ import com.site.reon.global.security.oauth2.dto.AppleOAuth2Token;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -121,13 +121,13 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     private boolean verifyAppleEmail(final String token, final OAuth2Client oAuth2Client) {
-        if (StringUtils.isBlank(token)) {
+        if (StringUtils.isEmpty(token)) {
             throw new IllegalArgumentException("Token is required for Apple login.");
         }
 
         final AppleOAuth2Token appleOAuth2Token = new AppleOAuth2Token(token);
         final String email = appleOAuth2Token.getEmail();
-        if (StringUtils.isBlank(email)) {
+        if (StringUtils.isEmpty(email)) {
             log.warn("The token information is invalid. token: {}", token);
             throw new IllegalArgumentException("The token information is invalid.");
         }
@@ -136,7 +136,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     private boolean verifyKakaoAndGoogleEmail(final String email, final OAuth2Client oAuth2Client) {
-        if (StringUtils.isBlank(email)) {
+        if (StringUtils.isEmpty(email)) {
             throw new IllegalArgumentException("Email is required for Kakao, Google login.");
         }
 
@@ -160,6 +160,6 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     private boolean isEmailMember(String authClientName) {
-        return StringUtils.isBlank(authClientName) || "empty".equals(authClientName);
+        return StringUtils.isEmpty(authClientName) || "empty".equals(authClientName);
     }
 }
