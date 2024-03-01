@@ -48,6 +48,7 @@ public class RoastingRecordResponse {
     private String disposeTime;
     private int inputCapacity;
     private float dtr; // Development Time Ratio
+    private int totalRoastingSecondsTime;
 
     public static RoastingRecordResponse of(final RoastingRecord roastingRecord) {
         final CreakInfo creakInfo = generateCrackInfo(roastingRecord.getCrackPoint(), roastingRecord.getCrackPointTime());
@@ -75,6 +76,7 @@ public class RoastingRecordResponse {
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
                 .dtr(calculateDevelopmentTimeRatio(totalRoastingSecondsTime, creakInfo.getFirstCrackPointTime()))
+                .totalRoastingSecondsTime(totalRoastingSecondsTime)
                 .build();
     }
 

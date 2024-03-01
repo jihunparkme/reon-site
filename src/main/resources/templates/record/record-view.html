@@ -44,6 +44,10 @@
                                 <table class="table table-hover">
                                     <tbody>
                                     <tr>
+                                        <th scope="row">Total Roasting Time</th>
+                                        <td id="totalRoastingTime"></td>
+                                    </tr>
+                                    <tr>
                                         <th scope="row">Input Capacity</th>
                                         <td>[(${record.inputCapacity})] g</td>
                                     </tr>
@@ -122,6 +126,9 @@
     if (record.temp1 !== null) {
         dataSize = JSON.parse(record.temp1).length;
     }
+
+    const totalRoastingTime = secondsToMMSS(record.totalRoastingSecondsTime);
+    document.getElementById('totalRoastingTime').textContent = totalRoastingTime;
 
     const timeArr = generateTimeArr(dataSize);
     const temp1Arr = generateGraphData(record.temp1, dataSize);
