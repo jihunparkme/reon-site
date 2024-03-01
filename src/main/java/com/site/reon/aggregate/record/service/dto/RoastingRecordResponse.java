@@ -47,8 +47,12 @@ public class RoastingRecordResponse {
     private float disposeTemp;
     private String disposeTime;
     private int inputCapacity;
+    private float dtr; // Development Time Ratio
 
     public static RoastingRecordResponse of(final RoastingRecord roastingRecord) {
+        final CreakInfo creakInfo = generateCrackInfo(roastingRecord.getCrackPoint(), roastingRecord.getCrackPointTime());
+        final int totalRoastingSecondsTime = calculateRoastingLogsInSeconds(roastingRecord.getTemp1());
+
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
                 .title(roastingRecord.getTitle())
@@ -61,7 +65,7 @@ public class RoastingRecordResponse {
                 .ror(roastingRecord.getRor())
                 .roasterSn(roastingRecord.getRoasterSn())
                 .memberId(roastingRecord.getMemberId())
-                .creakInfo(generateCrackInfo(roastingRecord.getCrackPoint(), roastingRecord.getCrackPointTime()))
+                .creakInfo(creakInfo)
                 .turningPointTemp(getSingleTemp(roastingRecord.getTurningPointTemp()))
                 .turningPointTime(getSingleTime(roastingRecord.getTurningPointTime()))
                 .preheatTemp(roastingRecord.getPreheatTemp())
@@ -70,6 +74,7 @@ public class RoastingRecordResponse {
                 .inputCapacity(roastingRecord.getInputCapacity())
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
+                .dtr(calculateDevelopmentTimeRatio(totalRoastingSecondsTime, creakInfo.getFirstCrackPointTime()))
                 .build();
     }
 
@@ -154,6 +159,32 @@ public class RoastingRecordResponse {
     private static String getHHSSTime(final String item) {
         final var dateTime = ZonedDateTime.parse(item, DATE_TIME_FORMATTER);
         return dateTime.format(TIME_FORMATTER);
+    }
+
+    static int calculateRoastingLogsInSeconds(final String tempLog) {
+        return convertToFloatList(tempLog).size();
+    }
+
+    static float calculateDevelopmentTimeRatio(final int totalRoastingSecondsTime, final String firstCrackPointTime) {
+        try {
+            final float firstCrackPointSecondsTime = getHHSSTimeToSeconds(firstCrackPointTime);
+            final float developmentSecondsTime = totalRoastingSecondsTime - firstCrackPointSecondsTime;
+            final float dtr = (developmentSecondsTime / totalRoastingSecondsTime) * 100;
+            return (float) (Math.round(dtr * 100.0) / 100.0);
+        } catch (Exception e) {
+            return 0.0F;
+        }
+    }
+
+    private static float getHHSSTimeToSeconds(final String firstCrackPointTime) {
+        try {
+            final String[] parts = firstCrackPointTime.split(":");
+            final int minutes = Integer.parseInt(parts[0]);
+            final int seconds = Integer.parseInt(parts[1]);
+            return (float) ((minutes * 60) + seconds);
+        } catch (Exception e) {
+            return 0.0F;
+        }
     }
 
     @Getter
