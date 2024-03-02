@@ -5,7 +5,6 @@ import com.site.reon.global.security.handler.CustomLoginSuccessHandler;
 import com.site.reon.global.security.jwt.CustomAccessDeniedHandler;
 import com.site.reon.global.security.jwt.CustomAuthenticationEntryPoint;
 import com.site.reon.global.security.jwt.CustomSecurityConfigurerAdapter;
-import com.site.reon.global.security.oauth2.converter.CustomRequestEntityConverter;
 import com.site.reon.global.security.oauth2.handler.OAuth2SuccessHandler;
 import com.site.reon.global.security.oauth2.handler.Oauth2FailureHandler;
 import com.site.reon.global.security.oauth2.service.CustomOauth2UserService;
@@ -20,9 +19,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationCodeTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient;
-import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -107,12 +103,5 @@ public class SecurityConfig {
     @Bean
     public AuthenticationSuccessHandler successHandler() {
         return new CustomLoginSuccessHandler("/");
-    }
-
-    @Bean
-    public OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> accessTokenResponseClient(){
-        DefaultAuthorizationCodeTokenResponseClient accessTokenResponseClient = new DefaultAuthorizationCodeTokenResponseClient();
-        accessTokenResponseClient.setRequestEntityConverter(new CustomRequestEntityConverter());
-        return accessTokenResponseClient;
     }
 }
