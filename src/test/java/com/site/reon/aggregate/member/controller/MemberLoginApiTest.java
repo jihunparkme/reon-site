@@ -186,7 +186,7 @@ public class MemberLoginApiTest extends ApiTest {
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
         final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
 
-        redisUtilService.setValueExpire("sign-up-verified:aaa@gmail.com", "123456", 5L);
+        redisUtilService.setValueExpire("sign-up-verified:aaa@gmail.com", "true", 5L);
         final var response = MemberLoginSteps.requestEmailSignUp(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
@@ -350,6 +350,54 @@ public class MemberLoginApiTest extends ApiTest {
         Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
         Assertions.assertEquals("false", response.jsonPath().getString("success"));
         Assertions.assertEquals("The time limit for entering the authentication code has been exceeded. Please try again.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    /**
+     * /api/login/email
+     */
+    @Test
+    void when_login_email_then_success() {
+        final String email = "user@gmail.com";
+        final String firstName = "aaron";
+        final String lastName = "park";
+        final String password = "park123!@#";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        final var requestSignUp = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+        redisUtilService.setValueExpire("sign-up-verified:user@gmail.com", "true", 5L);
+        MemberLoginSteps.requestEmailSignUp(requestSignUp);
+        final var request = MemberLoginSteps.loginEmailRequest(email, password);
+
+        final var response = MemberLoginSteps.requestLoginEmail(request);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("1", response.jsonPath().getString("count"));
+        Assertions.assertEquals("aaron", response.jsonPath().getString("data.firstName"));
+        Assertions.assertEquals("park", response.jsonPath().getString("data.lastName"));
+        Assertions.assertEquals(email, response.jsonPath().getString("data.email"));
+        Assertions.assertEquals(roasterSn, response.jsonPath().getString("data.roasterSn"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data.picture"));
+        Assertions.assertEquals("EMPTY", response.jsonPath().getString("data.oauthClient"));
+    }
+
+    @Test
+    void when_login_email_then_aaa() {
+        final String email = "user@gmail.com";
+        final String password = "user";
+        final var request = MemberLoginSteps.loginEmailRequest(email, password);
+
+        final var response = MemberLoginSteps.requestLoginEmail(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("자격 증명에 실패하였습니다.", response.jsonPath().getString("message"));
         Assertions.assertEquals("0", response.jsonPath().getString("count"));
         Assertions.assertEquals(null, response.jsonPath().getString("data"));
     }

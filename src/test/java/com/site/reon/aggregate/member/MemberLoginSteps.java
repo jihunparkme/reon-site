@@ -128,4 +128,23 @@ public class MemberLoginSteps {
                 .then()
                 .log().all().extract();
     }
+
+    public static ApiLoginRequest loginEmailRequest(final String email, final String password) {
+        return ApiLoginRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .email(email)
+                .password(password)
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestLoginEmail(final ApiLoginRequest request) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/login/email")
+                .then()
+                .log().all().extract();
+    }
 }
