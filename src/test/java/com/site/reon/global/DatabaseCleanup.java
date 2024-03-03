@@ -6,7 +6,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Table;
 import jakarta.persistence.metamodel.EntityType;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +22,10 @@ public class DatabaseCleanup implements InitializingBean {
     private EntityManager entityManager;
 
     private List<String> tableNames;
-    private final List<String> exceptionTableNames = Arrays.asList("authority");
-    private final Map<String, String> tableIds = Map.of(
-            "member", "member_id",
-            "member_authority", "member_id"
+    private final List<String> authorityTableNames = Arrays.asList("authority");
+    private final Map<String, CleanupTable> tableIds = Map.of(
+            "member", CleanupTable.MEMBER,
+            "member_authority", CleanupTable.MEMBER_AUTHORITY
     );
 
     @Override
@@ -73,16 +72,19 @@ public class DatabaseCleanup implements InitializingBean {
     }
 
     private void columnIdRestart(final String tableName) {
-        if (exceptionTableNames.contains(tableName)) {
+        if (authorityTableNames.contains(tableName)) {
+            entityManager.createNativeQuery("insert into authority (authority_name) values ('ROLE_GUEST')").executeUpdate();
+            entityManager.createNativeQuery("insert into authority (authority_name) values ('ROLE_USER')").executeUpdate();
+            entityManager.createNativeQuery("insert into authority (authority_name) values ('ROLE_ADMIN')").executeUpdate();
             return;
         }
 
-        final String idName = tableIds.get(tableName);
-        if (StringUtils.isEmpty(idName)) {
+        final CleanupTable cleanupTable = tableIds.get(tableName);
+        if (cleanupTable == null) {
             entityManager.createNativeQuery("ALTER TABLE " + tableName + " ALTER COLUMN ID RESTART WITH 1").executeUpdate();
             return;
         }
 
-        entityManager.createNativeQuery("ALTER TABLE " + tableName + " ALTER COLUMN " + idName + " RESTART WITH 1").executeUpdate();
+        entityManager.createNativeQuery("ALTER TABLE " + tableName + " ALTER COLUMN " + cleanupTable.primaryKey() + " RESTART WITH " + cleanupTable.index()).executeUpdate();
     }
 }
