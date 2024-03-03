@@ -259,7 +259,7 @@ public class MemberLoginApiTest extends ApiTest {
     }
 
     /**
-     * /email/auth-code
+     * /api/login/email/auth-code
      */
     @Test
     @Disabled
@@ -292,6 +292,64 @@ public class MemberLoginApiTest extends ApiTest {
         Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
         Assertions.assertEquals("false", response.jsonPath().getString("success"));
         Assertions.assertEquals("purpose is required.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    /**
+     * /api/login/email/auth-code/verify
+     */
+    @Test
+    void when_verify_auth_code_then_success() {
+        final String email = "jihunpark.tech@gmail.com";
+        final String authCode = "111111";
+        final var request = MemberLoginSteps.verifyAuthCodeRequest(email, authCode);
+        redisUtilService.setValueExpire("sign-up:jihunpark.tech@gmail.com", "111111", 5L);
+
+        final var response = MemberLoginSteps.requestVerifyAuthCode(request);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("1", response.jsonPath().getString("count"));
+        Assertions.assertEquals("SUCCESS", response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_verify_auth_code_then_incorrect_code() {
+        final String email = "jihunpark.tech@gmail.com";
+        final String authCode = "123456";
+        final var request = MemberLoginSteps.verifyAuthCodeRequest(email, authCode);
+        redisUtilService.setValueExpire("sign-up:jihunpark.tech@gmail.com", "111111", 1L);
+
+        final var response = MemberLoginSteps.requestVerifyAuthCode(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("The authentication code is incorrect. Please enter it again.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_verify_auth_code_then_exceed_time() throws InterruptedException {
+        final String email = "jihunpark.tech@gmail.com";
+        final String authCode = "111111";
+        final var request = MemberLoginSteps.verifyAuthCodeRequest(email, authCode);
+        redisUtilService.setValueExpire("sign-up:jihunpark.tech@gmail.com", "111111", 1L);
+
+        Thread.sleep(1500);
+        final var response = MemberLoginSteps.requestVerifyAuthCode(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("The time limit for entering the authentication code has been exceeded. Please try again.", response.jsonPath().getString("message"));
         Assertions.assertEquals("0", response.jsonPath().getString("count"));
         Assertions.assertEquals(null, response.jsonPath().getString("data"));
     }
