@@ -17,7 +17,7 @@ public class MemberAppleOauth2LoginController {
     private final AppleOauth2Property appleOauth2Property;
 
     @GetMapping(value = "/authorization/apple")
-    public String appleLogin(RedirectAttributes attr) {
+    public String authorization(RedirectAttributes attr) {
 
         attr.addAttribute("client_id", appleOauth2Property.getClientId());
         attr.addAttribute("redirect_uri", appleOauth2Property.getRedirectUri());
