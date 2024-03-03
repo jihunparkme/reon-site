@@ -25,7 +25,7 @@ function loginGoogle() {
 }
 
 function loginApple() {
-    location.href = "/oauth2/authorization/apple"
+    location.href = "/login/oauth2/authorization/apple"
 }
 
 function loginEmail() {

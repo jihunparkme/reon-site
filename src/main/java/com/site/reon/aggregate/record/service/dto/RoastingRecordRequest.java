@@ -2,10 +2,12 @@ package com.site.reon.aggregate.record.service.dto;
 
 import com.site.reon.aggregate.record.domain.RoastingRecord;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoastingRecordRequest {

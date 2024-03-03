@@ -1,17 +1,15 @@
 package com.site.reon.aggregate.record.service;
 
+import com.site.reon.aggregate.record.domain.RoastingRecord;
+import com.site.reon.aggregate.record.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.domain.repository.RoastingRecordRepository;
-import com.site.reon.aggregate.record.domain.RoastingRecord;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +18,7 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
     private final RoastingRecordRepository recordRepository;
 
     @Override
+    @Transactional
     public void upload(final RoastingRecordRequest request) {
         // TODO: S/N 로 memberId 검색
         final long memberId = 2L;

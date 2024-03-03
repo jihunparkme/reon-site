@@ -52,7 +52,7 @@ public class RoastingRecordController {
     public ResponseEntity<?> uploadFile(@RequestBody final RoastingRecordRequest request){
         try {
             recordService.upload(request);
-            return ResponseEntity.ok(SUCCESS);
+            return new ResponseEntity(SUCCESS, HttpStatus.CREATED);
         } catch (Exception e) {
             log.error("RoastingRecordController.uploadFile Exception: ", e);
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

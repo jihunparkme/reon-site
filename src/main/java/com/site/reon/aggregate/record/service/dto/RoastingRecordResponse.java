@@ -1,11 +1,11 @@
 package com.site.reon.aggregate.record.service.dto;
 
-import com.nimbusds.oauth2.sdk.util.StringUtils;
 import com.site.reon.aggregate.record.domain.RoastingRecord;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -135,7 +135,7 @@ public class RoastingRecordResponse {
      * [30.3] -> 30.3
      */
     static List<Float> convertToFloatList(final String input) {
-        if (StringUtils.isBlank(input) || "[]".equals(input)) {
+        if (StringUtils.isEmpty(input) || "[]".equals(input)) {
             return new ArrayList<>();
         }
 
@@ -149,7 +149,7 @@ public class RoastingRecordResponse {
      * [2024-02-20 15:00:18 +0000] -> 00:18
      */
     static List<String> convertToMMSSTimeList(final String input) {
-        if (StringUtils.isBlank(input) || "[]".equals(input)) {
+        if (StringUtils.isEmpty(input) || "[]".equals(input)) {
             return new ArrayList<>();
         }
 
