@@ -2,13 +2,18 @@ package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.MemberLoginSteps;
 import com.site.reon.global.ApiTest;
+import com.site.reon.global.common.util.infra.RedisUtilService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("test")
 public class MemberLoginApiTest extends ApiTest {
+
+    @Autowired
+    private RedisUtilService redisUtilService;
 
     /**
      * /api/login/verify/email
@@ -164,6 +169,90 @@ public class MemberLoginApiTest extends ApiTest {
         Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
         Assertions.assertEquals("false", response.jsonPath().getString("success"));
         Assertions.assertEquals("This is unsupported OAuth2 Client service. Please check authClientName field.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    /**
+     * /api/login/email/sign-up
+     */
+    @Test
+    void when_email_sign_up_then_success() {
+        final String email = "aaa@gmail.com";
+        final String firstName = "aaron";
+        final String lastName = "park";
+        final String password = "park123!@#";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+
+        redisUtilService.setValueExpire("sign-up-verified:aaa@gmail.com", "123456", 5L);
+        final var response = MemberLoginSteps.requestEmailSignUp(request);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("1", response.jsonPath().getString("count"));
+        Assertions.assertEquals("SUCCESS", response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_email_sign_up_then_email_is_already_registered() {
+        final String email = "user@gmail.com";
+        final String firstName = "aaron";
+        final String lastName = "park";
+        final String password = "park123!@#";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+
+        final var response = MemberLoginSteps.requestEmailSignUp(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("Your email has not been verified. Please try again.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_email_sign_up_then_password_rules_are_not_satisfied() {
+        final String email = "user@gmail.com";
+        final String firstName = "aaron";
+        final String lastName = "park";
+        final String password = "park";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+
+        final var response = MemberLoginSteps.requestEmailSignUp(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("The password must be between 8 and 50 characters long and include letters, numbers, and special characters.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_email_sign_up_then_email_rules_are_not_satisfied() {
+        final String email = "user";
+        final String firstName = "aaron";
+        final String lastName = "park";
+        final String password = "park123!@#";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+
+        final var response = MemberLoginSteps.requestEmailSignUp(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("Please check the email format.", response.jsonPath().getString("message"));
         Assertions.assertEquals("0", response.jsonPath().getString("count"));
         Assertions.assertEquals(null, response.jsonPath().getString("data"));
     }
