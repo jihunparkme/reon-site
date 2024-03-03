@@ -1,6 +1,5 @@
 package com.site.reon.aggregate.record.controller;
 
-import com.site.reon.aggregate.record.RoastingRecordSteps;
 import com.site.reon.global.ApiTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

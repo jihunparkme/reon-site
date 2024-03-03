@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record;
+package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
 import io.restassured.RestAssured;
