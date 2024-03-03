@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.member;
 
+import com.site.reon.aggregate.member.service.dto.api.ApiEmailAuthCodeRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiSignUpRequest;
@@ -88,6 +89,26 @@ public class MemberLoginSteps {
                 .body(request)
                 .when()
                 .post("/api/login/email/sign-up")
+                .then()
+                .log().all().extract();
+    }
+
+    public static ApiEmailAuthCodeRequest sendAuthCodeRequest(final String purpose, final String email) {
+        return ApiEmailAuthCodeRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .purpose(purpose)
+                .email(email)
+                .build();
+
+    }
+
+    public static ExtractableResponse<Response> requestSendAuthCode(final ApiEmailAuthCodeRequest request) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/login/email/auth-code")
                 .then()
                 .log().all().extract();
     }

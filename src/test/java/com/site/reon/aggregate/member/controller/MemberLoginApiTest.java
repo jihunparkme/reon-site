@@ -4,6 +4,7 @@ import com.site.reon.aggregate.member.MemberLoginSteps;
 import com.site.reon.global.ApiTest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -253,6 +254,44 @@ public class MemberLoginApiTest extends ApiTest {
         Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
         Assertions.assertEquals("false", response.jsonPath().getString("success"));
         Assertions.assertEquals("Please check the email format.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    /**
+     * /email/auth-code
+     */
+    @Test
+    @Disabled
+    void when_send_auth_code() {
+        final String purpose = "회원가입";
+        final String email = "jihunpark.tech@gmail.com";
+        final var request = MemberLoginSteps.sendAuthCodeRequest(purpose, email);
+
+        final var response = MemberLoginSteps.requestSendAuthCode(request);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("1", response.jsonPath().getString("count"));
+        Assertions.assertEquals("SUCCESS", response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_send_auth_code_then_purpose_required_error() {
+        final String purpose = "";
+        final String email = "jihunpark.tech@gmail.com";
+        final var request = MemberLoginSteps.sendAuthCodeRequest(purpose, email);
+
+        final var response = MemberLoginSteps.requestSendAuthCode(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("purpose is required.", response.jsonPath().getString("message"));
         Assertions.assertEquals("0", response.jsonPath().getString("count"));
         Assertions.assertEquals(null, response.jsonPath().getString("data"));
     }
