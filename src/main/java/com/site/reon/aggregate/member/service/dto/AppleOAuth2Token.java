@@ -38,15 +38,15 @@ public class AppleOAuth2Token {
     @JsonProperty("nonce_supported")
     private boolean nonceSupported;
 
-    public AppleOAuth2Token(String token) {
-        String[] chunks = token.split("\\.");
-        Base64.Decoder decoder = Base64.getUrlDecoder();
+    public AppleOAuth2Token(final String token) {
+        final String[] chunks = token.split("\\.");
+        final Base64.Decoder decoder = Base64.getUrlDecoder();
 
-        String header = new String(decoder.decode(chunks[0]));
-        String payload = new String(decoder.decode(chunks[1]));
+        final String header = new String(decoder.decode(chunks[0]));
+        final String payload = new String(decoder.decode(chunks[1]));
 
         try {
-            AppleOAuth2Token appleOAuth2Token = objectMapper.readValue(payload, AppleOAuth2Token.class);
+            final AppleOAuth2Token appleOAuth2Token = objectMapper.readValue(payload, AppleOAuth2Token.class);
             this.iss = appleOAuth2Token.getIss();
             this.aud = appleOAuth2Token.getAud();
             this.exp = appleOAuth2Token.getExp();

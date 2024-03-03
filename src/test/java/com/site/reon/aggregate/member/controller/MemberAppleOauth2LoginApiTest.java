@@ -15,4 +15,11 @@ class MemberAppleOauth2LoginApiTest extends ApiTest {
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
     }
+    
+    @Test 
+    void authorizationRedirect() {
+        final var response = AppleOauth2Steps.requestAuthorizationRedirect();
+
+        Assertions.assertEquals(HttpStatus.FOUND.value(), response.statusCode());
+    }
 }

@@ -41,7 +41,7 @@ public class MemberAppleOauth2LoginController {
     }
 
     @PostMapping("/apple/redirect")
-    public String servicesRedirect(final AppleOauth2LoginResponse response) {
+    public String authorizationRedirect(final AppleOauth2LoginResponse response) {
         if (response == null) {
             return "redirect:/login/oauth2/fail";
         }
@@ -57,6 +57,6 @@ public class MemberAppleOauth2LoginController {
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
         httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, appleOAuth2Token.getEmail());
 
-        return "redirect:/";;
+        return "redirect:/";
     }
 }
