@@ -1,6 +1,5 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.MemberLoginSteps;
 import com.site.reon.global.ApiTest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import org.junit.jupiter.api.Assertions;
@@ -8,9 +7,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("test")
 public class MemberLoginApiTest extends ApiTest {
 
     @Autowired

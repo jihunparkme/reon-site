@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member;
+package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.service.dto.api.*;
 import io.restassured.RestAssured;
