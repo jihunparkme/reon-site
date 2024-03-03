@@ -76,6 +76,7 @@ public class DatabaseCleanup implements InitializingBean {
             entityManager.createNativeQuery("insert into authority (authority_name) values ('ROLE_GUEST')").executeUpdate();
             entityManager.createNativeQuery("insert into authority (authority_name) values ('ROLE_USER')").executeUpdate();
             entityManager.createNativeQuery("insert into authority (authority_name) values ('ROLE_ADMIN')").executeUpdate();
+            entityManager.createNativeQuery("delete from member_authority").executeUpdate();
             return;
         }
 
