@@ -1,4 +1,4 @@
-package com.site.reon.global.security.oauth2.dto;
+package com.site.reon.aggregate.member.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
