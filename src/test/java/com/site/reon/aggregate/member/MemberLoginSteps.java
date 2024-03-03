@@ -147,4 +147,23 @@ public class MemberLoginSteps {
                 .then()
                 .log().all().extract();
     }
+
+    public static ApiWithdrawRequest withdrawRequest(final String email, final String authClientName) {
+        return ApiWithdrawRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .email(email)
+                .authClientName(authClientName)
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestWithdraw(final ApiWithdrawRequest request) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/login/withdraw")
+                .then()
+                .log().all().extract();
+    }
 }

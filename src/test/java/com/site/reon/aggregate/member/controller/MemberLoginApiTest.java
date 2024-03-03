@@ -364,9 +364,7 @@ public class MemberLoginApiTest extends ApiTest {
         final String lastName = "park";
         final String password = "park123!@#";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var requestSignUp = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
-        redisUtilService.setValueExpire("sign-up-verified:user@gmail.com", "true", 5L);
-        MemberLoginSteps.requestEmailSignUp(requestSignUp);
+        signUpEmailMember(email, firstName, lastName, password, roasterSn);
         final var request = MemberLoginSteps.loginEmailRequest(email, password);
 
         final var response = MemberLoginSteps.requestLoginEmail(request);
@@ -400,5 +398,95 @@ public class MemberLoginApiTest extends ApiTest {
         Assertions.assertEquals("자격 증명에 실패하였습니다.", response.jsonPath().getString("message"));
         Assertions.assertEquals("0", response.jsonPath().getString("count"));
         Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    /**
+     * /api/login/withdraw
+     */
+    @Test
+    void when_withdraw_email_member_then_success() {
+        final String authClientName = "";
+        final String email = "user@gmail.com";
+        final String firstName = "aaron";
+        final String lastName = "park";
+        final String password = "park123!@#";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        signUpEmailMember(email, firstName, lastName, password, roasterSn);
+        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+
+        final var response = MemberLoginSteps.requestWithdraw(request);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals("true", response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_withdraw_oauth2_member_then_success() {
+        final String authClientName = "google";
+        final String email = "aaron@gmail.com";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        signUpOauth2Member(authClientName, email, roasterSn);
+        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+
+        final var response = MemberLoginSteps.requestWithdraw(request);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals("true", response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_withdraw_then_no_registered_member() {
+        final String authClientName = "";
+        final String email = "aaron@gmail.com";
+        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+
+        final var response = MemberLoginSteps.requestWithdraw(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("No registered member information.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_withdraw_then_unsupported_oauth2_client() {
+        final String authClientName = "XXX";
+        final String email = "aaron@gmail.com";
+        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+
+        final var response = MemberLoginSteps.requestWithdraw(request);
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        Assertions.assertEquals("400", response.jsonPath().getString("status"));
+        Assertions.assertEquals("BAD_REQUEST", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("false", response.jsonPath().getString("success"));
+        Assertions.assertEquals("This is unsupported OAuth2 Client service. Please check authClientName field.", response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    private void signUpOauth2Member(final String authClientName, final String email, final String roasterSn) {
+        final var request = MemberLoginSteps.oAuth2SignUpRequest(
+                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);
+        MemberLoginSteps.requestOAuth2SignUp(request);
+    }
+
+    private void signUpEmailMember(final String email, final String firstName, final String lastName, final String password, final String roasterSn) {
+        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+        redisUtilService.setValueExpire("sign-up-verified:user@gmail.com", "true", 5L);
+        MemberLoginSteps.requestEmailSignUp(request);
     }
 }
