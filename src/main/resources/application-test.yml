@@ -67,6 +67,7 @@ spring:
 logging:
   level:
     root: INFO
+    org.hibernate.type: trace
     org:
       hibernate:
         type:
