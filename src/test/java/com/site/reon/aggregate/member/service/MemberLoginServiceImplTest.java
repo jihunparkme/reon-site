@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 
+@ActiveProfiles("test")
 @Transactional
 @SpringBootTest
 class MemberLoginServiceImplTest {
@@ -38,7 +40,7 @@ class MemberLoginServiceImplTest {
     @BeforeEach
     void beforeEach() {
         this.memberLoginService =
-                new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberAuthCodeService);
+                new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberAuthCodeService, null);
     }
 
     @Test

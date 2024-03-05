@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-@Profile("test")
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 class ReonAppPropertyTest {
 
