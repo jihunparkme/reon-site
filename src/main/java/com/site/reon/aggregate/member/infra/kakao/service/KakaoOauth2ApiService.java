@@ -31,7 +31,7 @@ public class KakaoOauth2ApiService {
 
     private final WebClient webClient;
 
-    public KakaoOauth2UnlinkResponse unlink(long userId) {
+    public KakaoOauth2UnlinkResponse unlink(Long userId) {
         final Map<String, String> authorization = getAuthorization();
         final KakaoOauth2UnlinkRequest request = KakaoOauth2UnlinkRequest.builder()
                 .targetIdType(TARGET_ID_TYPE)
