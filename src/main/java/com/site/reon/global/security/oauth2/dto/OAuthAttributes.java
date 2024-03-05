@@ -27,7 +27,7 @@ public class OAuthAttributes {
     private String email;
     private String picture;
     private OAuth2Client oAuthClient;
-    private Long oAuth2UserId;
+    private Long oAuthUserId;
 
     /**
      * OAtuh2User attributes 정보를 OAuthAttributes 클래스로 변환
@@ -52,7 +52,7 @@ public class OAuthAttributes {
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .oAuthClient(OAuth2Client.KAKAO)
-                .oAuth2UserId(id)
+                .oAuthUserId(id)
                 .build();
     }
 
@@ -76,7 +76,7 @@ public class OAuthAttributes {
                 .picture(this.picture)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
                 .oAuthClient(this.oAuthClient)
-                .oauth2UserId(this.oAuth2UserId)
+                .oauthUserId(this.oAuthUserId)
                 .activated(true)
                 .build();
     }
