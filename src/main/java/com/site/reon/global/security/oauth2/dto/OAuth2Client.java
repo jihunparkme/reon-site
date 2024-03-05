@@ -39,4 +39,8 @@ public enum OAuth2Client {
             throw new IllegalArgumentException("This is unsupported OAuth2 Client service. Please check authClientName field.");
         }
     }
+
+    public boolean isKakaoLogin() {
+        return KAKAO == this;
+    }
 }

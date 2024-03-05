@@ -64,6 +64,7 @@ CREATE TABLE member
     prd_code     varchar(100),
     roaster_sn   varchar(100),
     o_auth_client varchar(10),
+    oauth_user_id bigint(20),
     picture TEXT,
     activated   tinyint(1),
     created_dt  timestamp(6),

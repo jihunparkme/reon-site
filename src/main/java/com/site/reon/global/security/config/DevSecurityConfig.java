@@ -80,8 +80,8 @@ public class DevSecurityConfig {
                         ).permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/admin/**"),
-                                new AntPathRequestMatcher("/management/actuator/**")
-                        ).hasAuthority(Role.ADMIN.name())
+                                new AntPathRequestMatcher("/management/**")
+                        ).hasAuthority(Role.ADMIN.key())
                         .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated()
                 )

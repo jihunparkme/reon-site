@@ -3,6 +3,8 @@ package com.site.reon.aggregate.member.service;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.infra.kakao.dto.KakaoOauth2UnlinkResponse;
+import com.site.reon.aggregate.member.infra.kakao.service.KakaoOauth2ApiService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
@@ -36,6 +38,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberAuthCodeService memberAuthCodeService;
+    private final KakaoOauth2ApiService kakaoOauth2ApiService;
 
     @Override
     @Transactional
@@ -99,25 +102,34 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         final String email = request.getEmail();
         final String authClientName = request.getAuthClientName().toLowerCase();
         if (isEmailMember(authClientName)) {
-            return memberDeleteResult(email, OAuth2Client.EMPTY);
-        }
-
-        OAuth2Client.validateClientName(authClientName);
-        return memberDeleteResult(email, OAuth2Client.of(authClientName));
-    }
-
-    private boolean memberDeleteResult(final String email, final OAuth2Client oAuth2Client) {
-        final boolean existMember = isExistMember(email, oAuth2Client);
-        if (!existMember) {
-            throw new IllegalArgumentException("No registered member information.");
-        }
-
-        final int deleteCount = memberRepository.deleteByEmailAndOAuthClient(email, oAuth2Client);
-        if (deleteCount > 0) {
+            deleteMember(email, OAuth2Client.EMPTY);
             return true;
         }
 
-        throw new IllegalArgumentException("Failed to delete member.");
+        OAuth2Client.validateClientName(authClientName);
+        deleteMember(email, OAuth2Client.of(authClientName));
+        return true;
+    }
+
+    private void deleteMember(final String email, final OAuth2Client oAuth2Client) {
+        final Optional<Member> memberOpt = memberRepository.findByEmailAndOAuthClient(email, oAuth2Client);
+        if (memberOpt.isEmpty()) {
+            throw new IllegalArgumentException("No registered member information.");
+        }
+
+        final Member member = memberOpt.get();
+        memberRepository.delete(member);
+
+        if (oAuth2Client.isKakaoLogin()) {
+            requestUnlink(member);
+        }
+    }
+
+    private void requestUnlink(final Member member) {
+        final KakaoOauth2UnlinkResponse response = kakaoOauth2ApiService.unlink(member.getOauthUserId());
+        if (StringUtils.isNotEmpty(response.msg())) {
+            log.error("{} unlink api call error. msg: {}, code: {}", member.getOAuthClient(), response.msg(), response.code());
+        }
     }
 
     private boolean verifyAppleEmail(final String token, final OAuth2Client oAuth2Client) {

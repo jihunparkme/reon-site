@@ -75,7 +75,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 new AntPathRequestMatcher("/admin/**"),
                                 new AntPathRequestMatcher("/management/actuator/**")
-                        ).hasAuthority(Role.ADMIN.name())
+                        ).hasAuthority(Role.ADMIN.key())
                         .anyRequest().authenticated()
                 )
 
