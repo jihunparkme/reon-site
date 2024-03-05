@@ -71,6 +71,8 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private OAuth2Client oAuthClient;
 
+    private Long oauth2UserId;
+
     @Column
     private boolean activated;
 

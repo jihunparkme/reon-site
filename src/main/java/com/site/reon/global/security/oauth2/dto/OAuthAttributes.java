@@ -27,6 +27,7 @@ public class OAuthAttributes {
     private String email;
     private String picture;
     private OAuth2Client oAuthClient;
+    private Long oAuth2UserId;
 
     /**
      * OAtuh2User attributes 정보를 OAuthAttributes 클래스로 변환
@@ -40,6 +41,7 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes) {
+        final Long id = (Long) attributes.get("id");
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
@@ -50,6 +52,7 @@ public class OAuthAttributes {
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .oAuthClient(OAuth2Client.KAKAO)
+                .oAuth2UserId(id)
                 .build();
     }
 
@@ -73,6 +76,7 @@ public class OAuthAttributes {
                 .picture(this.picture)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
                 .oAuthClient(this.oAuthClient)
+                .oauth2UserId(this.oAuth2UserId)
                 .activated(true)
                 .build();
     }
