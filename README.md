@@ -27,13 +27,15 @@ Version.
   - Nginx
 > Front
   - thymeleaf
-  - JavaScript
+  - JavaScript(ES6)
+  - CSS
 > SSL
   - Certbot
   - Let’s encrypt
 > Test
   - Junit
   - mockito
+  - REST Assured
 ```
 
 # System architecture
@@ -45,18 +47,35 @@ Version.
 # developing
 
 ing.
+- https://flow.team/main.act?detail
+- 애플 로그인
+- table -> note 대신 t.p, fc, sc 컬럼 만들어서 시간/온도 보여주기
+- 서버에서 앱으로 그래프 데이터 조희 API
+- [AWS RDS 인증서](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/ssl-certificate-rotation-mysql.html)
+
 - Sign In/Sign Up
 - Record
 - Member -> 회원 정보 수정
 - 5xx, 4xx 에러 페이지 만들기
+  - https://recruit.kakaobank.com/404
 - 로그 관리 -> 날짜별로 덮어쓰기
 - 도메인 등록
   - [Google Search Console 등록](https://search.google.com/search-console/about)
 
-# Global
+Study.
+- [주문 API 개발로 알아보는 TDD ](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
 
-- TDD, DDD 적용
-- 단순 조회가 아닌 수정이 일어날 경우, DTO 로 리턴하기.
+  ```text
+  final keyword
+  record class
+  Assert in constructor
+  rest-assured api test
+  var type
+  HttpStatus
+    200 OK
+    201 CREATE
+  ```
+
 
 # Domain
 
@@ -112,16 +131,20 @@ ing.
   - 이메일 가입 시 인증번호 발송 및 검증
   - 인증번호 및 인증 상태는 Redis 에서 관리
 - 세션은 spring-session-data-redis 활용
-- 로그인/로그아웃/개인정보 수정/탈퇴
+- 로그인 / 로그아웃 / 개인정보 수정 / 탈퇴
 
 - [ ] 소셜 로그인
   - [x] 카카오 로그인
   - [x] 구글 로그인 (앱 게시 필요)
   - [ ] 애플 로그인
-  - [ ] 소셜 가입 탈퇴 요청 시 소셜 연결 끊기 API 연동 후 세션 제거
+  - 연결 끊기
+    - [ ] 카카오: https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#unlink
+    - [ ] 구글: 
+    - [ ] 애플: 
+  - 작업 끝나면 상용 적용
   
 - [ ] 이메일로 가입하기
-  - [ ] 탈퇴 
+  - [x] 탈퇴 
   - [ ] 비밀번호 찾기 (메일로 비밀번호 변경 링크 전달)
   - [ ] 이메일 찾기
 
@@ -148,14 +171,11 @@ ing.
 - [x] 로스팅 로그 조회
 - [x] [amcharts](https://www.amcharts.com/) 적용
   - [Highlighting Line Chart](https://www.amcharts.com/demos/highlighting-line-chart-series-on-legend-hover/)
-- [ ] 로스팅 로그 추출 기능(csv?) 
 - [ ] 회원은 자신의 로그만 조회 가능, 관리자는 모든 로그 조회 가능
-- [ ] 회원번호, S/N, 날짜로 검색 기능
-- [ ] 글쓰기(ckeditor) 기능 
-  - https://ckeditor.com/
-  - https://ckeditor.com/ckeditor-5/download/ 
-- [ ] 프로파일 레시피(ag-grid) 기능
-  - https://www.ag-grid.com/
+- [ ] 회원번호, S/N, 날짜로 검색
+- [x] 프로파일 레시피
+  - [AG Grid](https://www.ag-grid.com/)
+  - [AG Grid javascript Doc.](https://www.ag-grid.com/javascript-data-grid/getting-started/)
 
 .
 
@@ -190,6 +210,10 @@ ing.
 ## TODO
 
 - [ ] 레시피 공유(레시피 업로드, 다운로드)
+  - 로스팅 로그 페이지에서 공유하기 누르고, 글 작성을 하면 로스팅 공유 페이지로 등록
+  - 글쓰기(ckeditor) 기능
+    - https://ckeditor.com/
+    - https://ckeditor.com/ckeditor-5/download/
 - [ ] 레시피 명예의 전당
 - [ ] amcharts.com 결제
 
