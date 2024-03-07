@@ -20,6 +20,7 @@ public class RoastingRecordRequest {
     private String temp4;
     private String ror;
     private String roasterSn;
+    private long memberId;
 
     private String crackPoint; // 크랙 포인트(1차, 2차). [30.3, 50.3]
     private String crackPointTime; // 크랙 시간(1차, 2차). [2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]

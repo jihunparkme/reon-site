@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -69,11 +70,14 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
             OAuth2Client.validateClientName(authClientName.toLowerCase());
         }
 
-        Optional<List<RoastingRecordListResponse>> roastingRecordsOpt = recordRepository.findRoastingRecordListBy(email, oAuth2Client);
+        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findRoastingRecordListBy(email, oAuth2Client);
         if (roastingRecordsOpt.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
 
-        return roastingRecordsOpt.get();
+        final List<RoastingRecord> roastingRecords = roastingRecordsOpt.get();
+        return roastingRecords.stream()
+                .map(RoastingRecordListResponse::of)
+                .collect(Collectors.toList());
     }
 }
