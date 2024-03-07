@@ -181,7 +181,7 @@ public class MemberLoginSteps {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("/api/login/mypage")
+                .post("/api/login/info")
                 .then()
                 .log().all().extract();
     }
