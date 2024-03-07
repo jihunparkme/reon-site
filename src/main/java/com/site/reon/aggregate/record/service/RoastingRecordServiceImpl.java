@@ -28,7 +28,10 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
     @Transactional
     public void upload(final RoastingRecordRequest request) {
         // TODO: S/N 로 memberId 검색
-        final long memberId = 2L;
+        long memberId = request.getMemberId();
+        if (memberId == 0) {
+            memberId = 2L;
+        }
         final var roastingRecord = request.toEntity(memberId);
 
         recordRepository.save(roastingRecord);
