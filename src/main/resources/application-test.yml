@@ -66,14 +66,16 @@ spring:
 
 logging:
   level:
-    root: INFO
-    org.hibernate.type: trace
     org:
       hibernate:
-        type:
-          descriptor:
-            sql: TRACE
-        SQL: DEBUG
+        nodeValue: info # basic log level for all messages
+        stat: debug # Statistics and slow queries
+        SQL_SLOW: info # Statistics and slow queries
+        SQL: debug # SQL statements and parameters
+        cache: debug # 2nd Level Cache
+        orm:
+          jdbc:
+            bind: trace # SQL statements and parameters
 
 app:
   reon:
