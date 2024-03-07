@@ -145,6 +145,25 @@ public class MemberLoginApiController {
         }
     }
 
+    @ApiOperation(value = "회원 정보 조회", notes = "앱에서 회원 정보를 조회합니다.")
+    @PostMapping("/mypage")
+    public ResponseEntity mypage(@Valid @RequestBody final ApiMyPageRequest request,
+                                     final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+        if (allErrors != null) return allErrors;
+
+        try {
+            final OAuth2Client oAuthClient = OAuth2Client.of(request.getAuthClientName().toLowerCase());
+            final Member member = memberService.getMemberWithAuthorities(request.getEmail(), oAuthClient);
+            return BasicResponse.ok(MemberDto.from(member));
+        } catch (BadCredentialsException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            log.error("MemberLoginApiController.mypage Exception: ", e);
+            return BasicResponse.internalServerError(e.getMessage());
+        }
+    }
+
     @ApiOperation(value = "회원 탈퇴", notes = "앱에서 회원을 탈퇴합니다.")
     @PostMapping("/withdraw")
     public ResponseEntity withdraw(@Valid @RequestBody final ApiWithdrawRequest request,
