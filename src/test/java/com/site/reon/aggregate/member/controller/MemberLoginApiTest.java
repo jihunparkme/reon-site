@@ -485,7 +485,7 @@ public class MemberLoginApiTest extends ApiTest {
         signUpOauth2Member(authClientName, email, roasterSn);
         final var myPageRequest = MemberLoginSteps.myPageRequest(authClientName, email);
 
-        final ExtractableResponse<Response> response = MemberLoginSteps.requestMyPage(myPageRequest);
+        final var response = MemberLoginSteps.requestMyPage(myPageRequest);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
