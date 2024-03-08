@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
-import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.service.dto.api.ApiRoastingRecordListRequest;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordListRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

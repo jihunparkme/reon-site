@@ -2,8 +2,8 @@ package com.site.reon.aggregate.record.query.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordListResponse;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

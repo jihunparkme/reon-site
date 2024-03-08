@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.record.service.dto;
 
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

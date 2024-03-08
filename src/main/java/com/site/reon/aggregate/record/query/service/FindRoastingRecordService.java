@@ -1,8 +1,8 @@
 package com.site.reon.aggregate.record.query.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordListResponse;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record.service.dto.api;
+package com.site.reon.aggregate.record.query.dto.api;
 
 import com.site.reon.global.common.dto.ApiRequest;
 import jakarta.validation.constraints.NotBlank;

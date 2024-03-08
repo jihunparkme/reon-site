@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

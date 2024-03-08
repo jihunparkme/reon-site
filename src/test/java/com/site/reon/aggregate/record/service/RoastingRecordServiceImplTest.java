@@ -2,8 +2,8 @@ package com.site.reon.aggregate.record.service;
 
 import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
 import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
