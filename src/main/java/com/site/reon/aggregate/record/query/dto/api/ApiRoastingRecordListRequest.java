@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.record.query.dto.api;
 
 import com.site.reon.global.common.dto.ApiRequest;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,8 +12,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiRoastingRecordListRequest extends ApiRequest {
-    private String authClientName;
-
-    @NotBlank(message = "email is required.")
-    private String email;
+    @NotNull(message = "memberId is required.")
+    private Long memberId;
 }

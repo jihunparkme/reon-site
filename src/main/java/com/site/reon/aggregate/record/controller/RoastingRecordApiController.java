@@ -1,8 +1,9 @@
 package com.site.reon.aggregate.record.controller;
 
-import com.site.reon.aggregate.record.service.RoastingRecordService;
-import com.site.reon.aggregate.record.service.dto.api.ApiRoastingRecordListRequest;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordListResponse;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
+import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordListRequest;
+import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordResponse;
+import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
 import io.swagger.annotations.ApiOperation;
@@ -11,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,17 +22,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RoastingRecordApiController {
 
-    private final RoastingRecordService recordService;
+    private final FindRoastingRecordService recordService;
 
     @ApiOperation(value = "로스팅 로그 리스트 조회", notes = "앱에서 로스팅 로그 리스트를 조회합니다.")
     @PostMapping("/list")
-    public ResponseEntity RoastingRecords(@Valid @RequestBody final ApiRoastingRecordListRequest request,
+    public ResponseEntity RoastingRecordList(@Valid @RequestBody final ApiRoastingRecordListRequest request,
                                       final BindingResult bindingResult) {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            final List<RoastingRecordListResponse> result = recordService.findRoastingRecordListBy(request.getEmail(), request.getAuthClientName());
+            final List<RoastingRecordListResponse> result = recordService.findRoastingRecordListBy(request.getMemberId());
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
