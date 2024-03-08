@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.record.service.dto;
 
-import com.site.reon.aggregate.record.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import lombok.Builder;
 
 public record RoastingRecordListResponse(

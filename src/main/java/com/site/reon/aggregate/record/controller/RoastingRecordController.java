@@ -1,11 +1,9 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.domain.RoastingRecord;
 import com.site.reon.aggregate.record.service.RoastingRecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

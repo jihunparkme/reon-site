@@ -1,6 +1,6 @@
-package com.site.reon.aggregate.record.domain.repository;
+package com.site.reon.aggregate.record.command.domain.repository;
 
-import com.site.reon.aggregate.record.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
