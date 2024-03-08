@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record.service;
+package com.site.reon.aggregate.record.query.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordListResponse;

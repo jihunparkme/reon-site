@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.record.service;
 
 import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
+import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
