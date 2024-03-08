@@ -1,7 +1,8 @@
 package com.site.reon.aggregate.record.controller;
 
+import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.service.RoastingRecordService;
+import com.site.reon.aggregate.record.service.FindRoastingRecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,8 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RequiredArgsConstructor
 public class RoastingRecordController {
 
-    private final RoastingRecordService recordService;
+    private final FindRoastingRecordService recordService;
+    private final UploadRoastingRecordService uploadRecordService;
 
     @GetMapping
     public String list(
@@ -49,7 +51,7 @@ public class RoastingRecordController {
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestBody final RoastingRecordRequest request){
         try {
-            recordService.upload(request);
+            uploadRecordService.upload(request);
             return new ResponseEntity(SUCCESS, HttpStatus.CREATED);
         } catch (Exception e) {
             log.error("RoastingRecordController.uploadFile Exception: ", e);

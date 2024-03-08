@@ -1,15 +1,13 @@
 package com.site.reon.aggregate.record.service;
 
-import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordListResponse;
+import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface RoastingRecordService {
-    void upload(RoastingRecordRequest request);
+public interface FindRoastingRecordService {
 
     Page<RoastingRecord> findAllSortByIdDescPaging(int page, int size);
 

@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.record.service;
 
+import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
@@ -18,7 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RoastingRecordServiceImplTest {
 
     @Autowired
-    RoastingRecordService service;
+    FindRoastingRecordService service;
+
+    @Autowired
+    UploadRoastingRecordService uploadService;
 
     @Test
     void upload() throws Exception {
@@ -32,7 +36,7 @@ class RoastingRecordServiceImplTest {
         String ror = "RoR";
         String roasterSn = "roasterSn";
         RoastingRecordRequest request = new RoastingRecordRequest(title, fan, heater, temp1, temp2, temp3, temp4, ror, roasterSn);
-        service.upload(request);
+        uploadService.upload(request);
 
         RoastingRecordResponse result = service.findRoastingRecordBy(roasterSn);
 

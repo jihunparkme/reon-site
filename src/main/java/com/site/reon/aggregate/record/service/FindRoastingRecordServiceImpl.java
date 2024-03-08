@@ -2,7 +2,6 @@ package com.site.reon.aggregate.record.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.service.dto.RoastingRecordListResponse;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -20,22 +19,9 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class RoastingRecordServiceImpl implements RoastingRecordService {
+public class FindRoastingRecordServiceImpl implements FindRoastingRecordService {
 
     private final RoastingRecordRepository recordRepository;
-
-    @Override
-    @Transactional
-    public void upload(final RoastingRecordRequest request) {
-        // TODO: S/N 로 memberId 검색
-        long memberId = request.getMemberId();
-        if (memberId == 0) {
-            memberId = 2L;
-        }
-        final var roastingRecord = request.toEntity(memberId);
-
-        recordRepository.save(roastingRecord);
-    }
 
     @Override
     @Transactional(readOnly = true)
