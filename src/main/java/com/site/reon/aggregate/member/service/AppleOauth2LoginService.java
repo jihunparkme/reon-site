@@ -6,6 +6,7 @@ import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class AppleOauth2LoginService {
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Member getMemberInfo(final AppleOAuth2Token appleOAuth2Token) {
         Optional<Member> memberOpt = memberRepository.findWithAuthoritiesByEmailAndOAuthClient(
                 appleOAuth2Token.getEmail(), OAuth2Client.APPLE);

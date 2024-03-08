@@ -87,6 +87,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     }
 
     @Override
+    @Transactional
     public MemberDto oAuth2SignUp(ApiOAuth2SignUpRequest request) {
         String authClientName = request.getAuthClientName().toLowerCase();
         OAuth2Client.validateClientName(authClientName);

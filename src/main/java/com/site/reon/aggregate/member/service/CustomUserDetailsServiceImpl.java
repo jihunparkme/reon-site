@@ -23,7 +23,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(final String email) {
         return memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY)
                 .map(member -> createUser(email, member))

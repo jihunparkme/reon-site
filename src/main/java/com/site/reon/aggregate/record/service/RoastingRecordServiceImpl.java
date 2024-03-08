@@ -67,6 +67,7 @@ public class RoastingRecordServiceImpl implements RoastingRecordService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<RoastingRecordListResponse> findRoastingRecordListBy(final String email, final String authClientName) {
         final OAuth2Client oAuth2Client = OAuth2Client.of(authClientName);
         if (oAuth2Client.isNotEmpty()) {
