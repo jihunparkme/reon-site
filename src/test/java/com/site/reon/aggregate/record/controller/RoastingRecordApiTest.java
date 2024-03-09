@@ -32,7 +32,8 @@ class RoastingRecordApiTest extends ApiTest {
         final var myPageRequest = MemberLoginSteps.myPageRequest(authClientName, email);
         final var myPageResponse = MemberLoginSteps.requestMyPage(myPageRequest);
         Assertions.assertEquals(HttpStatus.OK.value(), myPageResponse.statusCode());
-        Assertions.assertEquals("1", myPageResponse.jsonPath().getString("data.id"));
+        final String memberId = myPageResponse.jsonPath().getString("data.id");
+        Assertions.assertEquals("1", memberId);
 
         // requestUploadRoastingRecord
         final var roastingRecordRequest = RoastingRecordSteps.getRoastingRecordRequest();
@@ -42,7 +43,7 @@ class RoastingRecordApiTest extends ApiTest {
         RoastingRecordSteps.requestUploadRoastingRecord(roastingRecordRequest2);
 
         // requestRoastingRecordList
-        final var request = RoastingRecordSteps.getRoastingRecordListRequest(authClientName, email);
+        final var request = RoastingRecordSteps.getRoastingRecordListRequest(Long.parseLong(memberId));
 
         final var response = RoastingRecordSteps.requestRoastingRecordList(request);
 

@@ -62,12 +62,11 @@ public class RoastingRecordSteps {
                 .log().all().extract();
     }
 
-    public static ApiRoastingRecordListRequest getRoastingRecordListRequest(final String authClientName, final String email) {
+    public static ApiRoastingRecordListRequest getRoastingRecordListRequest(final long memberId) {
         return ApiRoastingRecordListRequest.builder()
                 .clientName(CLIENT_NAME)
                 .clientId(CLIENT_ID)
-                .authClientName(authClientName)
-                .email(email)
+                .memberId(memberId)
                 .build();
     }
 
