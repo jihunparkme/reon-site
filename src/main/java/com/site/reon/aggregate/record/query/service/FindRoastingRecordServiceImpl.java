@@ -18,20 +18,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FindRoastingRecordServiceImpl implements FindRoastingRecordService {
 
     private final RoastingRecordRepository recordRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public Page<RoastingRecord> findAllSortByIdDescPaging(final int page, final int size) {
         final var pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return recordRepository.findAll(pageable);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public RoastingRecordResponse findRoastingRecordBy(final Long id) {
         final var roastingRecordOpt = recordRepository.findById(id);
         if (roastingRecordOpt.isEmpty()) {
@@ -53,14 +52,8 @@ public class FindRoastingRecordServiceImpl implements FindRoastingRecordService 
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<RoastingRecordListResponse> findRoastingRecordListBy(final String email, final String authClientName) {
-        final OAuth2Client oAuth2Client = OAuth2Client.of(authClientName);
-        if (oAuth2Client.isNotEmpty()) {
-            OAuth2Client.validateClientName(authClientName.toLowerCase());
-        }
-
-        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findRoastingRecordListBy(email, oAuth2Client);
+    public List<RoastingRecordListResponse> findRoastingRecordListBy(final long memberId) {
+        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findRoastingRecordListBy(memberId);
         if (roastingRecordsOpt.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
