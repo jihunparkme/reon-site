@@ -10,5 +10,8 @@ import java.util.Optional;
 public interface RoastingRecordRepository extends JpaRepository<RoastingRecord, Long> {
     Optional<RoastingRecord> findByRoasterSn(@Param(value = "roasterSn") String roasterSn);
 
+    Optional<RoastingRecord> findByIdAndMemberId(@Param(value = "id") long id,
+                                                 @Param(value = "memberId") long memberId);
+
     Optional<List<RoastingRecord>> findByMemberId(@Param(value = "memberId") long memberId);
 }

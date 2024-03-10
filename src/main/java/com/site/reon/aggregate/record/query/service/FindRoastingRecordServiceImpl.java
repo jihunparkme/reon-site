@@ -4,7 +4,7 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
-import com.site.reon.global.security.oauth2.dto.OAuth2Client;
+import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +41,16 @@ public class FindRoastingRecordServiceImpl implements FindRoastingRecordService 
     }
 
     @Override
-    @Transactional(readOnly = true)
+    public ApiRoastingRecordResponse findRoastingRecordBy(final long recordId, final long memberId) {
+        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndMemberId(recordId, memberId);
+        if (roastingRecordOpt.isEmpty()) {
+            throw new IllegalArgumentException("You do not have permission to access this data.");
+        }
+
+        return ApiRoastingRecordResponse.of(roastingRecordOpt.get());
+    }
+
+    @Override
     public RoastingRecordResponse findRoastingRecordBy(final String roasterSn) {
         final var roastingRecordOpt = recordRepository.findByRoasterSn(roasterSn);
         if (roastingRecordOpt.isEmpty()) {
@@ -53,7 +62,7 @@ public class FindRoastingRecordServiceImpl implements FindRoastingRecordService 
 
     @Override
     public List<RoastingRecordListResponse> findRoastingRecordListBy(final long memberId) {
-        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findRoastingRecordListBy(memberId);
+        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByMemberId(memberId);
         if (roastingRecordsOpt.isEmpty()) {
             return Collections.EMPTY_LIST;
         }

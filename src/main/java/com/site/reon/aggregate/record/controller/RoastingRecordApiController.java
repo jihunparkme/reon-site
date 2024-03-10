@@ -41,4 +41,23 @@ public class RoastingRecordApiController {
             return BasicResponse.internalServerError(e.getMessage());
         }
     }
+
+    @ApiOperation(value = "로스팅 로그 조회", notes = "앱에서 로스팅 로그를 조회합니다.")
+    @PostMapping("/{id}")
+    public ResponseEntity RoastingRecord(@PathVariable(name = "id") final Long id,
+                                         @Valid @RequestBody final ApiRoastingRecordListRequest request,
+                                         final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+        if (allErrors != null) return allErrors;
+
+        try {
+            final ApiRoastingRecordResponse result = recordService.findRoastingRecordBy(id, request.getMemberId());
+            return BasicResponse.ok(result);
+        } catch (IllegalArgumentException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            log.error("RoastingRecordApiController.RoastingRecords Exception: ", e);
+            return BasicResponse.internalServerError(e.getMessage());
+        }
+    }
 }
