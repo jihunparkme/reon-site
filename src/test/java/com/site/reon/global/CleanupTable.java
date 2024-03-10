@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum CleanupTable {
-    MEMBER("member_id", 3),
-    MEMBER_AUTHORITY("member_id", 4),
+    MEMBER("member_id", 1),
+    MEMBER_AUTHORITY("member_id", 1),
     ;
 
     private final String primaryKey;

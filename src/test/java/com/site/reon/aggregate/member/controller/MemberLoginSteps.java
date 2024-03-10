@@ -166,4 +166,23 @@ public class MemberLoginSteps {
                 .then()
                 .log().all().extract();
     }
+
+    public static ApiMyPageRequest myPageRequest(final String authClientName, final String email) {
+        return ApiMyPageRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .email(email)
+                .authClientName(authClientName)
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestMyPage(final ApiMyPageRequest request) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/login/info")
+                .then()
+                .log().all().extract();
+    }
 }

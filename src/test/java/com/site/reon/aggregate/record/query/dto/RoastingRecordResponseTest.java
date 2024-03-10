@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record.service.dto;
+package com.site.reon.aggregate.record.query.dto;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -149,7 +149,7 @@ class RoastingRecordResponseTest {
         List<String> expect = Arrays.asList("", "");
         Assertions.assertEquals(expect, result);
     }
-    
+
     @Test
     void calculateRoastingLogsInSeconds() {
         String tempLog = "[0,5,10,12,14,16,18,19,20,23,25,27,28,29,30,34,38,39,47,48,58,59,67,69,72,73,84,86,93,95,98,100,120,130,140,150,160,170,180,190,200,210,215,210,200,200,200,190,200,190,200,190,200,190,200,190,200,190,200,190,200,190,200,180,170,160,150,140,130,120,110,100,90,80,70,60,50,40,30,20,10]";
@@ -158,8 +158,8 @@ class RoastingRecordResponseTest {
 
         Assertions.assertEquals(81, result);
     }
-    
-    @Test 
+
+    @Test
     void calculateDevelopmentTimeRatio() {
         final int totalRoastingSecondsTime = 10 * 60;
         final String firstCrackPointTime = "07:00";

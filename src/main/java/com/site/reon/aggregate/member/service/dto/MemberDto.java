@@ -20,6 +20,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class MemberDto {
 
+    private long id;
+    
     @NotNull
     private MemberType type;
 
@@ -73,6 +75,7 @@ public class MemberDto {
         }
 
         return MemberDto.builder()
+                .id(member.getId())
                 .type(member.getType())
                 .firstName(member.getFirstName())
                 .lastName(member.getLastName())

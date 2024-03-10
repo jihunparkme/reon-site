@@ -40,7 +40,16 @@ Content-Type: application/json
   "email": "user@gmail.com"
 }
 
+### 앱에서 회원 정보를 조회합니다.
+POST http://localhost:8080/api/login/info
+Content-Type: application/json
 
+{
+    "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+    "clientName": "reon",
+    "authClientName": "",
+    "email": "user@gmail.com"
+}
 
 
 

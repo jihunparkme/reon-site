@@ -1,8 +1,10 @@
 package com.site.reon.aggregate.record.service;
 
-import com.site.reon.aggregate.record.service.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.service.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
+import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +20,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RoastingRecordServiceImplTest {
 
     @Autowired
-    RoastingRecordService service;
+    FindRoastingRecordService service;
+
+    @Autowired
+    UploadRoastingRecordService uploadService;
 
     @Test
     void upload() throws Exception {
@@ -32,7 +37,7 @@ class RoastingRecordServiceImplTest {
         String ror = "RoR";
         String roasterSn = "roasterSn";
         RoastingRecordRequest request = new RoastingRecordRequest(title, fan, heater, temp1, temp2, temp3, temp4, ror, roasterSn);
-        service.upload(request);
+        uploadService.upload(request);
 
         RoastingRecordResponse result = service.findRoastingRecordBy(roasterSn);
 

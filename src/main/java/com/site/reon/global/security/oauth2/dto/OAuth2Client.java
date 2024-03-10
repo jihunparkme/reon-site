@@ -43,4 +43,12 @@ public enum OAuth2Client {
     public boolean isKakaoLogin() {
         return KAKAO == this;
     }
+
+    public boolean isEmpty() {
+        return EMPTY == this;
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
 }

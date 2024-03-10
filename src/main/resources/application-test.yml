@@ -34,14 +34,13 @@ spring:
       enabled: true
 
   jpa:
-    show-sql: true
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
     properties:
       hibernate:
         format_sql: true
-        show_sql: true
+        show_sql: false
         default_batch_fetch_size: 100
 
   data:
@@ -66,14 +65,16 @@ spring:
 
 logging:
   level:
-    root: INFO
-    org.hibernate.type: trace
     org:
       hibernate:
-        type:
-          descriptor:
-            sql: TRACE
-        SQL: DEBUG
+        nodeValue: info # basic log level for all messages
+        stat: debug # Statistics and slow queries
+        SQL_SLOW: info # Statistics and slow queries
+        SQL: debug # SQL statements and parameters
+        cache: debug # 2nd Level Cache
+        orm:
+          jdbc:
+            bind: trace # SQL statements and parameters
 
 app:
   reon:

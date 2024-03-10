@@ -83,6 +83,7 @@ function sendAuthCode() {
     let data = {
         "email": $('#sign-up-email').val()
     };
+    alert('The authentication code has been sent.');
 
     $.ajax({
         type: 'POST',
@@ -92,7 +93,6 @@ function sendAuthCode() {
         contentType: 'application/json; charset=utf-8'
     }).done(function (response) {
         if (response.success) {
-            alert('The authentication code has been sent.');
             return;
         }
         alert('The authentication code sending failed. Please try again.');

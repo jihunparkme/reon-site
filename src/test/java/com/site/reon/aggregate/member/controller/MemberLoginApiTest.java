@@ -2,6 +2,8 @@ package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.global.ApiTest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -473,6 +475,31 @@ public class MemberLoginApiTest extends ApiTest {
         Assertions.assertEquals("This is unsupported OAuth2 Client service. Please check authClientName field.", response.jsonPath().getString("message"));
         Assertions.assertEquals("0", response.jsonPath().getString("count"));
         Assertions.assertEquals(null, response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void when_mypage_then_return_member_info() {
+        final String authClientName = "kakao";
+        final String email = "user@gmail.com";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        signUpOauth2Member(authClientName, email, roasterSn);
+        final var myPageRequest = MemberLoginSteps.myPageRequest(authClientName, email);
+
+        final var response = MemberLoginSteps.requestMyPage(myPageRequest);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("1", response.jsonPath().getString("count"));
+        Assertions.assertEquals("1", response.jsonPath().getString("data.id"));
+        Assertions.assertEquals("user", response.jsonPath().getString("data.firstName"));
+        Assertions.assertEquals("", response.jsonPath().getString("data.lastName"));
+        Assertions.assertEquals(email, response.jsonPath().getString("data.email"));
+        Assertions.assertEquals(roasterSn, response.jsonPath().getString("data.roasterSn"));
+        Assertions.assertEquals("picture", response.jsonPath().getString("data.picture"));
+        Assertions.assertEquals("KAKAO", response.jsonPath().getString("data.oauthClient"));
     }
 
     private void signUpOauth2Member(final String authClientName, final String email, final String roasterSn) {
