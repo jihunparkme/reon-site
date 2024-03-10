@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoastingRecordRepository extends JpaRepository<RoastingRecord, Long> {
-    @Query("SELECT rr " +
-            "FROM RoastingRecord rr " +
-            "WHERE rr.roasterSn=:roasterSn")
     Optional<RoastingRecord> findByRoasterSn(@Param(value = "roasterSn") String roasterSn);
 
     @Query("SELECT rr " +
