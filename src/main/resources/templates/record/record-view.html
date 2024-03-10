@@ -138,6 +138,7 @@
     const rorArr = stringToFloatTwoDecimals(generateGraphData(record.ror, dataSize));
     const heaterArr = generateGraphData(record.heater, dataSize);
     const fanArr = generateGraphData(record.fan, dataSize);
+    const noteArr = generateNoteData(record);
 
     function generateGraphData(data, size) {
         if (data === null) {
@@ -174,7 +175,32 @@
         });
         return result;
     }
+
+    function generateNoteData(data) {
+        let result = [];
+        const disposeTime = data.disposeTime;
+        const turningPointTime = data.turningPointTime;
+        const firstCrackPointTime = data.creakInfo.firstCrackPointTime;
+        const secondCrackPointTime = data.creakInfo.secondCrackPointTime;
+
+        result[MMSSToSeconds(disposeTime)] = 'Dispose';
+        result[MMSSToSeconds(turningPointTime)] = 'Turning Point';
+        result[MMSSToSeconds(firstCrackPointTime)] = 'First Crack';
+        result[MMSSToSeconds(secondCrackPointTime)] = 'Second Crack';
+
+        return result;
+    }
+
+    function MMSSToSeconds(timeString) {
+        const parts = timeString.split(":");
+        const minutes = parseInt(parts[0], 10);
+        const seconds = parseInt(parts[1], 10);
+
+        return (minutes * 60) + seconds;
+    }
     /*]]>*/
 </script>
 </body>
+<div th:replace="~{common/head :: head('Record')}"></div>
+<link th:href="@{/css/record/record.css}" rel="stylesheet"/>
 </html>

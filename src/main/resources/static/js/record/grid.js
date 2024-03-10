@@ -12,7 +12,7 @@ $(function() {
             { field: 'ror', width: 100 },
             { field: 'heater', width: 100 },
             { field: 'fan', width: 100 },
-            { field: 'note', width: 100 },
+            { field: 'note', width: 150 },
         ],
     };
 
@@ -32,7 +32,7 @@ function getRowData() {
             ror: rorArr[i],
             heater: heaterArr[i],
             fan: fanArr[i],
-            note: '',
+            note: noteArr[i],
         };
         rowData.push(row);
     }
