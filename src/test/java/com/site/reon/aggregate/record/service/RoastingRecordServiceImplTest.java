@@ -1,10 +1,10 @@
 package com.site.reon.aggregate.record.service;
 
-import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
-import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
-import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,7 +39,7 @@ class RoastingRecordServiceImplTest {
         RoastingRecordRequest request = new RoastingRecordRequest(title, fan, heater, temp1, temp2, temp3, temp4, ror, roasterSn);
         uploadService.upload(request);
 
-        RoastingRecordResponse result = service.findRoastingRecordBy(roasterSn);
+        RoastingRecordResponse result = service.findRoastingRecordBy(12L);
 
         assertEquals("title", result.getTitle());
         assertEquals("fan", result.getFan());
@@ -71,24 +71,6 @@ class RoastingRecordServiceImplTest {
     @Test
     void findRoastingRecordById_should_return_empty() throws Exception {
         RoastingRecordResponse result = service.findRoastingRecordBy(10000L);
-
-        assertEquals(RoastingRecordResponse.EMPTY, result);
-    }
-
-    @Test
-    void findRoastingRecordByRoasterSn() throws Exception {
-        RoastingRecordResponse result = service.findRoastingRecordBy("AGBAG1241AFWADF");
-
-        assertEquals("test roasting", result.getTitle());
-        assertEquals("[90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,90,105,105,105,105,105,105,105,105]",
-                result.getFan());
-        assertEquals("[100,105,125,130,130,130,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,120,125,135,155,155,155,155]",
-                result.getHeater());
-    }
-
-    @Test
-    void findRoastingRecordByRoasterSn_should_return_empty() throws Exception {
-        RoastingRecordResponse result = service.findRoastingRecordBy("XXX");
 
         assertEquals(RoastingRecordResponse.EMPTY, result);
     }

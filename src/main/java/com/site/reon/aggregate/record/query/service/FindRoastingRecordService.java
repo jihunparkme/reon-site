@@ -16,7 +16,5 @@ public interface FindRoastingRecordService {
 
     ApiRoastingRecordResponse findRoastingRecordBy(long recordId, long memberId);
 
-    RoastingRecordResponse findRoastingRecordBy(String roasterSn);
-
     List<RoastingRecordListResponse> findRoastingRecordListBy(long memberId);
 }
