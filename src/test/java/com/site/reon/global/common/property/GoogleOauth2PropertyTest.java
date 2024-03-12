@@ -24,6 +24,9 @@ class GoogleOauth2PropertyTest {
         log.info("responseType: {}", property.getResponseType());
         log.info("authorizationUri: {}", property.getAuthorizationUri());
         log.info("redirectUri: {}", property.getRedirectUri());
+        log.info("state: {}", property.getState());
+        log.info("accessType: {}", property.getAccessType());
+        log.info("includeGrantedScopes: {}", property.getIncludeGrantedScopes());
         Assertions.assertEquals("Google", property.getClientName());
     }
 }

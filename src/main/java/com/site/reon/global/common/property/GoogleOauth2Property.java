@@ -15,4 +15,7 @@ public class GoogleOauth2Property {
     private String responseType;
     private String authorizationUri;
     private String redirectUri;
+    private String state;
+    private String accessType;
+    private String includeGrantedScopes;
 }
