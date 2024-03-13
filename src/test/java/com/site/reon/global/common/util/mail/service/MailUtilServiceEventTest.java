@@ -1,7 +1,7 @@
 package com.site.reon.global.common.util.mail.service;
 
 import com.site.reon.global.common.event.Events;
-import com.site.reon.global.common.util.mail.dto.SendMailEvent;
+import com.site.reon.global.event.dto.SendMailEvent;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

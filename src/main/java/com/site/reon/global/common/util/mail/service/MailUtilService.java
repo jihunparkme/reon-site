@@ -1,7 +1,7 @@
 package com.site.reon.global.common.util.mail.service;
 
 import com.site.reon.global.common.exception.MailSendException;
-import com.site.reon.global.common.util.mail.dto.SendMailEvent;
+import com.site.reon.global.event.dto.SendMailEvent;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;

@@ -1,6 +1,6 @@
-package com.site.reon.global.common.util.mail.handler;
+package com.site.reon.global.event;
 
-import com.site.reon.global.common.util.mail.dto.SendMailEvent;
+import com.site.reon.global.event.dto.SendMailEvent;
 import com.site.reon.global.common.util.mail.service.MailUtilService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
