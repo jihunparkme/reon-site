@@ -4,14 +4,14 @@ import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class MemberGoogleOauth2LoginService {
+public class GoogleOauth2LoginService {
     private final RedisUtilService redisUtilService;
 
-    public void withdraw(final WithdrawRequest request) {
+    public void signalWithdrawal(final WithdrawRequest request) {
         redisUtilService.setValueExpire(generateKey(request), "true", 180L);
     }
 

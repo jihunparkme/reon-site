@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.service.MemberGoogleOauth2LoginService;
+import com.site.reon.aggregate.member.service.GoogleOauth2LoginService;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.global.common.dto.BasicResponse;
 import jakarta.validation.Valid;
@@ -18,20 +18,20 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @Controller
 @RequestMapping("/login/oauth2")
 @RequiredArgsConstructor
-public class MemberGoogleOauth2LoginController {
+public class GoogleOauth2LoginController {
 
-    private final MemberGoogleOauth2LoginService memberGoogleOauth2Login;
+    private final GoogleOauth2LoginService googleOauth2LoginService;
 
-    @PostMapping("/signal/withdraw/google")
-    public ResponseEntity sendSignalToWithdraw(@Valid @RequestBody final WithdrawRequest request) {
+    @PostMapping("/withdraw/google/signal")
+    public ResponseEntity signalWithdrawal(@Valid @RequestBody final WithdrawRequest request) {
         try {
-            memberGoogleOauth2Login.withdraw(request);
+            googleOauth2LoginService.signalWithdrawal(request);
             return BasicResponse.ok(SUCCESS);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
-            log.error("MemberGoogleOauth2LoginController.sendSignalToWithdraw Exception: ", e);
-            return BasicResponse.internalServerError("Failed to withdraw member. Please try again.");
+            log.error("GoogleOauth2LoginController.signalWithdrawal Exception: ", e);
+            return BasicResponse.internalServerError("Failed to withdraw google oauth2 member. Please try again.");
         }
     }
 }
