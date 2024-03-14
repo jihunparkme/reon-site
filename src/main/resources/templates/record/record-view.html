@@ -2,6 +2,17 @@
 <link th:href="@{/css/record/record.css}" rel="stylesheet"/>
 <body>
 <div th:replace="~{common/header :: header('record')}"></div>
+<style>
+    .background-black {
+        background-color: #222529; !important;
+    }
+    .font-white {
+        color: white; !important;
+    }
+    .bi-folder::before {
+        color: white; !important;
+    }
+</style>
 
 <main id="main">
     <section id="breadcrumbs" class="breadcrumbs">
@@ -20,9 +31,9 @@
         <div class="container" data-aos="fade-up">
             <div class="row">
                 <div class="entries">
-                    <article class="entry entry-single">
+                    <article class="entry entry-single background-black">
 
-                        <h2 class="entry-view-title">
+                        <h2 class="entry-view-title font-white">
                             <p>[(${record.title})]</p>
                         </h2>
                         <div class="entry-meta">
@@ -38,10 +49,10 @@
                             <div id="temperatureChart"></div>
                             <div id="sensorChart"></div>
 
-                            <h2 style="margin-top: 50px;">Profile Details</h2>
+                            <h2 class="font-white" style="margin-top: 50px;">Profile Details</h2>
 
                             <div class="profile-info">
-                                <table class="table table-hover">
+                                <table class="table table-dark table-hover">
                                     <tbody>
                                     <tr>
                                         <th scope="row">Total Roasting Time</th>
@@ -87,14 +98,13 @@
                         <div class="entry-footer">
                             <i class="bi bi-folder"></i>
                             <ul class="cats">
-                                <li><a href="/record">Record</a></li>
+                                <li><a href="/record" style="color: white;">Record</a></li>
                             </ul>
                         </div>
 
                         <div class="entry-button">
                             <div>
-                                <button th:onclick="|location.href='@{/record}'|" class="btn btn-outline-dark">목록
-                                </button>
+                                <button th:onclick="|location.href='@{/record}'|" class="btn btn-light">목록</button>
                             </div>
                         </div>
                     </article>
