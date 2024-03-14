@@ -1,5 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
+import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
+import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordListRequest;
 import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordResponse;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.site.reon.global.common.constant.Result.SUCCESS;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/records")
@@ -23,6 +27,7 @@ import java.util.List;
 public class RoastingRecordApiController {
 
     private final FindRoastingRecordService recordService;
+    private final UploadRoastingRecordService uploadRecordService;
 
     @ApiOperation(value = "로스팅 로그 리스트 조회", notes = "앱에서 로스팅 로그 리스트를 조회합니다.")
     @PostMapping
@@ -57,6 +62,24 @@ public class RoastingRecordApiController {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             log.error("RoastingRecordApiController.RoastingRecords Exception: ", e);
+            return BasicResponse.internalServerError(e.getMessage());
+        }
+    }
+
+    @ApiOperation(value = "로스팅 로그 업로드", notes = "앱에서 로스팅 로그를 업로드합니다.")
+    @PostMapping("/upload")
+    public ResponseEntity upload(@Valid @RequestBody final ApiRoastingRecordUploadRequest request,
+                               final BindingResult bindingResult) {
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+        if (allErrors != null) return allErrors;
+
+        try {
+            uploadRecordService.upload(request);
+            return BasicResponse.created(SUCCESS);
+        } catch (IllegalArgumentException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            log.error("RoastingRecordApiController.upload Exception: ", e);
             return BasicResponse.internalServerError(e.getMessage());
         }
     }

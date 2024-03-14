@@ -2,14 +2,14 @@ package com.site.reon.aggregate.record.command.dto;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-@AllArgsConstructor
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 public class RoastingRecordRequest {
     private String title;
     private String fan;
