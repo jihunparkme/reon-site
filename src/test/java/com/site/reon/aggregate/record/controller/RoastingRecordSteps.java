@@ -75,7 +75,7 @@ public class RoastingRecordSteps {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("/api/record/list")
+                .post("/api/records")
                 .then()
                 .log().all().extract();
     }
@@ -93,7 +93,7 @@ public class RoastingRecordSteps {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("/api/record/" + recordId)
+                .post("/api/records/" + recordId)
                 .then()
                 .log().all().extract();
     }

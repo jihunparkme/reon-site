@@ -18,15 +18,15 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/record")
+@RequestMapping("/api/records")
 @RequiredArgsConstructor
 public class RoastingRecordApiController {
 
     private final FindRoastingRecordService recordService;
 
     @ApiOperation(value = "로스팅 로그 리스트 조회", notes = "앱에서 로스팅 로그 리스트를 조회합니다.")
-    @PostMapping("/list")
-    public ResponseEntity RoastingRecordList(@Valid @RequestBody final ApiRoastingRecordListRequest request,
+    @PostMapping
+    public ResponseEntity list(@Valid @RequestBody final ApiRoastingRecordListRequest request,
                                       final BindingResult bindingResult) {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
@@ -44,7 +44,7 @@ public class RoastingRecordApiController {
 
     @ApiOperation(value = "로스팅 로그 조회", notes = "앱에서 로스팅 로그를 조회합니다.")
     @PostMapping("/{id}")
-    public ResponseEntity RoastingRecord(@PathVariable(name = "id") final Long id,
+    public ResponseEntity view(@PathVariable(name = "id") final Long id,
                                          @Valid @RequestBody final ApiRoastingRecordListRequest request,
                                          final BindingResult bindingResult) {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
