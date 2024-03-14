@@ -1,6 +1,7 @@
-package com.site.reon.global.common.util.mail.service;
+package com.site.reon.global.event.service;
 
 import com.site.reon.global.common.event.Events;
+import com.site.reon.global.common.util.mail.service.MailTemplate;
 import com.site.reon.global.event.dto.SendMailEvent;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Disabled
 @SpringBootTest
-class MailUtilServiceEventTest {
+class SendMailEventServiceTest {
 
     @Test
     void sendAuthCodeMailEvent() throws Exception {
