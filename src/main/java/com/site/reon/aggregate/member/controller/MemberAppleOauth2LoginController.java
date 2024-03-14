@@ -45,11 +45,6 @@ public class MemberAppleOauth2LoginController {
             return "redirect:/login/oauth2/fail";
         }
 
-        log.error("state: {}", response.getState());
-        log.error("code: {}", response.getCode());
-        log.error("idToken: {}", response.getId_token());
-        log.error("user: {}", response.getUser());
-
         final AppleOAuth2Token appleOAuth2Token = new AppleOAuth2Token(response.getId_token());
 
         Member member = appleOauth2LoginService.getMemberInfo(appleOAuth2Token);
