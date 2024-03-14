@@ -160,32 +160,30 @@
 <div th:replace="~{common/commonjs}"></div>
 <script type="text/javascript" th:inline="javascript">
     function requestWithdraw(data) {
-        if (confirm("Are you sure you want to withdraw?")) {
-            $.ajax({
-                type: 'POST',
-                url: "/member/withdraw",
-                dataType: 'json',
-                contentType: 'application/json; charset=UTF-8',
-                data: JSON.stringify(data),
-                accept: "application/json"
-            }).done(function (response) {
-                if (response.success) {
-                    alert("You have successfully withdrawn.");
-                    window.location.href = '/logout';
-                    return;
-                }
-                alert("Failed to withdraw member. Please try again.");
-            }).fail(function (error) {
-                let responseJson = error.responseJSON;
-                alert("Failed to withdraw member. Please contact the administrator.\n(" + responseJson.message + ")");
-            });
-        }
+        $.ajax({
+            type: 'POST',
+            url: "/member/withdraw",
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            accept: "application/json"
+        }).done(function (response) {
+            if (response.success) {
+                alert("You have successfully withdrawn.");
+                window.location.href = '/logout';
+                return;
+            }
+            alert("Failed to withdraw member. Please try again.");
+        }).fail(function (error) {
+            let responseJson = error.responseJSON;
+            alert("Failed to withdraw member. Please contact the administrator.\n(" + responseJson.message + ")");
+        });
     }
 
     function requestGoogleWithdraw(data) {
         $.ajax({
             type: 'POST',
-            url: "/login/oauth2/signal/withdraw/google",
+            url: "/login/oauth2/withdraw/google/signal",
             dataType: 'json',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(data),
@@ -195,10 +193,10 @@
                 location.href = "/oauth2/authorization/google"
                 return;
             }
-            alert("Failed to withdraw member. Please try again.");
+            alert("Failed to withdraw google oauth2 member. Please try again.");
         }).fail(function (error) {
             let responseJson = error.responseJSON;
-            alert("Failed to withdraw member. Please contact the administrator.\n(" + responseJson.message + ")");
+            alert("Failed to withdraw google oauth2 member. Please contact the administrator.\n(" + responseJson.message + ")");
         });
     }
 
@@ -213,12 +211,14 @@
                 "authClientName": oauthClient
             };
 
-            if ('GOOGLE' === oauthClient) {
-                requestGoogleWithdraw(data);
-                return;
-            }
+            if (confirm("Are you sure you want to withdraw?")) {
+                if ('GOOGLE' === oauthClient) {
+                    requestGoogleWithdraw(data);
+                    return;
+                }
 
-            requestWithdraw(data);
+                requestWithdraw(data);
+            }
         });
     });
     /*]]>*/
