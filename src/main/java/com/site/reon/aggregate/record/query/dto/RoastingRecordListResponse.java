@@ -3,20 +3,26 @@ package com.site.reon.aggregate.record.query.dto;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import lombok.Builder;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public record RoastingRecordListResponse(
         long id,
         String title,
-        String createdDt
+        String createdDate,
+        String createdTime
 ) {
     @Builder
     public RoastingRecordListResponse {
     }
 
     public static RoastingRecordListResponse of(final RoastingRecord record) {
+        LocalDateTime dateTime = LocalDateTime.parse(record.getCreatedDt().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         return RoastingRecordListResponse.builder()
                 .id(record.getId())
                 .title(record.getTitle())
-                .createdDt(record.getCreatedDt().toString())
+                .createdDate(dateTime.toLocalDate().toString())
+                .createdTime(dateTime.toLocalTime().toString())
                 .build();
     }
 }

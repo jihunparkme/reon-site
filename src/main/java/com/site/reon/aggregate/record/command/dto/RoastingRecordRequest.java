@@ -2,14 +2,14 @@ package com.site.reon.aggregate.record.command.dto;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
-@AllArgsConstructor
+@SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
 public class RoastingRecordRequest {
     private String title;
     private String fan;
@@ -40,7 +40,8 @@ public class RoastingRecordRequest {
             final String temp3,
             final String temp4,
             final String ror,
-            final String roasterSn) {
+            final String roasterSn,
+            final long memberId) {
         this.title = title;
         this.fan = fan;
         this.heater = heater;
@@ -50,6 +51,7 @@ public class RoastingRecordRequest {
         this.temp4 = temp4;
         this.ror = ror;
         this.roasterSn = roasterSn;
+        this.memberId = memberId;
     }
 
     public RoastingRecord toEntity(final long memberId) {

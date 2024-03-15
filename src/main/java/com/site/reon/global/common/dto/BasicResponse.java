@@ -1,5 +1,6 @@
 package com.site.reon.global.common.dto;
 
+import com.site.reon.global.common.constant.Result;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+
+import static com.site.reon.global.common.constant.Result.SUCCESS;
 
 @Getter
 @SuperBuilder
@@ -71,5 +74,16 @@ public class BasicResponse<T> {
                 .data(data)
                 .build();
         return ResponseEntity.ok(basicResponse);
+    }
+
+    public static <T> ResponseEntity created(final T data) {
+        BasicResponse<Object> basicResponse = BasicResponse.builder()
+                .status(HttpStatus.CREATED.value())
+                .httpStatusCode(HttpStatus.CREATED)
+                .success(true)
+                .count(1)
+                .data(data)
+                .build();
+        return new ResponseEntity<>(basicResponse, HttpStatus.CREATED);
     }
 }

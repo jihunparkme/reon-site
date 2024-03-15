@@ -1,7 +1,7 @@
-package com.site.reon.global.common.util.mail.service;
+package com.site.reon.global.event.service;
 
 import com.site.reon.global.common.exception.MailSendException;
-import com.site.reon.global.common.util.mail.dto.SendMailEvent;
+import com.site.reon.global.event.dto.SendMailEvent;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.joining;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MailUtilService {
+public class SendMailEventService {
 
     @Value("${spring.mail.username}")
     private String senderAddress;

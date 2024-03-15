@@ -30,6 +30,10 @@ public enum OAuth2Client {
         return KAKAO == of(registrationId);
     }
 
+    public static boolean isGoogleLogin(String registrationId) {
+        return GOOGLE == of(registrationId);
+    }
+
     public static boolean isNotSupport(String registrationId) {
         return EMPTY == of(registrationId);
     }

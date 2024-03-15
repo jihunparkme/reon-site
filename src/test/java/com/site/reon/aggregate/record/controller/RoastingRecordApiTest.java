@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.member.controller.MemberLoginSteps;
+import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
 import com.site.reon.global.ApiTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ class RoastingRecordApiTest extends ApiTest {
     private final static String EMAIL = "user@gmail.com";
 
     @Test
-    void upload_record() {
+    void upload_record_asis() {
         final var request = RoastingRecordSteps.getRoastingRecordRequest();
 
         final var response = RoastingRecordSteps.requestUploadRoastingRecord(request);
@@ -62,6 +63,15 @@ class RoastingRecordApiTest extends ApiTest {
         Assertions.assertEquals("test roasting222", response.jsonPath().getString("data.title"));
     }
 
+    @Test
+    void upload_record() {
+        final var request = RoastingRecordSteps.getApiRoastingRecordRequest();
+
+        final var response = RoastingRecordSteps.requestApiUploadRoastingRecord(request);
+
+        Assertions.assertEquals(HttpStatus.CREATED.value(), response.statusCode());
+    }
+
     private void requestUploadRoastingRecord() {
         final var roastingRecordRequest = RoastingRecordSteps.getRoastingRecordRequest();
 
@@ -87,9 +97,3 @@ class RoastingRecordApiTest extends ApiTest {
         MemberLoginSteps.requestOAuth2SignUp(oAuth2SignUpRequest);
     }
 }
-/**
- * * - 프로파일 이름
- *      * - 개수
- *      * - 날짜, 시간 (2024.2.14)
- *      * - 프로파일 아이디 (09:09:38)
- */

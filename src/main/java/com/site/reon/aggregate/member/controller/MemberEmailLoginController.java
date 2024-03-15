@@ -5,10 +5,10 @@ import com.site.reon.aggregate.member.service.MemberAuthCodeService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.MemberService;
 import com.site.reon.aggregate.member.service.dto.*;
-import com.site.reon.global.common.constant.Result;
 import com.site.reon.global.common.constant.SessionConst;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
+import com.site.reon.global.common.util.BindingResultUtil;
 import com.site.reon.global.security.dto.SessionMember;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -20,14 +20,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 import static com.site.reon.global.common.constant.Result.SUCCESS;
 
@@ -43,13 +39,8 @@ public class MemberEmailLoginController {
 
     @PostMapping("/sign-up")
     public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto, final BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            final List<ObjectError> allErrors = bindingResult.getAllErrors();
-            if (!CollectionUtils.isEmpty(allErrors)) {
-                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
-            }
-            return BasicResponse.clientError(Result.FAIL.message());
-        }
+        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
+        if (allErrors != null) return allErrors;
 
         try {
             memberLoginService.signup(signUpDto);

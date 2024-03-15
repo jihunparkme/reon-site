@@ -5,7 +5,7 @@ import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.event.Events;
 import com.site.reon.global.common.util.AuthCodeUtil;
 import com.site.reon.global.common.util.infra.RedisUtilService;
-import com.site.reon.global.common.util.mail.dto.SendMailEvent;
+import com.site.reon.global.event.dto.SendMailEvent;
 import com.site.reon.global.common.util.mail.service.MailTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -159,34 +159,65 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 <div th:replace="~{common/commonjs}"></div>
 <script type="text/javascript" th:inline="javascript">
+    function requestWithdraw(data) {
+        $.ajax({
+            type: 'POST',
+            url: "/member/withdraw",
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            accept: "application/json"
+        }).done(function (response) {
+            if (response.success) {
+                alert("You have successfully withdrawn.");
+                window.location.href = '/logout';
+                return;
+            }
+            alert("Failed to withdraw member. Please try again.");
+        }).fail(function (error) {
+            let responseJson = error.responseJSON;
+            alert("Failed to withdraw member. Please contact the administrator.\n(" + responseJson.message + ")");
+        });
+    }
+
+    function requestGoogleWithdraw(data) {
+        $.ajax({
+            type: 'POST',
+            url: "/login/oauth2/withdraw/google/signal",
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            accept: "application/json"
+        }).done(function (response) {
+            if (response.success) {
+                location.href = "/oauth2/authorization/google"
+                return;
+            }
+            alert("Failed to withdraw google oauth2 member. Please try again.");
+        }).fail(function (error) {
+            let responseJson = error.responseJSON;
+            alert("Failed to withdraw google oauth2 member. Please contact the administrator.\n(" + responseJson.message + ")");
+        });
+    }
+
     /*<![CDATA[*/
     $(function() {
         $('#btn-withdraw').click(function () {
             const member = [[${member}]];
+            const oauthClient = member.oauthClient;
+
             let data = {
                 "email": member.email,
-                "authClientName": member.oauthClient
+                "authClientName": oauthClient
             };
 
             if (confirm("Are you sure you want to withdraw?")) {
-                $.ajax({
-                    type: 'POST',
-                    url: "/member/withdraw",
-                    dataType: 'json',
-                    contentType: 'application/json; charset=UTF-8',
-                    data : JSON.stringify(data),
-                    accept: "application/json"
-                }).done(function(response) {
-                    if (response.success) {
-                        alert("You have successfully withdrawn.");
-                        window.location.href = '/logout';
-                        return;
-                    }
-                    alert("Failed to withdraw member. Please try again.");
-                }).fail(function (error) {
-                    let responseJson = error.responseJSON;
-                    alert("Failed to withdraw member. Please contact the administrator.\n(" + responseJson.message + ")");
-                });
+                if ('GOOGLE' === oauthClient) {
+                    requestGoogleWithdraw(data);
+                    return;
+                }
+
+                requestWithdraw(data);
             }
         });
     });

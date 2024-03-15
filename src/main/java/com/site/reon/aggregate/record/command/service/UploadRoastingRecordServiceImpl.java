@@ -15,13 +15,12 @@ public class UploadRoastingRecordServiceImpl implements UploadRoastingRecordServ
     @Override
     @Transactional
     public void upload(final RoastingRecordRequest request) {
-        // TODO: S/N 로 memberId 검색
         long memberId = request.getMemberId();
         if (memberId == 0) {
-            memberId = 2L;
+            new IllegalArgumentException("memberId is required.");
         }
-        final var roastingRecord = request.toEntity(memberId);
 
+        final var roastingRecord = request.toEntity(memberId);
         recordRepository.save(roastingRecord);
     }
 }

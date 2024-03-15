@@ -1,4 +1,4 @@
-package com.site.reon.global.common.util.mail.dto;
+package com.site.reon.global.event.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

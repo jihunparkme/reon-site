@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/login/oauth2")
 @RequiredArgsConstructor
-public class MemberAppleOauth2LoginController {
+public class AppleOauth2LoginController {
 
     private final HttpSession httpSession;
     private final AppleOauth2Property appleOauth2Property;
@@ -29,7 +29,6 @@ public class MemberAppleOauth2LoginController {
 
     @GetMapping(value = "/authorization/apple")
     public String authorization(RedirectAttributes attr) {
-
         attr.addAttribute("client_id", appleOauth2Property.getClientId());
         attr.addAttribute("redirect_uri", appleOauth2Property.getRedirectUri());
         attr.addAttribute("nonce", appleOauth2Property.getNonce());
@@ -45,11 +44,6 @@ public class MemberAppleOauth2LoginController {
         if (response == null) {
             return "redirect:/login/oauth2/fail";
         }
-
-        log.error("state: {}", response.getState());
-        log.error("code: {}", response.getCode());
-        log.error("idToken: {}", response.getId_token());
-        log.error("user: {}", response.getUser());
 
         final AppleOAuth2Token appleOAuth2Token = new AppleOAuth2Token(response.getId_token());
 

@@ -47,11 +47,8 @@ Version.
 # developing
 
 ing.
-- https://flow.team/main.act?detail
-- 애플 로그인
-- table -> note 대신 t.p, fc, sc 컬럼 만들어서 시간/온도 보여주기
 - 서버에서 앱으로 그래프 데이터 조희 API
-- [AWS RDS 인증서](https://docs.aws.amazon.com/ko_kr/AmazonRDS/latest/UserGuide/ssl-certificate-rotation-mysql.html)
+- 패키지/테스트 정리
 
 - Sign In/Sign Up
 - Record
@@ -59,23 +56,33 @@ ing.
 - 5xx, 4xx 에러 페이지 만들기
   - https://recruit.kakaobank.com/404
 - 로그 관리 -> 날짜별로 덮어쓰기
-- 도메인 등록
-  - [Google Search Console 등록](https://search.google.com/search-console/about)
 
-Study.
-- [주문 API 개발로 알아보는 TDD ](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
+.
 
-  ```text
-  final keyword
-  record class
-  Assert in constructor
-  rest-assured api test
-  var type
-  HttpStatus
-    200 OK
-    201 CREATE
-  ```
+Guide.
 
+```text
+JAVA
+
+final keyword
+record class
+Assert in constructor
+rest-assured api test
+var type
+HttpStatus
+  200 OK
+  201 CREATE
+  
+REST API 
+- 동사 보다는 복수 명사 사용
+  - GET /dogs, POST /dogs/{puppy}/owner/{terry}
+- GET /dogs (목록 조회)
+- GET /dogs/1 (1번 개체 조회)
+- POST /dogs (개체 생성)
+- PUT /dogs/1 (1번 개체 수정)
+- DELETE /dogs/1 (1번 개체 삭제)
+```
+- [주문 API 개발로 알아보는 TDD](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
 
 # Domain
 
@@ -136,12 +143,19 @@ Study.
 - [ ] 소셜 로그인
   - [x] 카카오 로그인
   - [x] 구글 로그인 (앱 게시 필요)
-  - [ ] 애플 로그인
+  - [x] 애플 로그인
   - 연결 끊기
-    - [ ] 카카오: https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#unlink
-    - [ ] 구글: 
-    - [ ] 애플: 
-  - 작업 끝나면 상용 적용
+    - [x] 카카오: https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#unlink
+    - [ ] 구글
+      - https://ahn3330.tistory.com/166
+      - https://soda-dev.tistory.com/60
+      - https://devvkkid.tistory.com/248
+      - https://developers.google.com/identity/protocols/oauth2/web-server#obtainingaccesstokens
+      - 구글에서 탈퇴하면 다시 로그인 시키고 받은 토큰으로 탈퇴..?
+    - [ ] 애플
+      - https://oozoowos.tistory.com/entry/Spring-Boot-Security-%EC%97%86%EC%9D%B4-OAuth2%EB%A1%9C-Google-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%98%84-%EC%9C%A0%EC%A0%80-%EC%A0%95%EB%B3%B4-%EC%96%BB%EA%B8%B0
+      - https://velog.io/@givepro91/jjo2cyus
+      - https://whitepaek.tistory.com/61
   
 - [ ] 이메일로 가입하기
   - [x] 탈퇴 

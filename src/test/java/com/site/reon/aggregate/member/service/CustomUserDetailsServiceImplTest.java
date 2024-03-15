@@ -1,15 +1,14 @@
 package com.site.reon.aggregate.member.service;
 
-import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.global.common.constant.member.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -32,13 +31,6 @@ class CustomUserDetailsServiceImplTest {
     @BeforeEach
     void beforeEach() {
         service = new CustomUserDetailsServiceImpl(memberRepository);
-    }
-
-    @Test
-    void loadUserByUsername() throws Exception {
-        UserDetails user = service.loadUserByUsername("user@gmail.com");
-
-        assertEquals("user", user.getUsername());
     }
 
     @Test

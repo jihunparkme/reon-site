@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
 import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordListRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -75,7 +76,7 @@ public class RoastingRecordSteps {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("/api/record/list")
+                .post("/api/records")
                 .then()
                 .log().all().extract();
     }
@@ -93,7 +94,42 @@ public class RoastingRecordSteps {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("/api/record/" + recordId)
+                .post("/api/records/" + recordId)
+                .then()
+                .log().all().extract();
+    }
+
+    public static ApiRoastingRecordUploadRequest getApiRoastingRecordRequest() {
+        return ApiRoastingRecordUploadRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .title(title)
+                .fan(fan)
+                .heater(heater)
+                .temp1(temp1)
+                .temp2(temp2)
+                .temp3(temp3)
+                .temp4(temp4)
+                .ror(ror)
+                .roasterSn(roasterSn)
+                .crackPoint(crackPoint)
+                .crackPointTime(crackPointTime)
+                .turningPointTemp(turningPointTemp)
+                .turningPointTime(turningPointTime)
+                .preheatTemp(preheatTemp)
+                .disposeTemp(disposeTemp)
+                .disposeTime(disposeTime)
+                .inputCapacity(inputCapacity)
+                .memberId(1)
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestApiUploadRoastingRecord(final RoastingRecordRequest request) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/records/upload")
                 .then()
                 .log().all().extract();
     }

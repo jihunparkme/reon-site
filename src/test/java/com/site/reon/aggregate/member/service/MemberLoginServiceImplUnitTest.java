@@ -1,17 +1,20 @@
 package com.site.reon.aggregate.member.service;
 
+import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
+import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -180,9 +183,18 @@ class MemberLoginServiceImplUnitTest {
                 .picture("safddsafdsafs")
                 .authClientName("kakao")
                 .build();
+        final Member expected = Member.builder()
+                .id(3L)
+                .roasterSn("asfdasfeasfdsasdfas")
+                .email(email)
+                .firstName("aaron")
+                .picture("safddsafdsafs")
+                .oAuthClient(OAuth2Client.KAKAO)
+                .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
+                .build();
 
         given(memberRepository.save(any()))
-                .willReturn(apiOAuth2SignUp.toMember());
+                .willReturn(expected);
 
         MemberDto member = memberLoginService.oAuth2SignUp(apiOAuth2SignUp);
         Assertions.assertEquals("asfdasfeasfdsasdfas", member.getRoasterSn());

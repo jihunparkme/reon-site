@@ -59,6 +59,7 @@ public class MemberController {
     }
 
     @PostMapping("/withdraw")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity withdraw(@Valid @RequestBody final WithdrawRequest request) {
         try {
             final boolean result = memberLoginService.withdraw(request);
