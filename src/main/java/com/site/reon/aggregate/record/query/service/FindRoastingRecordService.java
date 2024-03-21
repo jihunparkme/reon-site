@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface FindRoastingRecordService {
 
-    Page<RoastingRecord> findAllSortByIdDescPaging(int page, int size);
+    Page<RoastingRecord> findAllSortByIdDescPaging(long memberId, int page, int size);
 
     RoastingRecordResponse findRoastingRecordBy(Long id);
 
