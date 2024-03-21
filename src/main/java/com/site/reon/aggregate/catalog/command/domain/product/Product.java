@@ -2,6 +2,8 @@ package com.site.reon.aggregate.catalog.command.domain.product;
 
 import com.site.reon.aggregate.common.jpa.MoneyConverter;
 import com.site.reon.aggregate.common.model.Money;
+import com.site.reon.aggregate.common.model.ProductNo;
+import com.site.reon.aggregate.common.model.SerialNo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,11 +36,11 @@ public class Product {
     @Column(length = 1000)
     private String detail;
 
-    @Column(length = 100, nullable = false)
-    private String productCode;
+    @Embedded
+    private ProductNo productNo;
 
-    @Column(length = 100, nullable = false)
-    private String productSn;
+    @Embedded
+    private SerialNo serialNo;
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean activated;
