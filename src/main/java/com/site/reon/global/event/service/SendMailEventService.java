@@ -29,7 +29,7 @@ public class SendMailEventService {
     @Value("${admin.mail.address}")
     private String adminAddress;
 
-    private static final String MAIL_TITLE_PREFIX = "[RE:ON] ";
+    private static final String MAIL_TITLE_PREFIX = "[REONAI] ";
 
     private final JavaMailSender mailSender;
 
