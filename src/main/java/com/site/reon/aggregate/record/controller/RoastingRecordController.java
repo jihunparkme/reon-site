@@ -46,8 +46,13 @@ public class RoastingRecordController {
     }
 
     @GetMapping("{id}")
-    public String view(@PathVariable(name = "id") final Long id, Model model) {
-        model.addAttribute("record", recordService.findRoastingRecordBy(id));
+    @PreAuthorize("isAuthenticated()")
+    public String view(@LoginMember final SessionMember session,
+                       @PathVariable(name = "id") final Long id,
+                       Model model) {
+        final Long memberId = session.getId();
+        final RoastingRecord roastingRecord = recordService.findRoastingRecordBy(id, memberId);
+        model.addAttribute("record", RoastingRecordResponse.of(roastingRecord));
         return "record/record-view";
     }
 

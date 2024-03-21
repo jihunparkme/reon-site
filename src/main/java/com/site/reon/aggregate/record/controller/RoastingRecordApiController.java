@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.record.controller;
 
+import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
 import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
@@ -56,8 +57,8 @@ public class RoastingRecordApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            final ApiRoastingRecordResponse result = recordService.findRoastingRecordBy(id, request.getMemberId());
-            return BasicResponse.ok(result);
+            final RoastingRecord roastingRecord = recordService.findRoastingRecordBy(id, request.getMemberId());
+            return BasicResponse.ok(ApiRoastingRecordResponse.of(roastingRecord));
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {

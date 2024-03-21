@@ -32,7 +32,7 @@ class FindRoastingRecordServiceTest {
     @Test
     @Disabled
     void findAllSortByIdDescPaging() throws Exception {
-        Page<RoastingRecord> recordPage = findService.findAllSortByIdDescPaging(0, 10);
+        Page<RoastingRecord> recordPage = findService.findAllSortByIdDescPaging(2, 0, 10);
 
         assertEquals(11, recordPage.getTotalElements());
         assertEquals(2, recordPage.getTotalPages());
