@@ -37,7 +37,7 @@ public class RoastingRecordController {
             Model model) {
         // TODO: 날짜, 제목 검색
         final long memberId = session.getId();
-        final var roastingRecordListPage = recordService.findAllByIdOrderByIdDescPaging(memberId, page, size);
+        final var roastingRecordListPage = recordService.findAllByMemberIdOrderByIdDescPaging(memberId, page, size);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", page);
