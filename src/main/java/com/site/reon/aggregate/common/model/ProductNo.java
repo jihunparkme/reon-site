@@ -15,4 +15,8 @@ import lombok.NoArgsConstructor;
 public class ProductNo {
     @Column(name = "product_no", length = 100, nullable = false)
     private String no;
+
+    public static ProductNo of(final String productNo) {
+        return new ProductNo(productNo);
+    }
 }
