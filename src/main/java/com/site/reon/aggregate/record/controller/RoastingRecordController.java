@@ -35,9 +35,9 @@ public class RoastingRecordController {
             @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
             @RequestParam(value = "size", required = false, defaultValue = "10") final int size,
             Model model) {
-        // TODO: 회원번호, 날짜, S/N로 검색
+        // TODO: 날짜, 제목 검색
         final long memberId = session.getId();
-        final var roastingRecordListPage = recordService.findAllSortByIdDescPaging(memberId, page, size);
+        final var roastingRecordListPage = recordService.findAllByIdOrderByIdDescPaging(memberId, page, size);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", page);
