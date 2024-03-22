@@ -16,7 +16,9 @@
 <!--        <li><a href="/pricing" th:classappend="${title eq 'pricing' ? 'active' : ''}">Pricing</a></li>-->
 <!--        <li><a href="/blog" th:classappend="${title eq 'blog' ? 'active' : ''}">Blog</a></li>-->
 <!--        <li><a href="/contact" th:classappend="${title eq 'contact' ? 'active' : ''}">Contact</a></li>-->
-        <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
+        <div sec:authorize="isAuthenticated()">
+          <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
+        </div>
         <div sec:authorize="isAnonymous()">
           <li><a th:href="@{/login}" class="getstarted">Login</a></li>
         </div>

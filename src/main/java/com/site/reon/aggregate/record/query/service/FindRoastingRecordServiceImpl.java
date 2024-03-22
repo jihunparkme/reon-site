@@ -30,6 +30,12 @@ public class FindRoastingRecordServiceImpl implements FindRoastingRecordService 
     }
 
     @Override
+    public Page<RoastingRecord> findAllOrderByIdDescPaging(final int page, final int size) {
+        final var pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        return recordRepository.findAll(pageable);
+    }
+
+    @Override
     public RoastingRecordResponse findRoastingRecordBy(final Long id) {
         final var roastingRecordOpt = recordRepository.findById(id);
         if (roastingRecordOpt.isEmpty()) {
