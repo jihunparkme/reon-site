@@ -522,6 +522,7 @@ section {
 
 .section-bg,
 .records .icon-box,
+.products .icon-box,
 .services .icon-box {
   background-color: #f8f9fa;
 }
@@ -724,6 +725,48 @@ section {
 }
 
 .records .icon-box:hover h4 a {
+  color: #d9232d;
+}
+
+/*--------------------------------------------------------------
+# Products
+--------------------------------------------------------------*/
+.products {
+  min-height: 70%;
+  position: relative;
+}
+
+.products .icon-box {
+  margin-bottom: 20px;
+  padding: 30px;
+  border-radius: 6px;
+}
+
+.products .icon-box i {
+  float: left;
+  color: #d9232d;
+  font-size: 40px;
+}
+
+.products .icon-box h4 {
+  margin-left: 70px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.products .icon-box h4 a {
+  color: #556270;
+  transition: 0.3s;
+}
+
+.products .icon-box p {
+  margin-left: 70px;
+  line-height: 24px;
+  font-size: 14px;
+}
+
+.products .icon-box:hover h4 a {
   color: #d9232d;
 }
 
