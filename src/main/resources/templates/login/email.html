@@ -12,19 +12,13 @@
                 <div class="login-card" style="width: 100%; border-radius: 15px;">
                     <div class="login-card-body">
                         <div class="login-card-content">
-                            <h1>e-mail Login</h1>
+                            <h1>LOGIN</h1>
                             <div class="login-page">
                                 <form class="register-form transform-form" id="register-form" onsubmit="return false;">
-                                    <label>first name</label>
-                                    <input id="sign-up-first-name" type="text" placeholder="first name" required/>
-
-                                    <label>last name</label>
-                                    <input id="sign-up-last-name" type="text" placeholder="last name" required/>
-
                                     <label>email</label>
                                     <div class="clearfix">
                                         <div class="box1">
-                                            <input id="sign-up-email" type="email" placeholder="email" required/>
+                                            <input id="sign-up-email" type="email" placeholder="example@reonaicoffee.com" required/>
                                         </div>
                                         <div class="box2">
                                             <button type="button" class="btn btn-warning" th:onclick="'sendAuthCode()'">발송</button>
@@ -41,6 +35,12 @@
                                         </div>
                                     </div>
 
+                                    <label>first name</label>
+                                    <input id="sign-up-first-name" type="text" placeholder="first name" required/>
+
+                                    <label>last name</label>
+                                    <input id="sign-up-last-name" type="text" placeholder="last name" required/>
+
                                     <label>password</label>
                                     <input id="sign-up-password" type="password" placeholder="password" required/>
 
@@ -53,7 +53,7 @@
                                 </form>
                                 <form class="transform-form" onsubmit="return false;">
                                     <label>email</label>
-                                    <input id="login-email" type="email" placeholder="email"/>
+                                    <input id="login-email" type="email" placeholder="example@reonaicoffee.com"/>
 
                                     <label>password</label>
                                     <input id="login-password" type="password" placeholder="password"/>
