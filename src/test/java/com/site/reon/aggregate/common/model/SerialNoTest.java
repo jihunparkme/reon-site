@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 class SerialNoTest {
     @Test
     void generate_serial_no_test() {
-        final ProductNo productNo = ProductNo.of("R2N0");
+        final ProductNo productNo = ProductNo.of("R2N0BK");
         final int createdNo = 2;
         final LocalDate date = LocalDate.of(2024, 3, 22);
 
@@ -21,12 +21,12 @@ class SerialNoTest {
                 .date(date)
                 .build();
 
-        Assertions.assertEquals("R2N0-0003-20240322", serialNo.getNo());
+        Assertions.assertEquals("R2N0BK-0003-20240322", serialNo.getNo());
     }
 
     @Test
     void generate_multiple_serial_no_test() {
-        final ProductNo productNo = ProductNo.of("R2N0");
+        final ProductNo productNo = ProductNo.of("R2N0BK");
         final int createdNo = 8;
         final LocalDate date = LocalDate.of(2024, 3, 22);
 
@@ -38,15 +38,15 @@ class SerialNoTest {
                         .build())
                 .collect(Collectors.toList());
 
-        Assertions.assertEquals("R2N0-0009-20240322", serialNos.get(0).getNo());
-        Assertions.assertEquals("R2N0-0010-20240322", serialNos.get(1).getNo());
-        Assertions.assertEquals("R2N0-0011-20240322", serialNos.get(2).getNo());
-        Assertions.assertEquals("R2N0-0012-20240322", serialNos.get(3).getNo());
-        Assertions.assertEquals("R2N0-0013-20240322", serialNos.get(4).getNo());
-        Assertions.assertEquals("R2N0-0014-20240322", serialNos.get(5).getNo());
-        Assertions.assertEquals("R2N0-0015-20240322", serialNos.get(6).getNo());
-        Assertions.assertEquals("R2N0-0016-20240322", serialNos.get(7).getNo());
-        Assertions.assertEquals("R2N0-0017-20240322", serialNos.get(8).getNo());
-        Assertions.assertEquals("R2N0-0018-20240322", serialNos.get(9).getNo());
+        Assertions.assertEquals("R2N0BK-0009-20240322", serialNos.get(0).getNo());
+        Assertions.assertEquals("R2N0BK-0010-20240322", serialNos.get(1).getNo());
+        Assertions.assertEquals("R2N0BK-0011-20240322", serialNos.get(2).getNo());
+        Assertions.assertEquals("R2N0BK-0012-20240322", serialNos.get(3).getNo());
+        Assertions.assertEquals("R2N0BK-0013-20240322", serialNos.get(4).getNo());
+        Assertions.assertEquals("R2N0BK-0014-20240322", serialNos.get(5).getNo());
+        Assertions.assertEquals("R2N0BK-0015-20240322", serialNos.get(6).getNo());
+        Assertions.assertEquals("R2N0BK-0016-20240322", serialNos.get(7).getNo());
+        Assertions.assertEquals("R2N0BK-0017-20240322", serialNos.get(8).getNo());
+        Assertions.assertEquals("R2N0BK-0018-20240322", serialNos.get(9).getNo());
     }
 }
