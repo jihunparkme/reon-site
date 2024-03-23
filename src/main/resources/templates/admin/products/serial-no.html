@@ -15,17 +15,17 @@
         </div>
     </section>
 
-    <section id="blog" class="blog">
+    <section id="products" class="products">
         <div class="container" data-aos="fade-up">
             <div class="row">
                 <div class="entries">
                     <article class="entry entry-single">
-                        <form th:object="${product}" th:action="@{//admin/products/serial-no}" method="post">
+                        <form th:object="${product}" onsubmit="return false;">
                             <h2 class="entry-view-title">Create Serial No</h2>
 
                             <!-- Category -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
-                                <label for="category" th:text="Category">Category</label>
+                                <label for="category" th:text="Category">Category.</label>
                             </div>
                             <select id="category" th:field="*{category}" class="form-select width-300">
                                 <option value="">===== Select Category =====</option>
@@ -35,21 +35,21 @@
 
                             <!-- Name -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
-                                <label for="name" th:text="Name">Name</label>
+                                <label for="name" th:text="Name">Name.</label>
                             </div>
                             <input type="text" id="name" th:field="*{name}" th:errorclass="field-error" class="form-control width-300" placeholder="Product Name.">
                             <div class="field-error" th:errors="*{name}">name error</div>
 
                             <!-- ProductNo -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
-                                <label for="productNo" th:text="ProductNo">ProductNo</label>
+                                <label for="productNo" th:text="ProductNo">Product No.</label>
                             </div>
                             <input type="text" id="productNo" th:field="*{productNo}" th:errorclass="field-error" class="form-control width-300" placeholder="Product No.">
                             <div class="field-error" th:errors="*{productNo}">productNo error</div>
 
                             <!-- Color -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
-                                <label for="color" th:text="Color">Color</label>
+                                <label for="color" th:text="Color">Color.</label>
                             </div>
                             <select id="color" th:field="*{color}" class="form-select width-300">
                                 <option value="">===== Select Color =====</option>
@@ -59,7 +59,7 @@
 
                             <!-- RatedVoltage -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
-                                <label for="ratedVoltage" th:text="RatedVoltage">RatedVoltage</label>
+                                <label for="ratedVoltage" th:text="RatedVoltage">Rated Voltage.</label>
                             </div>
                             <select id="ratedVoltage" th:field="*{ratedVoltage}" class="form-select width-300">
                                 <option value="">== Select Rated Voltage ==</option>
@@ -69,7 +69,7 @@
 
                             <div class="entry-button mt-5">
                                 <div sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <button type="submit" class="btn btn-outline-primary">Register</button>
+                                    <button type="button" th:onclick="'register()'" class="btn btn-outline-primary">Register</button>
                                     <button type="button" th:onclick="|location.href='@{/admin/products}'|" class="btn btn-outline-secondary">Cancel</button>
                                 </div>
                             </div>
@@ -86,6 +86,7 @@
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
+<script type="text/javascript" th:src="@{/js/product/product.js}"></script>
 <div th:replace="~{common/commonjs}"></div>
 </body>
 </html>
