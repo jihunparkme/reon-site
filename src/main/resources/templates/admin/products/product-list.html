@@ -24,12 +24,14 @@
             <div class="row">
                 <div style="margin-bottom: 30px;">
                     <h5 style="float: left">Total : [(${productListPage.totalElements})]</h5>
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/admin/products}'|" class="btn btn-outline-primary" style="float: right">Register S/N</button>
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/admin/products/serial-no}'|" class="btn btn-outline-success" style="float: right; margin-right: 10px;">Create S/N</button>
                 </div>
 
                 <tr th:if="${productListPage.totalElements} == 0">
                     <div class="col-md-6">
                         <div class="icon-box">
-                            <i class="bi bi-bar-chart"></i>
+                            <i class="bi bi-menu-button-wide"></i>
                             <h4><a>등록된 상품이 없습니다.</a></h4>
                         </div>
                     </div>
@@ -39,11 +41,14 @@
                      th:unless="${#lists.isEmpty(productListPage.content)}" class="col-md-6"
                      th:classappend="${status.index gt 0 ? 'mt-4 mt-md-0' : ''}">
                     <div class="icon-box" th:onclick="'location.href=\'' + @{/admin/products/{id}(id=${product.id})} + '\''">
-                        <i class="bi bi-bar-chart"></i>
-                        <h4><a th:href="@{/admin/products/{id}(id=${product.id})}">[(${product.title})]</a></h4>
-                        <p>[(${#temporals.format(product.createdDt, 'yyyy-MM-dd HH:mm')})]
-                            <br/>
-                            Roaster S/N : [(${product.roasterSn})]</p>
+                        <i class="bi bi-menu-button-wide"></i>
+                        <h4><a th:href="@{/admin/products/{id}(id=${product.id})}">[(${product.productInfo.productNo.no})]</a></h4>
+                        <p>
+                            Name: [(${product.productInfo.name})]<br/>
+                            S/N : [(${product.productInfo.serialNo.no})]<br/>
+                            [(${product.productInfo.color})] / [(${product.productInfo.ratedVoltage})]<br/>
+                            [(${#temporals.format(product.productInfo.manufacturedDt, 'yyyy-MM-dd HH:mm')})]
+                        </p>
                     </div>
                 </div>
 
