@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.catalog.command.domain.dto;
 
+import com.site.reon.aggregate.catalog.command.domain.product.Color;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class SerialNoRequest {
     private String productNo;
 
     @NotBlank(message = "color is required.")
-    private String color;
+    private Color color;
 
     @NotBlank(message = "ratedVoltage is required.")
     private RatedVoltage ratedVoltage;

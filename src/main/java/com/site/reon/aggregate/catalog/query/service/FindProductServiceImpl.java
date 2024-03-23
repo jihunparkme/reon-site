@@ -6,6 +6,7 @@ import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
 import com.site.reon.aggregate.catalog.command.domain.dto.ProductResponse;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,7 @@ public class FindProductServiceImpl implements FindProductService {
     public ProductResponse findProductBy(final Long id) {
         final Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isEmpty()) {
-            return ProductResponse.EMPTY;
+            throw new EntityNotFoundException("Not Found Product");
         }
 
         return ProductResponse.of(productOpt.get());

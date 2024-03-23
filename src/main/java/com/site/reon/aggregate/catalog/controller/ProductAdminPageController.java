@@ -2,6 +2,8 @@ package com.site.reon.aggregate.catalog.controller;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
 import com.site.reon.aggregate.catalog.command.domain.dto.SerialNoRequest;
+import com.site.reon.aggregate.catalog.command.domain.product.Color;
+import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import com.site.reon.aggregate.catalog.query.service.FindProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +50,8 @@ public class ProductAdminPageController {
         final List<CategoryResponse> categories = productService.findCategories();
 
         model.addAttribute("categories", categories);
+        model.addAttribute("colors", Color.values());
+        model.addAttribute("ratedVoltages", RatedVoltage.values());
         model.addAttribute("product", SerialNoRequest.EMPTY);
         return "admin/products/serial-no";
     }

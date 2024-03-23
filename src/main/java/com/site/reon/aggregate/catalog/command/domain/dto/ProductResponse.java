@@ -5,14 +5,10 @@ import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.catalog.command.domain.product.ProductInfo;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Getter
-@NoArgsConstructor
 public record ProductResponse(
         Long id,
         Set<Long> categoryIds,
@@ -24,8 +20,6 @@ public record ProductResponse(
         Color color,
         RatedVoltage ratedVoltage
 ) {
-    public static final ProductResponse EMPTY = new ProductResponse();
-
     @Builder
     public ProductResponse {
     }
