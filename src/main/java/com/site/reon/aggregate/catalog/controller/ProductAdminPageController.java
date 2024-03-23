@@ -1,22 +1,23 @@
 package com.site.reon.aggregate.catalog.controller;
 
+import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
+import com.site.reon.aggregate.catalog.command.domain.dto.SerialNoRequest;
 import com.site.reon.aggregate.catalog.query.service.FindProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Controller
 @RequestMapping("/admin/products")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-public class ProductAdminController {
+public class ProductAdminPageController {
 
     private final FindProductService productService;
 
@@ -40,5 +41,14 @@ public class ProductAdminController {
 
         model.addAttribute("product", product);
         return "admin/products/product-view";
+    }
+
+    @GetMapping("serial-no")
+    public String createSerialNo(Model model) {
+        final List<CategoryResponse> categories = productService.findCategories();
+
+        model.addAttribute("categories", categories);
+        model.addAttribute("product", SerialNoRequest.EMPTY);
+        return "admin/products/serial-no";
     }
 }

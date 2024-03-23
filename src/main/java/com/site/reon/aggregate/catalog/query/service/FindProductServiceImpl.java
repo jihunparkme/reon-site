@@ -1,5 +1,8 @@
 package com.site.reon.aggregate.catalog.query.service;
 
+import com.site.reon.aggregate.catalog.command.domain.category.Category;
+import com.site.reon.aggregate.catalog.command.domain.category.CategoryRepository;
+import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
 import com.site.reon.aggregate.catalog.command.domain.dto.ProductResponse;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
@@ -10,7 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -18,6 +23,7 @@ import java.util.Optional;
 public class FindProductServiceImpl implements FindProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Page<Product> findAllOrderByIdDescPaging(final int page, final int size) {
@@ -33,5 +39,13 @@ public class FindProductServiceImpl implements FindProductService {
         }
 
         return ProductResponse.of(productOpt.get());
+    }
+
+    @Override
+    public List<CategoryResponse> findCategories() {
+        final List<Category> categories = categoryRepository.findAll();
+        return categories.stream()
+                .map(CategoryResponse::of)
+                .collect(Collectors.toList());
     }
 }
