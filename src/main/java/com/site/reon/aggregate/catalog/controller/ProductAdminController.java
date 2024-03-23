@@ -21,7 +21,7 @@ public class ProductAdminController {
     private final FindProductService productService;
 
     @GetMapping
-    public String list(
+    public String findProducts(
             @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
             @RequestParam(value = "size", required = false, defaultValue = "10") final int size,
             Model model) {
@@ -34,10 +34,11 @@ public class ProductAdminController {
     }
 
     @GetMapping("{id}")
-    public String view(@PathVariable(name = "id") final Long id,
+    public String finsProduct(@PathVariable(name = "id") final Long id,
                        Model model) {
+        final var product = productService.findProductBy(id);
 
-        model.addAttribute("record", null);
+        model.addAttribute("product", product);
         return "admin/products/product-view";
     }
 }

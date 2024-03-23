@@ -1,0 +1,47 @@
+package com.site.reon.aggregate.catalog.command.domain.dto;
+
+import com.site.reon.aggregate.catalog.command.domain.product.Color;
+import com.site.reon.aggregate.catalog.command.domain.product.Product;
+import com.site.reon.aggregate.catalog.command.domain.product.ProductInfo;
+import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+import java.util.Set;
+
+@Getter
+@NoArgsConstructor
+public record ProductResponse(
+        Long id,
+        Set<Long> categoryIds,
+        String name,
+        String detail,
+        String productNo,
+        String serialNo,
+        LocalDateTime manufacturedDt,
+        Color color,
+        RatedVoltage ratedVoltage
+) {
+    public static final ProductResponse EMPTY = new ProductResponse();
+
+    @Builder
+    public ProductResponse {
+    }
+
+    public static ProductResponse of(final Product product) {
+        final ProductInfo productInfo = product.getProductInfo();
+        return ProductResponse.builder()
+                .id(product.getId())
+                .categoryIds(product.getCategoryIds())
+                .name(productInfo.getName())
+                .detail(productInfo.getDetail())
+                .productNo(productInfo.getProductNo().getNo())
+                .serialNo(productInfo.getSerialNo().getNo())
+                .manufacturedDt(productInfo.getManufacturedDt())
+                .color(productInfo.getColor())
+                .ratedVoltage(productInfo.getRatedVoltage())
+                .build();
+    }
+}
