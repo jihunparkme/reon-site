@@ -1,6 +1,6 @@
 <header th:fragment="header (title)" id="header" class="fixed-top d-flex align-items-center">
   <div class="container d-flex align-items-center">
-    <h1 class="logo me-auto"><a href="/">RE:ON</a></h1>
+    <h1 class="logo me-auto"><a href="/">REONAI</a></h1>
     <nav id="navbar" class="navbar">
       <ul>
         <li><a href="/" th:classappend="${title eq 'home' ? 'active' : ''}">Home</a></li>
@@ -16,7 +16,9 @@
 <!--        <li><a href="/pricing" th:classappend="${title eq 'pricing' ? 'active' : ''}">Pricing</a></li>-->
 <!--        <li><a href="/blog" th:classappend="${title eq 'blog' ? 'active' : ''}">Blog</a></li>-->
 <!--        <li><a href="/contact" th:classappend="${title eq 'contact' ? 'active' : ''}">Contact</a></li>-->
-        <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
+        <div sec:authorize="isAuthenticated()">
+          <li><a href="/record" th:classappend="${title eq 'record' ? 'active' : ''}">Record</a></li>
+        </div>
         <div sec:authorize="isAnonymous()">
           <li><a th:href="@{/login}" class="getstarted">Login</a></li>
         </div>
@@ -30,10 +32,12 @@
               <i class="bi bi-chevron-down"></i>
             </a>
             <ul>
-              <li sec:authorize="hasRole('ROLE_ADMIN')">
-                <a th:href="@{/admin/member}">회원정보</a>
-              </li>
-              <li><a th:href="@{/member/mypage}">내정보</a></li>
+              <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <li><a th:href="@{/admin/members}">Members</a></li>
+                <li><a th:href="@{/admin/products}">Products</a></li>
+                <li><a th:href="@{/admin/records}">Records</a></li>
+              </div>
+              <li><a th:href="@{/member/mypage}">Mypage</a></li>
               <li><a th:href="@{/logout}">Logout</a></li>
             </ul>
           </li>

@@ -56,7 +56,7 @@ public record ApiRoastingRecordResponse(
                 .disposeTime(record.getDisposeTime())
                 .inputCapacity(record.getInputCapacity())
                 .createdDate(dateTime.toLocalDate().toString())
-                .createdTime(dateTime.toLocalTime().toString())
+                .createdTime(dateTime.toLocalTime().withNano(0).toString())
                 .build();
     }
 }

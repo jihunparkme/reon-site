@@ -1,12 +1,16 @@
 # re-on-site
 
-Version.
+Project Version.
 
 ```text
 > SpringBoot: 3.2.0
 > Java: jdk 17
 > Gradle
 ```
+
+# System architecture
+
+![Result](./reference/system-architecture.png 'Result')
 
 ```text
 > Backend
@@ -36,42 +40,22 @@ Version.
   - Junit
   - mockito
   - REST Assured
+  - Coverage(JaCoCo)
 ```
-
-# System architecture
-
-![Result](./reference/system-architecture.png 'Result')
 
 ---
 
-# developing
-
-ing.
-- 서버에서 앱으로 그래프 데이터 조희 API
-- 패키지/테스트 정리
-
-- Sign In/Sign Up
-- Record
-- Member -> 회원 정보 수정
-- 5xx, 4xx 에러 페이지 만들기
-  - https://recruit.kakaobank.com/404
-- 로그 관리 -> 날짜별로 덮어쓰기
-
-.
+# Development Memo
 
 Guide.
 
 ```text
 JAVA
-
-final keyword
-record class
-Assert in constructor
-rest-assured api test
-var type
-HttpStatus
-  200 OK
-  201 CREATE
+- final keyword
+- record class
+- Assert in constructor
+- rest-assured api test
+- var type
   
 REST API 
 - 동사 보다는 복수 명사 사용
@@ -81,15 +65,132 @@ REST API
 - POST /dogs (개체 생성)
 - PUT /dogs/1 (1번 개체 수정)
 - DELETE /dogs/1 (1번 개체 삭제)
+
+DDD
+- 도메인에서 비즈니스 로직 처리 + VO 활용하기
+- 한 Aggregate에서 다른 Aggregate의 참조는 식별자(id)를 통해서만 참조
+- 하나의 Transaction에서 여러 개의 Aggregate이 갱신되어야 하는 경우, 다른 Aggregate 갱신은 비동기 통신을 활용해서 결과적 일관성 맞추기
+- Domain Event: 비지니스 도메인에서 일어난 이벤트를 설명하는 메시지(`'과거형'`으로 명명)
 ```
 - [주문 API 개발로 알아보는 TDD](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
+- [Microservice 내부 아키텍처와 EventStorming 설계 - DDD](https://jihunparkme.gitbook.io/docs/lecture/msa/ddd)
 
 # Domain
 
-## Main
+## Login
 
-**Main.** (`/`)
-- [ ] 소개
+### View
+
+**Login Main Page**
+
+![Result](./reference/login.png 'Result')
+
+**Email Login/Sign Up Page**
+
+<p align="center" width="100%">
+    <img src="./reference/email-login.png" width="40%">
+    <img src="./reference/email-signup.png" width="40%">
+</p>
+
+### Function
+
+**• 로그인**
+
+- 이메일
+  - [ ] 비밀번호 찾기(메일로 비밀번호 변경 링크 전달)
+  - [ ] 이메일 찾기
+- 소셜(Kakao, Google, Apple)
+
+**• 세션 관리**
+
+- `spring-session-data-redis`
+
+**• 회원가입**
+
+- 이메일
+  - 인증번호 발송 및 검증
+  - 인증번호 및 인증 상태는 Redis 에서 관리
+- 소셜(Kakao, Google, Apple)
+  - Oauth2 Login API
+
+**• 로그아웃**
+
+## Mypage
+
+### View
+
+![Result](./reference/mypage.png 'Result')
+
+### Function
+
+**• 회원 정보 조회**
+
+- 소셜 로그인이면 소설 마크 노출
+
+**• 회원 정보 수정**
+- [ ] 비밀번호 변경
+
+**• 회원 탈퇴**
+
+- 이메일 계정
+  - 회원정보 삭제
+- 소셜 계정
+  - [kakaologin unlink API](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#unlink)
+  - Google revoke token
+  - [ ] Apple revoke token
+
+```text
+Apple revoke token Ref.
+
+- https://oozoowos.tistory.com/entry/Spring-Boot-Security-%EC%97%86%EC%9D%B4-OAuth2%EB%A1%9C-Google-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%98%84-%EC%9C%A0%EC%A0%80-%EC%A0%95%EB%B3%B4-%EC%96%BB%EA%B8%B0
+- https://velog.io/@givepro91/jjo2cyus
+- https://whitepaek.tistory.com/61
+```
+
+## Record
+
+### View
+
+**Record List**
+
+![Result](./reference/record-list.png 'Result')
+
+**Record View**
+
+![Result](./reference/record-graph.png 'Result')
+
+![Result](./reference/profile-recipe.png 'Result')
+
+### Function
+
+**• 로스팅 로그 조회**
+
+- 자신의 저장한 로그만 조회 가능
+- Roasting Record Graph
+  - [amcharts](https://www.amcharts.com/)
+- Profile Recipe
+  - [AG Grid](https://www.ag-grid.com/)
+  - [AG Grid javascript Doc.](https://www.ag-grid.com/javascript-data-grid/getting-started/)
+- [ ] 날짜, 로그 제목으로 검색
+
+
+## Admin
+
+**• Records**
+- 저장된 모든 로스팅 로그 조회
+
+**• Products**
+- [ ] 제품 관리(상태, 상품코드, S/N...)
+- [ ] 제품 S/N 생성 API
+
+**• Statistics**
+- [ ] 가입자(개인/기업), 지역, 로스팅 횟수 등 통계 정보
+
+**• Members**
+- [ ] 회원 정보 관리
+- [ ] 조회, 생성, 수정-삭제
+
+# TODD
 
 ## Notice
 
@@ -122,96 +223,7 @@ REST API
 - [ ] 수정/삭제 시 작성자와 요청자 검증 필요
 - [ ] 작성/수정 완료 시 관리자 메일로 알림
 
-## Sign In/Sign Up
-
-**Sign In/Sign Up**
-
-![Result](./reference/login.png 'Result')
-
-<p align="center" width="100%">
-    <img src="./reference/email-login.png" width="40%">
-    <img src="./reference/email-signup.png" width="40%">
-</p>
-
-- 소셜(카카오, 구글, 애플) 계정
-- 이메일 계정
-  - 이메일 가입 시 인증번호 발송 및 검증
-  - 인증번호 및 인증 상태는 Redis 에서 관리
-- 세션은 spring-session-data-redis 활용
-- 로그인 / 로그아웃 / 개인정보 수정 / 탈퇴
-
-- [ ] 소셜 로그인
-  - [x] 카카오 로그인
-  - [x] 구글 로그인 (앱 게시 필요)
-  - [x] 애플 로그인
-  - 연결 끊기
-    - [x] 카카오: https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#unlink
-    - [ ] 구글
-      - https://ahn3330.tistory.com/166
-      - https://soda-dev.tistory.com/60
-      - https://devvkkid.tistory.com/248
-      - https://developers.google.com/identity/protocols/oauth2/web-server#obtainingaccesstokens
-      - 구글에서 탈퇴하면 다시 로그인 시키고 받은 토큰으로 탈퇴..?
-    - [ ] 애플
-      - https://oozoowos.tistory.com/entry/Spring-Boot-Security-%EC%97%86%EC%9D%B4-OAuth2%EB%A1%9C-Google-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%98%84-%EC%9C%A0%EC%A0%80-%EC%A0%95%EB%B3%B4-%EC%96%BB%EA%B8%B0
-      - https://velog.io/@givepro91/jjo2cyus
-      - https://whitepaek.tistory.com/61
-  
-- [ ] 이메일로 가입하기
-  - [x] 탈퇴 
-  - [ ] 비밀번호 찾기 (메일로 비밀번호 변경 링크 전달)
-  - [ ] 이메일 찾기
-
-## Member
-
-![Result](./reference/mypage.png 'Result')
-
-- [x] 회원 정보 조회 및 수정
-  - [x] 소셜 로그인이면 소설 마크 노출
-  - [x] 이메일 가입자만 First name 변경 가능
-- [ ] 비밀번호 변경은 별도 페이지에서 관리
-- [ ] 회원탈퇴
-
-## Record
-
-**Record List**
-
-![Result](./reference/record-list.png 'Result')
-
-**Record View**
-
-![Result](./reference/record-view.png 'Result')
-
-- [x] 로스팅 로그 조회
-- [x] [amcharts](https://www.amcharts.com/) 적용
-  - [Highlighting Line Chart](https://www.amcharts.com/demos/highlighting-line-chart-series-on-legend-hover/)
-- [ ] 회원은 자신의 로그만 조회 가능, 관리자는 모든 로그 조회 가능
-- [ ] 회원번호, S/N, 날짜로 검색
-- [x] 프로파일 레시피
-  - [AG Grid](https://www.ag-grid.com/)
-  - [AG Grid javascript Doc.](https://www.ag-grid.com/javascript-data-grid/getting-started/)
-
 .
-
-## Admin
-
-**management** (`/management`)
-
-**Statistics** (`/management/statistics`)
-- [ ] 가입자(개인/기업), 지역, 로스팅 횟수 등 통계 정보
-
-**Users**  (`/management/members`)
-- [ ] 회원 정보 관리
-- [ ] 조회, 생성, 수정-삭제
-
-**Product**  (`/management/product`)
-- [ ] 상태, 상품코드, S/N, 버전 관리
-
-.
-
-## Test.
-
-- JaCoCo > 테코드 커버리지
 
 ## Monitoring
 
@@ -219,9 +231,7 @@ REST API
 - [ ] Grafana
 - [ ] 로그 파일 생성 규칙
 
-.
-
-## TODO
+## TOBE
 
 - [ ] 레시피 공유(레시피 업로드, 다운로드)
   - 로스팅 로그 페이지에서 공유하기 누르고, 글 작성을 하면 로스팅 공유 페이지로 등록
@@ -230,6 +240,7 @@ REST API
     - https://ckeditor.com/ckeditor-5/download/
 - [ ] 레시피 명예의 전당
 - [ ] amcharts.com 결제
+- 로그 관리 -> 날짜별로 덮어쓰기
 
 ## Refactor
 

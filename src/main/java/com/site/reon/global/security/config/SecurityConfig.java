@@ -64,6 +64,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/js/**"),
                                 new AntPathRequestMatcher("/vendor/**"),
                                 new AntPathRequestMatcher("/favicon.ico"),
+                                new AntPathRequestMatcher("/error"),
 
                                 new AntPathRequestMatcher("/profile"),
                                 new AntPathRequestMatcher("/management/actuator/health"),
@@ -90,7 +91,7 @@ public class SecurityConfig {
                                 .logoutSuccessUrl("/")
                 )
 
-                .oauth2Login(oauth2 -> // oauth2 로그인 기은 설정
+                .oauth2Login(oauth2 -> // oauth2 로그인 기능 설정
                         oauth2.userInfoEndpoint(userInfo -> // oauth2 로그인 성공 이후 사용자 정보 조회 설정
                                         userInfo.userService(customOauth2UserService)) // 사용자 정보 조회 이후 기능
                                 .successHandler(oauth2SuccessHandler)

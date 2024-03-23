@@ -22,7 +22,7 @@ public record RoastingRecordListResponse(
                 .id(record.getId())
                 .title(record.getTitle())
                 .createdDate(dateTime.toLocalDate().toString())
-                .createdTime(dateTime.toLocalTime().toString())
+                .createdTime(dateTime.toLocalTime().withNano(0).toString())
                 .build();
     }
 }

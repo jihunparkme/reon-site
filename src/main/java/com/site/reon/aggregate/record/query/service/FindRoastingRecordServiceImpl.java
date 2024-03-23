@@ -4,7 +4,6 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +24,13 @@ public class FindRoastingRecordServiceImpl implements FindRoastingRecordService 
     private final RoastingRecordRepository recordRepository;
 
     @Override
-    public Page<RoastingRecord> findAllSortByIdDescPaging(final int page, final int size) {
+    public Page<RoastingRecord> findAllByMemberIdOrderByIdDescPaging(final long memberId, final int page, final int size) {
+        final var pageable = PageRequest.of(page, size, Sort.by("id").descending());
+        return recordRepository.findByMemberId(memberId, pageable);
+    }
+
+    @Override
+    public Page<RoastingRecord> findAllOrderByIdDescPaging(final int page, final int size) {
         final var pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return recordRepository.findAll(pageable);
     }
@@ -41,13 +46,13 @@ public class FindRoastingRecordServiceImpl implements FindRoastingRecordService 
     }
 
     @Override
-    public ApiRoastingRecordResponse findRoastingRecordBy(final long recordId, final long memberId) {
+    public RoastingRecord findRoastingRecordBy(final long recordId, final long memberId) {
         final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndMemberId(recordId, memberId);
         if (roastingRecordOpt.isEmpty()) {
             throw new IllegalArgumentException("You do not have permission to access this data.");
         }
 
-        return ApiRoastingRecordResponse.of(roastingRecordOpt.get());
+        return roastingRecordOpt.get();
     }
 
     @Override
