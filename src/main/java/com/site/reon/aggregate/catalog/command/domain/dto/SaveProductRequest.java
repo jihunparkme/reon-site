@@ -6,7 +6,9 @@ import com.site.reon.aggregate.catalog.command.domain.product.ProductInfo;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import com.site.reon.aggregate.common.model.ProductNo;
 import com.site.reon.aggregate.common.model.SerialNo;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +25,7 @@ import java.util.Set;
 public class SaveProductRequest {
     public static final SaveProductRequest EMPTY = new SaveProductRequest();
     
-    @NotBlank(message = "category is required.")
+    @NotNull(message = "category is required.")
     private Long categoryId;
 
     @NotBlank(message = "name is required.")
@@ -32,13 +34,13 @@ public class SaveProductRequest {
     @NotBlank(message = "productNo is required.")
     private String productNo;
 
-    @NotBlank(message = "color is required.")
+    @NotNull(message = "color is required.")
     private Color color;
 
-    @NotBlank(message = "ratedVoltage is required.")
+    @NotNull(message = "ratedVoltage is required.")
     private RatedVoltage ratedVoltage;
 
-    @NotBlank(message = "size is required.")
+    @Min( value = 1, message = "size must be at least greater than 1.")
     private int size;
 
     public Product toProduct(final SerialNo serialNo) {
