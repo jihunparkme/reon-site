@@ -25,13 +25,13 @@
 
                             <!-- Category -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
-                                <label for="category" th:text="Category">Category.</label>
+                                <label for="categoryId" th:text="Category">Category.</label>
                             </div>
-                            <select id="category" th:field="*{category}" class="form-select width-300">
+                            <select id="categoryId" th:field="*{categoryId}" class="form-select width-300">
                                 <option value="">===== Select Category =====</option>
                                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
                             </select>
-                            <div class="field-error" th:errors="*{category}">product category error</div>
+                            <div class="field-error" th:errors="*{categoryId}">product category error</div>
 
                             <!-- Name -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">

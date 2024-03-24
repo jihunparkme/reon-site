@@ -24,7 +24,7 @@ public class SaveProductRequest {
     public static final SaveProductRequest EMPTY = new SaveProductRequest();
     
     @NotBlank(message = "category is required.")
-    private long categoryId;
+    private Long categoryId;
 
     @NotBlank(message = "name is required.")
     private String name;
