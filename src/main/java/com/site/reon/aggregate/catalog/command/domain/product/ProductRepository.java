@@ -5,13 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT count(product) " +
             "FROM Product product " +
             "WHERE product.productInfo.productNo = :productNo " +
-            "AND product.productInfo.manufacturedDt = :today")
+            "AND product.productInfo.manufacturedDt BETWEEN :startOfDay AND :endOfDay")
     int quantityOfProductsProducedToday(@Param("productNo") final ProductNo productNo,
-                                        @Param("today") LocalDate today);
+                                        @Param("startOfDay") LocalDateTime startOfDay,
+                                        @Param("endOfDay") LocalDateTime endOfDay);
 }

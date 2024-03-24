@@ -31,21 +31,18 @@
                                 <option value="">===== Select Category =====</option>
                                 <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
                             </select>
-                            <div class="field-error" th:errors="*{categoryId}">product category error</div>
 
                             <!-- Name -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="name" th:text="Name">Name.</label>
                             </div>
                             <input type="text" id="name" th:field="*{name}" th:errorclass="field-error" class="form-control width-300" placeholder="Product Name.">
-                            <div class="field-error" th:errors="*{name}">name error</div>
 
                             <!-- ProductNo -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="productNo" th:text="ProductNo">Product No.</label>
                             </div>
                             <input type="text" id="productNo" th:field="*{productNo}" th:errorclass="field-error" class="form-control width-300" placeholder="Product No.">
-                            <div class="field-error" th:errors="*{productNo}">productNo error</div>
 
                             <!-- Color -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
@@ -55,7 +52,6 @@
                                 <option value="">===== Select Color =====</option>
                                 <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
                             </select>
-                            <div class="field-error" th:errors="*{color}">color error</div>
 
                             <!-- RatedVoltage -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
@@ -65,7 +61,12 @@
                                 <option value="">== Select Rated Voltage ==</option>
                                 <option th:each="ratedVoltage : ${ratedVoltages}" th:value="${ratedVoltage}" th:text="${ratedVoltage}"></option>
                             </select>
-                            <div class="field-error" th:errors="*{ratedVoltage}">ratedVoltage error</div>
+
+                            <!-- Size -->
+                            <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
+                                <label for="size" th:text="Size">Size.</label>
+                            </div>
+                            <input type="number" id="size" th:field="*{size}" th:errorclass="field-error" class="form-control width-300" placeholder="Size.">
 
                             <div class="entry-button mt-5">
                                 <div sec:authorize="hasRole('ROLE_ADMIN')">

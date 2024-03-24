@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,6 +54,8 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     }
 
     private int getQuantityOfProductsProducedToday(final ProductNo productNo, final LocalDate today) {
-        return productRepository.quantityOfProductsProducedToday(productNo, today);
+        final LocalDateTime startOfDay = today.atStartOfDay();
+        final LocalDateTime endOfDay = today.plusDays(1).atStartOfDay();
+        return productRepository.quantityOfProductsProducedToday(productNo, startOfDay, endOfDay);
     }
 }
