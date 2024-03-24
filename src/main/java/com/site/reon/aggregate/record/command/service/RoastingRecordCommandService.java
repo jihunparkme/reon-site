@@ -2,6 +2,6 @@ package com.site.reon.aggregate.record.command.service;
 
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 
-public interface UploadRoastingRecordService {
+public interface RoastingRecordCommandService {
     void upload(RoastingRecordRequest request);
 }

@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UploadRoastingRecordServiceImpl implements UploadRoastingRecordService {
+public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandService {
 
     private final RoastingRecordRepository recordRepository;
 

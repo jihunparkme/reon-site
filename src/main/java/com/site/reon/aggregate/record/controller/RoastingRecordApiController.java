@@ -2,11 +2,11 @@ package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
-import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
+import com.site.reon.aggregate.record.command.service.RoastingRecordCommandService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordListRequest;
 import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordResponse;
-import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
+import com.site.reon.aggregate.record.query.service.RoastingRecordFindService;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +27,8 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RequiredArgsConstructor
 public class RoastingRecordApiController {
 
-    private final FindRoastingRecordService recordService;
-    private final UploadRoastingRecordService uploadRecordService;
+    private final RoastingRecordFindService roastingRecordFindService;
+    private final RoastingRecordCommandService roastingRecordCommandService;
 
     @ApiOperation(value = "로스팅 로그 리스트 조회", notes = "앱에서 로스팅 로그 리스트를 조회합니다.")
     @PostMapping
@@ -38,7 +38,7 @@ public class RoastingRecordApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            final List<RoastingRecordListResponse> result = recordService.findRoastingRecordListBy(request.getMemberId());
+            final List<RoastingRecordListResponse> result = roastingRecordFindService.findRoastingRecordListBy(request.getMemberId());
             return BasicResponse.ok(result);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
@@ -57,7 +57,7 @@ public class RoastingRecordApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            final RoastingRecord roastingRecord = recordService.findRoastingRecordBy(id, request.getMemberId());
+            final RoastingRecord roastingRecord = roastingRecordFindService.findRoastingRecordBy(id, request.getMemberId());
             return BasicResponse.ok(ApiRoastingRecordResponse.of(roastingRecord));
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
@@ -75,7 +75,7 @@ public class RoastingRecordApiController {
         if (allErrors != null) return allErrors;
 
         try {
-            uploadRecordService.upload(request);
+            roastingRecordCommandService.upload(request);
             return BasicResponse.created(SUCCESS);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());

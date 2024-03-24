@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
+import com.site.reon.aggregate.record.query.service.RoastingRecordFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 public class RoastingRecordAdminController {
 
-    private final FindRoastingRecordService recordService;
+    private final RoastingRecordFindService recordService;
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

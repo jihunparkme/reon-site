@@ -2,9 +2,9 @@ package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
-import com.site.reon.aggregate.record.command.service.UploadRoastingRecordService;
+import com.site.reon.aggregate.record.command.service.RoastingRecordCommandService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.service.FindRoastingRecordService;
+import com.site.reon.aggregate.record.query.service.RoastingRecordFindService;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.security.dto.SessionMember;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RequiredArgsConstructor
 public class RoastingRecordController {
 
-    private final FindRoastingRecordService recordService;
-    private final UploadRoastingRecordService uploadRecordService;
+    private final RoastingRecordFindService roastingRecordFindService;
+    private final RoastingRecordCommandService roastingRecordCommandService;
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
@@ -37,7 +37,7 @@ public class RoastingRecordController {
             Model model) {
         // TODO: 날짜, 제목 검색
         final long memberId = session.getId();
-        final var roastingRecordListPage = recordService.findAllByMemberIdOrderByIdDescPaging(memberId, page, size);
+        final var roastingRecordListPage = roastingRecordFindService.findAllByMemberIdOrderByIdDescPaging(memberId, page, size);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", page);
@@ -51,7 +51,7 @@ public class RoastingRecordController {
                        @PathVariable(name = "id") final Long id,
                        Model model) {
         final Long memberId = session.getId();
-        final RoastingRecord roastingRecord = recordService.findRoastingRecordBy(id, memberId);
+        final RoastingRecord roastingRecord = roastingRecordFindService.findRoastingRecordBy(id, memberId);
         model.addAttribute("record", RoastingRecordResponse.of(roastingRecord));
         return "record/record-view";
     }
@@ -60,7 +60,7 @@ public class RoastingRecordController {
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestBody final RoastingRecordRequest request){
         try {
-            uploadRecordService.upload(request);
+            roastingRecordCommandService.upload(request);
             return new ResponseEntity(SUCCESS, HttpStatus.CREATED);
         } catch (Exception e) {
             log.error("RoastingRecordController.uploadFile Exception: ", e);

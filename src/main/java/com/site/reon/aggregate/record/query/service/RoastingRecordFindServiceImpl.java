@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class FindRoastingRecordServiceImpl implements FindRoastingRecordService {
+public class RoastingRecordFindServiceImpl implements RoastingRecordFindService {
 
     private final RoastingRecordRepository recordRepository;
 
