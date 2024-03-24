@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SerialNoRequest {
-    public static final SerialNoRequest EMPTY = new SerialNoRequest();
+public class SaveProductRequest {
+    public static final SaveProductRequest EMPTY = new SaveProductRequest();
     
     @NotBlank(message = "category is required.")
     private String category;

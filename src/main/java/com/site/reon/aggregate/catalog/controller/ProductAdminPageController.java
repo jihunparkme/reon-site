@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.catalog.controller;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
-import com.site.reon.aggregate.catalog.command.domain.dto.SerialNoRequest;
+import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
 import com.site.reon.aggregate.catalog.command.domain.product.Color;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import com.site.reon.aggregate.catalog.query.service.ProductFindService;
@@ -52,7 +52,7 @@ public class ProductAdminPageController {
         model.addAttribute("categories", categories);
         model.addAttribute("colors", Color.values());
         model.addAttribute("ratedVoltages", RatedVoltage.values());
-        model.addAttribute("product", SerialNoRequest.EMPTY);
+        model.addAttribute("product", SaveProductRequest.EMPTY);
         return "admin/products/serial-no";
     }
 }

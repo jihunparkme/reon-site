@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.catalog.controller;
 
-import com.site.reon.aggregate.catalog.command.domain.dto.SerialNoRequest;
+import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
 import com.site.reon.aggregate.catalog.command.service.ProductCommandService;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
@@ -25,20 +25,20 @@ import java.util.List;
 public class ProductAdminController {
     private final ProductCommandService productCommandService;
 
-    @PostMapping("serial-no")
-    public ResponseEntity createSerialNo(@Valid @RequestBody final SerialNoRequest request,
+    @PostMapping
+    public ResponseEntity saveProduct(@Valid @RequestBody final SaveProductRequest request,
                                          final BindingResult bindingResult) {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
         try {
-            final List<String> serialNos = productCommandService.createSerialNo(request);
+            final List<String> serialNos = productCommandService.saveProduct(request);
             return BasicResponse.created(serialNos);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
-            log.error("ProductAdminController.createSerialNo Exception: ", e);
-            return BasicResponse.internalServerError("Failed to create serial no. Please try again.");
+            log.error("ProductAdminController.saveProduct Exception: ", e);
+            return BasicResponse.internalServerError("Failed to create saveProduct no. Please try again.");
         }
     }
 }
