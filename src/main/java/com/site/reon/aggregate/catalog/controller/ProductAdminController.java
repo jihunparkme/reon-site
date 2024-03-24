@@ -2,6 +2,7 @@ package com.site.reon.aggregate.catalog.controller;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
 import com.site.reon.aggregate.catalog.command.service.ProductCommandService;
+import com.site.reon.aggregate.common.model.SerialNo;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
 import jakarta.validation.Valid;
@@ -32,7 +33,7 @@ public class ProductAdminController {
         if (allErrors != null) return allErrors;
 
         try {
-            final List<String> serialNos = productCommandService.saveProduct(request);
+            final List<SerialNo> serialNos = productCommandService.saveProducts(request);
             return BasicResponse.created(serialNos);
         } catch (IllegalArgumentException e) {
             return BasicResponse.clientError(e.getMessage());

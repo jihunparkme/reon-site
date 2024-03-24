@@ -3,16 +3,14 @@ package com.site.reon.aggregate.catalog.command.domain.product;
 import com.site.reon.aggregate.common.model.ProductNo;
 import com.site.reon.aggregate.common.model.SerialNo;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Embeddable
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 @EqualsAndHashCode
 public class ProductInfo {
