@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class FindProductServiceImpl implements FindProductService {
+public class FindProductServiceImpl implements ProductFindService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;

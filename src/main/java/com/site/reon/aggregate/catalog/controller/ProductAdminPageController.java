@@ -4,7 +4,7 @@ import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
 import com.site.reon.aggregate.catalog.command.domain.dto.SerialNoRequest;
 import com.site.reon.aggregate.catalog.command.domain.product.Color;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
-import com.site.reon.aggregate.catalog.query.service.FindProductService;
+import com.site.reon.aggregate.catalog.query.service.ProductFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,7 +21,7 @@ import java.util.List;
 @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class ProductAdminPageController {
 
-    private final FindProductService productService;
+    private final ProductFindService productService;
 
     @GetMapping
     public String findProducts(
