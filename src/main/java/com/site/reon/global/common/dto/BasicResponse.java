@@ -92,8 +92,8 @@ public class BasicResponse<T> {
                 .status(HttpStatus.CREATED.value())
                 .httpStatusCode(HttpStatus.CREATED)
                 .success(true)
-                .count(1)
                 .count(data.size())
+                .data(data)
                 .build();
         return new ResponseEntity<>(basicResponse, HttpStatus.CREATED);
     }
