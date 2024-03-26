@@ -25,7 +25,9 @@ public class DatabaseCleanup implements InitializingBean {
     private final List<String> authorityTableNames = Arrays.asList("authority");
     private final Map<String, CleanupTable> tableIds = Map.of(
             "member", CleanupTable.MEMBER,
-            "member_authority", CleanupTable.MEMBER_AUTHORITY
+            "member_authority", CleanupTable.MEMBER_AUTHORITY,
+            "product", CleanupTable.PRODUCT,
+            "category", CleanupTable.CATEGORY
     );
 
     @Override

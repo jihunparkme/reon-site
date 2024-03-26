@@ -2,8 +2,6 @@ package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.global.ApiTest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

@@ -2314,3 +2314,7 @@ html, body {
 .save-success button {
   width: 100%;
 }
+
+.width-300 {
+  width: 300px;
+}

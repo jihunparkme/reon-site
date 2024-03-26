@@ -3,6 +3,7 @@ package com.site.reon.aggregate.catalog.command.domain.product;
 import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @Entity
 @Table(name = "product")
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product extends BaseTimeEntity {

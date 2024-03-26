@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface FindRoastingRecordService {
+public interface RoastingRecordFindService {
 
     Page<RoastingRecord> findAllByMemberIdOrderByIdDescPaging(long memberId, int page, int size);
 

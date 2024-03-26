@@ -1,7 +1,6 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.member.controller.MemberLoginSteps;
-import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
 import com.site.reon.global.ApiTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

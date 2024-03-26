@@ -233,3 +233,30 @@ insert into authority (authority_name) values ('ROLE_ADMIN');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_USER');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_ADMIN');
 insert into member_authority (member_id, authority_name) values (2, 'ROLE_USER');
+
+insert into category (TITLE)
+values ('Roaster');
+
+insert into product (ACTIVATED, CREATED_DT, MANUFACTURED_DT, COLOR, RATED_VOLTAGE, NAME, PRODUCT_NO, SERIAL_NO, DETAIL)
+values (1, PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), 'BLACK', 'V220', 'R200', 'R2N0BK', 'R2N0BK-0009-20240322', 'this is R200');
+
+insert into product (ACTIVATED, CREATED_DT, MANUFACTURED_DT, COLOR, RATED_VOLTAGE, NAME, PRODUCT_NO, SERIAL_NO, DETAIL)
+values (1, PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), 'BLACK', 'V220', 'R200', 'R2N0BK', 'R2N0BK-0010-20240322', 'this is R200');
+
+insert into product (ACTIVATED, CREATED_DT, MANUFACTURED_DT, COLOR, RATED_VOLTAGE, NAME, PRODUCT_NO, SERIAL_NO, DETAIL)
+values (1, PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), 'BLACK', 'V220', 'R200', 'R2N0BK', 'R2N0BK-0011-20240322', 'this is R200');
+
+insert into product (ACTIVATED, CREATED_DT, MANUFACTURED_DT, COLOR, RATED_VOLTAGE, NAME, PRODUCT_NO, SERIAL_NO, DETAIL)
+values (1, PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), PARSEDATETIME('2024-03-22 12:00:00','yyyy-MM-dd hh:mm:ss'), 'BLACK', 'V220', 'R200', 'R2N0BK', 'R2N0BK-0012-20240322', 'this is R200');
+
+insert into product_category (category_ids, product_id)
+values (1, 1);
+
+insert into product_category (category_ids, product_id)
+values (1, 2);
+
+insert into product_category (category_ids, product_id)
+values (1, 3);
+
+insert into product_category (category_ids, product_id)
+values (1, 4);
