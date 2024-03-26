@@ -1,3 +1,12 @@
+function searchProductList(page) {
+    if (page == undefined) {
+        page = 0;
+    }
+
+    $("#page").val(page);
+    $("#list-form").submit();
+}
+
 function register() {
     const data = {
         "categoryId": $('#categoryId').val(),
