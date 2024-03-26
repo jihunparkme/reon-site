@@ -86,4 +86,15 @@ public class BasicResponse<T> {
                 .build();
         return new ResponseEntity<>(basicResponse, HttpStatus.CREATED);
     }
+
+    public static <T> ResponseEntity created(final List<T> data) {
+        BasicResponse<Object> basicResponse = BasicResponse.builder()
+                .status(HttpStatus.CREATED.value())
+                .httpStatusCode(HttpStatus.CREATED)
+                .success(true)
+                .count(1)
+                .count(data.size())
+                .build();
+        return new ResponseEntity<>(basicResponse, HttpStatus.CREATED);
+    }
 }
