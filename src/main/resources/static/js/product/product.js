@@ -1,5 +1,5 @@
 function register() {
-    let data = {
+    const data = {
         "categoryId": $('#categoryId').val(),
         "name": $('#name').val(),
         "productNo": $('#productNo').val(),
@@ -12,8 +12,6 @@ function register() {
         return;
     }
 
-    console.log(data);
-
     $.ajax({
         type: 'POST',
         url: "/admin/products",
@@ -23,7 +21,7 @@ function register() {
     }).done(function (response) {
         showCreatedSerialNo(response);
     }).fail(function (error) {
-        let responseJson = error.responseJSON;
+        const responseJson = error.responseJSON;
         alert(responseJson.message);
     });
 }
@@ -63,5 +61,10 @@ function isNotValid(data) {
 }
 
 function showCreatedSerialNo(response) {
+    const serialNos = response.data.map(item => item.no);
+    const serialNosString = serialNos.join('\n');
 
+    document.getElementById('serial-nos').value = serialNosString;
+    document.getElementById('serial-nos-area').style.display = 'block';
+    document.getElementById('register-btn').style.display = 'none';
 }

@@ -67,15 +67,19 @@
                                 <label for="size" th:text="Size">Size.</label>
                             </div>
                             <input type="number" id="size" th:field="*{size}" th:errorclass="field-error" class="form-control width-300" placeholder="Size.">
-
-                            <div class="entry-button mt-5">
-                                <div sec:authorize="hasRole('ROLE_ADMIN')">
-                                    <button type="button" th:onclick="'register()'" class="btn btn-outline-primary">Register</button>
-                                    <button type="button" th:onclick="|location.href='@{/admin/products}'|" class="btn btn-outline-secondary">Cancel</button>
-                                </div>
-                            </div>
                         </form>
 
+                        <div class="mt-5 width-300" id="serial-nos-area" style="display: none">
+                            <label for="serial-nos" class="form-label">S/N</label>
+                            <textarea class="form-control" id="serial-nos" rows="10" readonly></textarea>
+                        </div>
+
+                        <div class="entry-button mt-5">
+                            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                                <button type="button" id="register-btn" th:onclick="'register()'" class="btn btn-outline-primary">Register</button>
+                                <button type="button" th:onclick="|location.href='@{/admin/products}'|" class="btn btn-outline-secondary">Cancel</button>
+                            </div>
+                        </div>
                     </article>
                 </div>
             </div>
