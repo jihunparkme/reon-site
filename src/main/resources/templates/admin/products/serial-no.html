@@ -23,6 +23,12 @@
                         <form th:object="${product}" onsubmit="return false;">
                             <h2 class="entry-view-title">Create Serial No</h2>
 
+                            <!-- date -->
+                            <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
+                                <label for="manufacturedDt" th:text="Date">Category.</label>
+                            </div>
+                            <input type="date" id="manufacturedDt" th:field="*{manufacturedDt}" class="form-control width-300" placeholder="Manufactured Date.">
+
                             <!-- Category -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="categoryId" th:text="Category">Category.</label>
@@ -36,13 +42,13 @@
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="name" th:text="Name">Name.</label>
                             </div>
-                            <input type="text" id="name" th:field="*{name}" th:errorclass="field-error" class="form-control width-300" placeholder="Product Name.">
+                            <input type="text" id="name" th:field="*{name}" class="form-control width-300" placeholder="Product Name.">
 
                             <!-- ProductNo -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="productNo" th:text="ProductNo">Product No.</label>
                             </div>
-                            <input type="text" id="productNo" th:field="*{productNo}" th:errorclass="field-error" class="form-control width-300" placeholder="Product No.">
+                            <input type="text" id="productNo" th:field="*{productNo}" class="form-control width-300" placeholder="Product No.">
 
                             <!-- Color -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
@@ -66,7 +72,7 @@
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="size" th:text="Size">Size.</label>
                             </div>
-                            <input type="number" id="size" th:field="*{size}" th:errorclass="field-error" class="form-control width-300" placeholder="Size.">
+                            <input type="number" id="size" th:field="*{size}" class="form-control width-300" placeholder="Size.">
                         </form>
 
                         <div class="mt-5 width-300" id="serial-nos-area" style="display: none">
