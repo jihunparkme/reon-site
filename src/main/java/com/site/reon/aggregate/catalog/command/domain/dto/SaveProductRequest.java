@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -53,7 +52,7 @@ public class SaveProductRequest {
                 .detail(StringUtils.EMPTY)
                 .productNo(ProductNo.of(this.productNo))
                 .serialNo(serialNo)
-                .manufacturedDt(LocalDateTime.now())
+                .manufacturedDt(this.manufacturedDt.atStartOfDay())
                 .color(color)
                 .ratedVoltage(ratedVoltage)
                 .build();

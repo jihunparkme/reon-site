@@ -38,24 +38,24 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     private List<SerialNo> createSerialNo(final SaveProductRequest request) {
         final int size = request.getSize();
         final ProductNo productNo = ProductNo.of(request.getProductNo());
-        final LocalDate today = LocalDate.now();
-        final int quantity = getQuantityOfProductsProducedToday(productNo, today);
+        final LocalDate manufacturedDt = request.getManufacturedDt();
+        final int quantity = getQuantityOfProductsProducedToday(productNo, manufacturedDt);
 
         final List<SerialNo> result = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             result.add(SerialNo.builder()
                     .productNo(productNo)
                     .createdNo(quantity + (i + 1))
-                    .date(today)
+                    .date(manufacturedDt)
                     .build());
         }
 
         return result;
     }
 
-    private int getQuantityOfProductsProducedToday(final ProductNo productNo, final LocalDate today) {
-        final LocalDateTime startOfDay = today.atStartOfDay();
-        final LocalDateTime endOfDay = today.plusDays(1).atStartOfDay();
+    private int getQuantityOfProductsProducedToday(final ProductNo productNo, final LocalDate manufacturedDt) {
+        final LocalDateTime startOfDay = manufacturedDt.atStartOfDay();
+        final LocalDateTime endOfDay = manufacturedDt.plusDays(1).atStartOfDay();
         return productRepository.quantityOfProductsProducedToday(productNo, startOfDay, endOfDay);
     }
 }
