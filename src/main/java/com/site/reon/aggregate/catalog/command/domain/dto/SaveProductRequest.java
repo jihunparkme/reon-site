@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -31,17 +32,20 @@ public class SaveProductRequest {
     @NotBlank(message = "name is required.")
     private String name;
 
-    @NotBlank(message = "productNo is required.")
+    @NotBlank(message = "product no is required.")
     private String productNo;
 
     @NotNull(message = "color is required.")
     private Color color;
 
-    @NotNull(message = "ratedVoltage is required.")
+    @NotNull(message = "rated voltage is required.")
     private RatedVoltage ratedVoltage;
 
     @Min( value = 1, message = "size must be at least greater than 1.")
     private int size;
+
+    @NotNull(message = "manufactured date is required.")
+    LocalDate manufacturedDt;
 
     public Product toProduct(final SerialNo serialNo) {
         final ProductInfo productInfo = ProductInfo.builder()
