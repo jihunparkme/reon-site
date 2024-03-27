@@ -25,9 +25,9 @@
 
                             <!-- date -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
-                                <label for="manufacturedDt" th:text="Date">Category.</label>
+                                <label for="manufacturedDt" th:text="Date">Date.</label>
                             </div>
-                            <input type="date" id="manufacturedDt" th:field="*{manufacturedDt}" class="form-control width-300" placeholder="Manufactured Date.">
+                            <input type="date" id="manufacturedDt" th:field="*{manufacturedDt}" class="form-control width-300">
 
                             <!-- Category -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
@@ -42,7 +42,7 @@
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="name" th:text="Name">Name.</label>
                             </div>
-                            <input type="text" id="name" th:field="*{name}" class="form-control width-300" placeholder="Product Name.">
+                            <input type="text" id="name" th:field="*{name}" required class="form-control width-300" placeholder="Product Name.">
 
                             <!-- ProductNo -->
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
@@ -72,7 +72,7 @@
                             <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                                 <label for="size" th:text="Size">Size.</label>
                             </div>
-                            <input type="number" id="size" th:field="*{size}" class="form-control width-300" placeholder="Size.">
+                            <input type="number" id="size" th:field="*{size}" class="form-control width-300">
                         </form>
 
                         <div class="mt-5 width-300" id="serial-nos-area" style="display: none">

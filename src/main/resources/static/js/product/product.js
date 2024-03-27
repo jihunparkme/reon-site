@@ -9,6 +9,7 @@ function searchProductList(page) {
 
 function register() {
     const data = {
+        "manufacturedDt": $('#manufacturedDt').val(),
         "categoryId": $('#categoryId').val(),
         "name": $('#name').val(),
         "productNo": $('#productNo').val(),
@@ -36,6 +37,11 @@ function register() {
 }
 
 function isNotValid(data) {
+    if (data.manufacturedDt.length == 0) {
+        alert("Manufactured Date is required.");
+        return true;
+    }
+
     if (data.categoryId == 0) {
         alert("Category is required.");
         return true;
