@@ -36,9 +36,6 @@ class MemberLoginServiceImplTest {
 
     @Mock private MemberAuthCodeService memberAuthCodeService;
 
-    @Mock
-    private MemberLoginService memberLoginServiceMock;
-
     @BeforeEach
     void beforeEach() {
         this.memberLoginService =
