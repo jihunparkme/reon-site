@@ -29,17 +29,20 @@
 
                             <div class="product-card-content">
                                 <h1>제품 정보</h1>
-                                <form th:action="@{/admin/products/{id}(id=${product.id})/edit}" th:object="${product}" method="post">
+                                <form th:action="@{/admin/products/{id}/edit(id=${product.id})}" th:object="${product}" method="post">
                                     <div th:if="${#fields.hasGlobalErrors()}" class="global-error">
                                         <button class="btn btn-outline-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></button>
                                     </div>
 
+                                    <input type="hidden" th:field="*{id}">
+
                                     <div style="margin-top: 25px; margin-bottom: 50px;">
                                         <div class="product-info-field">
-                                            <div class="product-info-label-text">Category.</div>
+                                            <div class="product-info-label-text">Category. <span class="required">*</span></div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <select id="categoryId" th:field="*{categoryIds}" class="form-select width-300">
+                                                    <div class="field-error" th:errors="*{categoryIds}">category error</div>
+                                                    <select id="categoryId" th:field="*{categoryIds}" class="form-select width-300" th:errorclass="field-error-input">
                                                         <option value="">===== Select Category =====</option>
                                                         <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
                                                     </select>
@@ -48,10 +51,11 @@
                                         </div>
 
                                         <div class="product-info-field">
-                                            <div class="product-info-label-text">Model Name.</div>
+                                            <div class="product-info-label-text">Model Name. <span class="required">*</span></div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <input type="text" th:field="*{name}" class="form-control">
+                                                    <div class="field-error" th:errors="*{name}">name error</div>
+                                                    <input type="text" th:field="*{name}" th:errorclass="field-error-input" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -60,25 +64,28 @@
                                             <div class="product-info-label-text">Detail. </div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <textarea type="text" th:field="*{detail}" class="form-control" rows="5"></textarea>
+                                                    <div class="field-error" th:errors="*{detail}">detail error</div>
+                                                    <textarea type="text" th:field="*{detail}" th:errorclass="field-error-input" class="form-control" rows="5"></textarea>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="product-info-field">
-                                            <div class="product-info-label-text">Product No. </div>
+                                            <div class="product-info-label-text">Product No. <span class="required">*</span></div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <input type="text" th:field="*{productNo}" class="form-control">
+                                                    <div class="field-error" th:errors="*{productNo}">Product No error</div>
+                                                    <input type="text" th:field="*{productNo}" th:errorclass="field-error-input" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="product-info-field">
-                                            <div class="product-info-label-text">Serial No. </div>
+                                            <div class="product-info-label-text">Serial No. <span class="required">*</span></div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <input type="text" th:field="*{serialNo}" class="form-control">
+                                                    <div class="field-error" th:errors="*{serialNo}">serial No error</div>
+                                                    <input type="text" th:field="*{serialNo}" th:errorclass="field-error-input" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -87,16 +94,17 @@
                                             <div class="product-info-label-text">Manufactured Date. </div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <input type="text" class="form-control" th:value="${#temporals.format(product.manufacturedDt, 'yyyy-MM-dd')}" readonly />
+                                                    <input type="text" class="form-control" th:field="*{manufacturedDt}" readonly />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="product-info-field">
-                                            <div class="product-info-label-text">Color.</div>
+                                            <div class="product-info-label-text">Color. <span class="required">*</span></div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <select th:field="${product.color}" th:value="${product.color}" class="form-select">
+                                                    <div class="field-error" th:errors="*{color}">Color error</div>
+                                                    <select th:field="${product.color}" th:value="${product.color}" class="form-select" th:errorclass="field-error-input">
                                                         <option value="">===== Select Color =====</option>
                                                         <option th:each="color : ${colors}" th:value="${color}" th:text="${color}"></option>
                                                     </select>
@@ -105,10 +113,11 @@
                                         </div>
 
                                         <div class="product-info-field">
-                                            <div class="product-info-label-text">Rated Voltage.</div>
+                                            <div class="product-info-label-text">Rated Voltage. <span class="required">*</span></div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">
-                                                    <select th:field="${product.ratedVoltage}" th:value="${product.ratedVoltage}" class="form-select">
+                                                    <div class="field-error" th:errors="*{ratedVoltage}">Rated Voltage error</div>
+                                                    <select th:field="${product.ratedVoltage}" th:value="${product.ratedVoltage}" class="form-select" th:errorclass="field-error-input">
                                                         <option value="">== Select Rated Voltage ==</option>
                                                         <option th:each="ratedVoltage : ${ratedVoltages}" th:value="${ratedVoltage}" th:text="${ratedVoltage}"></option>
                                                     </select>
@@ -118,7 +127,7 @@
 
                                         <div style="float: right;">
                                             <div style="display: inline-block">
-                                                <button type="submit" class="btn btn-success">수정</button>
+                                                <button type="submit" id="btn-save" class="btn btn-success">수정</button>
                                             </div>
                                             <div style="display: inline-block">
                                                 <button type="button" id="btn-delete" class="btn btn-danger">삭제</button>
@@ -141,5 +150,15 @@
         class="bi bi-arrow-up-short"></i></a>
 <script type="text/javascript" th:src="@{/js/product/product.js}"></script>
 <div th:replace="~{common/commonjs}"></div>
+<script type="text/javascript" th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitButton = document.getElementById('btn-save');
+        submitButton.addEventListener('click', function(event) {
+            if (!confirm('Are you sure you want to save?')) {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
 </body>
 </html>
