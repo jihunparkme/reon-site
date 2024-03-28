@@ -4,8 +4,11 @@ import com.site.reon.aggregate.catalog.command.domain.category.Category;
 import com.site.reon.aggregate.catalog.command.domain.category.CategoryRepository;
 import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
 import com.site.reon.aggregate.catalog.command.domain.dto.ProductResponse;
+import com.site.reon.aggregate.catalog.command.domain.dto.UpdateProductRequest;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
+import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.global.security.exception.NotFoundMemberException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -48,5 +51,17 @@ public class ProductFindServiceImpl implements ProductFindService {
         return categories.stream()
                 .map(CategoryResponse::of)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void update(final Long id, final UpdateProductRequest request) {
+        final Optional<Product> productOpt = productRepository.findById(id);
+        if (productOpt.isEmpty()) {
+            throw new NotFoundMemberException("Not Found Product");
+        }
+
+        final Product product = productOpt.get();
+        product.update(request);
+        productRepository.save(product);
     }
 }
