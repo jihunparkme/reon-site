@@ -34,6 +34,7 @@
                                     <button class="btn btn-outline-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></button>
                                 </div>
 
+                                <input type="hidden" th:field="*{oAuthClient}">
 
                                 <div th:switch="${member?.oAuthClient?.name()}">
                                     <div th:case="'GOOGLE'">
@@ -90,7 +91,8 @@
                                         <div class="my-page-label-text">Last name.</div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{lastName}" class="form-control">
+                                                <div class="field-error" th:errors="*{lastName}">LastName error</div>
+                                                <input type="text" th:field="*{lastName}" th:errorclass="field-error-input" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -98,7 +100,8 @@
                                         <div class="my-page-label-text">Phone.</div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="tel" th:field="*{phone}" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" title="올바른 전화번호 형식을 입력해 주세요." placeholder="010-0000-0000" class="form-control">
+                                                <div class="field-error" th:errors="*{phone}">Phone error</div>
+                                                <input type="tel" th:field="*{phone}" pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}" th:errorclass="field-error-input" title="올바른 전화번호 형식을 입력해 주세요." placeholder="010-0000-0000" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -106,7 +109,8 @@
                                         <div class="my-page-label-text">Product Code.</div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{prdCode}" class="form-control">
+                                                <div class="field-error" th:errors="*{prdCode}">PrdCode error</div>
+                                                <input type="text" th:field="*{prdCode}" th:errorclass="field-error-input" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -114,8 +118,8 @@
                                         <div class="my-page-label-text">Roaster S/N.</div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{roasterSn}" class="form-control">
                                                 <div class="field-error" th:errors="*{roasterSn}">Roaster S/N error</div>
+                                                <input type="text" th:field="*{roasterSn}" th:errorclass="field-error-input" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -123,7 +127,8 @@
                                         <div class="my-page-label-text">Company Name.</div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{companyName}" class="form-control">
+                                                <div class="field-error" th:errors="*{companyName}">Company Name error</div>
+                                                <input type="text" th:field="*{companyName}" th:errorclass="field-error-input" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -131,7 +136,8 @@
                                         <div class="my-page-label-text">Address.</div>
                                         <div class="my-page-input-field-out">
                                             <div class="my-page-input-field-in">
-                                                <input type="text" th:field="*{address}" class="form-control">
+                                                <div class="field-error" th:errors="*{address}">address error</div>
+                                                <input type="text" th:field="*{address}" th:errorclass="field-error-input" class="form-control">
                                             </div>
                                         </div>
                                     </div>
