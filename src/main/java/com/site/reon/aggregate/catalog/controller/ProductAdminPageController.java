@@ -40,8 +40,12 @@ public class ProductAdminPageController {
     public String finsProduct(@PathVariable(name = "id") final Long id,
                        Model model) {
         final var product = productService.findProductBy(id);
+        final List<CategoryResponse> categories = productService.findCategories();
 
         model.addAttribute("product", product);
+        model.addAttribute("categories", categories);
+        model.addAttribute("colors", Color.values());
+        model.addAttribute("ratedVoltages", RatedVoltage.values());
         return "admin/products/product-view";
     }
 
