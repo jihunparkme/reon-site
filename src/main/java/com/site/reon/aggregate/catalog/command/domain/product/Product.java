@@ -1,5 +1,8 @@
 package com.site.reon.aggregate.catalog.command.domain.product;
 
+import com.site.reon.aggregate.catalog.command.domain.dto.UpdateProductRequest;
+import com.site.reon.aggregate.common.model.ProductNo;
+import com.site.reon.aggregate.common.model.SerialNo;
 import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,4 +31,18 @@ public class Product extends BaseTimeEntity {
 
     @Embedded
     private ProductInfo productInfo;
+
+    public void update(final UpdateProductRequest request) {
+        this.categoryIds = request.getCategoryIds();
+        final ProductInfo productInfo = ProductInfo.builder()
+                .name(request.getName())
+                .detail(request.getDetail())
+                .productNo(ProductNo.of(request.getProductNo()))
+                .serialNo(SerialNo.of(request.getSerialNo(), this.productInfo.getSerialNo().isActivated()))
+                .manufacturedDt(this.productInfo.getManufacturedDt())
+                .color(request.getColor())
+                .ratedVoltage(request.getRatedVoltage())
+                .build();
+        this.productInfo = productInfo;
+    }
 }

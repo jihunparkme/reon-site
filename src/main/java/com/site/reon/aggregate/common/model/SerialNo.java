@@ -26,4 +26,8 @@ public class SerialNo {
         this.no = productNo.getNo() + "-" + String.format("%04d", createdNo) + "-" + date.format(formatter);
         this.activated = false;
     }
+
+    public static SerialNo of(final String serialNo, final boolean activated) {
+        return new SerialNo(serialNo, activated);
+    }
 }

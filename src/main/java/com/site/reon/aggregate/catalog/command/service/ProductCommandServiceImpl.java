@@ -1,10 +1,12 @@
 package com.site.reon.aggregate.catalog.command.service;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
+import com.site.reon.aggregate.catalog.command.domain.dto.UpdateProductRequest;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
 import com.site.reon.aggregate.common.model.ProductNo;
 import com.site.reon.aggregate.common.model.SerialNo;
+import com.site.reon.global.security.exception.NotFoundMemberException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +36,19 @@ public class ProductCommandServiceImpl implements ProductCommandService {
                 .forEach(product -> productRepository.save(product));
 
         return serialNos;
+    }
+
+    @Override
+    @Transactional
+    public void update(final Long id, final UpdateProductRequest request) {
+        final Optional<Product> productOpt = productRepository.findById(id);
+        if (productOpt.isEmpty()) {
+            throw new NotFoundMemberException("Not Found Product");
+        }
+
+        final Product product = productOpt.get();
+        product.update(request);
+        productRepository.save(product);
     }
 
     private List<SerialNo> createSerialNo(final SaveProductRequest request) {
