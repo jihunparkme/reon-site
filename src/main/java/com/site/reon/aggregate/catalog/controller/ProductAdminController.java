@@ -2,7 +2,6 @@ package com.site.reon.aggregate.catalog.controller;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
 import com.site.reon.aggregate.catalog.command.service.ProductCommandService;
-import com.site.reon.aggregate.catalog.query.dto.ProductResponse;
 import com.site.reon.aggregate.common.model.SerialNo;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
