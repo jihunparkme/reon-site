@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.catalog.command.domain.dto;
+package com.site.reon.aggregate.catalog.query.dto;
 
 import com.site.reon.aggregate.catalog.command.domain.category.Category;
 import lombok.Builder;
