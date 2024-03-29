@@ -8,5 +8,8 @@ import java.util.List;
 
 public interface ProductCommandService {
     List<SerialNo> saveProducts(SaveProductRequest request);
-    void update(final Long id, UpdateProductRequest request);
+
+    void update(Long id, UpdateProductRequest request);
+
+    void delete(Long id);
 }

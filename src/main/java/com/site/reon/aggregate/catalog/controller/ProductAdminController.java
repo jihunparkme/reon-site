@@ -2,6 +2,7 @@ package com.site.reon.aggregate.catalog.controller;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
 import com.site.reon.aggregate.catalog.command.service.ProductCommandService;
+import com.site.reon.aggregate.catalog.query.dto.ProductResponse;
 import com.site.reon.aggregate.common.model.SerialNo;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
@@ -11,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,7 +37,20 @@ public class ProductAdminController {
             return BasicResponse.clientError(e.getMessage());
         } catch (Exception e) {
             log.error("ProductAdminController.saveProduct Exception: ", e);
-            return BasicResponse.internalServerError("Failed to create saveProduct no. Please try again.");
+            return BasicResponse.internalServerError("Failed to create product. Please try again.");
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteProduct(@PathVariable(name = "id") final Long id) {
+        try {
+            productCommandService.delete(id);
+            return BasicResponse.ok(true);
+        } catch (IllegalArgumentException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            log.error("ProductAdminController.deleteProduct Exception: ", e);
+            return BasicResponse.internalServerError("Failed to delete product. Please try again.");
         }
     }
 }

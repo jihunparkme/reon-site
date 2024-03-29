@@ -159,6 +159,33 @@
             }
         });
     });
+
+    /*<![CDATA[*/
+    $(function() {
+        $('#btn-delete').click(function () {
+            const product = [[${product}]];
+
+            if (confirm("Are you sure you want to delete?")) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: "/admin/products/" + product.id,
+                    dataType: 'json',
+                    accept: "application/json"
+                }).done(function (response) {
+                    if (response.success) {
+                        alert("You have successfully delete.");
+                        window.location.href = '/admin/products';
+                        return;
+                    }
+                    alert("Failed to delete product. Please try again.");
+                }).fail(function (error) {
+                    let responseJson = error.responseJSON;
+                    alert("Failed to delete product. Please contact the administrator.\n(" + responseJson.message + ")");
+                });
+            }
+        });
+    });
+    /*]]>*/
 </script>
 </body>
 </html>
