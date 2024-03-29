@@ -62,7 +62,7 @@ public class ProductAdminPageController {
 
         try {
             productCommandService.update(id, request);
-        } catch (NotFoundMemberException e) {
+        } catch (Exception e) {
             addSelectAttribute(model);
             bindingResult.reject("global.error", e.getMessage());
             return "admin/products/product-view";

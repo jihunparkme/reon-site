@@ -49,7 +49,7 @@ public class MemberController {
 
         try {
             memberService.update(request, session.getId());
-        } catch (NotFoundMemberException e) {
+        } catch (Exception e) {
             bindingResult.reject("global.error", e.getMessage());
             return "member/mypage";
         }

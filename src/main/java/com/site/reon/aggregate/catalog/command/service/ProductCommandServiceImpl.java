@@ -7,6 +7,7 @@ import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
 import com.site.reon.aggregate.common.model.ProductNo;
 import com.site.reon.aggregate.common.model.SerialNo;
 import com.site.reon.global.security.exception.NotFoundMemberException;
+import com.site.reon.global.security.exception.NotFoundProductException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,7 +44,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     public void update(final Long id, final UpdateProductRequest request) {
         final Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isEmpty()) {
-            throw new NotFoundMemberException("Not Found Product");
+            throw new NotFoundProductException("Not Found Product");
         }
 
         final Product product = productOpt.get();
