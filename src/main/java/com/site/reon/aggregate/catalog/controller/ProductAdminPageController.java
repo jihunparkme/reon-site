@@ -6,7 +6,6 @@ import com.site.reon.aggregate.catalog.command.domain.product.Color;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import com.site.reon.aggregate.catalog.command.service.ProductCommandService;
 import com.site.reon.aggregate.catalog.query.service.ProductFindService;
-import com.site.reon.global.security.exception.NotFoundMemberException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +40,7 @@ public class ProductAdminPageController {
     }
 
     @GetMapping("/{id}")
-    public String finsProduct(@PathVariable(name = "id") final Long id, Model model) {
+    public String findProduct(@PathVariable(name = "id") final Long id, Model model) {
         final var product = productFindService.findProductBy(id);
 
         model.addAttribute("product", product);
@@ -50,7 +49,7 @@ public class ProductAdminPageController {
     }
 
     @PostMapping("/{id}/edit")
-    public String finsProduct(@PathVariable(name = "id") final Long id,
+    public String updateProduct(@PathVariable(name = "id") final Long id,
                               @Valid @ModelAttribute("product") final UpdateProductRequest request,
                               final BindingResult bindingResult,
                               RedirectAttributes redirectAttributes,
