@@ -7,34 +7,9 @@ function searchProductList(page) {
     $("#list-form").submit();
 }
 
-function create() {
-    const data = {
-        "manufacturedDt": $('#manufacturedDt').val(),
-        "categoryId": $('#categoryId').val(),
-        "name": $('#name').val(),
-        "productNo": $('#productNo').val(),
-        "color": $('#color').val(),
-        "ratedVoltage": $('#ratedVoltage').val(),
-        "size": $('#size').val()
-    };
-
-    if (isNotValid(data)) {
-        return;
-    }
-
-    $.ajax({
-        type: 'POST',
-        url: "/admin/products",
-        dataType: 'json',
-        data: JSON.stringify(data),
-        contentType: 'application/json; charset=utf-8'
-    }).done(function (response) {
-        showCreatedSerialNo(response);
-    }).fail(function (error) {
-        const responseJson = error.responseJSON;
-        alert("Failed to create serial no. Please contact the administrator.\n(" + responseJson.message + ")");
-    });
-}
+/**
+ * Create
+ */
 
 function isNotValid(data) {
     if (data.manufacturedDt.length == 0) {
@@ -84,6 +59,75 @@ function showCreatedSerialNo(response) {
     document.getElementById('create-btn').style.display = 'none';
 }
 
+function create() {
+    const data = {
+        "manufacturedDt": $('#manufacturedDt').val(),
+        "categoryId": $('#categoryId').val(),
+        "name": $('#name').val(),
+        "productNo": $('#productNo').val(),
+        "color": $('#color').val(),
+        "ratedVoltage": $('#ratedVoltage').val(),
+        "size": $('#size').val()
+    };
+
+    if (isNotValid(data)) {
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: "/admin/products",
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8'
+    }).done(function (response) {
+        showCreatedSerialNo(response);
+    }).fail(function (error) {
+        const responseJson = error.responseJSON;
+        alert("Failed to create serial no. Please contact the administrator.\n(" + responseJson.message + ")");
+    });
+}
+
+/**
+ * Register
+ */
+
+function addTdTag(value, $row) {
+    if (value) {
+        $('<td>').attr('style', 'color:green').text("SUCCESS").appendTo($row);
+        return;
+    }
+
+    $('<td>').attr('style', 'color:red').text("FAIL").appendTo($row);
+}
+
+function showRegisteredSerialNo(data) {
+    const $table = $('<table>').addClass('table table-hover');
+    const $thead = $('<thead>');
+    const $headerRow = $('<tr>');
+    ['S/N', 'Result'].forEach(headerText => {
+        $('<th>').attr('width', '300px').text(headerText).appendTo($headerRow);
+    });
+    $thead.append($headerRow);
+
+    const $tbody = $('<tbody>');
+    $.each(data, function(i, rowData) {
+        const $row = $('<tr>');
+        $.each(rowData, function(key, value) {
+            if (key === 'result') {
+                addTdTag(value, $row);
+                return;
+            }
+            $('<td>').text(value).appendTo($row);
+        });
+        $tbody.append($row);
+    });
+
+    $table.append($thead, $tbody);
+
+    $('#tableContainer').append($table);
+}
+
 function register() {
     const serialNos = $('#register-serial-nos').val();
     if (serialNos.length == 0) {
@@ -102,9 +146,8 @@ function register() {
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8'
     }).done(function (response) {
-        console.log(response);
         if (response.success) {
-            console.log(response.data.registerResult);
+            showRegisteredSerialNo(response.data.registerResult);
             return;
         }
         alert('Failed to activate S/N. Please try again.');

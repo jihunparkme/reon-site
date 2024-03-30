@@ -40,6 +40,8 @@
               <textarea class="form-control width-300" id="register-serial-nos" rows="10" required></textarea>
             </form>
 
+            <div id="tableContainer"></div>
+
             <div class="entry-button mt-5">
               <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <button type="button" id="register-btn" th:onclick="'register()'" class="btn btn-outline-primary">Register</button>
