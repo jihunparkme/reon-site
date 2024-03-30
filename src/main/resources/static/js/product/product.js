@@ -7,7 +7,7 @@ function searchProductList(page) {
     $("#list-form").submit();
 }
 
-function register() {
+function create() {
     const data = {
         "manufacturedDt": $('#manufacturedDt').val(),
         "categoryId": $('#categoryId').val(),

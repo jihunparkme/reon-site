@@ -82,7 +82,7 @@
 
                         <div class="entry-button mt-5">
                             <div sec:authorize="hasRole('ROLE_ADMIN')">
-                                <button type="button" id="register-btn" th:onclick="'register()'" class="btn btn-outline-primary">Register</button>
+                                <button type="button" id="register-btn" th:onclick="'create()'" class="btn btn-outline-primary">Create</button>
                                 <button type="button" th:onclick="|location.href='@{/admin/products}'|" class="btn btn-outline-secondary">Cancel</button>
                             </div>
                         </div>
