@@ -2,8 +2,8 @@ package com.site.reon.aggregate.catalog.query.service;
 
 import com.site.reon.aggregate.catalog.command.domain.category.Category;
 import com.site.reon.aggregate.catalog.command.domain.category.CategoryRepository;
-import com.site.reon.aggregate.catalog.command.domain.dto.CategoryResponse;
-import com.site.reon.aggregate.catalog.command.domain.dto.ProductResponse;
+import com.site.reon.aggregate.catalog.query.dto.CategoryResponse;
+import com.site.reon.aggregate.catalog.query.dto.ProductResponse;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;

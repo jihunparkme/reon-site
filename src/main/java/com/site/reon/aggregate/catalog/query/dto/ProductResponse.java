@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.catalog.command.domain.dto;
+package com.site.reon.aggregate.catalog.query.dto;
 
 import com.site.reon.aggregate.catalog.command.domain.product.Color;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
@@ -6,7 +6,6 @@ import com.site.reon.aggregate.catalog.command.domain.product.ProductInfo;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import lombok.Builder;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 public record ProductResponse(
@@ -16,7 +15,8 @@ public record ProductResponse(
         String detail,
         String productNo,
         String serialNo,
-        LocalDateTime manufacturedDt,
+        Boolean activated,
+        String manufacturedDt,
         Color color,
         RatedVoltage ratedVoltage
 ) {
@@ -33,7 +33,8 @@ public record ProductResponse(
                 .detail(productInfo.getDetail())
                 .productNo(productInfo.getProductNo().getNo())
                 .serialNo(productInfo.getSerialNo().getNo())
-                .manufacturedDt(productInfo.getManufacturedDt())
+                .activated(productInfo.getSerialNo().isActivated())
+                .manufacturedDt(productInfo.getManufacturedDt().toLocalDate().toString())
                 .color(productInfo.getColor())
                 .ratedVoltage(productInfo.getRatedVoltage())
                 .build();

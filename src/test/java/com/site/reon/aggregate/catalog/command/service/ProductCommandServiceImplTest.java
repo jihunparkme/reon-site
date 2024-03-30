@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -33,6 +34,7 @@ class ProductCommandServiceImplTest {
     @Test
     void when_save_product_success_then_return_serial_no_list() {
         final SaveProductRequest request = SaveProductRequest.builder()
+                .manufacturedDt(LocalDate.of(2024, 3, 25))
                 .categoryId(1L)
                 .name("R200")
                 .productNo("R2N0BK")
