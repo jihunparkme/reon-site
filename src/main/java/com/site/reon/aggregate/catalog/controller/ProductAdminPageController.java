@@ -78,6 +78,11 @@ public class ProductAdminPageController {
         return "admin/products/serial-no";
     }
 
+    @GetMapping("/register/serial-no")
+    public String registerSerialNo() {
+        return "admin/products/serial-no-register";
+    }
+
     private void addSelectAttribute(final Model model) {
         model.addAttribute("categories", productFindService.findCategories());
         model.addAttribute("colors", Color.values());
