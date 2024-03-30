@@ -81,5 +81,5 @@ function showCreatedSerialNo(response) {
 
     document.getElementById('serial-nos').value = serialNosString;
     document.getElementById('serial-nos-area').style.display = 'block';
-    document.getElementById('register-btn').style.display = 'none';
+    document.getElementById('create-btn').style.display = 'none';
 }
