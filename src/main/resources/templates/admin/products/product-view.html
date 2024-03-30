@@ -91,6 +91,20 @@
                                         </div>
 
                                         <div class="product-info-field">
+                                            <div class="product-info-label-text">Activated. <span class="required">*</span></div>
+                                            <div class="product-info-input-field-out">
+                                                <div class="product-info-input-field-in">
+                                                    <div class="field-error" th:errors="*{activated}">Activated error</div>
+                                                    <select th:field="${product.activated}" th:value="${product.activated}" class="form-select" th:errorclass="field-error-input">
+                                                        <option value="">===== Select Activated =====</option>
+                                                        <option th:value="1" th:text="TRUE"></option>
+                                                        <option th:value="0" th:text="FALSE"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-info-field">
                                             <div class="product-info-label-text">Manufactured Date. </div>
                                             <div class="product-info-input-field-out">
                                                 <div class="product-info-input-field-in">

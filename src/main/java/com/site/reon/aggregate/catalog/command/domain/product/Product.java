@@ -38,7 +38,7 @@ public class Product extends BaseTimeEntity {
                 .name(request.getName())
                 .detail(request.getDetail())
                 .productNo(ProductNo.of(request.getProductNo()))
-                .serialNo(SerialNo.of(request.getSerialNo(), this.productInfo.getSerialNo().isActivated()))
+                .serialNo(SerialNo.of(request.getSerialNo(), request.getActivated()))
                 .manufacturedDt(this.productInfo.getManufacturedDt())
                 .color(request.getColor())
                 .ratedVoltage(request.getRatedVoltage())

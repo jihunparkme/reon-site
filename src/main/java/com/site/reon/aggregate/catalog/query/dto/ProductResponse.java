@@ -15,6 +15,7 @@ public record ProductResponse(
         String detail,
         String productNo,
         String serialNo,
+        Boolean activated,
         String manufacturedDt,
         Color color,
         RatedVoltage ratedVoltage
@@ -32,6 +33,7 @@ public record ProductResponse(
                 .detail(productInfo.getDetail())
                 .productNo(productInfo.getProductNo().getNo())
                 .serialNo(productInfo.getSerialNo().getNo())
+                .activated(productInfo.getSerialNo().isActivated())
                 .manufacturedDt(productInfo.getManufacturedDt().toLocalDate().toString())
                 .color(productInfo.getColor())
                 .ratedVoltage(productInfo.getRatedVoltage())

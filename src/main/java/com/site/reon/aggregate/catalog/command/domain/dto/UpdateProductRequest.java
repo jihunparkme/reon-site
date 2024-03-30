@@ -34,6 +34,9 @@ public class UpdateProductRequest {
     @Size(min = 1, max = 100, message = "The name length must be between 1 and 100 characters.")
     private String serialNo;
 
+    @NotNull(message = "activated is required.")
+    private Boolean activated;
+
     private String manufacturedDt;
 
     @NotNull(message = "color is required.")
