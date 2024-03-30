@@ -75,7 +75,7 @@ function signUp() {
         location.href = "/login/email";
     }).fail(function (error) {
         let responseJson = error.responseJSON;
-        alert(responseJson.message);
+        alert("Failed to sign up. Please contact the administrator.\n(" + responseJson.message + ")");
     });
 }
 
@@ -98,7 +98,7 @@ function sendAuthCode() {
         alert('The authentication code sending failed. Please try again.');
     }).fail(function (error) {
         let responseJson = error.responseJSON;
-        alert(responseJson.message);
+        alert("Failed to send authentication code. Please contact the administrator.\n(" + responseJson.message + ")");
     });
 }
 
@@ -122,6 +122,6 @@ function verifyAuthCode() {
         alert('Your email verification has failed. Please try again.');
     }).fail(function (error) {
         let responseJson = error.responseJSON;
-        alert(responseJson.message);
+        alert("Failed to verify authentication code. Please contact the administrator.\n(" + responseJson.message + ")");
     });
 }
