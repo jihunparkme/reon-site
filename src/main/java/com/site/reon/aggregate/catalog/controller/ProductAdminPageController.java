@@ -71,7 +71,7 @@ public class ProductAdminPageController {
         return "redirect:" + "/admin/products/" + id;
     }
 
-    @GetMapping("/serial-no")
+    @GetMapping("/create/serial-no")
     public String createSerialNo(Model model) {
         addSelectAttribute(model);
         model.addAttribute("product", SaveProductRequest.EMPTY);

@@ -24,8 +24,8 @@
             <div class="row">
                 <div style="margin-bottom: 30px;">
                     <h5 style="float: left">Total : [(${productListPage.totalElements})]</h5>
-                    <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/admin/products}'|" class="btn btn-outline-primary" style="float: right">Register S/N</button>
-                    <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/admin/products/serial-no}'|" class="btn btn-outline-success" style="float: right; margin-right: 10px;">Create S/N</button>
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/admin/products/register/serial-no}'|" class="btn btn-outline-primary" style="float: right">Register S/N</button>
+                    <button sec:authorize="hasRole('ROLE_ADMIN')" th:onclick="|location.href='@{/admin/products/create/serial-no}'|" class="btn btn-outline-success" style="float: right; margin-right: 10px;">Create S/N</button>
                 </div>
 
                 <tr th:if="${productListPage.totalElements} == 0">
