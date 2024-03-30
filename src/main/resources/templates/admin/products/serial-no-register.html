@@ -1,6 +1,15 @@
 <div th:replace="~{common/head :: head('Products')}"></div>
 <body>
 <div th:replace="~{common/header :: header('Products')}"></div>
+<style>
+  .comment {
+    color: #707070;
+    font-size: 14px;
+    letter-spacing: -.2px;
+    line-height: 24px;
+    margin-top: 2px;
+  }
+</style>
 
 <main id="main">
   <section id="breadcrumbs" class="breadcrumbs">
@@ -25,6 +34,8 @@
 
               <div class="entry-content" style="margin-top: 20px; margin-bottom: 10px">
                 <label for="register-serial-nos" class="form-label">S/N.</label>
+                <p class="comment">생산된 제품의 시리얼 넘버를 활성화 상태로 변경합니다.<br/>
+                  여러개의 시리얼 넘버를 줄바꿈으로 추가해주세요.</p>
               </div>
               <textarea class="form-control width-300" id="register-serial-nos" rows="10" required></textarea>
             </form>

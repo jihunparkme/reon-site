@@ -1,5 +1,7 @@
 package com.site.reon.aggregate.catalog.controller;
 
+import com.site.reon.aggregate.catalog.command.domain.dto.RegisterSerialNoRequest;
+import com.site.reon.aggregate.catalog.command.domain.dto.RegisterSerialNoResponse;
 import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
 import com.site.reon.aggregate.catalog.command.service.ProductCommandService;
 import com.site.reon.aggregate.common.model.SerialNo;
@@ -50,6 +52,19 @@ public class ProductAdminController {
         } catch (Exception e) {
             log.error("ProductAdminController.deleteProduct Exception: ", e);
             return BasicResponse.internalServerError("Failed to delete product. Please try again.");
+        }
+    }
+
+    @PutMapping("/register/serial-no")
+    public ResponseEntity registerSerialNo(@RequestBody final RegisterSerialNoRequest request) {
+        try {
+            final RegisterSerialNoResponse registerSerialNoResponse = productCommandService.activateSerialNo(request);
+            return BasicResponse.ok(registerSerialNoResponse);
+        } catch (IllegalArgumentException e) {
+            return BasicResponse.clientError(e.getMessage());
+        } catch (Exception e) {
+            log.error("ProductAdminController.registerSerialNo Exception: ", e);
+            return BasicResponse.internalServerError("Failed to activate S/N. Please try again.");
         }
     }
 }
