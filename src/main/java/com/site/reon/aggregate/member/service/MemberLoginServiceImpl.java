@@ -11,6 +11,7 @@ import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
+import com.site.reon.aggregate.member.service.dto.api.ApiRegisterSerialNo;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -34,6 +35,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MemberLoginServiceImpl implements MemberLoginService {
+
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -110,6 +112,16 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         OAuth2Client.validateClientName(authClientName);
         deleteMember(email, OAuth2Client.of(authClientName));
         return true;
+    }
+
+    @Override
+    @Transactional
+    public boolean registerMemberSerialNo(final ApiRegisterSerialNo request) {
+        final OAuth2Client oAuth2Client = OAuth2Client.of(request.getAuthClientName().toLowerCase());
+        int result = memberRepository.registerMemberSerialNo(request.getSerialNo(),
+                request.getEmail(),
+                oAuth2Client);
+        return result == 1;
     }
 
     private void deleteMember(final String email, final OAuth2Client oAuth2Client) {
