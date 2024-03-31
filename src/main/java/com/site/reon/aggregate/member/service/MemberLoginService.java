@@ -6,7 +6,7 @@ import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiRegisterSerialNo;
+import com.site.reon.aggregate.member.service.dto.api.ApiRegisterMemberSerialNo;
 
 public interface MemberLoginService {
     /**
@@ -37,5 +37,5 @@ public interface MemberLoginService {
     /**
      * S/N 등록
      */
-    boolean registerMemberSerialNo(ApiRegisterSerialNo request);
+    boolean registerMemberSerialNo(ApiRegisterMemberSerialNo request);
 }

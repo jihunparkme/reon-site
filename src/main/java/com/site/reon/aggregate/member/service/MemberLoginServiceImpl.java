@@ -11,7 +11,7 @@ import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiRegisterSerialNo;
+import com.site.reon.aggregate.member.service.dto.api.ApiRegisterMemberSerialNo;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -116,7 +116,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     @Transactional
-    public boolean registerMemberSerialNo(final ApiRegisterSerialNo request) {
+    public boolean registerMemberSerialNo(final ApiRegisterMemberSerialNo request) {
         final OAuth2Client oAuth2Client = OAuth2Client.of(request.getAuthClientName().toLowerCase());
         int result = memberRepository.registerMemberSerialNo(request.getSerialNo(),
                 request.getEmail(),
