@@ -69,9 +69,15 @@
 <script type="text/javascript" th:src="@{/js/product/product.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    let totalPages = [[${roastingRecordListPage.totalPages}]];
+    let startPage = [[${roastingRecordListPage.number}]] + 1;
+    if (startPage === 1) {
+        totalPages = 1;
+    }
+
     window.pagObj = $('#pagination').twbsPagination({
-        totalPages: [[${productListPage.totalPages}]],
-        startPage: [[${productListPage.number}]] + 1,
+        totalPages: totalPages,
+        startPage: startPage,
         visiblePages: 10,
         prev: "‹",
         next: "›",
