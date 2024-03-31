@@ -84,7 +84,6 @@ create table member_authority (
   primary key (member_id, authority_name)
 );
 
-
 insert into member (TYPE, FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, PHONE, COMPANY_NAME, ADDRESS, PRD_CODE, ROASTER_SN, O_AUTH_CLIENT, PICTURE, ACTIVATED, CREATED_DT)
 values ('PRIVATE', 'admin', 'park', 'admin@gmail.com', '$2a$08$lDnHPz7eUkSi6ao14Twuau08mzhWrL4kyZGGU5xfiGALO/Vxd5DOi', '010-1234-1234', null, null, 'admin', 'admin', 'EMPTY', null, true, DATE_FORMAT('2023-10-01', '%y-%m-%d'));
 
@@ -98,3 +97,32 @@ insert into authority (authority_name) values ('ROLE_ADMIN');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_USER');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_ADMIN');
 insert into member_authority (member_id, authority_name) values (2, 'ROLE_USER');
+
+create table category (
+      category_id bigint(20) NOT NULL AUTO_INCREMENT,
+      title varchar(100) not null,
+      primary key (category_id)
+);
+
+insert into category (TITLE)
+values ('Roaster');
+
+create table product (
+     product_id bigint(20) NOT NULL AUTO_INCREMENT,
+     name varchar(100) not null,
+     detail varchar(1000),
+     product_no varchar(100) not null,
+     serial_no varchar(100) not null,
+     activated tinyint(1) default false not null,
+     manufactured_dt timestamp(6),
+     color varchar(10),
+     rated_voltage varchar(10),
+     created_dt timestamp(6),
+     modified_dt timestamp(6),
+     primary key (product_id)
+);
+
+create table product_category (
+      product_id bigint(20) NOT NULL,
+      category_ids bigint(20)
+)
