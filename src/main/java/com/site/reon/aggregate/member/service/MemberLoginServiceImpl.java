@@ -116,11 +116,8 @@ public class MemberLoginServiceImpl implements MemberLoginService {
 
     @Override
     @Transactional
-    public boolean registerMemberSerialNo(final ApiRegisterMemberSerialNo request) {
-        final OAuth2Client oAuth2Client = OAuth2Client.of(request.getAuthClientName().toLowerCase());
-        int result = memberRepository.registerMemberSerialNo(request.getSerialNo(),
-                request.getEmail(),
-                oAuth2Client);
+    public boolean registerMemberSerialNo(final long memberId, final ApiRegisterMemberSerialNo request) {
+        int result = memberRepository.registerMemberSerialNo(request.getSerialNo(), memberId);
         return result == 1;
     }
 

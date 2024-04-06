@@ -12,12 +12,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiRegisterMemberSerialNo extends ApiRequest {
-    @NotBlank(message = "authClientName is required.")
-    private String authClientName;
-
-    @NotBlank(message = "email is required.")
-    private String email;
-
     @NotBlank(message = "serialNo is required.")
     private String serialNo;
 }

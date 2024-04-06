@@ -37,5 +37,5 @@ public interface MemberLoginService {
     /**
      * S/N 등록
      */
-    boolean registerMemberSerialNo(ApiRegisterMemberSerialNo request);
+    boolean registerMemberSerialNo(final long id, ApiRegisterMemberSerialNo request);
 }
