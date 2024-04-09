@@ -1,6 +1,9 @@
 package com.site.reon.global.common.handler;
 
 import com.site.reon.global.common.dto.BasicResponse;
+import com.site.reon.global.security.exception.DuplicateMemberException;
+import com.site.reon.global.security.exception.NotFoundMemberException;
+import com.site.reon.global.security.exception.NotFoundProductException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanCreationNotAllowedException;
@@ -19,7 +22,7 @@ import java.net.BindException;
 public class RestControllerExceptionHandler {
 
     @ExceptionHandler({
-            MethodArgumentTypeMismatchException.class
+            MethodArgumentTypeMismatchException.class,
             MethodArgumentNotValidException.class,
             BindException.class,
             ConstraintViolationException.class,
@@ -29,10 +32,25 @@ public class RestControllerExceptionHandler {
         return BasicResponse.clientError(ex.getMessage());
     }
 
+    @ExceptionHandler({
+            DuplicateMemberException.class
+    })
+    public ResponseEntity handleCustomBadRequestException(IllegalArgumentException ex) {
+        return BasicResponse.clientError(ex.getMessage());
+    }
+
+    @ExceptionHandler({
+            NotFoundMemberException.class,
+            NotFoundProductException.class
+    })
+    public ResponseEntity handleCustomNotFoundException(IllegalArgumentException ex) {
+        return BasicResponse.clientError(ex.getMessage());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleException(Exception ex) {
         log.error("Exception. ", ex);
-        return BasicResponse.internalServerError(ex.getMessage());
+        return BasicResponse.internalServerError("Request processing failed. Please try again.");
     }
 
     @ExceptionHandler(BeanCreationNotAllowedException.class)
