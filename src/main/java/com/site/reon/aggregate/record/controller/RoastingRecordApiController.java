@@ -37,15 +37,8 @@ public class RoastingRecordApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final List<RoastingRecordListResponse> result = roastingRecordFindService.findRoastingRecordListBy(request.getMemberId());
-            return BasicResponse.ok(result);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("RoastingRecordApiController.RoastingRecords Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        final List<RoastingRecordListResponse> result = roastingRecordFindService.findRoastingRecordListBy(request.getMemberId());
+        return BasicResponse.ok(result);
     }
 
     @ApiOperation(value = "로스팅 로그 조회", notes = "앱에서 로스팅 로그를 조회합니다.")
@@ -56,15 +49,8 @@ public class RoastingRecordApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final RoastingRecord roastingRecord = roastingRecordFindService.findRoastingRecordBy(id, request.getMemberId());
-            return BasicResponse.ok(ApiRoastingRecordResponse.of(roastingRecord));
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("RoastingRecordApiController.RoastingRecords Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        final RoastingRecord roastingRecord = roastingRecordFindService.findRoastingRecordBy(id, request.getMemberId());
+        return BasicResponse.ok(ApiRoastingRecordResponse.of(roastingRecord));
     }
 
     @ApiOperation(value = "로스팅 로그 업로드", notes = "앱에서 로스팅 로그를 업로드합니다.")
@@ -74,14 +60,7 @@ public class RoastingRecordApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            roastingRecordCommandService.upload(request);
-            return BasicResponse.created(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("RoastingRecordApiController.upload Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        roastingRecordCommandService.upload(request);
+        return BasicResponse.created(SUCCESS);
     }
 }
