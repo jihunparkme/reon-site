@@ -50,7 +50,7 @@ public class RestControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleException(Exception ex) {
         log.error("Exception. ", ex);
-        return BasicResponse.internalServerError("Request processing failed. Please try again.");
+        return BasicResponse.internalServerError("An error occurred while processing the request. Please try again.");
     }
 
     @ExceptionHandler(BeanCreationNotAllowedException.class)
