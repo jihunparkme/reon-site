@@ -10,14 +10,12 @@ import com.site.reon.aggregate.member.service.dto.api.*;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.common.util.BindingResultUtil;
-import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import io.swagger.annotations.ApiOperation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
