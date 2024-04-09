@@ -16,9 +16,11 @@ Project Version.
 > Backend
   - Java
   - Spring Boot
+  - Spring MVC
   - Spring Data JPA/REDIS
   - Spring Security
   - Spring OAuth2
+  - Spring WebFlux
 > DataBase
   - MariaDB
   - Redis
@@ -71,11 +73,17 @@ DDD
 - 한 Aggregate에서 다른 Aggregate의 참조는 식별자(id)를 통해서만 참조
 - 하나의 Transaction에서 여러 개의 Aggregate이 갱신되어야 하는 경우, 다른 Aggregate 갱신은 비동기 통신을 활용해서 결과적 일관성 맞추기
 - Domain Event: 비지니스 도메인에서 일어난 이벤트를 설명하는 메시지(`'과거형'`으로 명명)
+- 공통 에러 코드 관리
+
+JPA
+- @JoinColumn
+- @Index
+- @UniqueConstraint
 ```
 - [주문 API 개발로 알아보는 TDD](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
 - [Microservice 내부 아키텍처와 EventStorming 설계 - DDD](https://jihunparkme.gitbook.io/docs/lecture/msa/ddd)
 
-# Domain
+# Page
 
 ## Login
 
@@ -83,13 +91,13 @@ DDD
 
 **Login Main Page**
 
-![Result](./reference/login.png 'Result')
+![Result](reference/image/page/login.png 'Result')
 
 **Email Login/Sign Up Page**
 
 <p align="center" width="100%">
-    <img src="./reference/email-login.png" width="40%">
-    <img src="./reference/email-signup.png" width="40%">
+    <img src="reference/image/page/email-login.png" width="40%">
+    <img src="reference/image/page/email-signup.png" width="40%">
 </p>
 
 ### Function
@@ -119,7 +127,7 @@ DDD
 
 ### View
 
-![Result](./reference/mypage.png 'Result')
+![Result](reference/image/page/mypage.png 'Result')
 
 ### Function
 
@@ -153,13 +161,13 @@ Apple revoke token Ref.
 
 **Record List**
 
-![Result](./reference/record-list.png 'Result')
+![Result](reference/image/page/record-list.png 'Result')
 
 **Record View**
 
-![Result](./reference/record-graph.png 'Result')
+![Result](reference/image/page/record-graph.png 'Result')
 
-![Result](./reference/profile-recipe.png 'Result')
+![Result](reference/image/page/profile-recipe.png 'Result')
 
 ### Function
 
@@ -180,8 +188,10 @@ Apple revoke token Ref.
 - 저장된 모든 로스팅 로그 조회
 
 **• Products**
-- [ ] 제품 관리(상태, 상품코드, S/N...)
-- [ ] 제품 S/N 생성 API
+- 제품 리스트 조회
+- 제품 상세 정보 조회/수정/삭제
+- S/N 생성
+- S/N 등록
 
 **• Statistics**
 - [ ] 가입자(개인/기업), 지역, 로스팅 횟수 등 통계 정보
@@ -250,3 +260,18 @@ Apple revoke token Ref.
 - [ ] 미서용 코드 제거
   - [ ] style.css
   - [ ] main.js
+
+# Domain
+
+**Records**
+
+![Result](./reference/image/domain/records.png 'Result')
+
+**Members**
+
+![Result](./reference/image/domain/members.png 'Result')
+
+**Products**
+
+![Result](./reference/image/domain/products.png 'Result')
+
