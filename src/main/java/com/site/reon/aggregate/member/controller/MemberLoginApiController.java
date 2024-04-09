@@ -40,15 +40,8 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final boolean result = memberLoginService.verifySocialEmail(request);
-            return BasicResponse.ok(result);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.verifyEmail Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        final boolean result = memberLoginService.verifySocialEmail(request);
+        return BasicResponse.ok(result);
     }
 
     @ApiOperation(value = "신규 소셜 가입", notes = "앱에서 신규로 소셜 가입을 합니다.")
@@ -58,15 +51,8 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final MemberDto member = memberLoginService.oAuth2SignUp(request);
-            return BasicResponse.ok(member);
-        } catch (DuplicateMemberException | IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.oAuth2SignUp Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        final MemberDto member = memberLoginService.oAuth2SignUp(request);
+        return BasicResponse.ok(member);
     }
 
     @ApiOperation(value = "이메일 가입", notes = "앱에서 이메일로 가입합니다.")
@@ -76,15 +62,8 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            memberLoginService.signup(request);
-            return BasicResponse.ok(SUCCESS);
-        } catch (DuplicateMemberException | IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.signUpEmail Exception: ", e);
-            return BasicResponse.internalServerError("Registration failed. Please try again.");
-        }
+        memberLoginService.signup(request);
+        return BasicResponse.ok(SUCCESS);
     }
 
     @ApiOperation(value = "이메일 인증번호 발송", notes = "앱에서 이메일로 가입 시 인증번호를 발송합니다.")
@@ -94,15 +73,8 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, request.getPurpose(), request.getEmail());
-            return BasicResponse.ok(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.sendAuthenticationCodeByEmail Exception: ", e);
-            return BasicResponse.internalServerError("Failed to send email authentication code. Please try again.");
-        }
+        memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, request.getPurpose(), request.getEmail());
+        return BasicResponse.ok(SUCCESS);
     }
 
     @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다.")
@@ -112,15 +84,8 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
-            return BasicResponse.ok(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.verifyAuthenticationCode Exception: ", e);
-            return BasicResponse.internalServerError("Email authentication code validation failed. Please try again.");
-        }
+        memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
+        return BasicResponse.ok(SUCCESS);
     }
 
     @ApiOperation(value = "이메일 로그인", notes = "앱에서 이메일로 로그인합니다.")
@@ -130,16 +95,9 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            memberLoginService.emailAuthenticate(LoginDto.from(request));
-            final Member member = memberService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
-            return BasicResponse.ok(MemberDto.from(member));
-        } catch (BadCredentialsException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.loginEmail Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        memberLoginService.emailAuthenticate(LoginDto.from(request));
+        final Member member = memberService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
+        return BasicResponse.ok(MemberDto.from(member));
     }
 
     @ApiOperation(value = "회원 정보 조회", notes = "앱에서 회원 정보를 조회합니다.")
@@ -149,16 +107,9 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final OAuth2Client oAuthClient = OAuth2Client.of(request.getAuthClientName().toLowerCase());
-            final Member member = memberService.getMemberWithAuthorities(request.getEmail(), oAuthClient);
-            return BasicResponse.ok(MemberDto.from(member));
-        } catch (BadCredentialsException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.mypage Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        final OAuth2Client oAuthClient = OAuth2Client.of(request.getAuthClientName().toLowerCase());
+        final Member member = memberService.getMemberWithAuthorities(request.getEmail(), oAuthClient);
+        return BasicResponse.ok(MemberDto.from(member));
     }
 
     @ApiOperation(value = "회원 탈퇴", notes = "앱에서 회원을 탈퇴합니다.")
@@ -168,15 +119,8 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final boolean result = memberLoginService.withdraw(request.toBaseRequest());
-            return BasicResponse.ok(result);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.withdraw Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        final boolean result = memberLoginService.withdraw(request.toBaseRequest());
+        return BasicResponse.ok(result);
     }
 
     @ApiOperation(value = "회원 S/N 등록", notes = "앱에서 회원의 S/N를 등록합니다.")
@@ -187,14 +131,7 @@ public class MemberLoginApiController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final boolean result = memberLoginService.registerMemberSerialNo(id, request);
-            return BasicResponse.ok(result);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberLoginApiController.registerSerialNo Exception: ", e);
-            return BasicResponse.internalServerError(e.getMessage());
-        }
+        final boolean result = memberLoginService.registerMemberSerialNo(id, request);
+        return BasicResponse.ok(result);
     }
 }
