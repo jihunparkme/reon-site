@@ -42,15 +42,8 @@ public class MemberEmailLoginController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            memberLoginService.signup(signUpDto);
-            return ResponseEntity.ok(SUCCESS);
-        } catch (DuplicateMemberException | IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberEmailLoginController.signup Exception: ", e);
-            return BasicResponse.internalServerError("Registration failed. Please try again.");
-        }
+        memberLoginService.signup(signUpDto);
+        return ResponseEntity.ok(SUCCESS);
     }
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,27 +59,13 @@ public class MemberEmailLoginController {
 
     @PostMapping("/auth-code")
     public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody final EmailAuthCodeRequest request) {
-        try {
-            memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, KeyPrefix.SIGN_UP.purpose(), request.getEmail());
-            return BasicResponse.ok(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberEmailLoginController.sendAuthenticationCodeByEmail Exception: ", e);
-            return BasicResponse.internalServerError("Failed to send email authentication code. Please try again.");
-        }
+        memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, KeyPrefix.SIGN_UP.purpose(), request.getEmail());
+        return BasicResponse.ok(SUCCESS);
     }
 
     @PostMapping("/auth-code/verify")
     public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody final EmailAuthCodeVerifyRequest request) {
-        try {
-            memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
-            return BasicResponse.ok(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberEmailLoginController.verifyAuthenticationCode Exception: ", e);
-            return BasicResponse.internalServerError("Email authentication code validation failed. Please try again.");
-        }
+        memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
+        return BasicResponse.ok(SUCCESS);
     }
 }

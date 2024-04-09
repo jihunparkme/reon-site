@@ -31,40 +31,19 @@ public class ProductAdminController {
         final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
         if (allErrors != null) return allErrors;
 
-        try {
-            final List<SerialNo> serialNos = productCommandService.saveProducts(request);
-            return BasicResponse.created(serialNos);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("ProductAdminController.saveProduct Exception: ", e);
-            return BasicResponse.internalServerError("Failed to create product. Please try again.");
-        }
+        final List<SerialNo> serialNos = productCommandService.saveProducts(request);
+        return BasicResponse.created(serialNos);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteProduct(@PathVariable(name = "id") final Long id) {
-        try {
-            productCommandService.delete(id);
-            return BasicResponse.ok(true);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("ProductAdminController.deleteProduct Exception: ", e);
-            return BasicResponse.internalServerError("Failed to delete product. Please try again.");
-        }
+        productCommandService.delete(id);
+        return BasicResponse.ok(true);
     }
 
     @PutMapping("/register/serial-no")
     public ResponseEntity registerSerialNo(@RequestBody final RegisterSerialNoRequest request) {
-        try {
-            final RegisterSerialNoResponse registerSerialNoResponse = productCommandService.activateSerialNo(request);
-            return BasicResponse.ok(registerSerialNoResponse);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("ProductAdminController.registerSerialNo Exception: ", e);
-            return BasicResponse.internalServerError("Failed to activate S/N. Please try again.");
-        }
+        final RegisterSerialNoResponse registerSerialNoResponse = productCommandService.activateSerialNo(request);
+        return BasicResponse.ok(registerSerialNoResponse);
     }
 }

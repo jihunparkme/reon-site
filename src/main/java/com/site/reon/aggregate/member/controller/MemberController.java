@@ -61,14 +61,7 @@ public class MemberController {
     @PostMapping("/withdraw")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity withdraw(@Valid @RequestBody final WithdrawRequest request) {
-        try {
-            final boolean result = memberLoginService.withdraw(request);
-            return BasicResponse.ok(result);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberEmailLoginController.withdraw Exception: ", e);
-            return BasicResponse.internalServerError("Failed to withdraw member. Please try again.");
-        }
+        final boolean result = memberLoginService.withdraw(request);
+        return BasicResponse.ok(result);
     }
 }
