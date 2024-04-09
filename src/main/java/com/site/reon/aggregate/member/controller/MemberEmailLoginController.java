@@ -8,9 +8,7 @@ import com.site.reon.aggregate.member.service.dto.*;
 import com.site.reon.global.common.constant.SessionConst;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
-import com.site.reon.global.common.util.BindingResultUtil;
 import com.site.reon.global.security.dto.SessionMember;
-import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +35,7 @@ public class MemberEmailLoginController {
     private final MemberAuthCodeService memberAuthCodeService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto, final BindingResult bindingResult) {
-        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
-        if (allErrors != null) return allErrors;
-
+    public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto) {
         memberLoginService.signup(signUpDto);
         return ResponseEntity.ok(SUCCESS);
     }

@@ -18,6 +18,15 @@ Content-Type: application/json
   "memberId": "99999"
 }
 
+### Find roasting list then BAD_REQUEST (memberId is required.)
+POST http://localhost:8080/api/records
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa"
+}
+
 
 
 
@@ -31,7 +40,7 @@ Content-Type: application/json
   "memberId": "2"
 }
 
-### Find roasting record then return BAD_REQUEST
+### Find roasting record then return BAD_REQUEST (You do not have permission to access this data.)
 POST http://localhost:8080/api/records/1
 Content-Type: application/json
 
