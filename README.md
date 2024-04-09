@@ -6,71 +6,55 @@
 
 - `AWS EC2/RDS`, `Docker` 기반 인프라 구축, `Spring Security`, `OAuth 2.0`, `JPA`, `Redis` 등..
 
-## 기술 스택
+## Development Stack
 
-```text
-> Backend
-  - Java JDK 17
-  - Spring Boot 3.2.0
-  - Spring Web MVC
-  - Spring Data JPA/REDIS
-  - Spring Security
-  - Spring OAuth2
-  - Spring WebFlux
-  - Gradle 8.3
-> DataBase
-  - MariaDB
-  - Redis
-> DevOps
-  - AWS RDS (db.t3.micro)
-  - AWS EC2 (t2.micro)
-  - AWS Route 53
-  - Docker
-  - Jenkins
-  - Nginx
-> Front
-  - thymeleaf
-  - JavaScript(ES6)
-  - CSS
-> SSL
-  - Certbot
-  - Let’s encrypt
-> Test
-  - Junit 5
-  - mockito
-  - REST Assured
-  - Coverage(JaCoCo)
+```bash
+├── Backend
+│   ├── Java JDK 17
+│   ├── Spring Boot 3.2.0
+│   ├── Spring Web MVC
+│   ├── Spring Data JPA/REDIS
+│   ├── Spring Security
+│   ├── Spring OAuth2
+│   ├── Spring WebFlux
+│   └── Gradle 8.3
+├── DataBase
+│   ├── MariaDB
+│   └── Redis
+├── DevOps
+│   ├── AWS RDS (db.t3.micro)
+│   ├── AWS EC2 (t2.micro)
+│   ├── AWS Route 53
+│   ├── Docker
+│   ├── Jenkins
+│   └── Nginx
+├── Front
+│   ├── thymeleaf
+│   ├── JavaScript(ES6)
+│   └── CSS
+├── SSL
+│   ├──Certbot
+│   └──Let’s encrypt
+├── TEST
+│   ├──Junit 5
+│   ├──mockito
+│   ├──REST Assured
+│   └──Coverage(JaCoCo)
 ```
 
 ## System architecture
 
 ![Result](./reference/system-architecture.png 'Result')
 
-# Page
+## 주요 기능
 
-## Login
+### 로그인
 
-### View
-
-**Login Main Page**
-
-![Result](reference/image/page/login.png 'Result')
-
-**Email Login/Sign Up Page**
-
-<p align="center" width="100%">
-    <img src="reference/image/page/email-login.png" width="40%">
-    <img src="reference/image/page/email-signup.png" width="40%">
-</p>
-
-### Function
-
-**• 로그인**
-
-- 이메일
+- Social(KAKAO, GOOGLE, APPLE) Login
+- Email Login
   - [ ] 비밀번호 찾기(메일로 비밀번호 변경 링크 전달)
   - [ ] 이메일 찾기
-- 소셜(Kakao, Google, Apple)
+
 
 **• 세션 관리**
 
@@ -85,6 +69,24 @@
   - Oauth2 Login API
 
 **• 로그아웃**
+
+
+## Page
+
+### Login
+
+
+
+**Login Main Page**
+
+![Result](reference/image/page/login.png 'Result')
+
+**Email Login/Sign Up Page**
+
+<p align="center" width="100%">
+    <img src="reference/image/page/email-login.png" width="40%">
+    <img src="reference/image/page/email-signup.png" width="40%">
+</p>
 
 ## Mypage
 
