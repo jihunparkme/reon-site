@@ -1,26 +1,23 @@
-# re-on-site
+# REON
 
-Project Version.
+로스팅 프로파일 분석 및 공유 사이트입니다.
 
-```text
-> SpringBoot: 3.2.0
-> Java: jdk 17
-> Gradle
-```
+평소 관심있고, 프로젝트에 적용해 보고 싶었던 기술을 적용해 보았습니다.
 
-# System architecture
+- `AWS EC2/RDS`, `Docker` 기반 인프라 구축, `Spring Security`, `OAuth 2.0`, `JPA`, `Redis` 등..
 
-![Result](./reference/system-architecture.png 'Result')
+## 기술 스택
 
 ```text
 > Backend
-  - Java
-  - Spring Boot
-  - Spring MVC
+  - Java JDK 17
+  - Spring Boot 3.2.0
+  - Spring Web MVC
   - Spring Data JPA/REDIS
   - Spring Security
   - Spring OAuth2
   - Spring WebFlux
+  - Gradle 8.3
 > DataBase
   - MariaDB
   - Redis
@@ -39,49 +36,15 @@ Project Version.
   - Certbot
   - Let’s encrypt
 > Test
-  - Junit
+  - Junit 5
   - mockito
   - REST Assured
   - Coverage(JaCoCo)
 ```
 
----
+## System architecture
 
-# Development Memo
-
-Guide.
-
-```text
-JAVA
-- final keyword
-- record class
-- Assert in constructor
-- rest-assured api test
-- var type
-  
-REST API 
-- 동사 보다는 복수 명사 사용
-  - GET /dogs, POST /dogs/{puppy}/owner/{terry}
-- GET /dogs (목록 조회)
-- GET /dogs/1 (1번 개체 조회)
-- POST /dogs (개체 생성)
-- PUT /dogs/1 (1번 개체 수정)
-- DELETE /dogs/1 (1번 개체 삭제)
-
-DDD
-- 도메인에서 비즈니스 로직 처리 + VO 활용하기
-- 한 Aggregate에서 다른 Aggregate의 참조는 식별자(id)를 통해서만 참조
-- 하나의 Transaction에서 여러 개의 Aggregate이 갱신되어야 하는 경우, 다른 Aggregate 갱신은 비동기 통신을 활용해서 결과적 일관성 맞추기
-- Domain Event: 비지니스 도메인에서 일어난 이벤트를 설명하는 메시지(`'과거형'`으로 명명)
-- 공통 에러 코드 관리
-
-JPA
-- @JoinColumn
-- @Index
-- @UniqueConstraint
-```
-- [주문 API 개발로 알아보는 TDD](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
-- [Microservice 내부 아키텍처와 EventStorming 설계 - DDD](https://jihunparkme.gitbook.io/docs/lecture/msa/ddd)
+![Result](./reference/system-architecture.png 'Result')
 
 # Page
 
@@ -275,3 +238,41 @@ Apple revoke token Ref.
 
 ![Result](./reference/image/domain/products.png 'Result')
 
+
+---
+
+## Reference
+
+Guide.
+
+```text
+JAVA
+- final keyword
+- record class
+- Assert in constructor
+- rest-assured api test
+- var type
+  
+REST API 
+- 동사 보다는 복수 명사 사용
+  - GET /dogs, POST /dogs/{puppy}/owner/{terry}
+- GET /dogs (목록 조회)
+- GET /dogs/1 (1번 개체 조회)
+- POST /dogs (개체 생성)
+- PUT /dogs/1 (1번 개체 수정)
+- DELETE /dogs/1 (1번 개체 삭제)
+
+DDD
+- 도메인에서 비즈니스 로직 처리 + VO 활용하기
+- 한 Aggregate에서 다른 Aggregate의 참조는 식별자(id)를 통해서만 참조
+- 하나의 Transaction에서 여러 개의 Aggregate이 갱신되어야 하는 경우, 다른 Aggregate 갱신은 비동기 통신을 활용해서 결과적 일관성 맞추기
+- Domain Event: 비지니스 도메인에서 일어난 이벤트를 설명하는 메시지(`'과거형'`으로 명명)
+- 공통 에러 코드 관리
+
+JPA
+- @JoinColumn
+- @Index
+- @UniqueConstraint
+```
+- [주문 API 개발로 알아보는 TDD](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
+- [Microservice 내부 아키텍처와 EventStorming 설계 - DDD](https://jihunparkme.gitbook.io/docs/lecture/msa/ddd)
