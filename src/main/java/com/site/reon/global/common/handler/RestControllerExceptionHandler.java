@@ -9,6 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanCreationNotAllowedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.util.CollectionUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,26 +21,43 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.net.BindException;
+import java.util.List;
+
+import static com.site.reon.global.common.constant.Result.FAIL;
 
 @Slf4j
 @RestControllerAdvice
 public class RestControllerExceptionHandler {
 
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity handleValidationExceptions(MethodArgumentNotValidException ex) {
+        BindingResult bindingResult = ex.getBindingResult();
+        if (bindingResult.hasErrors()) {
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            if (!CollectionUtils.isEmpty(allErrors)) {
+                return BasicResponse.clientError(allErrors.get(0).getDefaultMessage());
+            }
+            return BasicResponse.clientError(FAIL.message());
+        }
+        return BasicResponse.clientError(ex.getMessage());
+    }
+
     @ExceptionHandler({
+            HttpMessageNotReadableException.class,
             MethodArgumentTypeMismatchException.class,
-            MethodArgumentNotValidException.class,
             BindException.class,
             ConstraintViolationException.class,
-            IllegalArgumentException.class
+            IllegalArgumentException.class,
+            BadCredentialsException.class,
     })
-    public ResponseEntity handleBadRequest(IllegalArgumentException ex) {
+    public ResponseEntity handleBadRequest(Exception ex) {
         return BasicResponse.clientError(ex.getMessage());
     }
 
     @ExceptionHandler({
             DuplicateMemberException.class
     })
-    public ResponseEntity handleCustomBadRequestException(IllegalArgumentException ex) {
+    public ResponseEntity handleCustomBadRequestException(Exception ex) {
         return BasicResponse.clientError(ex.getMessage());
     }
 
@@ -43,7 +65,7 @@ public class RestControllerExceptionHandler {
             NotFoundMemberException.class,
             NotFoundProductException.class
     })
-    public ResponseEntity handleCustomNotFoundException(IllegalArgumentException ex) {
+    public ResponseEntity handleCustomNotFoundException(Exception ex) {
         return BasicResponse.clientError(ex.getMessage());
     }
 
