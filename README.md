@@ -46,36 +46,75 @@
 
 ![Result](./reference/system-architecture.png 'Result')
 
-## 주요 기능
+## Key Features
 
-### 로그인
+### Login
 
-- Social(KAKAO, GOOGLE, APPLE) Login
+**Login/Logout**
+- Social(KAKAO, GOOGLE, APPLE) account Login
 - Email Login
-  - [ ] 비밀번호 찾기(메일로 비밀번호 변경 링크 전달)
-  - [ ] 이메일 찾기
+  - [ ] Find Password(Authenticate mail)
+  - [ ] Find Email
 
-
-**• 세션 관리**
-
+**Login Session Management**
 - `spring-session-data-redis`
 
-**• 회원가입**
+**Sign Up**
+- Sign up with email
+  - Send and verify authentication number
+  - Authentication number and status are `managed by Redis`
+- Sign up with social account(KAKAO, GOOGLE, APPLE)
+  - Social `Oauth2 Login API`
 
-- 이메일
-  - 인증번호 발송 및 검증
-  - 인증번호 및 인증 상태는 Redis 에서 관리
-- 소셜(Kakao, Google, Apple)
-  - Oauth2 Login API
+### MyPage
 
-**• 로그아웃**
+**account info**
+- View my information
+- Update my information
+  - [ ] change password
 
+**Account withdrawal**
+- Email account
+  - Delete Account information
+- Social account
+  - Delete Account information
+  - unlink social account
+    - [kakaologin unlink API](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#unlink)
+    - Google revoke token
+    - [ ] Apple revoke token
+
+
+### Record
+
+- View private roasting profile
+  - Roasting Record Graph with [amcharts](https://www.amcharts.com/)
+  - Roasting Profile Recipe with [AG Grid](https://www.ag-grid.com/)
+    - [AG Grid javascript Doc.](https://www.ag-grid.com/javascript-data-grid/getting-started/)
+- [ ] search function(title, date ..)
+
+### Admin
+
+**Records**
+- View all roasting profile
+
+**Products**
+- View all product list
+- View/Update/Delete product detail
+- Create S/N
+- Register S/N
+
+**Statistics**
+- [ ] Member(PRIVATE/COMPANY), Region, Roasting statistics 
+
+**Members**
+- [ ] Member management
+- [ ] View/Update/Delete Member
+
+---
 
 ## Page
 
 ### Login
-
-
 
 **Login Main Page**
 
@@ -88,41 +127,11 @@
     <img src="reference/image/page/email-signup.png" width="40%">
 </p>
 
-## Mypage
-
-### View
+### Mypage
 
 ![Result](reference/image/page/mypage.png 'Result')
 
-### Function
-
-**• 회원 정보 조회**
-
-- 소셜 로그인이면 소설 마크 노출
-
-**• 회원 정보 수정**
-- [ ] 비밀번호 변경
-
-**• 회원 탈퇴**
-
-- 이메일 계정
-  - 회원정보 삭제
-- 소셜 계정
-  - [kakaologin unlink API](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#unlink)
-  - Google revoke token
-  - [ ] Apple revoke token
-
-```text
-Apple revoke token Ref.
-
-- https://oozoowos.tistory.com/entry/Spring-Boot-Security-%EC%97%86%EC%9D%B4-OAuth2%EB%A1%9C-Google-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%98%84-%EC%9C%A0%EC%A0%80-%EC%A0%95%EB%B3%B4-%EC%96%BB%EA%B8%B0
-- https://velog.io/@givepro91/jjo2cyus
-- https://whitepaek.tistory.com/61
-```
-
-## Record
-
-### View
+### Record
 
 **Record List**
 
@@ -133,37 +142,6 @@ Apple revoke token Ref.
 ![Result](reference/image/page/record-graph.png 'Result')
 
 ![Result](reference/image/page/profile-recipe.png 'Result')
-
-### Function
-
-**• 로스팅 로그 조회**
-
-- 자신의 저장한 로그만 조회 가능
-- Roasting Record Graph
-  - [amcharts](https://www.amcharts.com/)
-- Profile Recipe
-  - [AG Grid](https://www.ag-grid.com/)
-  - [AG Grid javascript Doc.](https://www.ag-grid.com/javascript-data-grid/getting-started/)
-- [ ] 날짜, 로그 제목으로 검색
-
-
-## Admin
-
-**• Records**
-- 저장된 모든 로스팅 로그 조회
-
-**• Products**
-- 제품 리스트 조회
-- 제품 상세 정보 조회/수정/삭제
-- S/N 생성
-- S/N 등록
-
-**• Statistics**
-- [ ] 가입자(개인/기업), 지역, 로스팅 횟수 등 통계 정보
-
-**• Members**
-- [ ] 회원 정보 관리
-- [ ] 조회, 생성, 수정-삭제
 
 # TODD
 
