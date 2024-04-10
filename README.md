@@ -253,6 +253,9 @@ JPA
 - @JoinColumn
 - @Index
 - @UniqueConstraint
+
+common
+- @RestControllerAdvice, @ExceptionHandler 활용 예외 공통 처리
 ```
 - [주문 API 개발로 알아보는 TDD](https://github.com/jihunparkme/Study-project-spring-java/tree/main/product-order-service)
 - [Microservice 내부 아키텍처와 EventStorming 설계 - DDD](https://jihunparkme.gitbook.io/docs/lecture/msa/ddd)
