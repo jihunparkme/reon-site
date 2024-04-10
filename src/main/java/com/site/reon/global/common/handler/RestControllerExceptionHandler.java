@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -52,6 +53,7 @@ public class RestControllerExceptionHandler {
             ConstraintViolationException.class,
             IllegalArgumentException.class,
             BadCredentialsException.class,
+            MissingServletRequestParameterException.class,
     })
     public ResponseEntity handleBadRequest(Exception ex) {
         return BasicResponse.clientError(ex.getMessage());
