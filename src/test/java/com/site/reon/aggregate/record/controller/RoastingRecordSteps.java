@@ -3,6 +3,7 @@ package com.site.reon.aggregate.record.controller;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
 import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordListRequest;
+import com.site.reon.global.common.dto.ApiRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -49,7 +50,7 @@ public class RoastingRecordSteps {
                 .disposeTemp(disposeTemp)
                 .disposeTime(disposeTime)
                 .inputCapacity(inputCapacity)
-                .memberId(1)
+                .memberId(1L)
                 .build();
     }
 
@@ -120,7 +121,7 @@ public class RoastingRecordSteps {
                 .disposeTemp(disposeTemp)
                 .disposeTime(disposeTime)
                 .inputCapacity(inputCapacity)
-                .memberId(1)
+                .memberId(1L)
                 .build();
     }
 
@@ -130,6 +131,24 @@ public class RoastingRecordSteps {
                 .body(request)
                 .when()
                 .post("/api/records/upload")
+                .then()
+                .log().all().extract();
+    }
+
+    public static ApiRequest getApiRoastingRecordShareRequest() {
+        return ApiRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestApiShareRoastingRecord(
+            final ApiRequest request, final String recordId, final String email) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/records/" + recordId + "/share?email=" + email)
                 .then()
                 .log().all().extract();
     }
