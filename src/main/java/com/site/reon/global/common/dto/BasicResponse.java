@@ -1,6 +1,5 @@
 package com.site.reon.global.common.dto;
 
-import com.site.reon.global.common.constant.Result;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
@@ -8,8 +7,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-
-import static com.site.reon.global.common.constant.Result.SUCCESS;
 
 @Getter
 @SuperBuilder
@@ -42,6 +39,16 @@ public class BasicResponse<T> {
                 .message(message)
                 .build();
         return new ResponseEntity<>(basicResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    public static ResponseEntity notFound(final String message) {
+        BasicResponse basicResponse = BasicResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .httpStatusCode(HttpStatus.NOT_FOUND)
+                .success(false)
+                .message(message)
+                .build();
+        return new ResponseEntity<>(basicResponse, HttpStatus.NOT_FOUND);
     }
 
     public static ResponseEntity ok(final boolean data) {

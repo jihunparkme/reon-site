@@ -4,6 +4,8 @@ import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.exception.NotFoundMemberException;
 import com.site.reon.global.security.exception.NotFoundProductException;
+import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanCreationNotAllowedException;
@@ -11,10 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -49,6 +53,7 @@ public class RestControllerExceptionHandler {
             ConstraintViolationException.class,
             IllegalArgumentException.class,
             BadCredentialsException.class,
+            MissingServletRequestParameterException.class,
     })
     public ResponseEntity handleBadRequest(Exception ex) {
         return BasicResponse.clientError(ex.getMessage());
@@ -63,10 +68,13 @@ public class RestControllerExceptionHandler {
 
     @ExceptionHandler({
             NotFoundMemberException.class,
-            NotFoundProductException.class
+            NotFoundProductException.class,
+            NotFoundRoastingRecordException.class,
+            UsernameNotFoundException.class,
+            EntityNotFoundException.class
     })
     public ResponseEntity handleCustomNotFoundException(Exception ex) {
-        return BasicResponse.clientError(ex.getMessage());
+        return BasicResponse.notFound(ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
@@ -84,6 +92,6 @@ public class RestControllerExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity handleNoHandlerFoundException(Exception ex) {
         log.error("NoHandlerFoundException. ", ex);
-        return new ResponseEntity("NoHandlerFoundException", HttpStatus.NOT_FOUND);
+        return BasicResponse.notFound("NoHandlerFoundException");
     }
 }

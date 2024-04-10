@@ -2,7 +2,7 @@ package com.site.reon.global.security.exception;
 
 public class NotFoundProductException extends RuntimeException {
     public NotFoundProductException() {
-        super();
+        super("Not Found Product");
     }
 
     public NotFoundProductException(String message, Throwable cause) {

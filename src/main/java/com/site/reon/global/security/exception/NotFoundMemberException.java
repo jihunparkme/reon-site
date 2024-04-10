@@ -2,7 +2,7 @@ package com.site.reon.global.security.exception;
 
 public class NotFoundMemberException extends RuntimeException {
     public NotFoundMemberException() {
-        super();
+        super("Not Found Member");
     }
 
     public NotFoundMemberException(String message, Throwable cause) {

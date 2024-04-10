@@ -44,7 +44,7 @@ public class MemberServiceImpl implements MemberService {
     public void update(final MemberEditRequest memberEditRequest, final Long id) {
         final Optional<Member> memberOpt = memberRepository.findById(id);
         if (memberOpt.isEmpty()) {
-            throw new NotFoundMemberException("Not Found Member");
+            throw new NotFoundMemberException();
         }
 
         final Member member = memberOpt.get();

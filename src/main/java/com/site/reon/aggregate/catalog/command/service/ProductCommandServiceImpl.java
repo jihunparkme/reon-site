@@ -43,7 +43,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     public void update(final Long id, final UpdateProductRequest request) {
         final Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isEmpty()) {
-            throw new NotFoundProductException("Not Found Product");
+            throw new NotFoundProductException();
         }
 
         final Product product = productOpt.get();
@@ -56,7 +56,7 @@ public class ProductCommandServiceImpl implements ProductCommandService {
     public void delete(final Long id) {
         final Optional<Product> productOpt = productRepository.findById(id);
         if (productOpt.isEmpty()) {
-            throw new NotFoundProductException("Not Found Product");
+            throw new NotFoundProductException();
         }
 
         final Product product = productOpt.get();

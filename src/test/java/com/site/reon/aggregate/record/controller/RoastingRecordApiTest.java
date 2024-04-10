@@ -2,9 +2,10 @@ package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.member.controller.MemberLoginSteps;
 import com.site.reon.global.ApiTest;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RoastingRecordApiTest extends ApiTest {
 
@@ -17,7 +18,7 @@ class RoastingRecordApiTest extends ApiTest {
 
         final var response = RoastingRecordSteps.requestUploadRoastingRecord(request);
 
-        Assertions.assertEquals(HttpStatus.CREATED.value(), response.statusCode());
+        assertEquals(HttpStatus.CREATED.value(), response.statusCode());
     }
 
     @Test
@@ -34,12 +35,12 @@ class RoastingRecordApiTest extends ApiTest {
         // then
         final var response = RoastingRecordSteps.requestRoastingRecordList(request);
 
-        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
-        Assertions.assertEquals("2", response.jsonPath().getString("count"));
-        Assertions.assertEquals("1", response.jsonPath().getString("data[0].id"));
-        Assertions.assertEquals("test roasting222", response.jsonPath().getString("data[0].title"));
-        Assertions.assertEquals("2", response.jsonPath().getString("data[1].id"));
-        Assertions.assertEquals("test roasting222", response.jsonPath().getString("data[1].title"));
+        assertEquals(HttpStatus.OK.value(), response.statusCode());
+        assertEquals("2", response.jsonPath().getString("count"));
+        assertEquals("1", response.jsonPath().getString("data[0].id"));
+        assertEquals("test roasting222", response.jsonPath().getString("data[0].title"));
+        assertEquals("2", response.jsonPath().getString("data[1].id"));
+        assertEquals("test roasting222", response.jsonPath().getString("data[1].title"));
     }
 
     @Test
@@ -57,9 +58,9 @@ class RoastingRecordApiTest extends ApiTest {
         // then
         final var response = RoastingRecordSteps.requestApiRoastingRecord(request, recordId);
 
-        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
-        Assertions.assertEquals("1", response.jsonPath().getString("data.id"));
-        Assertions.assertEquals("test roasting222", response.jsonPath().getString("data.title"));
+        assertEquals(HttpStatus.OK.value(), response.statusCode());
+        assertEquals("1", response.jsonPath().getString("data.id"));
+        assertEquals("test roasting222", response.jsonPath().getString("data.title"));
     }
 
     @Test
@@ -68,7 +69,60 @@ class RoastingRecordApiTest extends ApiTest {
 
         final var response = RoastingRecordSteps.requestApiUploadRoastingRecord(request);
 
-        Assertions.assertEquals(HttpStatus.CREATED.value(), response.statusCode());
+        assertEquals(HttpStatus.CREATED.value(), response.statusCode());
+    }
+
+    @Test
+    void share_record() {
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);
+        requestUploadRoastingRecord();
+        final var request = RoastingRecordSteps.getApiRoastingRecordShareRequest();
+
+        final var response = RoastingRecordSteps.requestApiShareRoastingRecord(request, "1", "user@gmail.com");
+
+        assertEquals(HttpStatus.OK.value(), response.statusCode());
+        assertEquals("1", response.jsonPath().getString("count"));
+    }
+
+    @Test
+    void share_record_then_not_found_record() {
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);
+        requestUploadRoastingRecord();
+        final var request = RoastingRecordSteps.getApiRoastingRecordShareRequest();
+
+        final var response = RoastingRecordSteps.requestApiShareRoastingRecord(request, "9999", "user@gmail.com");
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.statusCode());
+        assertEquals("0", response.jsonPath().getString("count"));
+        assertEquals("Not Found Roasting Record", response.jsonPath().getString("message"));
+    }
+
+    @Test
+    void share_record_then_not_found_share_owner_member() {
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);
+        requestUploadRoastingRecord();
+        final var request = RoastingRecordSteps.getApiRoastingRecordShareRequest();
+
+        final var response = RoastingRecordSteps.requestApiShareRoastingRecord(request, "1", "user9999@gmail.com");
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.statusCode());
+        assertEquals("0", response.jsonPath().getString("count"));
+        assertEquals("Not Found Roasting Record Owner Member", response.jsonPath().getString("message"));
+    }
+
+    @Test
+    void share_record_then_request_incorrect() {
+        final String tempEmail = "user9999@gmail.com";
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, tempEmail);
+        requestUploadRoastingRecord();
+        final var request = RoastingRecordSteps.getApiRoastingRecordShareRequest();
+
+        final var response = RoastingRecordSteps.requestApiShareRoastingRecord(request, "1", tempEmail);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        assertEquals("0", response.jsonPath().getString("count"));
+        assertEquals("Roasting information is incorrect.", response.jsonPath().getString("message"));
     }
 
     private void requestUploadRoastingRecord() {
@@ -80,10 +134,10 @@ class RoastingRecordApiTest extends ApiTest {
     private long getMemberId(final String authClientName, final String email) {
         final var myPageRequest = MemberLoginSteps.myPageRequest(authClientName, email);
         final var myPageResponse = MemberLoginSteps.requestMyPage(myPageRequest);
-        Assertions.assertEquals(HttpStatus.OK.value(), myPageResponse.statusCode());
+        assertEquals(HttpStatus.OK.value(), myPageResponse.statusCode());
 
         final String memberId = myPageResponse.jsonPath().getString("data.id");
-        Assertions.assertEquals("1", memberId);
+        assertEquals("1", memberId);
 
         return Long.parseLong(memberId);
     }
