@@ -24,15 +24,8 @@ public class GoogleOauth2LoginController {
 
     @PostMapping("/withdraw/google/signal")
     public ResponseEntity signalWithdrawal(@Valid @RequestBody final WithdrawRequest request) {
-        try {
-            googleOauth2LoginService.signalWithdrawal(request);
-            return BasicResponse.ok(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("GoogleOauth2LoginController.signalWithdrawal Exception: ", e);
-            return BasicResponse.internalServerError("Failed to withdraw google oauth2 member. Please try again.");
-        }
+        googleOauth2LoginService.signalWithdrawal(request);
+        return BasicResponse.ok(SUCCESS);
     }
 }
 

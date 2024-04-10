@@ -59,12 +59,7 @@ public class RoastingRecordController {
     @ResponseBody
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestBody final RoastingRecordRequest request){
-        try {
-            roastingRecordCommandService.upload(request);
-            return new ResponseEntity(SUCCESS, HttpStatus.CREATED);
-        } catch (Exception e) {
-            log.error("RoastingRecordController.uploadFile Exception: ", e);
-            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        roastingRecordCommandService.upload(request);
+        return new ResponseEntity(SUCCESS, HttpStatus.CREATED);
     }
 }

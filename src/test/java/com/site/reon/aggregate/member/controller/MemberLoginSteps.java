@@ -185,4 +185,22 @@ public class MemberLoginSteps {
                 .then()
                 .log().all().extract();
     }
+
+    public static ApiRegisterMemberSerialNo registerMemberSerialNoRequest() {
+        return ApiRegisterMemberSerialNo.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .serialNo("R2N0BK-0009-20240322")
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestRegisterMemberSerialNo(final ApiRegisterMemberSerialNo request) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/login/member/1/serial-no")
+                .then()
+                .log().all().extract();
+    }
 }

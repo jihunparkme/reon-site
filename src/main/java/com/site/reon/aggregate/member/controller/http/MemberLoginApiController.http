@@ -362,3 +362,17 @@ Content-Type: application/json
   "email": "contact@myreon.net",
   "authCode": "111111"
 }
+
+
+
+
+
+### 앱에서 회원의 S/N를 등록합니다.
+POST http://localhost:8080/api/login/member/1/serial-no
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "serialNo": "R2N0BK-0004-20240325"
+}

@@ -500,6 +500,29 @@ public class MemberLoginApiTest extends ApiTest {
         Assertions.assertEquals("KAKAO", response.jsonPath().getString("data.oauthClient"));
     }
 
+    /**
+     * /api/login/email/member/{id}/serial-no
+     */
+    @Test 
+    void when_register_member_serial_no_then_return_result() {
+        final String authClientName = "google";
+        final String email = "aaron@gmail.com";
+        final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
+        signUpOauth2Member(authClientName, email, roasterSn);
+        final var request = MemberLoginSteps.registerMemberSerialNoRequest();
+
+        final var response = MemberLoginSteps.requestRegisterMemberSerialNo(request);
+
+        Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+        Assertions.assertEquals("200", response.jsonPath().getString("status"));
+        Assertions.assertEquals("OK", response.jsonPath().getString("httpStatusCode"));
+        Assertions.assertEquals("true", response.jsonPath().getString("success"));
+        Assertions.assertEquals(null, response.jsonPath().getString("message"));
+        Assertions.assertEquals("0", response.jsonPath().getString("count"));
+        Assertions.assertEquals("true", response.jsonPath().getString("data"));
+    }
+
+
     private void signUpOauth2Member(final String authClientName, final String email, final String roasterSn) {
         final var request = MemberLoginSteps.oAuth2SignUpRequest(
                 MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);

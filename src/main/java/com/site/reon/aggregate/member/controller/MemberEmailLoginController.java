@@ -8,9 +8,7 @@ import com.site.reon.aggregate.member.service.dto.*;
 import com.site.reon.global.common.constant.SessionConst;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
-import com.site.reon.global.common.util.BindingResultUtil;
 import com.site.reon.global.security.dto.SessionMember;
-import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -20,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,19 +35,9 @@ public class MemberEmailLoginController {
     private final MemberAuthCodeService memberAuthCodeService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto, final BindingResult bindingResult) {
-        final ResponseEntity allErrors = BindingResultUtil.validateBindingResult(bindingResult);
-        if (allErrors != null) return allErrors;
-
-        try {
-            memberLoginService.signup(signUpDto);
-            return ResponseEntity.ok(SUCCESS);
-        } catch (DuplicateMemberException | IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberEmailLoginController.signup Exception: ", e);
-            return BasicResponse.internalServerError("Registration failed. Please try again.");
-        }
+    public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto) {
+        memberLoginService.signup(signUpDto);
+        return ResponseEntity.ok(SUCCESS);
     }
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,27 +53,13 @@ public class MemberEmailLoginController {
 
     @PostMapping("/auth-code")
     public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody final EmailAuthCodeRequest request) {
-        try {
-            memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, KeyPrefix.SIGN_UP.purpose(), request.getEmail());
-            return BasicResponse.ok(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberEmailLoginController.sendAuthenticationCodeByEmail Exception: ", e);
-            return BasicResponse.internalServerError("Failed to send email authentication code. Please try again.");
-        }
+        memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, KeyPrefix.SIGN_UP.purpose(), request.getEmail());
+        return BasicResponse.ok(SUCCESS);
     }
 
     @PostMapping("/auth-code/verify")
     public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody final EmailAuthCodeVerifyRequest request) {
-        try {
-            memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
-            return BasicResponse.ok(SUCCESS);
-        } catch (IllegalArgumentException e) {
-            return BasicResponse.clientError(e.getMessage());
-        } catch (Exception e) {
-            log.error("MemberEmailLoginController.verifyAuthenticationCode Exception: ", e);
-            return BasicResponse.internalServerError("Email authentication code validation failed. Please try again.");
-        }
+        memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
+        return BasicResponse.ok(SUCCESS);
     }
 }
