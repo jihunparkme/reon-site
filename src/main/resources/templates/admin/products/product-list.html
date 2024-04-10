@@ -71,23 +71,22 @@
     /*<![CDATA[*/
     let totalPages = [[${productListPage.totalPages}]];
     let startPage = [[${productListPage.number}]] + 1;
-    if (startPage === 1) {
-        totalPages = 1;
-    }
 
-    window.pagObj = $('#pagination').twbsPagination({
-        totalPages: totalPages,
-        startPage: startPage,
-        visiblePages: 10,
-        prev: "‹",
-        next: "›",
-        first: '«',
-        last: '»',
-        onPageClick: function (event, page) {
-        }
-    }).on('page', function (event, page) {
-        searchProductList(page - 1);
-    });
+    if (totalPages > 1) {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: totalPages,
+            startPage: startPage,
+            visiblePages: 10,
+            prev: "‹",
+            next: "›",
+            first: '«',
+            last: '»',
+            onPageClick: function (event, page) {
+            }
+        }).on('page', function (event, page) {
+            searchProductList(page - 1);
+        });
+    }
     /*]]>*/
 </script>
 </body>
