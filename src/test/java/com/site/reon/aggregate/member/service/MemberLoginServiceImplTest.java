@@ -2,6 +2,9 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
+import com.site.reon.aggregate.member.query.service.MemberFindService;
+import com.site.reon.aggregate.member.query.service.MemberFindServiceImpl;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -24,7 +27,7 @@ import static org.mockito.BDDMockito.given;
 class MemberLoginServiceImplTest {
 
     private MemberLoginService memberLoginService;
-    private MemberService memberService;
+    private MemberFindService memberFindService;
 
     @Mock private MemberRepository memberRepository;
 
@@ -32,13 +35,13 @@ class MemberLoginServiceImplTest {
 
     @Mock private AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    @Mock private MemberAuthCodeService memberAuthCodeService;
+    @Mock private MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @BeforeEach
     void beforeEach() {
         this.memberLoginService =
-                new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberAuthCodeService, null);
-        this.memberService = new MemberServiceImpl(memberRepository);
+                new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberEmailAuthCodeService, null);
+        this.memberFindService = new MemberFindServiceImpl(memberRepository);
     }
 
     @Test
@@ -60,7 +63,7 @@ class MemberLoginServiceImplTest {
 
         given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(any(), any())).willReturn(Optional.of(member));
 
-        Member findMember = memberService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
+        Member findMember = memberFindService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
         assertEquals("aaron", findMember.getFirstName());
         assertEquals("park", findMember.getLastName());
         assertEquals(email, findMember.getEmail());
@@ -81,7 +84,7 @@ class MemberLoginServiceImplTest {
         given(memberRepository.save(any())).willThrow(new DuplicateMemberException("This email is already registered."));
 
         DuplicateMemberException exception = assertThrows(DuplicateMemberException.class, () ->
-                memberLoginService.signup(signUp)
+                memberLoginService.signUpWithEmail(signUp)
         );
         assertEquals("This email is already registered.", exception.getMessage());
     }

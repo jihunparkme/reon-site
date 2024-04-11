@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service;
+package com.site.reon.aggregate.member.infra.service;
 
 import com.site.reon.global.common.constant.mail.MailSubject;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
@@ -17,7 +17,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberAuthCodeService {
+public class MemberEmailAuthCodeService {
     private final RedisUtilService redisUtilService;
 
     public void sendAuthenticationCodeByEmail(final KeyPrefix keyPrefix, final String purpose, final String email) {

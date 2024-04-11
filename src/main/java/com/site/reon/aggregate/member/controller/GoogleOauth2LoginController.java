@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.service.GoogleOauth2LoginService;
+import com.site.reon.aggregate.member.infra.service.GoogleOAuth2WithdrawalService;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.global.common.dto.BasicResponse;
 import jakarta.validation.Valid;
@@ -20,11 +20,11 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RequiredArgsConstructor
 public class GoogleOauth2LoginController {
 
-    private final GoogleOauth2LoginService googleOauth2LoginService;
+    private final GoogleOAuth2WithdrawalService googleOAuth2WithdrawalService;
 
     @PostMapping("/withdraw/google/signal")
     public ResponseEntity signalWithdrawal(@Valid @RequestBody final WithdrawRequest request) {
-        googleOauth2LoginService.signalWithdrawal(request);
+        googleOAuth2WithdrawalService.signalWithdrawal(request);
         return BasicResponse.ok(SUCCESS);
     }
 }

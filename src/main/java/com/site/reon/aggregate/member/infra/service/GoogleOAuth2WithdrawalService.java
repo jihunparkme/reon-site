@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service;
+package com.site.reon.aggregate.member.infra.service;
 
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GoogleOauth2LoginService {
+public class GoogleOAuth2WithdrawalService {
     private final RedisUtilService redisUtilService;
 
     public void signalWithdrawal(final WithdrawRequest request) {

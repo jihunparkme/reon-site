@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service;
+package com.site.reon.aggregate.member.query.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;

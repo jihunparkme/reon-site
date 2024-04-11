@@ -1,11 +1,11 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.service.MemberAuthCodeService;
+import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
-import com.site.reon.aggregate.member.service.MemberService;
+import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
-import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.api.*;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
@@ -26,8 +26,8 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 public class MemberLoginApiController {
 
     private final MemberLoginService memberLoginService;
-    private final MemberService memberService;
-    private final MemberAuthCodeService memberAuthCodeService;
+    private final MemberFindService memberFindService;
+    private final MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
     @PostMapping("/verify/email")
@@ -46,21 +46,21 @@ public class MemberLoginApiController {
     @ApiOperation(value = "이메일 가입", notes = "앱에서 이메일로 가입합니다.")
     @PostMapping("/email/sign-up")
     public ResponseEntity signUpEmail(@Valid @RequestBody final ApiSignUpRequest request) {
-        memberLoginService.signup(request);
+        memberLoginService.signUpWithEmail(request);
         return BasicResponse.ok(SUCCESS);
     }
 
     @ApiOperation(value = "이메일 인증번호 발송", notes = "앱에서 이메일로 가입 시 인증번호를 발송합니다.")
     @PostMapping("/email/auth-code")
     public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody final ApiEmailAuthCodeRequest request) {
-        memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, request.getPurpose(), request.getEmail());
+        memberEmailAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, request.getPurpose(), request.getEmail());
         return BasicResponse.ok(SUCCESS);
     }
 
     @ApiOperation(value = "이메일 인증번호 검증", notes = "앱에서 이메일로 가입 시 발송된 인증번호를 검증합니다.")
     @PostMapping("/email/auth-code/verify")
     public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody final ApiEmailAuthCodeVerifyRequest request) {
-        memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
+        memberEmailAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
         return BasicResponse.ok(SUCCESS);
     }
 
@@ -68,7 +68,7 @@ public class MemberLoginApiController {
     @PostMapping("/email")
     public ResponseEntity loginEmail(@Valid @RequestBody final ApiLoginRequest request) {
         memberLoginService.emailAuthenticate(LoginDto.from(request));
-        final Member member = memberService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
+        final Member member = memberFindService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
         return BasicResponse.ok(MemberDto.from(member));
     }
 
@@ -76,7 +76,7 @@ public class MemberLoginApiController {
     @PostMapping("/info")
     public ResponseEntity loginInfo(@Valid @RequestBody final ApiMyPageRequest request) {
         final OAuth2Client oAuthClient = OAuth2Client.of(request.getAuthClientName().toLowerCase());
-        final Member member = memberService.getMemberWithAuthorities(request.getEmail(), oAuthClient);
+        final Member member = memberFindService.getMemberWithAuthorities(request.getEmail(), oAuthClient);
         return BasicResponse.ok(MemberDto.from(member));
     }
 

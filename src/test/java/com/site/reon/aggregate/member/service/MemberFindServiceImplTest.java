@@ -2,6 +2,8 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.query.service.MemberFindService;
+import com.site.reon.aggregate.member.query.service.MemberFindServiceImpl;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,16 +17,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class MemberServiceImplTest {
+class MemberFindServiceImplTest {
 
     @Mock
     private MemberRepository memberRepository;
 
-    private MemberService memberService;
+    private MemberFindService memberFindService;
 
     @BeforeEach
     void setUp() {
-        memberService = new MemberServiceImpl(memberRepository);
+        memberFindService = new MemberFindServiceImpl(memberRepository);
     }
 
     @Test
@@ -38,7 +40,7 @@ class MemberServiceImplTest {
         given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY))
                 .willReturn(Optional.of(willReturn));
 
-        Member member = memberService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
+        Member member = memberFindService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
 
         assertEquals("admin", member.getFirstName());
         assertEquals("park", member.getLastName());
@@ -51,7 +53,7 @@ class MemberServiceImplTest {
         given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY))
                 .willReturn(Optional.empty());
 
-        Member member = memberService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
+        Member member = memberFindService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
 
         assertEquals(null, member);
     }

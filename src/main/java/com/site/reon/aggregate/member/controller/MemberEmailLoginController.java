@@ -1,9 +1,10 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.service.MemberAuthCodeService;
+import com.site.reon.aggregate.member.query.dto.MemberDto;
+import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
-import com.site.reon.aggregate.member.service.MemberService;
+import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.service.dto.*;
 import com.site.reon.global.common.constant.SessionConst;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
@@ -30,13 +31,13 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RequiredArgsConstructor
 public class MemberEmailLoginController {
     private final HttpSession httpSession;
-    private final MemberService memberService;
+    private final MemberFindService memberFindService;
     private final MemberLoginService memberLoginService;
-    private final MemberAuthCodeService memberAuthCodeService;
+    private final MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @PostMapping("/sign-up")
     public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto) {
-        memberLoginService.signup(signUpDto);
+        memberLoginService.signUpWithEmail(signUpDto);
         return ResponseEntity.ok(SUCCESS);
     }
 
@@ -44,7 +45,7 @@ public class MemberEmailLoginController {
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody final LoginDto loginDto) {
         memberLoginService.emailAuthenticate(loginDto);
 
-        final Member member = memberService.getMemberWithAuthorities(loginDto.getEmail(), OAuth2Client.EMPTY);
+        final Member member = memberFindService.getMemberWithAuthorities(loginDto.getEmail(), OAuth2Client.EMPTY);
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
         httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, loginDto.getEmail());
 
@@ -53,13 +54,13 @@ public class MemberEmailLoginController {
 
     @PostMapping("/auth-code")
     public ResponseEntity sendAuthenticationCodeByEmail(@Valid @RequestBody final EmailAuthCodeRequest request) {
-        memberAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, KeyPrefix.SIGN_UP.purpose(), request.getEmail());
+        memberEmailAuthCodeService.sendAuthenticationCodeByEmail(KeyPrefix.SIGN_UP, KeyPrefix.SIGN_UP.purpose(), request.getEmail());
         return BasicResponse.ok(SUCCESS);
     }
 
     @PostMapping("/auth-code/verify")
     public ResponseEntity verifyAuthenticationCode(@Valid @RequestBody final EmailAuthCodeVerifyRequest request) {
-        memberAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
+        memberEmailAuthCodeService.verifyAuthenticationCode(KeyPrefix.SIGN_UP, request.getEmail(), request.getAuthCode());
         return BasicResponse.ok(SUCCESS);
     }
 }

@@ -5,8 +5,9 @@ import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.infra.kakao.dto.KakaoOauth2UnlinkResponse;
 import com.site.reon.aggregate.member.infra.kakao.service.KakaoOauth2ApiService;
+import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
-import com.site.reon.aggregate.member.service.dto.MemberDto;
+import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
@@ -39,13 +40,13 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final MemberAuthCodeService memberAuthCodeService;
+    private final MemberEmailAuthCodeService memberEmailAuthCodeService;
     private final KakaoOauth2ApiService kakaoOauth2ApiService;
 
     @Override
     @Transactional
-    public void signup(final SignUpDto signUpDto) {
-        memberAuthCodeService.checkEmailVerificationStatus(KeyPrefix.SIGN_UP, signUpDto.getEmail());
+    public void signUpWithEmail(final SignUpDto signUpDto) {
+        memberEmailAuthCodeService.checkEmailVerificationStatus(KeyPrefix.SIGN_UP, signUpDto.getEmail());
         validateEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY);
 
         final Authority authority = Authority.builder()

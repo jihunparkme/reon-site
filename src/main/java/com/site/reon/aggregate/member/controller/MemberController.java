@@ -1,14 +1,14 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.command.service.MemberCommandService;
+import com.site.reon.aggregate.member.query.dto.MemberDto;
+import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
-import com.site.reon.aggregate.member.service.MemberService;
-import com.site.reon.aggregate.member.service.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.MemberEditRequest;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.dto.SessionMember;
-import com.site.reon.global.security.exception.NotFoundMemberException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +25,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
-    private final MemberService memberService;
+    private final MemberFindService memberFindService;
+    private final MemberCommandService memberCommandService;
     private final MemberLoginService memberLoginService;
 
     @GetMapping("/mypage")
     @PreAuthorize("isAuthenticated()")
     public String view(@LoginMember final SessionMember session, Model model) {
-        final MemberDto findMember = memberService.getMember(session.getId());
+        final MemberDto findMember = memberFindService.getMember(session.getId());
         model.addAttribute("member", findMember);
         return "member/mypage";
     }
@@ -48,7 +49,7 @@ public class MemberController {
         }
 
         try {
-            memberService.update(request, session.getId());
+            memberCommandService.update(request, session.getId());
         } catch (Exception e) {
             bindingResult.reject("global.error", e.getMessage());
             return "member/mypage";
