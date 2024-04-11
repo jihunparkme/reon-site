@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AppleOAuth2LoginService {
+public class AppleOAuth2MemberFindService {
     private final MemberRepository memberRepository;
 
     @Transactional

@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.query.service.AppleOAuth2LoginService;
+import com.site.reon.aggregate.member.query.service.AppleOAuth2MemberFindService;
 import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
 import com.site.reon.aggregate.member.service.dto.AppleOauth2LoginResponse;
 import com.site.reon.global.common.constant.SessionConst;
@@ -25,7 +25,7 @@ public class AppleOauth2LoginController {
 
     private final HttpSession httpSession;
     private final AppleOAuth2Property appleOAuth2Property;
-    private final AppleOAuth2LoginService appleOAuth2LoginService;
+    private final AppleOAuth2MemberFindService appleOAuth2MemberFindService;
 
     @GetMapping(value = "/authorization/apple")
     public String authorization(RedirectAttributes attr) {
@@ -47,7 +47,7 @@ public class AppleOauth2LoginController {
 
         final AppleOAuth2Token appleOAuth2Token = new AppleOAuth2Token(response.getId_token());
 
-        Member member = appleOAuth2LoginService.getMemberInfo(appleOAuth2Token);
+        Member member = appleOAuth2MemberFindService.getMemberInfo(appleOAuth2Token);
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
         httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, appleOAuth2Token.getEmail());
 
