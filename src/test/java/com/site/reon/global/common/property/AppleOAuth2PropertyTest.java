@@ -12,10 +12,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @Slf4j
 @ActiveProfiles({"test", "dev-oauth"})
 @SpringBootTest(webEnvironment = RANDOM_PORT)
-class AppleOauth2PropertyTest {
+class AppleOAuth2PropertyTest {
 
     @Autowired
-    AppleOauth2Property property;
+    AppleOAuth2Property property;
 
     @Test 
     void property() {

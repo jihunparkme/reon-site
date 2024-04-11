@@ -1,11 +1,11 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.query.service.AppleOauth2LoginService;
+import com.site.reon.aggregate.member.query.service.AppleOAuth2LoginService;
 import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
 import com.site.reon.aggregate.member.service.dto.AppleOauth2LoginResponse;
 import com.site.reon.global.common.constant.SessionConst;
-import com.site.reon.global.common.property.AppleOauth2Property;
+import com.site.reon.global.common.property.AppleOAuth2Property;
 import com.site.reon.global.security.dto.SessionMember;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,19 +24,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AppleOauth2LoginController {
 
     private final HttpSession httpSession;
-    private final AppleOauth2Property appleOauth2Property;
-    private final AppleOauth2LoginService appleOauth2LoginService;
+    private final AppleOAuth2Property appleOAuth2Property;
+    private final AppleOAuth2LoginService appleOAuth2LoginService;
 
     @GetMapping(value = "/authorization/apple")
     public String authorization(RedirectAttributes attr) {
-        attr.addAttribute("client_id", appleOauth2Property.getClientId());
-        attr.addAttribute("redirect_uri", appleOauth2Property.getRedirectUri());
-        attr.addAttribute("nonce", appleOauth2Property.getNonce());
-        attr.addAttribute("response_type", appleOauth2Property.getResponseType());
-        attr.addAttribute("scope", appleOauth2Property.getScope());
-        attr.addAttribute("response_mode", appleOauth2Property.getResponseMode());
+        attr.addAttribute("client_id", appleOAuth2Property.getClientId());
+        attr.addAttribute("redirect_uri", appleOAuth2Property.getRedirectUri());
+        attr.addAttribute("nonce", appleOAuth2Property.getNonce());
+        attr.addAttribute("response_type", appleOAuth2Property.getResponseType());
+        attr.addAttribute("scope", appleOAuth2Property.getScope());
+        attr.addAttribute("response_mode", appleOAuth2Property.getResponseMode());
 
-        return "redirect:" + appleOauth2Property.getAuthorizationUri();
+        return "redirect:" + appleOAuth2Property.getAuthorizationUri();
     }
 
     @PostMapping("/apple/redirect")
@@ -47,7 +47,7 @@ public class AppleOauth2LoginController {
 
         final AppleOAuth2Token appleOAuth2Token = new AppleOAuth2Token(response.getId_token());
 
-        Member member = appleOauth2LoginService.getMemberInfo(appleOAuth2Token);
+        Member member = appleOAuth2LoginService.getMemberInfo(appleOAuth2Token);
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
         httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, appleOAuth2Token.getEmail());
 

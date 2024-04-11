@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Getter
 @Setter
 @ConfigurationProperties("oauth2.client.apple")
-public class AppleOauth2Property {
+public class AppleOAuth2Property {
     private String teamId;
     private String clientId;
     private String keyId;
