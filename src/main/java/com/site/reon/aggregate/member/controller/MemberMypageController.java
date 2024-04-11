@@ -24,7 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
-public class MemberController {
+public class MemberMypageController {
     private final MemberFindService memberFindService;
     private final MemberCommandService memberCommandService;
     private final MemberLoginService memberLoginService;
