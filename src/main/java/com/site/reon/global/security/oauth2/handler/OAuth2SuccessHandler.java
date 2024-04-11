@@ -92,7 +92,9 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                 oAuthAttributes.getEmail(), oAuthAttributes.getOAuthClient());
         if (memberOpt.isPresent()) {
             final Member member = memberOpt.get();
-            member.oAuth2UserUpdate(oAuthAttributes.getName(), oAuthAttributes.getPicture());
+            member.updateOAuth2User(oAuthAttributes.getOAuthUserId(),
+                    oAuthAttributes.getName(),
+                    oAuthAttributes.getPicture());
             memberRepository.save(member);
             return member;
         }

@@ -83,7 +83,8 @@ public class Member extends BaseTimeEntity {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
-    public Member oAuth2UserUpdate(String name, String picture) {
+    public Member updateOAuth2User(final Long oAuthUserId, final String name, final String picture) {
+        this.oauthUserId = oAuthUserId;
         this.firstName = name;
         this.picture = picture;
         return this;
