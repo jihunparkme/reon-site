@@ -6,7 +6,6 @@ import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiRegisterMemberSerialNo;
 
 public interface MemberLoginService {
     /**
@@ -33,9 +32,4 @@ public interface MemberLoginService {
      * 회원 탈퇴
      */
     boolean withdraw(WithdrawRequest request);
-
-    /**
-     * S/N 등록
-     */
-    boolean registerMemberSerialNo(final long id, ApiRegisterMemberSerialNo request);
 }

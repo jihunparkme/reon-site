@@ -6,17 +6,16 @@ import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.infra.kakao.dto.KakaoOauth2UnlinkResponse;
 import com.site.reon.aggregate.member.infra.kakao.service.KakaoOauth2ApiService;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
+import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
+import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiRegisterMemberSerialNo;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
-import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -113,13 +112,6 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         OAuth2Client.validateClientName(authClientName);
         deleteMember(email, OAuth2Client.of(authClientName));
         return true;
-    }
-
-    @Override
-    @Transactional
-    public boolean registerMemberSerialNo(final long memberId, final ApiRegisterMemberSerialNo request) {
-        int result = memberRepository.registerMemberSerialNo(request.getSerialNo(), memberId);
-        return result == 1;
     }
 
     private void deleteMember(final String email, final OAuth2Client oAuth2Client) {

@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
@@ -27,6 +28,7 @@ public class MemberLoginApiController {
 
     private final MemberLoginService memberLoginService;
     private final MemberFindService memberFindService;
+    private final MemberCommandService memberCommandService;
     private final MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
@@ -91,7 +93,7 @@ public class MemberLoginApiController {
     @PostMapping("/member/{id}/serial-no")
     public ResponseEntity registerMemberSerialNo(@PathVariable(name = "id") final long id,
                                     @Valid @RequestBody final ApiRegisterMemberSerialNo request) {
-        final boolean result = memberLoginService.registerMemberSerialNo(id, request);
+        final boolean result = memberCommandService.registerSerialNo(id, request);
         return BasicResponse.ok(result);
     }
 }
