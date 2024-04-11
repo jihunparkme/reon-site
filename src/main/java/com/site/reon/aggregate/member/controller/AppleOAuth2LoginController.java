@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/login/oauth2")
 @RequiredArgsConstructor
-public class AppleOauth2LoginController {
+public class AppleOAuth2LoginController {
 
     private final HttpSession httpSession;
     private final AppleOAuth2Property appleOAuth2Property;

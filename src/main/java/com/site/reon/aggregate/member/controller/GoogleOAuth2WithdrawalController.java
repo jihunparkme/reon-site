@@ -18,7 +18,7 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RestController
 @RequestMapping("/login/oauth2")
 @RequiredArgsConstructor
-public class GoogleOauth2LoginController {
+public class GoogleOAuth2WithdrawalController {
 
     private final GoogleOAuth2WithdrawalService googleOAuth2WithdrawalService;
 
