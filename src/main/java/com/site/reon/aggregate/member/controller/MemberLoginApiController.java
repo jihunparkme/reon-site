@@ -3,10 +3,10 @@ package com.site.reon.aggregate.member.controller;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
-import com.site.reon.aggregate.member.service.MemberLoginService;
-import com.site.reon.aggregate.member.query.service.MemberFindService;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
+import com.site.reon.aggregate.member.query.service.MemberFindService;
+import com.site.reon.aggregate.member.service.MemberLoginService;
+import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.api.*;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
@@ -85,7 +85,7 @@ public class MemberLoginApiController {
     @ApiOperation(value = "회원 탈퇴", notes = "앱에서 회원을 탈퇴합니다.")
     @PostMapping("/withdraw")
     public ResponseEntity withdraw(@Valid @RequestBody final ApiWithdrawRequest request) {
-        final boolean result = memberLoginService.withdraw(request.toBaseRequest());
+        final boolean result = memberCommandService.withdraw(request.toBaseRequest());
         return BasicResponse.ok(result);
     }
 

@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface MemberFindService {
     List<Member> getMemberWithAuthorities(String email);
+
     Member getMemberWithAuthorities(String email, OAuth2Client oAuthClient);
+
     MemberDto getMember(long id);
 }

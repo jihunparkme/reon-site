@@ -1,6 +1,6 @@
 package com.site.reon.global.event.service;
 
-import com.site.reon.aggregate.member.service.MemberLoginService;
+import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import com.site.reon.global.event.dto.GoogleOauth2TokenRevokeEvent;
@@ -21,10 +21,8 @@ public class GoogleOauth2TokenRevokeEventService {
     private String revokeUrl;
 
     private final WebClient webClient;
-
     private final RedisUtilService redisUtilService;
-
-    private final MemberLoginService memberLoginService;
+    private final MemberCommandService memberCommandService;
 
     public void revoke(final GoogleOauth2TokenRevokeEvent event) {
         final Mono<String> responseMono = webClient.mutate()
@@ -50,7 +48,7 @@ public class GoogleOauth2TokenRevokeEventService {
                             .authClientName(OAuth2Client.GOOGLE.name())
                             .build();
                     redisUtilService.deleteOf(event.getSignalKey());
-                    memberLoginService.withdraw(build);
+                    memberCommandService.withdraw(build);
                 },
                 error -> log.error("GoogleOauth2TokenRevokeEventService.revoke api call error. response status: {}", error.getMessage())
         );

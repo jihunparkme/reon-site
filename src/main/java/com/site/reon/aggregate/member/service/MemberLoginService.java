@@ -27,9 +27,4 @@ public interface MemberLoginService {
      * 신규 소셜 가입 for App
      */
     MemberDto oAuth2SignUp(ApiOAuth2SignUpRequest request);
-
-    /**
-     * 회원 탈퇴
-     */
-    boolean withdraw(WithdrawRequest request);
 }

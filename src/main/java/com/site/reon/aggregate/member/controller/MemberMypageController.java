@@ -62,7 +62,7 @@ public class MemberMypageController {
     @PostMapping("/withdraw")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity withdraw(@Valid @RequestBody final WithdrawRequest request) {
-        final boolean result = memberLoginService.withdraw(request);
+        final boolean result = memberCommandService.withdraw(request);
         return BasicResponse.ok(result);
     }
 }
