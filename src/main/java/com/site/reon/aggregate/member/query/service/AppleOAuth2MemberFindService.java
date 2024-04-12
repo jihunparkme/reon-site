@@ -2,7 +2,7 @@ package com.site.reon.aggregate.member.query.service;
 
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
+import com.site.reon.aggregate.member.query.dto.AppleOAuth2Token;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

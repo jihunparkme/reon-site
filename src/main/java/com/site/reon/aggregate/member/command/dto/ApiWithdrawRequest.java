@@ -1,6 +1,6 @@
-package com.site.reon.aggregate.member.service.dto.api;
+package com.site.reon.aggregate.member.command.dto;
 
-import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
+import com.site.reon.aggregate.member.command.dto.WithdrawRequest;
 import com.site.reon.global.common.dto.ApiRequest;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

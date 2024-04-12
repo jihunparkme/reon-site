@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto;
+package com.site.reon.aggregate.member.command.dto;
 
 import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;

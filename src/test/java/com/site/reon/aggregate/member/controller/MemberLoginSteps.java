@@ -1,6 +1,10 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.service.dto.api.*;
+import com.site.reon.aggregate.member.command.dto.ApiOAuth2SignUpRequest;
+import com.site.reon.aggregate.member.command.dto.ApiRegisterMemberSerialNo;
+import com.site.reon.aggregate.member.command.dto.ApiWithdrawRequest;
+import com.site.reon.aggregate.member.controller.dto.*;
+import com.site.reon.aggregate.member.query.dto.ApiEmailVerifyRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

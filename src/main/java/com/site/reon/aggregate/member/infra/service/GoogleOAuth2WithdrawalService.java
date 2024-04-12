@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.infra.service;
 
-import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
+import com.site.reon.aggregate.member.command.dto.WithdrawRequest;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import lombok.RequiredArgsConstructor;

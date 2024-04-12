@@ -1,6 +1,6 @@
 package com.site.reon.global.security.oauth2.dto;
 
-import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
+import com.site.reon.aggregate.member.query.dto.AppleOAuth2Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

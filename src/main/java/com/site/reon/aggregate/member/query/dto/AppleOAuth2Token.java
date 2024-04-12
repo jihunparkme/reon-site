@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto;
+package com.site.reon.aggregate.member.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.command.domain;
 
-import com.site.reon.aggregate.member.service.dto.MemberEditRequest;
+import com.site.reon.aggregate.member.command.dto.MemberEditRequest;
 import com.site.reon.global.common.BaseTimeEntity;
 import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;

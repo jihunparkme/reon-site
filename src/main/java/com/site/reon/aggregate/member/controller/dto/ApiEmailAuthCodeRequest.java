@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto.api;
+package com.site.reon.aggregate.member.controller.dto;
 
 import com.site.reon.global.common.dto.ApiRequest;
 import jakarta.validation.constraints.NotBlank;
@@ -11,10 +11,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiEmailAuthCodeVerifyRequest extends ApiRequest {
+public class ApiEmailAuthCodeRequest extends ApiRequest {
+    @NotBlank(message = "purpose is required.")
+    private String purpose;
+
     @NotBlank(message = "email is required.")
     private String email;
-
-    @NotBlank(message = "authCode is required.")
-    private String authCode;
 }

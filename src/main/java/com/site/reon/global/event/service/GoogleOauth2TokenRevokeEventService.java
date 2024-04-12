@@ -1,7 +1,7 @@
 package com.site.reon.global.event.service;
 
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
-import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
+import com.site.reon.aggregate.member.command.dto.WithdrawRequest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import com.site.reon.global.event.dto.GoogleOauth2TokenRevokeEvent;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;

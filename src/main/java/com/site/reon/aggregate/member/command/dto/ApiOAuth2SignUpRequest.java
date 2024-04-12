@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto.api;
+package com.site.reon.aggregate.member.command.dto;
 
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;

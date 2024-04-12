@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto.api;
+package com.site.reon.aggregate.member.query.dto;
 
 import com.site.reon.global.common.dto.ApiRequest;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +11,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiRegisterMemberSerialNo extends ApiRequest {
-    @NotBlank(message = "serialNo is required.")
-    private String serialNo;
+public class ApiEmailVerifyRequest extends ApiRequest {
+    @NotBlank(message = "authClientName is required.")
+    private String authClientName;
+
+    private String email;
+
+    private String token;
 }

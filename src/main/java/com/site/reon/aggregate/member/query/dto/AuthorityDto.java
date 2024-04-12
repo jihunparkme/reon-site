@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto;
+package com.site.reon.aggregate.member.query.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
