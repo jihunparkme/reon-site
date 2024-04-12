@@ -1,6 +1,6 @@
 package com.site.reon.global.security.dto;
 
-import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.service.dto.AuthorityDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

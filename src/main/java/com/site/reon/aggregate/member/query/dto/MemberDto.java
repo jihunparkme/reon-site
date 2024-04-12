@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.query.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.service.dto.AuthorityDto;
 import com.site.reon.global.common.constant.member.MemberType;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;

@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindService;

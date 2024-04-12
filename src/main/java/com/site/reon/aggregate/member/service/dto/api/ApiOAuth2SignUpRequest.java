@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.service.dto.api;
 
-import com.site.reon.aggregate.member.domain.Authority;
-import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.command.domain.Authority;
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.dto.ApiRequest;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;

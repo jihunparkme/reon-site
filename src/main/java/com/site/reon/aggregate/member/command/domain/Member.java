@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.domain;
+package com.site.reon.aggregate.member.command.domain;
 
 import com.site.reon.aggregate.member.service.dto.MemberEditRequest;
 import com.site.reon.global.common.BaseTimeEntity;

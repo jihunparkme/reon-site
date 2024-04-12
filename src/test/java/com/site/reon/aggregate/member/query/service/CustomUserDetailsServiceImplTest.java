@@ -1,8 +1,8 @@
 package com.site.reon.aggregate.member.query.service;
 
-import com.site.reon.aggregate.member.domain.Authority;
-import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.domain.Authority;
+import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.global.common.constant.member.Role;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

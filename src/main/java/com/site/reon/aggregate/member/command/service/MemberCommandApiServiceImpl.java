@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.command.service;
 
-import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
 import com.site.reon.global.security.exception.DuplicateMemberException;

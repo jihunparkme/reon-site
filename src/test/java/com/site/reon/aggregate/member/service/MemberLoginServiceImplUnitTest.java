@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.service;
 
-import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;

@@ -1,6 +1,6 @@
-package com.site.reon.aggregate.member.domain.repository;
+package com.site.reon.aggregate.member.command.domain.repository;
 
-import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;

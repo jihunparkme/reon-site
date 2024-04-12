@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.domain.Member;
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.query.service.AppleOAuth2MemberFindService;
 import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
 import com.site.reon.aggregate.member.service.dto.AppleOauth2LoginResponse;

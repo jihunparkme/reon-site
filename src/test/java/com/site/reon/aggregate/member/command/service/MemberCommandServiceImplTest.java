@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.command.service;
 
-import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.service.dto.WithdrawRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

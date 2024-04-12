@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.command.service;
 
-import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.infra.kakao.dto.KakaoOauth2UnlinkResponse;
 import com.site.reon.aggregate.member.infra.kakao.service.KakaoOauth2ApiService;
 import com.site.reon.aggregate.member.service.dto.MemberEditRequest;

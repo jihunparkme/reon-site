@@ -1,7 +1,7 @@
 package com.site.reon.global.security.oauth2.handler;
 
-import com.site.reon.aggregate.member.domain.Member;
-import com.site.reon.aggregate.member.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.global.common.constant.SessionConst;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.event.Events;
