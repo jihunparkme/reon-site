@@ -1,10 +1,11 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.service.MemberCommandApiService;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
-import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
+import com.site.reon.aggregate.member.query.service.MemberFindApiService;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
@@ -29,6 +30,7 @@ public class MemberLoginApiController {
 
     private final MemberLoginService memberLoginService;
     private final MemberFindService memberFindService;
+    private final MemberFindApiService memberFindApiService;
     private final MemberCommandService memberCommandService;
     private final MemberCommandApiService memberCommandApiService;
     private final MemberEmailAuthCodeService memberEmailAuthCodeService;
@@ -36,7 +38,7 @@ public class MemberLoginApiController {
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
     @PostMapping("/verify/email")
     public ResponseEntity verifyEmail(@Valid @RequestBody final ApiEmailVerifyRequest request) {
-        final boolean result = memberLoginService.verifySocialEmail(request);
+        final boolean result = memberFindApiService.verifySocialEmail(request);
         return BasicResponse.ok(result);
     }
 
