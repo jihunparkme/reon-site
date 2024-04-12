@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.command.service.MemberCommandApiService;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
@@ -29,6 +30,7 @@ public class MemberLoginApiController {
     private final MemberLoginService memberLoginService;
     private final MemberFindService memberFindService;
     private final MemberCommandService memberCommandService;
+    private final MemberCommandApiService memberCommandApiService;
     private final MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
@@ -41,7 +43,7 @@ public class MemberLoginApiController {
     @ApiOperation(value = "신규 소셜 가입", notes = "앱에서 신규로 소셜 가입을 합니다.")
     @PostMapping("/oauth2/sign-up")
     public ResponseEntity signUpOAuth2(@Valid @RequestBody final ApiOAuth2SignUpRequest request) {
-        final MemberDto member = memberLoginService.oAuth2SignUp(request);
+        final MemberDto member = memberCommandApiService.oAuth2SignUp(request);
         return BasicResponse.ok(member);
     }
 

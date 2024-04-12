@@ -3,14 +3,11 @@ package com.site.reon.aggregate.member.service;
 import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.infra.kakao.service.KakaoOauth2ApiService;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
-import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.AppleOAuth2Token;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -38,7 +35,6 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final MemberEmailAuthCodeService memberEmailAuthCodeService;
-    private final KakaoOauth2ApiService kakaoOauth2ApiService;
 
     @Override
     @Transactional
@@ -86,17 +82,6 @@ public class MemberLoginServiceImpl implements MemberLoginService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    @Override
-    @Transactional
-    public MemberDto oAuth2SignUp(ApiOAuth2SignUpRequest request) {
-        String authClientName = request.getAuthClientName().toLowerCase();
-        OAuth2Client.validateClientName(authClientName);
-        validateEmailAndOAuthClient(request.getEmail(), OAuth2Client.of(authClientName));
-
-        Member member = request.toMember();
-        return MemberDto.from(memberRepository.save(member));
-    }
-
     private boolean verifyAppleEmail(final String token, final OAuth2Client oAuth2Client) {
         if (StringUtils.isEmpty(token)) {
             throw new IllegalArgumentException("Token is required for Apple login.");
@@ -123,7 +108,7 @@ public class MemberLoginServiceImpl implements MemberLoginService {
     private void validateEmailAndOAuthClient(final String email, final OAuth2Client oAuthClient) {
         final Optional<Member> memberOpt = memberRepository.findByEmailAndOAuthClient(email, oAuthClient);
         if (memberOpt.isPresent()) {
-            throw new DuplicateMemberException("This email is already registered.");
+            throw new DuplicateMemberException();
         }
     }
 

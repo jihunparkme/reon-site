@@ -1,25 +1,19 @@
 package com.site.reon.aggregate.member.service;
 
-import com.site.reon.aggregate.member.domain.Authority;
 import com.site.reon.aggregate.member.domain.Member;
 import com.site.reon.aggregate.member.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
-import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.service.dto.api.ApiEmailVerifyRequest;
-import com.site.reon.aggregate.member.service.dto.api.ApiOAuth2SignUpRequest;
-import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -29,7 +23,7 @@ class MemberLoginServiceImplUnitTest {
     private PasswordEncoder passwordEncoder = mock(PasswordEncoder.class);
     private AuthenticationManagerBuilder authenticationManagerBuilder = mock(AuthenticationManagerBuilder.class);
     private MemberEmailAuthCodeService memberEmailAuthCodeService = mock(MemberEmailAuthCodeService.class);
-    private MemberLoginService memberLoginService = new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberEmailAuthCodeService, null);
+    private MemberLoginService memberLoginService = new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberEmailAuthCodeService);
     private final static String APPLE_LOGIN_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiYWFyb24ucGFyayIsImV4cCI6MTcwNjQ0NTUyOSwiaWF0IjoxNzA2MzU5MTI5LCJzdWIiOiIwMDAzODUuMDQ3c2dmNjZhYnM2NGQ2MGE0MDZkNWQ0YjNiNHgydjIuMTk5MyIsImNfaGFzaCI6IkYyWWRiN0R2RUJZaE9vUElHdGhEb0ciLCJlbWFpbCI6InVzZXJAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOiJ0cnVlIiwiYXV0aF90aW1lIjoxNzA2MzU5MTI5LCJub25jZV9zdXBwb3J0ZWQiOnRydWV9.8DWNWY3PkDRdXzAjmrcaWH9p0tvjmg3ieOH4MZXz7Gs";
 
     private String email = "user@gmail.com";
@@ -171,54 +165,5 @@ class MemberLoginServiceImplUnitTest {
 
         boolean result = memberLoginService.verifySocialEmail(verifyDto);
         Assertions.assertFalse(result);
-    }
-
-    @Test
-    void oAuth2SignUp_success() throws Exception {
-        String email = "user@gmail.com";
-        ApiOAuth2SignUpRequest apiOAuth2SignUp = ApiOAuth2SignUpRequest.builder()
-                .roasterSn("asfdasfeasfdsasdfas")
-                .email(email)
-                .firstName("aaron")
-                .picture("safddsafdsafs")
-                .authClientName("kakao")
-                .build();
-        final Member expected = Member.builder()
-                .id(3L)
-                .roasterSn("asfdasfeasfdsasdfas")
-                .email(email)
-                .firstName("aaron")
-                .picture("safddsafdsafs")
-                .oAuthClient(OAuth2Client.KAKAO)
-                .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .build();
-
-        given(memberRepository.save(any()))
-                .willReturn(expected);
-
-        MemberDto member = memberLoginService.oAuth2SignUp(apiOAuth2SignUp);
-        Assertions.assertEquals("asfdasfeasfdsasdfas", member.getRoasterSn());
-        Assertions.assertEquals("aaron", member.getFirstName());
-        Assertions.assertEquals("safddsafdsafs", member.getPicture());
-        Assertions.assertEquals(OAuth2Client.KAKAO, member.getOAuthClient());
-    }
-
-    @Test
-    void oAuth2SignUp_fail() throws Exception {
-        String email = "user@gmail.com";
-        ApiOAuth2SignUpRequest apiOAuth2SignUp = ApiOAuth2SignUpRequest.builder()
-                .roasterSn("asfdasfeasfdsasdfas")
-                .email(email)
-                .firstName("aaron")
-                .picture("safddsafdsafs")
-                .authClientName("aaaa")
-                .build();
-
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                memberLoginService.oAuth2SignUp(apiOAuth2SignUp)
-        );
-
-        assertEquals("This is unsupported OAuth2 Client service. Please check authClientName field.", exception.getMessage());
     }
 }

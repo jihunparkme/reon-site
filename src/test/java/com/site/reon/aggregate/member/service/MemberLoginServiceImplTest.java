@@ -40,7 +40,7 @@ class MemberLoginServiceImplTest {
     @BeforeEach
     void beforeEach() {
         this.memberLoginService =
-                new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberEmailAuthCodeService, null);
+                new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberEmailAuthCodeService);
         this.memberFindService = new MemberFindServiceImpl(memberRepository);
     }
 

@@ -2,7 +2,7 @@ package com.site.reon.global.security.exception;
 
 public class DuplicateMemberException extends RuntimeException {
     public DuplicateMemberException() {
-        super();
+        super("This email is already registered.");
     }
 
     public DuplicateMemberException(String message, Throwable cause) {
