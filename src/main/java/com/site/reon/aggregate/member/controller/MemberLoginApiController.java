@@ -8,11 +8,11 @@ import com.site.reon.aggregate.member.command.service.MemberCommandApiService;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.controller.dto.*;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
-import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.dto.ApiEmailVerifyRequest;
+import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindApiService;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
-import com.site.reon.aggregate.member.service.MemberLoginService;
+import com.site.reon.aggregate.member.service.MemberEmailLoginService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
@@ -32,11 +32,11 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RequiredArgsConstructor
 public class MemberLoginApiController {
 
-    private final MemberLoginService memberLoginService;
     private final MemberFindService memberFindService;
     private final MemberFindApiService memberFindApiService;
     private final MemberCommandService memberCommandService;
     private final MemberCommandApiService memberCommandApiService;
+    private final MemberEmailLoginService memberEmailLoginService;
     private final MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @ApiOperation(value = "소셜 로그인 가입 여부 확인", notes = "앱에서 소셜 로그인 가입 여부를 확인합니다.")
@@ -56,7 +56,7 @@ public class MemberLoginApiController {
     @ApiOperation(value = "이메일 가입", notes = "앱에서 이메일로 가입합니다.")
     @PostMapping("/email/sign-up")
     public ResponseEntity signUpEmail(@Valid @RequestBody final ApiSignUpRequest request) {
-        memberLoginService.signUpWithEmail(request);
+        memberEmailLoginService.signUpWithEmail(request);
         return BasicResponse.ok(SUCCESS);
     }
 
@@ -77,7 +77,7 @@ public class MemberLoginApiController {
     @ApiOperation(value = "이메일 로그인", notes = "앱에서 이메일로 로그인합니다.")
     @PostMapping("/email")
     public ResponseEntity loginEmail(@Valid @RequestBody final ApiLoginRequest request) {
-        memberLoginService.emailAuthenticate(LoginDto.from(request));
+        memberEmailLoginService.emailAuthenticate(LoginDto.from(request));
         final Member member = memberFindService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
         return BasicResponse.ok(MemberDto.from(member));
     }

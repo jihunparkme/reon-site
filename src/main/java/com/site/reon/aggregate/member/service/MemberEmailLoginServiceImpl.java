@@ -26,7 +26,7 @@ import java.util.Optional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberLoginServiceImpl implements MemberLoginService {
+public class MemberEmailLoginServiceImpl implements MemberEmailLoginService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;

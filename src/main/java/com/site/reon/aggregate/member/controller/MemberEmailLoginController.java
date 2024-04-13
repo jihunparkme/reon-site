@@ -1,12 +1,12 @@
 package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.controller.dto.EmailAuthCodeRequest;
+import com.site.reon.aggregate.member.controller.dto.EmailAuthCodeVerifyRequest;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
-import com.site.reon.aggregate.member.service.MemberLoginService;
-import com.site.reon.aggregate.member.controller.dto.EmailAuthCodeRequest;
-import com.site.reon.aggregate.member.controller.dto.EmailAuthCodeVerifyRequest;
+import com.site.reon.aggregate.member.service.MemberEmailLoginService;
 import com.site.reon.aggregate.member.service.dto.LoginDto;
 import com.site.reon.aggregate.member.service.dto.SignUpDto;
 import com.site.reon.global.common.constant.SessionConst;
@@ -35,18 +35,18 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 public class MemberEmailLoginController {
     private final HttpSession httpSession;
     private final MemberFindService memberFindService;
-    private final MemberLoginService memberLoginService;
+    private final MemberEmailLoginService memberEmailLoginService;
     private final MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @PostMapping("/sign-up")
     public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto) {
-        memberLoginService.signUpWithEmail(signUpDto);
+        memberEmailLoginService.signUpWithEmail(signUpDto);
         return ResponseEntity.ok(SUCCESS);
     }
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MemberDto> authorize(@Valid @RequestBody final LoginDto loginDto) {
-        memberLoginService.emailAuthenticate(loginDto);
+        memberEmailLoginService.emailAuthenticate(loginDto);
 
         final Member member = memberFindService.getMemberWithAuthorities(loginDto.getEmail(), OAuth2Client.EMPTY);
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));

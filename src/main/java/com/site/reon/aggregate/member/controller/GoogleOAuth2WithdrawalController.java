@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.controller;
 
-import com.site.reon.aggregate.member.infra.service.GoogleOAuth2WithdrawalService;
 import com.site.reon.aggregate.member.command.dto.WithdrawRequest;
+import com.site.reon.aggregate.member.infra.service.GoogleOAuth2WithdrawalService;
 import com.site.reon.global.common.dto.BasicResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -24,9 +24,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
-class MemberLoginServiceImplTest {
+class MemberEmailLoginServiceImplTest {
 
-    private MemberLoginService memberLoginService;
+    private MemberEmailLoginService memberEmailLoginService;
     private MemberFindService memberFindService;
 
     @Mock private MemberRepository memberRepository;
@@ -39,8 +39,8 @@ class MemberLoginServiceImplTest {
 
     @BeforeEach
     void beforeEach() {
-        this.memberLoginService =
-                new MemberLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberEmailAuthCodeService);
+        this.memberEmailLoginService =
+                new MemberEmailLoginServiceImpl(memberRepository, passwordEncoder, authenticationManagerBuilder, memberEmailAuthCodeService);
         this.memberFindService = new MemberFindServiceImpl(memberRepository);
     }
 
@@ -84,7 +84,7 @@ class MemberLoginServiceImplTest {
         given(memberRepository.save(any())).willThrow(new DuplicateMemberException("This email is already registered."));
 
         DuplicateMemberException exception = assertThrows(DuplicateMemberException.class, () ->
-                memberLoginService.signUpWithEmail(signUp)
+                memberEmailLoginService.signUpWithEmail(signUp)
         );
         assertEquals("This email is already registered.", exception.getMessage());
     }
