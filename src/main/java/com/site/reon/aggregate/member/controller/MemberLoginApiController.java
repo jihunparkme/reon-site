@@ -8,8 +8,8 @@ import com.site.reon.aggregate.member.command.service.MemberCommandApiService;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.controller.dto.*;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
-import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.dto.ApiEmailVerifyRequest;
+import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindApiService;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.service.MemberLoginService;
@@ -56,7 +56,7 @@ public class MemberLoginApiController {
     @ApiOperation(value = "이메일 가입", notes = "앱에서 이메일로 가입합니다.")
     @PostMapping("/email/sign-up")
     public ResponseEntity signUpEmail(@Valid @RequestBody final ApiSignUpRequest request) {
-        memberLoginService.signUpWithEmail(request);
+        memberCommandService.signUpWithEmail(request);
         return BasicResponse.ok(SUCCESS);
     }
 
