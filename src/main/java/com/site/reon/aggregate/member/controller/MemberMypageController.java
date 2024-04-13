@@ -3,7 +3,7 @@ package com.site.reon.aggregate.member.controller;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
-import com.site.reon.aggregate.member.service.MemberEmailLoginService;
+import com.site.reon.aggregate.member.command.service.MemberEmailLoginService;
 import com.site.reon.aggregate.member.command.dto.MemberEditRequest;
 import com.site.reon.aggregate.member.command.dto.WithdrawRequest;
 import com.site.reon.global.common.annotation.LoginMember;

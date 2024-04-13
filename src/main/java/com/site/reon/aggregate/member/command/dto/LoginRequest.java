@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.service.dto;
+package com.site.reon.aggregate.member.command.dto;
 
 import com.site.reon.aggregate.member.controller.dto.ApiLoginRequest;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDto {
+public class LoginRequest {
 
     @NotBlank(message = "email is required.")
     private String email;
@@ -19,8 +19,8 @@ public class LoginDto {
     @NotBlank(message = "password is required.")
     private String password;
 
-    public static LoginDto from(ApiLoginRequest request) {
-        return LoginDto.builder()
+    public static LoginRequest from(ApiLoginRequest request) {
+        return LoginRequest.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .build();

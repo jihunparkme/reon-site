@@ -6,9 +6,9 @@ import com.site.reon.aggregate.member.controller.dto.EmailAuthCodeVerifyRequest;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
-import com.site.reon.aggregate.member.service.MemberEmailLoginService;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
-import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.command.service.MemberEmailLoginService;
+import com.site.reon.aggregate.member.command.dto.LoginRequest;
+import com.site.reon.aggregate.member.command.dto.SignUpRequest;
 import com.site.reon.global.common.constant.SessionConst;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
@@ -39,18 +39,18 @@ public class MemberEmailLoginController {
     private final MemberEmailAuthCodeService memberEmailAuthCodeService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity signup(@Valid @RequestBody final SignUpDto signUpDto) {
-        memberEmailLoginService.signUpWithEmail(signUpDto);
+    public ResponseEntity signup(@Valid @RequestBody final SignUpRequest signUpRequest) {
+        memberEmailLoginService.signUpWithEmail(signUpRequest);
         return ResponseEntity.ok(SUCCESS);
     }
 
     @PostMapping(value = "/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MemberDto> authorize(@Valid @RequestBody final LoginDto loginDto) {
-        memberEmailLoginService.emailAuthenticate(loginDto);
+    public ResponseEntity<MemberDto> authorize(@Valid @RequestBody final LoginRequest loginRequest) {
+        memberEmailLoginService.emailAuthenticate(loginRequest);
 
-        final Member member = memberFindService.getMemberWithAuthorities(loginDto.getEmail(), OAuth2Client.EMPTY);
+        final Member member = memberFindService.getMemberWithAuthorities(loginRequest.getEmail(), OAuth2Client.EMPTY);
         httpSession.setAttribute(SessionConst.LOGIN_MEMBER, SessionMember.from(member));
-        httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, loginDto.getEmail());
+        httpSession.setAttribute(FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, loginRequest.getEmail());
 
         return ResponseEntity.ok(MemberDto.from(member));
     }

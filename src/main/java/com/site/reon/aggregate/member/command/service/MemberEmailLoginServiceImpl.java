@@ -1,11 +1,11 @@
-package com.site.reon.aggregate.member.service;
+package com.site.reon.aggregate.member.command.service;
 
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
-import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.command.dto.LoginRequest;
+import com.site.reon.aggregate.member.command.dto.SignUpRequest;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -35,20 +35,20 @@ public class MemberEmailLoginServiceImpl implements MemberEmailLoginService {
 
     @Override
     @Transactional
-    public void signUpWithEmail(final SignUpDto signUpDto) {
-        memberEmailAuthCodeService.checkEmailVerificationStatus(KeyPrefix.SIGN_UP, signUpDto.getEmail());
-        validateEmailAndOAuthClient(signUpDto.getEmail(), OAuth2Client.EMPTY);
+    public void signUpWithEmail(final SignUpRequest signUpRequest) {
+        memberEmailAuthCodeService.checkEmailVerificationStatus(KeyPrefix.SIGN_UP, signUpRequest.getEmail());
+        validateEmailAndOAuthClient(signUpRequest.getEmail(), OAuth2Client.EMPTY);
 
         final Authority authority = Authority.builder()
                 .authorityName(Role.USER.key())
                 .build();
 
         final Member member = Member.builder()
-                .firstName(signUpDto.getFirstName())
-                .lastName(signUpDto.getLastName())
-                .email(signUpDto.getEmail())
-                .password(passwordEncoder.encode(signUpDto.getPassword()))
-                .roasterSn(signUpDto.getRoasterSn())
+                .firstName(signUpRequest.getFirstName())
+                .lastName(signUpRequest.getLastName())
+                .email(signUpRequest.getEmail())
+                .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                .roasterSn(signUpRequest.getRoasterSn())
                 .authorities(Collections.singleton(authority))
                 .oAuthClient(OAuth2Client.EMPTY)
                 .activated(true)
@@ -58,9 +58,9 @@ public class MemberEmailLoginServiceImpl implements MemberEmailLoginService {
     }
 
     @Override
-    public void emailAuthenticate(final LoginDto loginDto) {
+    public void emailAuthenticate(final LoginRequest loginRequest) {
         final UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
 
         final Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);

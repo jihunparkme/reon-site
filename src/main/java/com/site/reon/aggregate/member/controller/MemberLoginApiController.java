@@ -12,8 +12,8 @@ import com.site.reon.aggregate.member.query.dto.ApiEmailVerifyRequest;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindApiService;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
-import com.site.reon.aggregate.member.service.MemberEmailLoginService;
-import com.site.reon.aggregate.member.service.dto.LoginDto;
+import com.site.reon.aggregate.member.command.service.MemberEmailLoginService;
+import com.site.reon.aggregate.member.command.dto.LoginRequest;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -77,7 +77,7 @@ public class MemberLoginApiController {
     @ApiOperation(value = "이메일 로그인", notes = "앱에서 이메일로 로그인합니다.")
     @PostMapping("/email")
     public ResponseEntity loginEmail(@Valid @RequestBody final ApiLoginRequest request) {
-        memberEmailLoginService.emailAuthenticate(LoginDto.from(request));
+        memberEmailLoginService.emailAuthenticate(LoginRequest.from(request));
         final Member member = memberFindService.getMemberWithAuthorities(request.getEmail(), OAuth2Client.EMPTY);
         return BasicResponse.ok(MemberDto.from(member));
     }

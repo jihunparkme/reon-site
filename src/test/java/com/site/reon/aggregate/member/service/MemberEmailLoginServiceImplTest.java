@@ -2,10 +2,12 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.service.MemberEmailLoginService;
+import com.site.reon.aggregate.member.command.service.MemberEmailLoginServiceImpl;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.query.service.MemberFindServiceImpl;
-import com.site.reon.aggregate.member.service.dto.SignUpDto;
+import com.site.reon.aggregate.member.command.dto.SignUpRequest;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +49,7 @@ class MemberEmailLoginServiceImplTest {
     @Test
     void signup_is_success() throws Exception {
         String email = "aaron@gmail.com";
-        SignUpDto signUp = SignUpDto.builder()
+        SignUpRequest signUp = SignUpRequest.builder()
                 .email(email)
                 .firstName("aaron")
                 .lastName("park")
@@ -74,7 +76,7 @@ class MemberEmailLoginServiceImplTest {
     @Test
     void signup_is_fail() throws Exception {
         String email = "admin@gmail.com";
-        SignUpDto signUp = SignUpDto.builder()
+        SignUpRequest signUp = SignUpRequest.builder()
                 .firstName("admin")
                 .lastName("park")
                 .email(email)
