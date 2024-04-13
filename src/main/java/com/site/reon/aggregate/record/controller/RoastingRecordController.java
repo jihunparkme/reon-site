@@ -16,7 +16,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static com.site.reon.global.common.constant.Result.FAIL;
 import static com.site.reon.global.common.constant.Result.SUCCESS;
 
 @Slf4j
