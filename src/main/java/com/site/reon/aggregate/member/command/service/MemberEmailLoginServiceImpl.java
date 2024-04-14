@@ -3,6 +3,7 @@ package com.site.reon.aggregate.member.command.service;
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.OAuth2;
+import com.site.reon.aggregate.member.command.domain.ProductInfo;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.command.dto.LoginRequest;
@@ -51,7 +52,9 @@ public class MemberEmailLoginServiceImpl implements MemberEmailLoginService {
                 .lastName(signUpRequest.getLastName())
                 .email(signUpRequest.getEmail())
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
-                .roasterSn(signUpRequest.getRoasterSn())
+                .productInfo(ProductInfo.builder()
+                        .roasterSn(signUpRequest.getRoasterSn())
+                        .build())
                 .authorities(Collections.singleton(authority))
                 .oAuth2(oAuth2)
                 .activated(true)

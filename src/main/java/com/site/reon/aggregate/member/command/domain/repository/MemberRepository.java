@@ -38,7 +38,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Modifying
     @Query("UPDATE Member member " +
-            "SET member.roasterSn = :serialNo " +
+            "SET member.productInfo.roasterSn = :serialNo " +
             "WHERE member.id = :memberId")
     int registerMemberSerialNo(@Param("serialNo") String serialNo,
                                @Param("memberId") long memberId);

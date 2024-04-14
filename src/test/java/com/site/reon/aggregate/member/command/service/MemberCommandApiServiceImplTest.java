@@ -3,6 +3,7 @@ package com.site.reon.aggregate.member.command.service;
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.OAuth2;
+import com.site.reon.aggregate.member.command.domain.ProductInfo;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.command.dto.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
@@ -40,7 +41,9 @@ class MemberCommandApiServiceImplTest {
                 .build();
         final Member expected = Member.builder()
                 .id(3L)
-                .roasterSn("asfdasfeasfdsasdfas")
+                .productInfo(ProductInfo.builder()
+                        .roasterSn("asfdasfeasfdsasdfas")
+                        .build())
                 .email(email)
                 .firstName("aaron")
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))

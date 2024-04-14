@@ -9,10 +9,10 @@ import lombok.*;
 
 @Embeddable
 @Getter
-@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class OAuth2 {
     @Column(length = 2000)
     private String picture;

@@ -57,11 +57,8 @@ public class Member extends BaseTimeEntity {
     @Column(length = 100)
     private String address;
 
-    @Column(length = 100)
-    private String prdCode;
-
-    @Column(length = 100)
-    private String roasterSn;
+    @Embedded
+    private ProductInfo productInfo;
 
     @Embedded
     private OAuth2 oAuth2;
@@ -87,8 +84,10 @@ public class Member extends BaseTimeEntity {
         this.firstName = memberEditRequest.getFirstName();
         this.lastName = memberEditRequest.getLastName();
         this.phone = memberEditRequest.getPhone();
-        this.prdCode = memberEditRequest.getPrdCode();
-        this.roasterSn = memberEditRequest.getRoasterSn();
+        this.productInfo = ProductInfo.builder()
+                .prdCode(memberEditRequest.getPrdCode())
+                .roasterSn(memberEditRequest.getRoasterSn())
+                .build();
         this.companyName = memberEditRequest.getCompanyName();
         this.address = memberEditRequest.getAddress();
     }

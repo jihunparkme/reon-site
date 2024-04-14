@@ -3,6 +3,7 @@ package com.site.reon.aggregate.member.command.dto;
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.OAuth2;
+import com.site.reon.aggregate.member.command.domain.ProductInfo;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.dto.ApiRequest;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -48,7 +49,9 @@ public class ApiOAuth2SignUpRequest extends ApiRequest {
                 .password(UUID.randomUUID().toString())
                 .oAuth2(oAuth2)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .roasterSn(this.roasterSn)
+                .productInfo(ProductInfo.builder()
+                        .roasterSn(this.roasterSn)
+                        .build())
                 .activated(true)
                 .build();
     }
