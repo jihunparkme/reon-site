@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.OAuth2;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.AllArgsConstructor;
@@ -66,13 +67,16 @@ public class AppleOAuth2Token {
     }
 
     public Member toMember() {
+        final OAuth2 oAuth2 = OAuth2.builder()
+                .oAuthClient(OAuth2Client.APPLE)
+                .build();
         return Member.builder()
                 .firstName(extractEmailName())
                 .lastName(StringUtils.EMPTY)
                 .email(this.email)
                 .password(UUID.randomUUID().toString())
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .oAuthClient(OAuth2Client.APPLE)
+                .oAuth2(oAuth2)
                 .activated(true)
                 .build();
     }

@@ -2,9 +2,10 @@ package com.site.reon.aggregate.member.command.service;
 
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.OAuth2;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.command.dto.ApiOAuth2SignUpRequest;
+import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -32,14 +34,17 @@ class MemberCommandApiServiceImplTest {
                 .picture("safddsafdsafs")
                 .authClientName("kakao")
                 .build();
+        final OAuth2 oAuth2 = OAuth2.builder()
+                .picture("safddsafdsafs")
+                .oAuthClient(OAuth2Client.KAKAO)
+                .build();
         final Member expected = Member.builder()
                 .id(3L)
                 .roasterSn("asfdasfeasfdsasdfas")
                 .email(email)
                 .firstName("aaron")
-                .picture("safddsafdsafs")
-                .oAuthClient(OAuth2Client.KAKAO)
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
+                .oAuth2(oAuth2)
                 .build();
 
         given(memberRepository.save(any()))

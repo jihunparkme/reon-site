@@ -3,7 +3,6 @@ package com.site.reon.aggregate.member.command.domain;
 import com.site.reon.aggregate.member.command.dto.MemberEditRequest;
 import com.site.reon.global.common.BaseTimeEntity;
 import com.site.reon.global.common.constant.member.MemberType;
-import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -64,14 +63,8 @@ public class Member extends BaseTimeEntity {
     @Column(length = 100)
     private String roasterSn;
 
-    @Column(length = 2000)
-    private String picture;
-
-    @Column(length = 10)
-    @Enumerated(EnumType.STRING)
-    private OAuth2Client oAuthClient;
-
-    private Long oauthUserId;
+    @Embedded
+    private OAuth2 oAuth2;
 
     @Column
     private boolean activated;
@@ -83,10 +76,9 @@ public class Member extends BaseTimeEntity {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
-    public Member updateOAuth2User(final Long oAuthUserId, final String name, final String picture) {
-        this.oauthUserId = oAuthUserId;
+    public Member updateOAuth2AccountInfo(final Long oAuthUserId, final String name, final String picture) {
+        this.oAuth2.update(picture, oAuthUserId);
         this.firstName = name;
-        this.picture = picture;
         return this;
     }
 

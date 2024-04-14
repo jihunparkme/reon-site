@@ -20,20 +20,20 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT member " +
             "FROM Member member " +
             "WHERE member.email=:email " +
-            "AND member.oAuthClient=:oAuthClient")
+            "AND member.oAuth2.oAuthClient=:oAuthClient")
     Optional<Member> findByEmailAndOAuthClient(@Param("email") String email, @Param("oAuthClient") OAuth2Client oAuthClient);
 
     @Query("SELECT member " +
             "FROM Member member " +
             "WHERE member.email=:email " +
-            "AND member.oAuthClient=:oAuthClient")
+            "AND member.oAuth2.oAuthClient=:oAuthClient")
     @EntityGraph(attributePaths = "authorities")
     Optional<Member> findWithAuthoritiesByEmailAndOAuthClient(@Param("email") String email, @Param("oAuthClient") OAuth2Client oAuthClient);
 
     @Modifying
     @Query("DELETE FROM Member member " +
             "WHERE member.email=:email " +
-            "AND member.oAuthClient=:oAuthClient")
+            "AND member.oAuth2.oAuthClient=:oAuthClient")
     int deleteByEmailAndOAuthClient(@Param("email") String email, @Param("oAuthClient") OAuth2Client oAuthClient);
 
     @Modifying

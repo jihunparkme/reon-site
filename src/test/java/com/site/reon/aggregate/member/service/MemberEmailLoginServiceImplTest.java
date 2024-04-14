@@ -1,13 +1,14 @@
 package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.OAuth2;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.command.dto.SignUpRequest;
 import com.site.reon.aggregate.member.command.service.MemberEmailLoginService;
 import com.site.reon.aggregate.member.command.service.MemberEmailLoginServiceImpl;
 import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.query.service.MemberFindServiceImpl;
-import com.site.reon.aggregate.member.command.dto.SignUpRequest;
 import com.site.reon.global.security.exception.DuplicateMemberException;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,11 +56,14 @@ class MemberEmailLoginServiceImplTest {
                 .lastName("park")
                 .password("aaron")
                 .build();
+        final OAuth2 oAuth2 = OAuth2.builder()
+                .oAuthClient(OAuth2Client.EMPTY)
+                .build();
         final Member member = Member.builder()
                 .firstName(signUp.getFirstName())
                 .lastName(signUp.getLastName())
                 .email(signUp.getEmail())
-                .oAuthClient(OAuth2Client.EMPTY)
+                .oAuth2(oAuth2)
                 .activated(true)
                 .build();
 
@@ -69,7 +73,7 @@ class MemberEmailLoginServiceImplTest {
         assertEquals("aaron", findMember.getFirstName());
         assertEquals("park", findMember.getLastName());
         assertEquals(email, findMember.getEmail());
-        assertEquals(OAuth2Client.EMPTY, findMember.getOAuthClient());
+        assertEquals(OAuth2Client.EMPTY, findMember.getOAuth2().getOAuthClient());
         assertEquals(true, findMember.isActivated());
     }
 

@@ -7,12 +7,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Embeddable
-@NoArgsConstructor
-@Builder
-@AllArgsConstructor
+@Getter
 @EqualsAndHashCode
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductInfo {
     @Column(length = 100, nullable = false)
     private String name;

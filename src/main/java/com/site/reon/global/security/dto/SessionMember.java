@@ -31,7 +31,7 @@ public class SessionMember implements Serializable {
                 .id(member.getId())
                 .name(member.getFirstName())
                 .email(member.getEmail())
-                .picture(member.getPicture())
+                .picture(member.getOAuth2().getPicture())
                 .authorityDtoSet(member.getAuthorities().stream()
                         .map(authority -> AuthorityDto.builder()
                                 .authorityName(authority.getAuthorityName())

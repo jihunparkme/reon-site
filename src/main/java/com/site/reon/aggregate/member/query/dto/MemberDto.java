@@ -92,8 +92,8 @@ public class MemberDto {
                                 .authorityName(authority.getAuthorityName())
                                 .build())
                         .collect(Collectors.toSet()))
-                .picture(member.getPicture())
-                .oAuthClient(member.getOAuthClient())
+                .picture(member.getOAuth2().getPicture())
+                .oAuthClient(member.getOAuth2().getOAuthClient())
                 .build();
     }
 }
