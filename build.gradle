@@ -85,6 +85,11 @@ jacocoTestReport {
             files(classDirectories.files.collect {
                 fileTree(dir: it, exclude: [
                         '**/dto',
+                        '**/exception',
+                        '**/handler',
+                        '**/model',
+                        '**/domain',
+                        '**/const',
                         '**/MemberMypageController.class',
                         '**/*PageController.class',
                 ])
