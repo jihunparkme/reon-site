@@ -529,7 +529,7 @@ section {
 .records .icon-box,
 .products .icon-box,
 .services .icon-box {
-  background-color: #444142;
+  background-color: #44414287;
 }
 
 .section-title {
@@ -572,7 +572,7 @@ section {
 --------------------------------------------------------------*/
 .breadcrumbs {
   padding: 18px 0;
-  background: #444142;
+  background: #44414287;
   min-height: 40px;
   margin-top: 80px;
 }
