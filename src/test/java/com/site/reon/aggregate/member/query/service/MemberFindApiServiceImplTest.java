@@ -26,7 +26,7 @@ class MemberFindApiServiceImplTest {
             .build());
 
     @Test
-    void verify_email_of_email_is_null() throws Exception {
+    void when_verifySocialEmail_then_null_email_exception() throws Exception {
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("KAKAO")
                 .email(null)
@@ -41,7 +41,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_email_is_empty() throws Exception {
+    void when_verifySocialEmail_then_empty_email_exception() throws Exception {
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("KAKAO")
                 .email("")
@@ -56,7 +56,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_token_is_empty() throws Exception {
+    void when_verifySocialEmail_then_empty_token_exception() throws Exception {
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("Apple")
                 .email("")
@@ -71,7 +71,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_kakao_login_should_be_return_true() throws Exception {
+    void when_verifySocialEmail_kakao_account_then_return_true() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("KAKAO")
@@ -87,7 +87,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_kakao_login_should_be_return_false() throws Exception {
+    void when_verifySocialEmail_kakao_account_then_return_false() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("kakao")
@@ -102,7 +102,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_google_login_should_be_return_true() throws Exception {
+    void when_verifySocialEmail_google_account_then_return_true() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("google")
@@ -117,7 +117,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_google_login_should_be_return_false() throws Exception {
+    void when_verifySocialEmail_google_account_then_return_false() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("google")
@@ -132,7 +132,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_apple_login_should_be_return_true() throws Exception {
+    void when_verifySocialEmail_apple_account_then_return_true() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("apple")
@@ -147,7 +147,7 @@ class MemberFindApiServiceImplTest {
     }
 
     @Test
-    void verify_email_of_apple_login_should_be_return_false() throws Exception {
+    void when_verifySocialEmail_apple_account_then_return_false() throws Exception {
         String email = "user@gmail.com";
         ApiEmailVerifyRequest verifyDto = ApiEmailVerifyRequest.builder()
                 .authClientName("apple")
