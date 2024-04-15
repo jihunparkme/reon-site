@@ -8,11 +8,11 @@ body {
 
 a {
   text-decoration: none;
-  color: #ffffff;
+  color: #f8f9fa;
 }
 
 a:hover {
-  color: #ffffff;
+  color: #f2b626;
   text-decoration: none;
 }
 
@@ -529,7 +529,7 @@ section {
 .records .icon-box,
 .products .icon-box,
 .services .icon-box {
-  background-color: #f8f9fa;
+  background-color: #444142;
 }
 
 .section-title {
@@ -572,7 +572,7 @@ section {
 --------------------------------------------------------------*/
 .breadcrumbs {
   padding: 18px 0;
-  background: #f8f9fa;
+  background: #444142;
   min-height: 40px;
   margin-top: 80px;
 }
@@ -703,11 +703,12 @@ section {
   margin-bottom: 20px;
   padding: 30px;
   border-radius: 6px;
+  color: #f8f9fad9;
 }
 
 .records .icon-box i {
   float: left;
-  color: #d9232d;
+  color: #f2b626;
   font-size: 40px;
 }
 
@@ -719,7 +720,7 @@ section {
 }
 
 .records .icon-box h4 a {
-  color: #556270;
+  color: #f8f9fad9;
   transition: 0.3s;
 }
 
@@ -730,7 +731,7 @@ section {
 }
 
 .records .icon-box:hover h4 a {
-  color: #d9232d;
+  color: #f2b626;
 }
 
 /*--------------------------------------------------------------
@@ -2250,7 +2251,7 @@ section {
 }
 
 .small-menu {
-  color: black
+  color: #f8f9fad9;
 }
 
 /*--------------------------------------------------------------
@@ -2316,4 +2317,13 @@ section {
 
 .width-300 {
   width: 300px;
+}
+
+.total {
+  margin-bottom: 30px;
+  color: #f8f9fad9;
+}
+
+main {
+  background: #211F20;
 }
