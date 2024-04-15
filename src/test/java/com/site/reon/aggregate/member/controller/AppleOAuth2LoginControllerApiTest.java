@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,6 +18,7 @@ class AppleOAuth2LoginControllerApiTest extends ApiTest {
         final var response = AppleOAuth2LoginApiSteps.requestAppleOauth2Authorization();
 
         assertEquals(HttpStatus.OK.value(), response.statusCode());
+        assertThat(response.body().asString(), containsString("<title>Sign in with Apple ID</title>"));
     }
     
     @Test 
