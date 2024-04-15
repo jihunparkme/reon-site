@@ -29,7 +29,7 @@ public class SendMailEventService {
     @Value("${admin.mail.address}")
     private String adminAddress;
 
-    private static final String MAIL_TITLE_PREFIX = "[REONAI] ";
+    private static final String MAIL_TITLE_PREFIX = "[REONAi] ";
 
     private final JavaMailSender mailSender;
 
@@ -52,7 +52,7 @@ public class SendMailEventService {
         try {
             message.setSubject(MAIL_TITLE_PREFIX + subject);
             setMailRecipient(message, addressList);
-            message.setFrom(new InternetAddress(senderAddress, MimeUtility.encodeText("REONAI", "UTF-8", "B")));
+            message.setFrom(new InternetAddress(senderAddress, MimeUtility.encodeText("REONAi", "UTF-8", "B")));
             message.setContent(contents, "text/html;charset=UTF-8");
         } catch (Exception e) {
             log.error("[MailUtilService.getMimeMessage] exception.");

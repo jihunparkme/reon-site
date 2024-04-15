@@ -21,7 +21,7 @@ public class MailTemplate {
                 "                                        <tr>\n" +
                 "                                            <td\n" +
                 "                                                style=\"padding-bottom:50px;font-size:14px;line-height:22px;font-weight:normal;color:#000000;text-align:left;letter-spacing:-1px;font-family:나눔고딕,NanumGothic,맑은고딕,Malgun Gothic,돋움,Dotum,Helvetica,Apple SD Gothic Neo,Sans-serif\">\n" +
-                "                                                <p style=\"margin:0;padding:0\">본 메일은 REONAI 사이트의 ");
+                "                                                <p style=\"margin:0;padding:0\">본 메일은 REONAi 사이트의 ");
         sb.append(purpose);
         sb.append("을 위한 이메일 <span class=\"il\">인증</span>입니다.</p>\n" +
                 "                                                <p style=\"margin:0;padding:0\">아래의 [이메일 <span class=\"il\">인증</span><span class=\"il\">번호</span>]를 입력하여 본인확인을 해주시기 바랍니다.</p>\n" +
@@ -122,7 +122,7 @@ public class MailTemplate {
                 "                                            <td style=\"width:100%;text-align:left\" valign=\"bottom\">\n" +
                 "                                                <a href=\"http://www.reonaicoffee.com/\" target=\"_blank\"\n" +
                 "                                                    data-saferedirecturl=\"http://www.google.com/url?q=https://www.reonaicoffee.com\">\n" +
-                "                                                    <img src=\"http://www.reonaicoffee.com/img/logo/reonai.png\" alt=\"REONAI\"\n" +
+                "                                                    <img src=\"http://www.reonaicoffee.com/img/logo/reonai.png\" alt=\"REONAi\"\n" +
                 "                                                        style=\"width: 80px; height: 80px;\">\n" +
                 "                                                </a>\n" +
                 "                                            </td>\n" +
