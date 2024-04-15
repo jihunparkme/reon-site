@@ -10,6 +10,7 @@ import com.site.reon.aggregate.member.command.domain.PersonalInfo;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppleOAuth2Token {
