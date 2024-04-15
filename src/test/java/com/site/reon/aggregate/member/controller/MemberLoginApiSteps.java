@@ -10,11 +10,10 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.springframework.http.MediaType;
 
-public class MemberLoginSteps {
+public class MemberLoginApiSteps {
 
     public final static String CLIENT_NAME = "reon";
     public final static String CLIENT_ID = "235df110-bd70-11ee-aa8b-e30685fde2fa";
-
 
     public static ApiEmailVerifyRequest verifyEmailRequest(
             final String clientName,

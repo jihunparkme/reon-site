@@ -5,7 +5,7 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.springframework.http.MediaType;
 
-public class AppleOauth2Steps {
+public class AppleOAuth2LoginApiSteps {
     public static ExtractableResponse<Response> requestAppleOauth2Authorization() {
         return RestAssured.given().log().all()
                 .when()

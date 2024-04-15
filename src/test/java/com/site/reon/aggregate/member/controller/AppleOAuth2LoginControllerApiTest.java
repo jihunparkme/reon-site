@@ -7,25 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 @ActiveProfiles("dev-oauth")
-class MemberAppleOauth2LoginApiTest extends ApiTest {
+class AppleOAuth2LoginControllerApiTest extends ApiTest {
     
     @Test 
     void when_authorization_then_redirect_authorization_uri() {
-        final var response = AppleOauth2Steps.requestAppleOauth2Authorization();
+        final var response = AppleOAuth2LoginApiSteps.requestAppleOauth2Authorization();
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
     }
     
     @Test 
     void when_authorizationRedirect_then_redirect_main() {
-        final var response = AppleOauth2Steps.requestAuthorizationRedirect();
+        final var response = AppleOAuth2LoginApiSteps.requestAuthorizationRedirect();
 
         Assertions.assertEquals(HttpStatus.FOUND.value(), response.statusCode());
     }
 
     @Test
     void when_authorizationRedirect_then_redirect_login_fail_page() {
-        final var response = AppleOauth2Steps.requestAuthorizationRedirectEmptyParam();
+        final var response = AppleOAuth2LoginApiSteps.requestAuthorizationRedirectEmptyParam();
 
         Assertions.assertEquals(HttpStatus.FOUND.value(), response.statusCode());
     }
