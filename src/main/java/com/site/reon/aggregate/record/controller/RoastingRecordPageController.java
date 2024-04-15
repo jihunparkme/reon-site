@@ -22,7 +22,7 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @Controller
 @RequestMapping("/record")
 @RequiredArgsConstructor
-public class RoastingRecordController {
+public class RoastingRecordPageController {
 
     private final RoastingRecordFindService roastingRecordFindService;
     private final RoastingRecordCommandService roastingRecordCommandService;
