@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.controller.steps.MemberLoginApiSteps;
 import com.site.reon.global.ApiTest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import org.junit.jupiter.api.Assertions;

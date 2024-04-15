@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.controller;
+package com.site.reon.aggregate.member.controller.steps;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;

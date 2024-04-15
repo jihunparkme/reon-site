@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.record.controller;
 
-import com.site.reon.aggregate.member.controller.MemberLoginApiSteps;
+import com.site.reon.aggregate.member.controller.steps.MemberLoginApiSteps;
 import com.site.reon.global.ApiTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

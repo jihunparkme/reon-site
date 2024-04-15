@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.controller;
+package com.site.reon.aggregate.member.controller.steps;
 
 import com.site.reon.aggregate.member.command.dto.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.command.dto.ApiRegisterMemberSerialNo;
