@@ -12,7 +12,7 @@ a {
 }
 
 a:hover {
-  color: #e24d55;
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -35,7 +35,7 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 996;
-  background: #d9232d;
+  background: #fdbc1a;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -49,7 +49,7 @@ h6 {
 }
 
 .back-to-top:hover {
-  background: #e1444d;
+  background: #ffffff;
   color: #fff;
 }
 
@@ -77,7 +77,7 @@ h6 {
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-#header .logo {
+header .logo {
   font-size: 28px;
   margin: 0;
   padding: 0;
@@ -87,11 +87,15 @@ h6 {
 }
 
 #header .logo a {
-  color: #556270;
+  color: #000000;
 }
 
 #header .logo img {
   max-height: 40px;
+}
+
+.me-auto {
+  margin-right: auto !important;
 }
 
 /*--------------------------------------------------------------
@@ -170,8 +174,8 @@ h6 {
   z-index: 99;
   opacity: 0;
   visibility: hidden;
-  background: #fff;
-  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  background: #f2b626;
+  box-shadow: 0px 0px 30px rgb(0, 0, 0, 0.25);
   transition: 0.3s;
 }
 
@@ -229,7 +233,7 @@ h6 {
 * Mobile Navigation
 */
 .mobile-nav-toggle {
-  color: #556270;
+  color: #f2b626;
   font-size: 28px;
   cursor: pointer;
   display: none;
@@ -691,7 +695,7 @@ section {
 # Records
 --------------------------------------------------------------*/
 .records {
-  min-height: 70%;
+  min-height: 80%;
   position: relative;
 }
 
@@ -733,7 +737,7 @@ section {
 # Products
 --------------------------------------------------------------*/
 .products {
-  min-height: 70%;
+  min-height: 80%;
   position: relative;
 }
 
@@ -1433,8 +1437,8 @@ section {
 .contact .info .email:hover i,
 .contact .info .address:hover i,
 .contact .info .phone:hover i {
-  background: #556270;
-  color: #fff;
+  background: #fdbc1a;
+  color: #211f20;
 }
 
 .contact .php-email-form {
@@ -1448,8 +1452,8 @@ section {
 
 .contact .php-email-form .error-message {
   display: none;
-  color: #fff;
-  background: #ed3c0d;
+  color: #211f20;
+  background: #fdbc1a;
   text-align: left;
   padding: 15px;
   font-weight: 600;
@@ -1497,7 +1501,7 @@ section {
 
 .contact .php-email-form input:focus,
 .contact .php-email-form textarea:focus {
-  border-color: #d9232d;
+  border-color: #fcbc1a;
 }
 
 .contact .php-email-form input {
@@ -2070,15 +2074,14 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #4a5562;
+  background: #111111;
   padding: 0 0 30px 0;
-  color: #fff;
-  font-size: 14px;
-  bottom: 0;
+  color: #f2b626;
+  font-size: 20px;
 }
 
 #footer .footer-top {
-  background: #515d6a;
+  background: #000000;
   padding: 60px 0 30px 0;
 }
 
@@ -2105,8 +2108,8 @@ section {
 #footer .footer-top .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgb(253, 188, 26, 0.1);
+  color: #ffb71a;
   line-height: 1;
   padding: 8px 0;
   margin-right: 4px;
@@ -2126,7 +2129,7 @@ section {
 #footer .footer-top h4 {
   font-size: 16px;
   font-weight: 600;
-  color: #fff;
+  color: #fdbc1a;
   position: relative;
   padding-bottom: 12px;
 }
@@ -2222,11 +2225,6 @@ section {
 
 #footer .credits a:hover {
   color: white;
-}
-
-
-html, body {
-  height: 100%
 }
 
 /*--------------------------------------------------------------

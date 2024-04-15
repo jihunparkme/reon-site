@@ -5,8 +5,8 @@
 
 .container-login div.login-box {
     padding: 130px 30px 20px;
-    min-height: 75%;
-    background-color: rgb(251, 251, 251);
+    min-height: 90%;
+    background: #211F20;
 }
 
 .container-login .login-row {
