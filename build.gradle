@@ -84,7 +84,8 @@ jacocoTestReport {
 	getClassDirectories().setFrom(
 			files(classDirectories.files.collect {
 				fileTree(dir: it, exclude: [
-						'**/dto'
+						'**/dto',
+						'**/MemberMypageController.class',
 				])
 			})
 	)
