@@ -86,6 +86,7 @@ jacocoTestReport {
                 fileTree(dir: it, exclude: [
                         '**/dto',
                         '**/MemberMypageController.class',
+                        '**/*PageController.class',
                 ])
             })
     )
