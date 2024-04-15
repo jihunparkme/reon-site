@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.PersonalInfo;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.query.service.MemberFindServiceImpl;
@@ -33,17 +34,19 @@ class MemberFindServiceImplTest {
     void getMemberWithAuthorities_is_exist_member() throws Exception {
         String email = "admin@gmail.com";
         final Member willReturn = Member.builder()
-                .firstName("admin")
-                .lastName("park")
                 .email(email)
+                .personalInfo(PersonalInfo.builder()
+                        .firstName("admin")
+                        .lastName("park")
+                        .build())
                 .build();
         given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(email, OAuth2Client.EMPTY))
                 .willReturn(Optional.of(willReturn));
 
         Member member = memberFindService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
 
-        assertEquals("admin", member.getFirstName());
-        assertEquals("park", member.getLastName());
+        assertEquals("admin", member.getPersonalInfo().getFirstName());
+        assertEquals("park", member.getPersonalInfo().getLastName());
         assertEquals(email, member.getEmail());
     }
 

@@ -36,26 +36,14 @@ public class Member extends BaseTimeEntity {
     @Column(length = 10)
     private MemberType type;
 
-    @Column(length = 30, nullable = false)
-    private String firstName;
-
-    @Column(length = 30, nullable = false)
-    private String lastName;
-
     @Column(length = 50, nullable = false)
     private String email;
 
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 20)
-    private String phone;
-
-    @Column(length = 30)
-    private String companyName;
-
-    @Column(length = 100)
-    private String address;
+    @Embedded
+    private PersonalInfo personalInfo;
 
     @Embedded
     private ProductInfo productInfo;
@@ -75,20 +63,22 @@ public class Member extends BaseTimeEntity {
 
     public Member updateOAuth2AccountInfo(final Long oAuthUserId, final String name, final String picture) {
         this.oAuth2.update(picture, oAuthUserId);
-        this.firstName = name;
+        this.personalInfo.updateFirstName(name);
         return this;
     }
 
     public void update(MemberEditRequest memberEditRequest) {
         this.type = memberEditRequest.getType();
-        this.firstName = memberEditRequest.getFirstName();
-        this.lastName = memberEditRequest.getLastName();
-        this.phone = memberEditRequest.getPhone();
+        this.personalInfo = PersonalInfo.builder()
+                .firstName(memberEditRequest.getFirstName())
+                .lastName(memberEditRequest.getLastName())
+                .phone(memberEditRequest.getPhone())
+                .companyName(memberEditRequest.getCompanyName())
+                .address(memberEditRequest.getAddress())
+                .build();
         this.productInfo = ProductInfo.builder()
                 .prdCode(memberEditRequest.getPrdCode())
                 .roasterSn(memberEditRequest.getRoasterSn())
                 .build();
-        this.companyName = memberEditRequest.getCompanyName();
-        this.address = memberEditRequest.getAddress();
     }
 }

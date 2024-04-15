@@ -1,9 +1,6 @@
 package com.site.reon.aggregate.member.command.service;
 
-import com.site.reon.aggregate.member.command.domain.Authority;
-import com.site.reon.aggregate.member.command.domain.Member;
-import com.site.reon.aggregate.member.command.domain.OAuth2;
-import com.site.reon.aggregate.member.command.domain.ProductInfo;
+import com.site.reon.aggregate.member.command.domain.*;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.command.dto.ApiOAuth2SignUpRequest;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
@@ -35,19 +32,20 @@ class MemberCommandApiServiceImplTest {
                 .picture("safddsafdsafs")
                 .authClientName("kakao")
                 .build();
-        final OAuth2 oAuth2 = OAuth2.builder()
-                .picture("safddsafdsafs")
-                .oAuthClient(OAuth2Client.KAKAO)
-                .build();
         final Member expected = Member.builder()
                 .id(3L)
+                .email(email)
+                .personalInfo(PersonalInfo.builder()
+                        .firstName("aaron")
+                        .build())
                 .productInfo(ProductInfo.builder()
                         .roasterSn("asfdasfeasfdsasdfas")
                         .build())
-                .email(email)
-                .firstName("aaron")
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .oAuth2(oAuth2)
+                .oAuth2(OAuth2.builder()
+                        .picture("safddsafdsafs")
+                        .oAuthClient(OAuth2Client.KAKAO)
+                        .build())
                 .build();
 
         given(memberRepository.save(any()))

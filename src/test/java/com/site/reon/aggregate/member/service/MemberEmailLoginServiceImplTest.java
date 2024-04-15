@@ -2,6 +2,7 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.OAuth2;
+import com.site.reon.aggregate.member.command.domain.PersonalInfo;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
 import com.site.reon.aggregate.member.command.dto.SignUpRequest;
 import com.site.reon.aggregate.member.command.service.MemberEmailLoginService;
@@ -56,22 +57,23 @@ class MemberEmailLoginServiceImplTest {
                 .lastName("park")
                 .password("aaron")
                 .build();
-        final OAuth2 oAuth2 = OAuth2.builder()
-                .oAuthClient(OAuth2Client.EMPTY)
-                .build();
         final Member member = Member.builder()
-                .firstName(signUp.getFirstName())
-                .lastName(signUp.getLastName())
                 .email(signUp.getEmail())
-                .oAuth2(oAuth2)
+                .personalInfo(PersonalInfo.builder()
+                        .firstName(signUp.getFirstName())
+                        .lastName(signUp.getLastName())
+                        .build())
+                .oAuth2(OAuth2.builder()
+                        .oAuthClient(OAuth2Client.EMPTY)
+                        .build())
                 .activated(true)
                 .build();
 
         given(memberRepository.findWithAuthoritiesByEmailAndOAuthClient(any(), any())).willReturn(Optional.of(member));
 
         Member findMember = memberFindService.getMemberWithAuthorities(email, OAuth2Client.EMPTY);
-        assertEquals("aaron", findMember.getFirstName());
-        assertEquals("park", findMember.getLastName());
+        assertEquals("aaron", findMember.getPersonalInfo().getFirstName());
+        assertEquals("park", findMember.getPersonalInfo().getLastName());
         assertEquals(email, findMember.getEmail());
         assertEquals(OAuth2Client.EMPTY, findMember.getOAuth2().getOAuthClient());
         assertEquals(true, findMember.isActivated());

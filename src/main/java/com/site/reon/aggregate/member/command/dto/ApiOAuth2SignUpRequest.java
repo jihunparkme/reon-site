@@ -1,9 +1,6 @@
 package com.site.reon.aggregate.member.command.dto;
 
-import com.site.reon.aggregate.member.command.domain.Authority;
-import com.site.reon.aggregate.member.command.domain.Member;
-import com.site.reon.aggregate.member.command.domain.OAuth2;
-import com.site.reon.aggregate.member.command.domain.ProductInfo;
+import com.site.reon.aggregate.member.command.domain.*;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.dto.ApiRequest;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
@@ -38,16 +35,17 @@ public class ApiOAuth2SignUpRequest extends ApiRequest {
     private String authClientName;
 
     public Member toMember() {
-        final OAuth2 oAuth2 = OAuth2.builder()
-                .picture(this.picture)
-                .oAuthClient(OAuth2Client.of(this.authClientName.toLowerCase()))
-                .build();
         return Member.builder()
-                .firstName(this.firstName)
-                .lastName(StringUtils.EMPTY)
                 .email(this.email)
                 .password(UUID.randomUUID().toString())
-                .oAuth2(oAuth2)
+                .personalInfo(PersonalInfo.builder()
+                        .firstName(this.firstName)
+                        .lastName(StringUtils.EMPTY)
+                        .build())
+                .oAuth2(OAuth2.builder()
+                        .picture(this.picture)
+                        .oAuthClient(OAuth2Client.of(this.authClientName.toLowerCase()))
+                        .build())
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
                 .productInfo(ProductInfo.builder()
                         .roasterSn(this.roasterSn)

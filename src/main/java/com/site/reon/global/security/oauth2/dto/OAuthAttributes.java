@@ -3,6 +3,7 @@ package com.site.reon.global.security.oauth2.dto;
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.OAuth2;
+import com.site.reon.aggregate.member.command.domain.PersonalInfo;
 import com.site.reon.global.common.constant.member.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -75,10 +76,12 @@ public class OAuthAttributes {
                 .oauthUserId(this.oAuthUserId)
                 .build();
         return Member.builder()
-                .firstName(this.name)
-                .lastName(StringUtils.EMPTY)
                 .email(this.email)
                 .password(UUID.randomUUID().toString())
+                .personalInfo(PersonalInfo.builder()
+                        .firstName(this.name)
+                        .lastName(StringUtils.EMPTY)
+                        .build())
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
                 .oAuth2(oAuth2)
                 .activated(true)
