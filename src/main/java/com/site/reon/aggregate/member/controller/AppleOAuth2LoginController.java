@@ -41,7 +41,7 @@ public class AppleOAuth2LoginController {
 
     @PostMapping("/apple/redirect")
     public String authorizationRedirect(final AppleOauth2LoginResponse response) {
-        if (response == null) {
+        if (response == null || response.getId_token() == null) {
             return "redirect:/login/oauth2/fail";
         }
 

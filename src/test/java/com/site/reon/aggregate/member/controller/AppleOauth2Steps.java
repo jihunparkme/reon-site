@@ -23,4 +23,12 @@ public class AppleOauth2Steps {
                 .then()
                 .log().all().extract();
     }
+
+    public static ExtractableResponse<Response> requestAuthorizationRedirectEmptyParam() {
+        return RestAssured.given().log().all()
+                .when()
+                .post("/login/oauth2/apple/redirect")
+                .then()
+                .log().all().extract();
+    }
 }

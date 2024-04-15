@@ -10,15 +10,22 @@ import org.springframework.test.context.ActiveProfiles;
 class MemberAppleOauth2LoginApiTest extends ApiTest {
     
     @Test 
-    void authorization() {
+    void when_authorization_then_redirect_authorization_uri() {
         final var response = AppleOauth2Steps.requestAppleOauth2Authorization();
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
     }
     
     @Test 
-    void authorizationRedirect() {
+    void when_authorizationRedirect_then_redirect_main() {
         final var response = AppleOauth2Steps.requestAuthorizationRedirect();
+
+        Assertions.assertEquals(HttpStatus.FOUND.value(), response.statusCode());
+    }
+
+    @Test
+    void when_authorizationRedirect_then_redirect_login_fail_page() {
+        final var response = AppleOauth2Steps.requestAuthorizationRedirectEmptyParam();
 
         Assertions.assertEquals(HttpStatus.FOUND.value(), response.statusCode());
     }
