@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum MailSubject {
     AUTH_CODE("Please verify your email"),
-    INQUIRY("Your inquiry has been registered."),
+    INQUIRY("Inquiry has been registered."),
     ;
 
     private final String title;
