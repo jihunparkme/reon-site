@@ -1,8 +1,8 @@
 /**
-* PHP Email Form Validation - v3.6
-* URL: https://bootstrapmade.com/php-email-form/
-* Author: BootstrapMade.com
-*/
+ * PHP Email Form Validation - v3.6
+ * URL: https://bootstrapmade.com/php-email-form/
+ * Author: BootstrapMade.com
+ */
 (function () {
   "use strict";
 
@@ -16,7 +16,7 @@
 
       let action = thisForm.getAttribute('action');
       let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
-      
+
       if( ! action ) {
         displayError(thisForm, 'The form action property is not set!');
         return;
@@ -32,10 +32,10 @@
           grecaptcha.ready(function() {
             try {
               grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
-              .then(token => {
-                formData.set('recaptcha-response', token);
-                php_email_form_submit(thisForm, action, formData);
-              })
+                  .then(token => {
+                    formData.set('recaptcha-response', token);
+                    php_email_form_submit(thisForm, action, formData);
+                  })
             } catch(error) {
               displayError(thisForm, error);
             }
@@ -55,25 +55,25 @@
       body: formData,
       headers: {'X-Requested-With': 'XMLHttpRequest'}
     })
-    .then(response => {
-      if( response.ok ) {
-        return response.text();
-      } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
-      }
-    })
-    .then(data => {
-      thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.trim() == 'OK') {
-        thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
-      } else {
-        throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
-      }
-    })
-    .catch((error) => {
-      displayError(thisForm, error);
-    });
+        .then(response => {
+          if( response.ok ) {
+            return response.text();
+          } else {
+            throw new Error(`${response.status} ${response.statusText} ${response.url}`);
+          }
+        })
+        .then(data => {
+          thisForm.querySelector('.loading').classList.remove('d-block');
+          if (data.trim() == 'OK') {
+            thisForm.querySelector('.sent-message').classList.add('d-block');
+            thisForm.reset();
+          } else {
+            throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action);
+          }
+        })
+        .catch((error) => {
+          displayError(thisForm, error);
+        });
   }
 
   function displayError(thisForm, error) {
