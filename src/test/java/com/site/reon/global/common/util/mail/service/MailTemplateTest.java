@@ -9,7 +9,7 @@ class MailTemplateTest {
 
     @Test
     void generateAuthCodeTemplate() throws Exception {
-        String purpose = "회원가입";
+        String purpose = "sign up";
         String authCode = "111111";
         String template = MailTemplate.generateAuthCodeTemplate(purpose, authCode);
 

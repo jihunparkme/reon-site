@@ -19,7 +19,7 @@ class SendMailEventServiceTest {
     @Test
     void sendAuthCodeMailEvent() throws Exception {
         String subject = "TEST: 인증번호 발송";
-        String purpose = "회원가입";
+        String purpose = "sign up";
         String authCode = "111111";
         Events.raise(SendMailEvent.builder()
                 .subject(subject)

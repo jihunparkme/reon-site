@@ -262,7 +262,7 @@ public class MemberLoginApiControllerApiTest extends ApiTest {
     @Test
     @Disabled
     void when_send_auth_code() {
-        final String purpose = "회원가입";
+        final String purpose = "sign up";
         final String email = "jihunpark.tech@gmail.com";
         final var request = MemberLoginApiSteps.sendAuthCodeRequest(purpose, email);
 
