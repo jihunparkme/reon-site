@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum KeyPrefix {
-    SIGN_UP("sign-up:", "회원가입", "sign-up-verified:"),
-    WITHDRAW("withdraw:", "탈퇴", "GOOGLE"),
+    SIGN_UP("sign-up:", "sign up", "sign-up-verified:"),
+    WITHDRAW("withdraw:", "withdrawal", "GOOGLE"),
     ;
 
     private final String prefix;
