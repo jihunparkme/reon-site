@@ -15,16 +15,16 @@ public class MailTemplate {
                 "                                    <tbody>\n" +
                 "                                        <tr>\n" +
                 "                                            <td style=\"font-size:44px;line-height:48px;font-weight:bold;color:#000000;padding-bottom:60px;text-align:left;letter-spacing:-1px;font-family:나눔고딕,NanumGothic,맑은고딕,Malgun Gothic,돋움,Dotum,Helvetica,Apple SD Gothic Neo,Sans-serif\">\n" +
-                "                                                <span>이메일 <span class=\"il\">인증</span><span class=\"il\">번호</span> 안내</span>\n" +
+                "                                                <span>Email Verification Code Guide</span>\n" +
                 "                                            </td>\n" +
                 "                                        </tr>\n" +
                 "                                        <tr>\n" +
                 "                                            <td\n" +
                 "                                                style=\"padding-bottom:50px;font-size:14px;line-height:22px;font-weight:normal;color:#000000;text-align:left;letter-spacing:-1px;font-family:나눔고딕,NanumGothic,맑은고딕,Malgun Gothic,돋움,Dotum,Helvetica,Apple SD Gothic Neo,Sans-serif\">\n" +
-                "                                                <p style=\"margin:0;padding:0\">본 메일은 REONAi 사이트의 ");
+                "                                                <p style=\"margin:0;padding:0\">This mail is an email verification for the ");
         sb.append(purpose);
-        sb.append("을 위한 이메일 <span class=\"il\">인증</span>입니다.</p>\n" +
-                "                                                <p style=\"margin:0;padding:0\">아래의 [이메일 <span class=\"il\">인증</span><span class=\"il\">번호</span>]를 입력하여 본인확인을 해주시기 바랍니다.</p>\n" +
+        sb.append(" of the REONAI site.</p>\n" +
+                "                                                <p style=\"margin:0;padding:0\">Please enter the [Verification Code] below to confirm your identity.</p>\n" +
                 "                                            </td>\n" +
                 "                                        </tr>\n" +
                 "                                        <tr>\n" +
@@ -45,7 +45,7 @@ public class MailTemplate {
                 "                                        </tr>\n" +
                 "                                        <tr>\n" +
                 "                                            <td style=\"font-size:14px;line-height:22px;font-weight:normal;color:#000000;text-align:left;letter-spacing:-1px;font-family:나눔고딕,NanumGothic,맑은고딕,Malgun Gothic,돋움,Dotum,Helvetica,Apple SD Gothic Neo,Sans-serif\">\n" +
-                "                                                <p style=\"margin:0;padding:0\">감사합니다.<br>REONAi</p>\n" +
+                "                                                <p style=\"margin:0;padding:0\"><span>Thank you.</span><br><span>RE:ON Company</span></p>\n" +
                 "                                            </td>\n" +
                 "                                        </tr>\n" +
                 "                                    </tbody>\n" +
