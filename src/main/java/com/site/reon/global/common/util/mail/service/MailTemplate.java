@@ -105,7 +105,7 @@ public class MailTemplate {
         return mergeTemplates(sb.toString());
     }
 
-    private static String getMailTemplatePrefix() {
+    private static String getTemplatePrefix() {
         StringBuffer sb = new StringBuffer();
         sb.append("<table width=\"100%\" style=\"padding:60px 0 60px 0;color:#555;font-size:16px;word-break:keep-all\">\n" +
                 "    <tbody>\n" +
@@ -139,7 +139,7 @@ public class MailTemplate {
         return sb.toString();
     }
 
-    private static String getMailTemplatePostFix() {
+    private static String getTemplatePostFix() {
         StringBuffer sb = new StringBuffer();
         sb.append("                     </tr>\n" +
                 "                    </tbody>\n" +
@@ -153,6 +153,6 @@ public class MailTemplate {
     }
 
     private static String mergeTemplates(String contents) {
-        return getMailTemplatePrefix() + contents + getMailTemplatePostFix();
+        return getTemplatePrefix() + contents + getTemplatePostFix();
     }
 }
