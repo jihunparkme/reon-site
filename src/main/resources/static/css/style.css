@@ -281,7 +281,7 @@ header .logo {
   bottom: 15px;
   left: 15px;
   padding: 10px 0;
-  background-color: #fff;
+  background-color: #f2b626;
   overflow-y: auto;
   transition: 0.3s;
 }
@@ -746,11 +746,12 @@ section {
   margin-bottom: 20px;
   padding: 30px;
   border-radius: 6px;
+  color: #f8f9fad9;
 }
 
 .products .icon-box i {
   float: left;
-  color: #d9232d;
+  color: #f2b626;
   font-size: 40px;
 }
 
@@ -762,7 +763,7 @@ section {
 }
 
 .products .icon-box h4 a {
-  color: #556270;
+  color: #f8f9fa;
   transition: 0.3s;
 }
 
@@ -774,6 +775,17 @@ section {
 
 .products .icon-box:hover h4 a {
   color: #d9232d;
+}
+
+.products .entry{
+  color: #f8f9fad9;
+}
+
+.products .entry .entry-view-title {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0 0 20px 0;
 }
 
 /*--------------------------------------------------------------
@@ -2242,8 +2254,8 @@ section {
 .page-item.active .page-link {
   z-index: 3 !important;
   color: #fff !important;
-  background-color: #5D432C !important;
-  border-color: #5D432C !important;
+  background-color: #f2b626 !important;
+  border-color: #f2b626 !important;
 }
 
 .page-link {
@@ -2326,4 +2338,8 @@ section {
 
 main {
   background: #211F20;
+}
+
+main .container {
+  margin-top: 10px;
 }

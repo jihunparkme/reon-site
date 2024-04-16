@@ -4,8 +4,8 @@
 }
 
 .container-product div.product-box {
-    min-height: 75%;
-    background-color: rgb(251, 251, 251);
+    min-height: 80%;
+    background: #211F20;
 }
 
 .container-product .product-row {
@@ -29,7 +29,6 @@
     width: 100%;
     border-radius: 15px;
     box-sizing: border-box;
-    margin: 0;
     padding: 0;
     color: #272b41;
     font-size: 15px;
@@ -39,6 +38,7 @@
     font-feature-settings: "tnum","tnum";
     position: relative;
     background: #fff;
+    margin: 50px 0 0;
 }
 
 .container-product .product-card .product-card-body {
