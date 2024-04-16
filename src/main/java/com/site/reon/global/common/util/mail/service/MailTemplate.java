@@ -45,7 +45,7 @@ public class MailTemplate {
                 "                                        </tr>\n" +
                 "                                        <tr>\n" +
                 "                                            <td style=\"font-size:14px;line-height:22px;font-weight:normal;color:#000000;text-align:left;letter-spacing:-1px;font-family:나눔고딕,NanumGothic,맑은고딕,Malgun Gothic,돋움,Dotum,Helvetica,Apple SD Gothic Neo,Sans-serif\">\n" +
-                "                                                <p style=\"margin:0;padding:0\">감사합니다.<br>RE:ON Company</p>\n" +
+                "                                                <p style=\"margin:0;padding:0\">감사합니다.<br>REONAi</p>\n" +
                 "                                            </td>\n" +
                 "                                        </tr>\n" +
                 "                                    </tbody>\n" +
@@ -122,8 +122,8 @@ public class MailTemplate {
                 "                                            <td style=\"width:100%;text-align:left\" valign=\"bottom\">\n" +
                 "                                                <a href=\"http://www.reonaicoffee.com/\" target=\"_blank\"\n" +
                 "                                                    data-saferedirecturl=\"http://www.google.com/url?q=https://www.reonaicoffee.com\">\n" +
-                "                                                    <img src=\"http://www.reonaicoffee.com/img/logo/reonai.png\" alt=\"REONAi\"\n" +
-                "                                                        style=\"width: 80px; height: 80px;\">\n" +
+                "                                                    <img src=\"http://www.reonaicoffee.com/img/logo/reonai-logo.png\" alt=\"REONAi\"\n" +
+                "                                                        style=\"width: 180px;\">\n" +
                 "                                                </a>\n" +
                 "                                            </td>\n" +
                 "                                        </tr>\n" +
