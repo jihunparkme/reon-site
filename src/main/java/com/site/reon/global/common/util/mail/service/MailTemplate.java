@@ -88,7 +88,7 @@ public class MailTemplate {
                     "                                                            </tr>");
         }
         sb.append("<tr width='100%' bgcolor='#ffffff'>\n" +
-                "                                                                <th width='25%'>발송시간 </th>\n" +
+                "                                                                <th width='25%'>Send time </th>\n" +
                 "                                                                <td width='75%'>");
         sb.append(LocalDateTime.now().format(formatter));
         sb.append("</td>\n" +
@@ -123,7 +123,7 @@ public class MailTemplate {
                 "                                                <a href=\"http://www.reonaicoffee.com/\" target=\"_blank\"\n" +
                 "                                                    data-saferedirecturl=\"http://www.google.com/url?q=https://www.reonaicoffee.com\">\n" +
                 "                                                    <img src=\"http://www.reonaicoffee.com/img/logo/reonai-logo.png\" alt=\"REONAi\"\n" +
-                "                                                        style=\"width: 180px;\">\n" +
+                "                                                        style=\"width: 180px; height: 38px;\">\n" +
                 "                                                </a>\n" +
                 "                                            </td>\n" +
                 "                                        </tr>\n" +
