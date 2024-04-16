@@ -281,7 +281,7 @@ header .logo {
   bottom: 15px;
   left: 15px;
   padding: 10px 0;
-  background-color: #f2b626;
+  background-color: #211F20;
   overflow-y: auto;
   transition: 0.3s;
 }
@@ -296,7 +296,7 @@ header .logo {
 .navbar-mobile a:hover,
 .navbar-mobile .active,
 .navbar-mobile li:hover>a {
-  color: #d9232d;
+  color: #f2b626;
 }
 
 .navbar-mobile .getstarted,
@@ -312,7 +312,7 @@ header .logo {
   z-index: 99;
   opacity: 1;
   visibility: visible;
-  background: #fff;
+  background: #f2b626;
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
 }
 

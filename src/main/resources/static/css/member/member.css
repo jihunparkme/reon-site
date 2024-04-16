@@ -4,9 +4,8 @@
 }
 
 .container-member div.member-box {
-    padding: 130px 30px 20px;
-    min-height: 100%;
-    background-color: rgb(251, 251, 251);
+    min-height: 80%;
+    background: #211F20;
 }
 
 .container-member .member-row {
@@ -30,7 +29,6 @@
     width: 100%;
     border-radius: 15px;
     box-sizing: border-box;
-    margin: 0;
     padding: 0;
     color: #272b41;
     font-size: 15px;
@@ -40,6 +38,7 @@
     font-feature-settings: "tnum","tnum";
     position: relative;
     background: #fff;
+    margin: 100px 0 0;
 }
 
 .container-member .member-card .member-card-body {
