@@ -11,7 +11,7 @@ public class MailTemplate {
     public static String generateAuthCodeTemplate(String purpose, String authCode) {
         StringBuffer sb = new StringBuffer();
         sb.append("                                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" align=\"center\"\n" +
-                "                                    style=\"width:100%;max-width:630px;margin-left:auto;margin-right:auto;letter-spacing:-1px\">\n" +
+                "                                    style=\"width:100%;margin-left:auto;margin-right:auto;letter-spacing:-1px\">\n" +
                 "                                    <tbody>\n" +
                 "                                        <tr>\n" +
                 "                                            <td style=\"font-size:44px;line-height:48px;font-weight:bold;color:#000000;padding-bottom:60px;text-align:left;letter-spacing:-1px;font-family:나눔고딕,NanumGothic,맑은고딕,Malgun Gothic,돋움,Dotum,Helvetica,Apple SD Gothic Neo,Sans-serif\">\n" +
@@ -72,7 +72,7 @@ public class MailTemplate {
                 "                                        </tr>\n" +
                 "                                        <tr>\n" +
                 "                                            <table bgcolor='#eeeeee' cellpadding='10' cellspacing='0' border='0' width='100%' align='center'\n" +
-                "                                                style='max-width: 500px; font-family: arial; font-size: 13px; color: #555555;'>\n" +
+                "                                                style='font-family: arial; font-size: 13px; color: #555555;'>\n" +
                 "                                                <tr>\n" +
                 "                                                    <td>\n" +
                 "                                                        <table width='100%' cellpadding='10' cellspacing='2' bgcolor='#eeeeee' border='0' align='left'>");
