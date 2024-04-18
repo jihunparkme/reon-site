@@ -1,11 +1,10 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.command.dto.MemberEditRequest;
+import com.site.reon.aggregate.member.command.dto.WithdrawRequest;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
-import com.site.reon.aggregate.member.command.service.MemberEmailLoginService;
-import com.site.reon.aggregate.member.command.dto.MemberEditRequest;
-import com.site.reon.aggregate.member.command.dto.WithdrawRequest;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.dto.SessionMember;
@@ -27,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class MemberMypageController {
     private final MemberFindService memberFindService;
     private final MemberCommandService memberCommandService;
-    private final MemberEmailLoginService memberEmailLoginService;
 
     @GetMapping("/mypage")
     @PreAuthorize("isAuthenticated()")
