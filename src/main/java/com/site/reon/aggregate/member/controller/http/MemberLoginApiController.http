@@ -308,7 +308,7 @@ Content-Type: application/json
 {
   "clientName": "reon",
   "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
-  "purpose": "회원가입",
+  "purpose": "sign up",
   "email": "contact@myreon.net"
 }
 

@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.controller.steps.MemberLoginApiSteps;
 import com.site.reon.global.ApiTest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import org.junit.jupiter.api.Assertions;
@@ -8,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-public class MemberLoginApiTest extends ApiTest {
+public class MemberLoginApiControllerApiTest extends ApiTest {
 
     @Autowired
     private RedisUtilService redisUtilService;
@@ -20,10 +21,10 @@ public class MemberLoginApiTest extends ApiTest {
     void when_verify_email_then_return_false() {
         final String authClientName = "kakao";
         final String email = "aaa@gmail.com";
-        final var request = MemberLoginSteps.verifyEmailRequest(
-                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email);
+        final var request = MemberLoginApiSteps.verifyEmailRequest(
+                MemberLoginApiSteps.CLIENT_NAME, MemberLoginApiSteps.CLIENT_ID, authClientName, email);
 
-        final var response = MemberLoginSteps.requestVerifyEmail(request);
+        final var response = MemberLoginApiSteps.requestVerifyEmail(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -38,10 +39,10 @@ public class MemberLoginApiTest extends ApiTest {
     void when_verify_email_then_return_true() {
         final String authClientName = "kakao";
         final String email = "user@gmail.com";
-        final var request = MemberLoginSteps.verifyEmailRequest(
-                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email);
+        final var request = MemberLoginApiSteps.verifyEmailRequest(
+                MemberLoginApiSteps.CLIENT_NAME, MemberLoginApiSteps.CLIENT_ID, authClientName, email);
 
-        final var response = MemberLoginSteps.requestVerifyEmail(request);
+        final var response = MemberLoginApiSteps.requestVerifyEmail(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -56,10 +57,10 @@ public class MemberLoginApiTest extends ApiTest {
     void when_verify_email_then_invalid_client_name() {
         final String authClientName = "kakao";
         final String email = "user@gmail.com";
-        final var request = MemberLoginSteps.verifyEmailRequest(
-                "", MemberLoginSteps.CLIENT_ID, authClientName, email);
+        final var request = MemberLoginApiSteps.verifyEmailRequest(
+                "", MemberLoginApiSteps.CLIENT_ID, authClientName, email);
 
-        final var response = MemberLoginSteps.requestVerifyEmail(request);
+        final var response = MemberLoginApiSteps.requestVerifyEmail(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -74,10 +75,10 @@ public class MemberLoginApiTest extends ApiTest {
     void when_verify_email_then_invalid_client_id() {
         final String authClientName = "kakao";
         final String email = "user@gmail.com";
-        final var request = MemberLoginSteps.verifyEmailRequest(
-                MemberLoginSteps.CLIENT_NAME, "", authClientName, email);
+        final var request = MemberLoginApiSteps.verifyEmailRequest(
+                MemberLoginApiSteps.CLIENT_NAME, "", authClientName, email);
 
-        final var response = MemberLoginSteps.requestVerifyEmail(request);
+        final var response = MemberLoginApiSteps.requestVerifyEmail(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -96,10 +97,10 @@ public class MemberLoginApiTest extends ApiTest {
         final String authClientName = "kakao";
         final String email = "user@gmail.com";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var request = MemberLoginSteps.oAuth2SignUpRequest(
-                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);
+        final var request = MemberLoginApiSteps.oAuth2SignUpRequest(
+                MemberLoginApiSteps.CLIENT_NAME, MemberLoginApiSteps.CLIENT_ID, authClientName, email, roasterSn);
 
-        final var response = MemberLoginSteps.requestOAuth2SignUp(request);
+        final var response = MemberLoginApiSteps.requestOAuth2SignUp(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -119,10 +120,10 @@ public class MemberLoginApiTest extends ApiTest {
         final String authClientName = "kakao";
         final String email = "user@gmail.com";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var request = MemberLoginSteps.oAuth2SignUpRequest(
-                "", MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);
+        final var request = MemberLoginApiSteps.oAuth2SignUpRequest(
+                "", MemberLoginApiSteps.CLIENT_ID, authClientName, email, roasterSn);
 
-        final var response = MemberLoginSteps.requestOAuth2SignUp(request);
+        final var response = MemberLoginApiSteps.requestOAuth2SignUp(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -138,10 +139,10 @@ public class MemberLoginApiTest extends ApiTest {
         final String authClientName = "kakao";
         final String email = "user@gmail.com";
         final String roasterSn = "";
-        final var request = MemberLoginSteps.oAuth2SignUpRequest(
-                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);
+        final var request = MemberLoginApiSteps.oAuth2SignUpRequest(
+                MemberLoginApiSteps.CLIENT_NAME, MemberLoginApiSteps.CLIENT_ID, authClientName, email, roasterSn);
 
-        final var response = MemberLoginSteps.requestOAuth2SignUp(request);
+        final var response = MemberLoginApiSteps.requestOAuth2SignUp(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -157,10 +158,10 @@ public class MemberLoginApiTest extends ApiTest {
         final String authClientName = "xxxx";
         final String email = "user@gmail.com";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var request = MemberLoginSteps.oAuth2SignUpRequest(
-                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);
+        final var request = MemberLoginApiSteps.oAuth2SignUpRequest(
+                MemberLoginApiSteps.CLIENT_NAME, MemberLoginApiSteps.CLIENT_ID, authClientName, email, roasterSn);
 
-        final var response = MemberLoginSteps.requestOAuth2SignUp(request);
+        final var response = MemberLoginApiSteps.requestOAuth2SignUp(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -181,10 +182,10 @@ public class MemberLoginApiTest extends ApiTest {
         final String lastName = "park";
         final String password = "park123!@#";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+        final var request = MemberLoginApiSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
 
         redisUtilService.setValueExpire("sign-up-verified:aaa@gmail.com", "true", 5L);
-        final var response = MemberLoginSteps.requestEmailSignUp(request);
+        final var response = MemberLoginApiSteps.requestEmailSignUp(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -202,9 +203,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String lastName = "park";
         final String password = "park123!@#";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+        final var request = MemberLoginApiSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
 
-        final var response = MemberLoginSteps.requestEmailSignUp(request);
+        final var response = MemberLoginApiSteps.requestEmailSignUp(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -222,9 +223,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String lastName = "park";
         final String password = "park";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+        final var request = MemberLoginApiSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
 
-        final var response = MemberLoginSteps.requestEmailSignUp(request);
+        final var response = MemberLoginApiSteps.requestEmailSignUp(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -242,9 +243,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String lastName = "park";
         final String password = "park123!@#";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+        final var request = MemberLoginApiSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
 
-        final var response = MemberLoginSteps.requestEmailSignUp(request);
+        final var response = MemberLoginApiSteps.requestEmailSignUp(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -261,11 +262,11 @@ public class MemberLoginApiTest extends ApiTest {
     @Test
     @Disabled
     void when_send_auth_code() {
-        final String purpose = "회원가입";
+        final String purpose = "sign up";
         final String email = "jihunpark.tech@gmail.com";
-        final var request = MemberLoginSteps.sendAuthCodeRequest(purpose, email);
+        final var request = MemberLoginApiSteps.sendAuthCodeRequest(purpose, email);
 
-        final var response = MemberLoginSteps.requestSendAuthCode(request);
+        final var response = MemberLoginApiSteps.requestSendAuthCode(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -280,9 +281,9 @@ public class MemberLoginApiTest extends ApiTest {
     void when_send_auth_code_then_purpose_required_error() {
         final String purpose = "";
         final String email = "jihunpark.tech@gmail.com";
-        final var request = MemberLoginSteps.sendAuthCodeRequest(purpose, email);
+        final var request = MemberLoginApiSteps.sendAuthCodeRequest(purpose, email);
 
-        final var response = MemberLoginSteps.requestSendAuthCode(request);
+        final var response = MemberLoginApiSteps.requestSendAuthCode(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -300,10 +301,10 @@ public class MemberLoginApiTest extends ApiTest {
     void when_verify_auth_code_then_success() {
         final String email = "jihunpark.tech@gmail.com";
         final String authCode = "111111";
-        final var request = MemberLoginSteps.verifyAuthCodeRequest(email, authCode);
+        final var request = MemberLoginApiSteps.verifyAuthCodeRequest(email, authCode);
         redisUtilService.setValueExpire("sign-up:jihunpark.tech@gmail.com", "111111", 5L);
 
-        final var response = MemberLoginSteps.requestVerifyAuthCode(request);
+        final var response = MemberLoginApiSteps.requestVerifyAuthCode(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -318,10 +319,10 @@ public class MemberLoginApiTest extends ApiTest {
     void when_verify_auth_code_then_incorrect_code() {
         final String email = "jihunpark.tech@gmail.com";
         final String authCode = "123456";
-        final var request = MemberLoginSteps.verifyAuthCodeRequest(email, authCode);
+        final var request = MemberLoginApiSteps.verifyAuthCodeRequest(email, authCode);
         redisUtilService.setValueExpire("sign-up:jihunpark.tech@gmail.com", "111111", 1L);
 
-        final var response = MemberLoginSteps.requestVerifyAuthCode(request);
+        final var response = MemberLoginApiSteps.requestVerifyAuthCode(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -336,11 +337,11 @@ public class MemberLoginApiTest extends ApiTest {
     void when_verify_auth_code_then_exceed_time() throws InterruptedException {
         final String email = "jihunpark.tech@gmail.com";
         final String authCode = "111111";
-        final var request = MemberLoginSteps.verifyAuthCodeRequest(email, authCode);
+        final var request = MemberLoginApiSteps.verifyAuthCodeRequest(email, authCode);
         redisUtilService.setValueExpire("sign-up:jihunpark.tech@gmail.com", "111111", 1L);
 
         Thread.sleep(1500);
-        final var response = MemberLoginSteps.requestVerifyAuthCode(request);
+        final var response = MemberLoginApiSteps.requestVerifyAuthCode(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -362,9 +363,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String password = "park123!@#";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
         signUpEmailMember(email, firstName, lastName, password, roasterSn);
-        final var request = MemberLoginSteps.loginEmailRequest(email, password);
+        final var request = MemberLoginApiSteps.loginEmailRequest(email, password);
 
-        final var response = MemberLoginSteps.requestLoginEmail(request);
+        final var response = MemberLoginApiSteps.requestLoginEmail(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -384,9 +385,9 @@ public class MemberLoginApiTest extends ApiTest {
     void when_login_email_then_aaa() {
         final String email = "user@gmail.com";
         final String password = "user";
-        final var request = MemberLoginSteps.loginEmailRequest(email, password);
+        final var request = MemberLoginApiSteps.loginEmailRequest(email, password);
 
-        final var response = MemberLoginSteps.requestLoginEmail(request);
+        final var response = MemberLoginApiSteps.requestLoginEmail(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -409,9 +410,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String password = "park123!@#";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
         signUpEmailMember(email, firstName, lastName, password, roasterSn);
-        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+        final var request = MemberLoginApiSteps.withdrawRequest(email, authClientName);
 
-        final var response = MemberLoginSteps.requestWithdraw(request);
+        final var response = MemberLoginApiSteps.requestWithdraw(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -428,9 +429,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String email = "aaron@gmail.com";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
         signUpOauth2Member(authClientName, email, roasterSn);
-        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+        final var request = MemberLoginApiSteps.withdrawRequest(email, authClientName);
 
-        final var response = MemberLoginSteps.requestWithdraw(request);
+        final var response = MemberLoginApiSteps.requestWithdraw(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -445,9 +446,9 @@ public class MemberLoginApiTest extends ApiTest {
     void when_withdraw_then_no_registered_member() {
         final String authClientName = "";
         final String email = "aaron@gmail.com";
-        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+        final var request = MemberLoginApiSteps.withdrawRequest(email, authClientName);
 
-        final var response = MemberLoginSteps.requestWithdraw(request);
+        final var response = MemberLoginApiSteps.requestWithdraw(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -462,9 +463,9 @@ public class MemberLoginApiTest extends ApiTest {
     void when_withdraw_then_unsupported_oauth2_client() {
         final String authClientName = "XXX";
         final String email = "aaron@gmail.com";
-        final var request = MemberLoginSteps.withdrawRequest(email, authClientName);
+        final var request = MemberLoginApiSteps.withdrawRequest(email, authClientName);
 
-        final var response = MemberLoginSteps.requestWithdraw(request);
+        final var response = MemberLoginApiSteps.requestWithdraw(request);
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
         Assertions.assertEquals("400", response.jsonPath().getString("status"));
@@ -481,9 +482,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String email = "user@gmail.com";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
         signUpOauth2Member(authClientName, email, roasterSn);
-        final var myPageRequest = MemberLoginSteps.myPageRequest(authClientName, email);
+        final var myPageRequest = MemberLoginApiSteps.myPageRequest(authClientName, email);
 
-        final var response = MemberLoginSteps.requestMyPage(myPageRequest);
+        final var response = MemberLoginApiSteps.requestMyPage(myPageRequest);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -509,9 +510,9 @@ public class MemberLoginApiTest extends ApiTest {
         final String email = "aaron@gmail.com";
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
         signUpOauth2Member(authClientName, email, roasterSn);
-        final var request = MemberLoginSteps.registerMemberSerialNoRequest();
+        final var request = MemberLoginApiSteps.registerMemberSerialNoRequest();
 
-        final var response = MemberLoginSteps.requestRegisterMemberSerialNo(request);
+        final var response = MemberLoginApiSteps.requestRegisterMemberSerialNo(request);
 
         Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
         Assertions.assertEquals("200", response.jsonPath().getString("status"));
@@ -524,14 +525,14 @@ public class MemberLoginApiTest extends ApiTest {
 
 
     private void signUpOauth2Member(final String authClientName, final String email, final String roasterSn) {
-        final var request = MemberLoginSteps.oAuth2SignUpRequest(
-                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);
-        MemberLoginSteps.requestOAuth2SignUp(request);
+        final var request = MemberLoginApiSteps.oAuth2SignUpRequest(
+                MemberLoginApiSteps.CLIENT_NAME, MemberLoginApiSteps.CLIENT_ID, authClientName, email, roasterSn);
+        MemberLoginApiSteps.requestOAuth2SignUp(request);
     }
 
     private void signUpEmailMember(final String email, final String firstName, final String lastName, final String password, final String roasterSn) {
-        final var request = MemberLoginSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
+        final var request = MemberLoginApiSteps.emailSignUpRequest(email, firstName, lastName, password, roasterSn);
         redisUtilService.setValueExpire("sign-up-verified:user@gmail.com", "true", 5L);
-        MemberLoginSteps.requestEmailSignUp(request);
+        MemberLoginApiSteps.requestEmailSignUp(request);
     }
 }

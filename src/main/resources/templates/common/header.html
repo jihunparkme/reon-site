@@ -1,6 +1,8 @@
 <header th:fragment="header (title)" id="header" class="fixed-top d-flex align-items-center">
   <div class="container d-flex align-items-center">
-    <h1 class="logo me-auto"><a href="/">REONAI</a></h1>
+    <a href="/" class="logo me-auto">
+      <img th:src="@{/img/logo/reonai-logo.png}" alt="" class="img-fluid">
+    </a>
     <nav id="navbar" class="navbar">
       <ul>
         <li><a href="/" th:classappend="${title eq 'home' ? 'active' : ''}">Home</a></li>
@@ -27,7 +29,7 @@
             <a href="#">
               <div>
                 <span th:if="${not #strings.isEmpty(session.member.picture)}" class="login-picture"><img th:src="${session.member.picture}"></span>
-                <span>[[${session.member.name}]]</span>
+                <span style="color: #f8f9fad9;">[[${session.member.name}]]</span>
               </div>
               <i class="bi bi-chevron-down"></i>
             </a>

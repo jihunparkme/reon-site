@@ -1,13 +1,17 @@
 package com.site.reon.aggregate.member.query.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.site.reon.aggregate.member.command.domain.Authority;
 import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.OAuth2;
+import com.site.reon.aggregate.member.command.domain.PersonalInfo;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -17,8 +21,10 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AppleOAuth2Token {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -39,6 +45,8 @@ public class AppleOAuth2Token {
     private boolean nonceSupported;
     @JsonProperty("transfer_sub")
     private String transferSub;
+    @JsonProperty("real_user_status")
+    private String realUserStatus;
 
     public AppleOAuth2Token(final String token) {
         final String[] chunks = token.split("\\.");
@@ -60,6 +68,7 @@ public class AppleOAuth2Token {
             this.authTime = appleOAuth2Token.getAuthTime();
             this.nonceSupported = appleOAuth2Token.isNonceSupported();
             this.transferSub = appleOAuth2Token.getTransferSub();
+            this.realUserStatus = appleOAuth2Token.getRealUserStatus();
         } catch (JsonProcessingException e) {
             throw new IllegalArgumentException("The token information is invalid.");
         }
@@ -67,12 +76,16 @@ public class AppleOAuth2Token {
 
     public Member toMember() {
         return Member.builder()
-                .firstName(extractEmailName())
-                .lastName(StringUtils.EMPTY)
                 .email(this.email)
                 .password(UUID.randomUUID().toString())
+                .personalInfo(PersonalInfo.builder()
+                        .firstName(extractEmailName())
+                        .lastName(StringUtils.EMPTY)
+                        .build())
                 .authorities(Collections.singleton(Authority.generateAuthorityBy(Role.USER.key())))
-                .oAuthClient(OAuth2Client.APPLE)
+                .oAuth2(OAuth2.builder()
+                        .oAuthClient(OAuth2Client.APPLE)
+                        .build())
                 .activated(true)
                 .build();
     }

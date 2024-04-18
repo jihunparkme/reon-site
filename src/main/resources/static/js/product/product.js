@@ -102,7 +102,7 @@ function addTdTag(value, $row) {
 }
 
 function showRegisteredSerialNo(data) {
-    const $table = $('<table>').addClass('table table-hover');
+    const $table = $('<table>').addClass('table table-hover table-dark');
     const $thead = $('<thead>');
     const $headerRow = $('<tr>');
     ['S/N', 'Result'].forEach(headerText => {

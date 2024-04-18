@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.record.controller;
 
-import com.site.reon.aggregate.member.controller.MemberLoginSteps;
+import com.site.reon.aggregate.member.controller.steps.MemberLoginApiSteps;
 import com.site.reon.global.ApiTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -132,8 +132,8 @@ class RoastingRecordApiTest extends ApiTest {
     }
 
     private long getMemberId(final String authClientName, final String email) {
-        final var myPageRequest = MemberLoginSteps.myPageRequest(authClientName, email);
-        final var myPageResponse = MemberLoginSteps.requestMyPage(myPageRequest);
+        final var myPageRequest = MemberLoginApiSteps.myPageRequest(authClientName, email);
+        final var myPageResponse = MemberLoginApiSteps.requestMyPage(myPageRequest);
         assertEquals(HttpStatus.OK.value(), myPageResponse.statusCode());
 
         final String memberId = myPageResponse.jsonPath().getString("data.id");
@@ -144,9 +144,9 @@ class RoastingRecordApiTest extends ApiTest {
 
     private void requestOAuth2SignUp(final String authClientName, final String email) {
         final String roasterSn = "AFSFE-ASDVES-AbdSc-AebsC";
-        final var oAuth2SignUpRequest = MemberLoginSteps.oAuth2SignUpRequest(
-                MemberLoginSteps.CLIENT_NAME, MemberLoginSteps.CLIENT_ID, authClientName, email, roasterSn);
+        final var oAuth2SignUpRequest = MemberLoginApiSteps.oAuth2SignUpRequest(
+                MemberLoginApiSteps.CLIENT_NAME, MemberLoginApiSteps.CLIENT_ID, authClientName, email, roasterSn);
 
-        MemberLoginSteps.requestOAuth2SignUp(oAuth2SignUpRequest);
+        MemberLoginApiSteps.requestOAuth2SignUp(oAuth2SignUpRequest);
     }
 }

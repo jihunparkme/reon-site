@@ -3,16 +3,16 @@
 --------------------------------------------------------------*/
 body {
   font-family: "Open Sans", sans-serif;
-  color: #444444;
+  color: #000000;
 }
 
 a {
   text-decoration: none;
-  color: #d9232d;
+  color: #f8f9fa;
 }
 
 a:hover {
-  color: #e24d55;
+  color: #f2b626;
   text-decoration: none;
 }
 
@@ -35,7 +35,7 @@ h6 {
   right: 15px;
   bottom: 15px;
   z-index: 996;
-  background: #d9232d;
+  background: #fdbc1a;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -49,7 +49,7 @@ h6 {
 }
 
 .back-to-top:hover {
-  background: #e1444d;
+  background: #ffffff;
   color: #fff;
 }
 
@@ -62,7 +62,7 @@ h6 {
 # Header
 --------------------------------------------------------------*/
 #header {
-  background: white;
+  background: #000000;
   transition: all 0.5s;
   z-index: 997;
   padding: 20px 0;
@@ -77,7 +77,7 @@ h6 {
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-#header .logo {
+header .logo {
   font-size: 28px;
   margin: 0;
   padding: 0;
@@ -87,11 +87,15 @@ h6 {
 }
 
 #header .logo a {
-  color: #556270;
+  color: #000000;
 }
 
 #header .logo img {
   max-height: 40px;
+}
+
+.me-auto {
+  margin-right: auto !important;
 }
 
 /*--------------------------------------------------------------
@@ -141,17 +145,17 @@ h6 {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover>a {
-  color: #d9232d;
+  color: #f2b626;
 }
 
 .navbar .getstarted,
 .navbar .getstarted:focus {
-  background: #d9232d;
+  background: #f2b626;
   padding: 8px 25px;
   margin-left: 30px;
   border-radius: 4px;
   font-weight: 400;
-  color: #fff;
+  color: #000000;
 }
 
 .navbar .getstarted:hover,
@@ -170,8 +174,8 @@ h6 {
   z-index: 99;
   opacity: 0;
   visibility: hidden;
-  background: #fff;
-  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  background: #f2b626;
+  box-shadow: 0px 0px 30px rgb(0, 0, 0, 0.25);
   transition: 0.3s;
 }
 
@@ -229,7 +233,7 @@ h6 {
 * Mobile Navigation
 */
 .mobile-nav-toggle {
-  color: #556270;
+  color: #f2b626;
   font-size: 28px;
   cursor: pointer;
   display: none;
@@ -277,7 +281,7 @@ h6 {
   bottom: 15px;
   left: 15px;
   padding: 10px 0;
-  background-color: #fff;
+  background-color: #211F20;
   overflow-y: auto;
   transition: 0.3s;
 }
@@ -292,7 +296,7 @@ h6 {
 .navbar-mobile a:hover,
 .navbar-mobile .active,
 .navbar-mobile li:hover>a {
-  color: #d9232d;
+  color: #f2b626;
 }
 
 .navbar-mobile .getstarted,
@@ -308,7 +312,7 @@ h6 {
   z-index: 99;
   opacity: 1;
   visibility: visible;
-  background: #fff;
+  background: #f2b626;
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
 }
 
@@ -517,6 +521,7 @@ h6 {
 --------------------------------------------------------------*/
 section {
   padding: 60px 0;
+  background: #211F20;
   overflow: hidden;
 }
 
@@ -524,7 +529,7 @@ section {
 .records .icon-box,
 .products .icon-box,
 .services .icon-box {
-  background-color: #f8f9fa;
+  background-color: #44414287;
 }
 
 .section-title {
@@ -567,7 +572,7 @@ section {
 --------------------------------------------------------------*/
 .breadcrumbs {
   padding: 18px 0;
-  background: #f8f9fa;
+  background: #44414287;
   min-height: 40px;
   margin-top: 80px;
 }
@@ -690,7 +695,7 @@ section {
 # Records
 --------------------------------------------------------------*/
 .records {
-  min-height: 70%;
+  min-height: 80%;
   position: relative;
 }
 
@@ -698,11 +703,12 @@ section {
   margin-bottom: 20px;
   padding: 30px;
   border-radius: 6px;
+  color: #f8f9fad9;
 }
 
 .records .icon-box i {
   float: left;
-  color: #d9232d;
+  color: #f2b626;
   font-size: 40px;
 }
 
@@ -714,7 +720,7 @@ section {
 }
 
 .records .icon-box h4 a {
-  color: #556270;
+  color: #f8f9fad9;
   transition: 0.3s;
 }
 
@@ -725,14 +731,14 @@ section {
 }
 
 .records .icon-box:hover h4 a {
-  color: #d9232d;
+  color: #f2b626;
 }
 
 /*--------------------------------------------------------------
 # Products
 --------------------------------------------------------------*/
 .products {
-  min-height: 70%;
+  min-height: 80%;
   position: relative;
 }
 
@@ -740,11 +746,12 @@ section {
   margin-bottom: 20px;
   padding: 30px;
   border-radius: 6px;
+  color: #f8f9fad9;
 }
 
 .products .icon-box i {
   float: left;
-  color: #d9232d;
+  color: #f2b626;
   font-size: 40px;
 }
 
@@ -756,7 +763,7 @@ section {
 }
 
 .products .icon-box h4 a {
-  color: #556270;
+  color: #f8f9fa;
   transition: 0.3s;
 }
 
@@ -768,6 +775,17 @@ section {
 
 .products .icon-box:hover h4 a {
   color: #d9232d;
+}
+
+.products .entry{
+  color: #f8f9fad9;
+}
+
+.products .entry .entry-view-title {
+  font-size: 28px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0 0 20px 0;
 }
 
 /*--------------------------------------------------------------
@@ -1392,16 +1410,16 @@ section {
 --------------------------------------------------------------*/
 .contact .info {
   width: 100%;
-  background: #fff;
+  background: #211f20;
 }
 
 .contact .info i {
   font-size: 20px;
-  color: #556270;
+  color: #211f20;
   float: left;
   width: 44px;
   height: 44px;
-  background: #edeff1;
+  background: #fdbc1a;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1414,14 +1432,14 @@ section {
   font-size: 22px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: #556270;
+  color: #fdbc1a;
 }
 
 .contact .info p {
   padding: 0 0 0 60px;
   margin-bottom: 0;
   font-size: 14px;
-  color: #8795a4;
+  color: #ffffff;
 }
 
 .contact .info .email,
@@ -1432,13 +1450,13 @@ section {
 .contact .info .email:hover i,
 .contact .info .address:hover i,
 .contact .info .phone:hover i {
-  background: #556270;
-  color: #fff;
+  background: #fdbc1a;
+  color: #211f20;
 }
 
 .contact .php-email-form {
   width: 100%;
-  background: #fff;
+  background: #211f20;
 }
 
 .contact .php-email-form .form-group {
@@ -1447,8 +1465,8 @@ section {
 
 .contact .php-email-form .error-message {
   display: none;
-  color: #fff;
-  background: #ed3c0d;
+  color: #211f20;
+  background: #fdbc1a;
   text-align: left;
   padding: 15px;
   font-weight: 600;
@@ -1496,7 +1514,7 @@ section {
 
 .contact .php-email-form input:focus,
 .contact .php-email-form textarea:focus {
-  border-color: #d9232d;
+  border-color: #fcbc1a;
 }
 
 .contact .php-email-form input {
@@ -1508,16 +1526,29 @@ section {
 }
 
 .contact .php-email-form button[type=submit] {
-  background: #d9232d;
+  background: #fcbc1a;
   border: 0;
   padding: 10px 24px;
-  color: #fff;
+  color: #231f20;
   transition: 0.4s;
   border-radius: 4px;
 }
 
 .contact .php-email-form button[type=submit]:hover {
-  background: #e24d55;
+  background: #f0cb66;
+}
+
+.contact .php-email-form .send {
+  background: #fcbc1a;
+  border: 0;
+  padding: 10px 24px;
+  color: #231f20;
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.contact .php-email-form .send:hover {
+  background: #f0cb66;
 }
 
 @keyframes animate-loading {
@@ -2069,15 +2100,14 @@ section {
 # Footer
 --------------------------------------------------------------*/
 #footer {
-  background: #4a5562;
+  background: #111111;
   padding: 0 0 30px 0;
-  color: #fff;
-  font-size: 14px;
-  bottom: 0;
+  color: #f2b626;
+  font-size: 20px;
 }
 
 #footer .footer-top {
-  background: #515d6a;
+  background: #000000;
   padding: 60px 0 30px 0;
 }
 
@@ -2104,8 +2134,8 @@ section {
 #footer .footer-top .social-links a {
   font-size: 18px;
   display: inline-block;
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgb(253, 188, 26, 0.1);
+  color: #ffb71a;
   line-height: 1;
   padding: 8px 0;
   margin-right: 4px;
@@ -2125,7 +2155,7 @@ section {
 #footer .footer-top h4 {
   font-size: 16px;
   font-weight: 600;
-  color: #fff;
+  color: #fdbc1a;
   position: relative;
   padding-bottom: 12px;
 }
@@ -2223,11 +2253,6 @@ section {
   color: white;
 }
 
-
-html, body {
-  height: 100%
-}
-
 /*--------------------------------------------------------------
 # Pagination
 --------------------------------------------------------------*/
@@ -2242,8 +2267,8 @@ html, body {
 .page-item.active .page-link {
   z-index: 3 !important;
   color: #fff !important;
-  background-color: #5D432C !important;
-  border-color: #5D432C !important;
+  background-color: #f2b626 !important;
+  border-color: #f2b626 !important;
 }
 
 .page-link {
@@ -2251,7 +2276,7 @@ html, body {
 }
 
 .small-menu {
-  color: black
+  color: #f8f9fad9;
 }
 
 /*--------------------------------------------------------------
@@ -2317,4 +2342,17 @@ html, body {
 
 .width-300 {
   width: 300px;
+}
+
+.total {
+  margin-bottom: 30px;
+  color: #f8f9fad9;
+}
+
+main {
+  background: #211F20;
+}
+
+main .container {
+  margin-top: 10px;
 }

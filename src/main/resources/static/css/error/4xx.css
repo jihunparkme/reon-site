@@ -1,6 +1,10 @@
+html {
+    background: #211F20;
+}
+
 .info_error {
+    background: #211F20;
     padding: 170px 10px 80px;
-    border-bottom: 1px solid #e6e6e6;
     text-align: center;
 }
 .info_error img.error_img {
@@ -9,6 +13,7 @@
     margin: 0 auto 53px;
 }
 .info_error .tit_error {
+    color: #ffffff;
     display: block;
     font-size: 25px;
     font-style: normal;
@@ -19,6 +24,7 @@
     font-size: 13px;
     color: #818181;
     line-height: 18px;
+    color: #ffffff8a;
 }
 .info_error .link_home {
     display: block;

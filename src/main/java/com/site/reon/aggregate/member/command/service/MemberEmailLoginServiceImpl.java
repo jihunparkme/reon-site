@@ -1,11 +1,10 @@
 package com.site.reon.aggregate.member.command.service;
 
-import com.site.reon.aggregate.member.command.domain.Authority;
-import com.site.reon.aggregate.member.command.domain.Member;
+import com.site.reon.aggregate.member.command.domain.*;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.aggregate.member.command.dto.LoginRequest;
 import com.site.reon.aggregate.member.command.dto.SignUpRequest;
+import com.site.reon.aggregate.member.infra.service.MemberEmailAuthCodeService;
 import com.site.reon.global.common.constant.member.Role;
 import com.site.reon.global.common.constant.redis.KeyPrefix;
 import com.site.reon.global.security.exception.DuplicateMemberException;
@@ -39,18 +38,22 @@ public class MemberEmailLoginServiceImpl implements MemberEmailLoginService {
         memberEmailAuthCodeService.checkEmailVerificationStatus(KeyPrefix.SIGN_UP, signUpRequest.getEmail());
         validateEmailAndOAuthClient(signUpRequest.getEmail(), OAuth2Client.EMPTY);
 
-        final Authority authority = Authority.builder()
-                .authorityName(Role.USER.key())
-                .build();
-
         final Member member = Member.builder()
-                .firstName(signUpRequest.getFirstName())
-                .lastName(signUpRequest.getLastName())
                 .email(signUpRequest.getEmail())
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
-                .roasterSn(signUpRequest.getRoasterSn())
-                .authorities(Collections.singleton(authority))
-                .oAuthClient(OAuth2Client.EMPTY)
+                .personalInfo(PersonalInfo.builder()
+                        .firstName(signUpRequest.getFirstName())
+                        .lastName(signUpRequest.getLastName())
+                        .build())
+                .productInfo(ProductInfo.builder()
+                        .roasterSn(signUpRequest.getRoasterSn())
+                        .build())
+                .authorities(Collections.singleton(Authority.builder()
+                        .authorityName(Role.USER.key())
+                        .build()))
+                .oAuth2(OAuth2.builder()
+                        .oAuthClient(OAuth2Client.EMPTY)
+                        .build())
                 .activated(true)
                 .build();
 

@@ -3,7 +3,6 @@ package com.site.reon.aggregate.member.command.domain;
 import com.site.reon.aggregate.member.command.dto.MemberEditRequest;
 import com.site.reon.global.common.BaseTimeEntity;
 import com.site.reon.global.common.constant.member.MemberType;
-import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,41 +36,20 @@ public class Member extends BaseTimeEntity {
     @Column(length = 10)
     private MemberType type;
 
-    @Column(length = 30, nullable = false)
-    private String firstName;
-
-    @Column(length = 30, nullable = false)
-    private String lastName;
-
     @Column(length = 50, nullable = false)
     private String email;
 
     @Column(length = 100, nullable = false)
     private String password;
 
-    @Column(length = 20)
-    private String phone;
+    @Embedded
+    private PersonalInfo personalInfo;
 
-    @Column(length = 30)
-    private String companyName;
+    @Embedded
+    private ProductInfo productInfo;
 
-    @Column(length = 100)
-    private String address;
-
-    @Column(length = 100)
-    private String prdCode;
-
-    @Column(length = 100)
-    private String roasterSn;
-
-    @Column(length = 2000)
-    private String picture;
-
-    @Column(length = 10)
-    @Enumerated(EnumType.STRING)
-    private OAuth2Client oAuthClient;
-
-    private Long oauthUserId;
+    @Embedded
+    private OAuth2 oAuth2;
 
     @Column
     private boolean activated;
@@ -83,21 +61,37 @@ public class Member extends BaseTimeEntity {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
-    public Member updateOAuth2User(final Long oAuthUserId, final String name, final String picture) {
-        this.oauthUserId = oAuthUserId;
-        this.firstName = name;
-        this.picture = picture;
+    @PostLoad
+    private void postLoad() {
+        if (personalInfo == null) {
+            personalInfo = new PersonalInfo();
+        }
+        if (productInfo == null) {
+            productInfo = new ProductInfo();
+        }
+        if (oAuth2 == null) {
+            oAuth2 = new OAuth2();
+        }
+    }
+
+    public Member updateOAuth2AccountInfo(final Long oAuthUserId, final String name, final String picture) {
+        this.oAuth2.update(picture, oAuthUserId);
+        this.personalInfo.updateFirstName(name);
         return this;
     }
 
     public void update(MemberEditRequest memberEditRequest) {
         this.type = memberEditRequest.getType();
-        this.firstName = memberEditRequest.getFirstName();
-        this.lastName = memberEditRequest.getLastName();
-        this.phone = memberEditRequest.getPhone();
-        this.prdCode = memberEditRequest.getPrdCode();
-        this.roasterSn = memberEditRequest.getRoasterSn();
-        this.companyName = memberEditRequest.getCompanyName();
-        this.address = memberEditRequest.getAddress();
+        this.personalInfo = PersonalInfo.builder()
+                .firstName(memberEditRequest.getFirstName())
+                .lastName(memberEditRequest.getLastName())
+                .phone(memberEditRequest.getPhone())
+                .companyName(memberEditRequest.getCompanyName())
+                .address(memberEditRequest.getAddress())
+                .build();
+        this.productInfo = ProductInfo.builder()
+                .prdCode(memberEditRequest.getPrdCode())
+                .roasterSn(memberEditRequest.getRoasterSn())
+                .build();
     }
 }

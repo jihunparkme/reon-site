@@ -76,14 +76,14 @@ public class MemberCommandServiceImpl implements MemberCommandService {
     }
 
     private void requestUnlink(final Member member) {
-        final Long oauthUserId = member.getOauthUserId();
+        final Long oauthUserId = member.getOAuth2().getOauthUserId();
         if (oauthUserId == null) {
             return;
         }
 
         final KakaoOauth2UnlinkResponse response = kakaoOauth2ApiService.unlink(oauthUserId);
         if (StringUtils.isNotEmpty(response.msg())) {
-            log.error("{} unlink api call error. msg: {}, code: {}", member.getOAuthClient(), response.msg(), response.code());
+            log.error("{} unlink api call error. msg: {}, code: {}", member.getOAuth2().getOAuthClient(), response.msg(), response.code());
         }
     }
 

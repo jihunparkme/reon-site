@@ -1,25 +1,25 @@
 package com.site.reon.aggregate.index.controller;
 
+import com.site.reon.global.ApiTest;
+import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.http.HttpStatus;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@WebMvcTest(HomeController.class)
-public class HomeControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+public class HomeControllerTest extends ApiTest {
 
     @Test
-    void success() throws Exception {
-        ResultActions perform = mockMvc.perform(get("/"));
+    void when_home_then_return_index_page() {
+        final var response = RestAssured.given().log().all()
+                .when()
+                .get("/")
+                .then()
+                .log().all().extract();
 
-        perform
-                .andExpect(status().is3xxRedirection());
+        assertEquals(HttpStatus.OK.value(), response.statusCode());
+        assertThat(response.body().asString(), containsString("<title>REONAI / Home</title>"));
     }
 }

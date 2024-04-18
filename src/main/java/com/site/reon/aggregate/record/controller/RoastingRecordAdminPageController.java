@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/admin/records")
 @RequiredArgsConstructor
-public class RoastingRecordAdminController {
+public class RoastingRecordAdminPageController {
 
     private final RoastingRecordFindService recordService;
 

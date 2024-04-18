@@ -34,7 +34,7 @@ class CustomUserDetailsServiceImplTest {
     }
 
     @Test
-    void loadUserByUsername_should_return_exception() throws Exception {
+    void when_loadUserByUsername_then_not_found_exception() throws Exception {
 
         String email = "xxx@gmail.com";
         assertThatThrownBy(() -> {
@@ -49,7 +49,7 @@ class CustomUserDetailsServiceImplTest {
     }
 
     @Test
-    void createUser_is_not_active_member() throws Exception {
+    void when_loadUserByUsername_then_inactive_exception() throws Exception {
         String email = "xxx@gmail.com";
         Member member = Member.builder()
                 .activated(false)
@@ -62,7 +62,7 @@ class CustomUserDetailsServiceImplTest {
     }
 
     @Test
-    void createUser_is_active_member() throws Exception {
+    void when_createUser_then_return_active_user() throws Exception {
         String email = "aaron@gmail.com";
         Authority authority = Authority.builder()
                 .authorityName(Role.USER.key())
