@@ -43,6 +43,8 @@ public class AppleOAuth2Token {
     private boolean nonceSupported;
     @JsonProperty("transfer_sub")
     private String transferSub;
+    @JsonProperty("real_user_status")
+    private String realUserStatus;
 
     public AppleOAuth2Token(final String token) {
         final String[] chunks = token.split("\\.");
@@ -64,6 +66,7 @@ public class AppleOAuth2Token {
             this.authTime = appleOAuth2Token.getAuthTime();
             this.nonceSupported = appleOAuth2Token.isNonceSupported();
             this.transferSub = appleOAuth2Token.getTransferSub();
+            this.realUserStatus = appleOAuth2Token.getRealUserStatus();
         } catch (JsonProcessingException e) {
             throw new IllegalArgumentException("The token information is invalid.");
         }
