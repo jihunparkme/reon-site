@@ -23,12 +23,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
+@PreAuthorize("isAuthenticated()")
 public class MemberMypageController {
     private final MemberFindService memberFindService;
     private final MemberCommandService memberCommandService;
 
     @GetMapping("/mypage")
-    @PreAuthorize("isAuthenticated()")
     public String view(@LoginMember final SessionMember session, Model model) {
         final MemberDto findMember = memberFindService.getMember(session.getId());
         model.addAttribute("member", findMember);
@@ -36,7 +36,6 @@ public class MemberMypageController {
     }
 
     @PostMapping("/mypage/edit")
-    @PreAuthorize("isAuthenticated()")
     public String edit(@Valid @ModelAttribute("member") final MemberEditRequest request,
                        final BindingResult bindingResult,
                        @LoginMember final SessionMember session,
@@ -58,7 +57,6 @@ public class MemberMypageController {
     }
 
     @PostMapping("/withdraw")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity withdraw(@Valid @RequestBody final WithdrawRequest request) {
         final boolean result = memberCommandService.withdraw(request);
         return BasicResponse.ok(result);

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/admin/records")
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 public class RoastingRecordAdminPageController {
 
     private final RoastingRecordFindService recordService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String list(
             @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
             @RequestParam(value = "size", required = false, defaultValue = "10") final int size,
@@ -35,7 +35,6 @@ public class RoastingRecordAdminPageController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String view(@PathVariable(name = "id") final Long id,
                        Model model) {
         final RoastingRecordResponse roastingRecord = recordService.findRoastingRecordBy(id);
