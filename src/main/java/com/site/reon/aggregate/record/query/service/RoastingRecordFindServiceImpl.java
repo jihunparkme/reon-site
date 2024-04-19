@@ -4,6 +4,7 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,14 +58,42 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
 
     @Override
     public List<RoastingRecordListResponse> findRoastingRecordListBy(final long memberId) {
+        final List<RoastingRecord> roastingRecords = findMemberRecords(memberId);
+
+        return roastingRecords.stream()
+                .map(RoastingRecordListResponse::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public RoastingRecordsAndPilotsResponse findRoastingRecordsAndPilotsBy(final Long memberId) {
+        final List<RoastingRecord> personalRecords = findMemberRecords(memberId);
+        final List<RoastingRecord> pilotRecords = findPilotRecords();
+
+        return RoastingRecordsAndPilotsResponse.builder()
+                .personalRecords(personalRecords.stream()
+                        .map(RoastingRecordListResponse::of)
+                        .collect(Collectors.toList()))
+                .pilotRecords(pilotRecords.stream()
+                        .map(RoastingRecordListResponse::of)
+                        .collect(Collectors.toList()))
+                .build();
+    }
+
+    private List<RoastingRecord> findMemberRecords(final long memberId) {
         Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByMemberId(memberId);
         if (roastingRecordsOpt.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
 
-        final List<RoastingRecord> roastingRecords = roastingRecordsOpt.get();
-        return roastingRecords.stream()
-                .map(RoastingRecordListResponse::of)
-                .collect(Collectors.toList());
+        return roastingRecordsOpt.get();
+    }
+
+    private List<RoastingRecord> findPilotRecords() {
+        final Optional<List<RoastingRecord>> pilotRecordOpt = recordRepository.findByPilotTrue();
+        if (pilotRecordOpt.isEmpty()) {
+            return Collections.EMPTY_LIST;
+        }
+        return pilotRecordOpt.get();
     }
 }
