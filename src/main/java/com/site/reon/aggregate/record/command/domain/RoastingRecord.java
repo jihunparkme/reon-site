@@ -77,4 +77,8 @@ public class RoastingRecord extends BaseTimeEntity {
     @Column
     @ColumnDefault("false")
     private boolean pilot;
+
+    public void sharePilot(final Boolean pilot) {
+        this.pilot = pilot;
+    }
 }
