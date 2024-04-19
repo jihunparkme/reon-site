@@ -21,7 +21,6 @@
             <div class="row">
                 <div class="entries">
                     <article class="entry entry-single background-black">
-
                         <div sec:authorize="hasRole('ROLE_PILOT')" class="entry-meta" style="margin-bottom: 50px">
                             <span style="color: #f2b626">* Pilot account can share roasting profile.</span>
                             <div class="pilot-container">
@@ -35,10 +34,10 @@
                                 </div>
                                 <div class="pilot-right">
                                     <div th:if="${record.pilot}">
-                                        <button type="button" class="btn btn-danger">Do Not Share</button>
+                                        <button type="button" class="btn btn-danger" th:onclick="'share(' + ${record.id} + ', false);'">Do Not Share</button>
                                     </div>
                                     <span th:unless="${record.pilot}">
-                                        <button type="button" class="btn btn-success">Do Share</button>
+                                        <button type="button" class="btn btn-success" th:onclick="'share(' + ${record.id} + ', true);'">Do Share</button>
                                     </span>
                                 </div>
                             </div>
@@ -137,6 +136,7 @@
 
 <script th:src="@{/js/library/agGrid/ag-grid-community.min.js}"></script>
 
+<script th:src="@{/js/record/record.js}"></script>
 <script th:src="@{/js/record/chart.js}"></script>
 <script th:src="@{/js/record/grid.js}"></script>
 <script type="text/javascript" th:inline="javascript">
