@@ -13,3 +13,25 @@
 .comment {
     font-size: 15px;
 }
+.background-black {
+    background-color: #44414287; !important;
+}
+.font-white {
+    color: white; !important;
+}
+.bi-folder::before {
+    color: white; !important;
+}
+.pilot-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.pilot-left {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.pilot-right {
+    padding: 5px;
+}
