@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApiRoastingRecordListRequest extends ApiRequest {
+public class ApiRoastingRecordsRequest extends ApiRequest {
     @NotNull(message = "memberId is required.")
     private Long memberId;
 }

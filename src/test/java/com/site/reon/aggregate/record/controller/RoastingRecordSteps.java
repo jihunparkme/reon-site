@@ -2,7 +2,7 @@ package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
-import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordListRequest;
+import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordsRequest;
 import com.site.reon.global.common.dto.ApiRequest;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -64,15 +64,15 @@ public class RoastingRecordSteps {
                 .log().all().extract();
     }
 
-    public static ApiRoastingRecordListRequest getRoastingRecordListRequest(final long memberId) {
-        return ApiRoastingRecordListRequest.builder()
+    public static ApiRoastingRecordsRequest getRoastingRecordListRequest(final long memberId) {
+        return ApiRoastingRecordsRequest.builder()
                 .clientName(CLIENT_NAME)
                 .clientId(CLIENT_ID)
                 .memberId(memberId)
                 .build();
     }
 
-    public static ExtractableResponse<Response> requestRoastingRecordList(final ApiRoastingRecordListRequest request) {
+    public static ExtractableResponse<Response> requestRoastingRecordList(final ApiRoastingRecordsRequest request) {
         return RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
@@ -82,15 +82,15 @@ public class RoastingRecordSteps {
                 .log().all().extract();
     }
 
-    public static ApiRoastingRecordListRequest getApiRoastingRecordRequest(final long memberId) {
-        return ApiRoastingRecordListRequest.builder()
+    public static ApiRoastingRecordsRequest getApiRoastingRecordRequest(final long memberId) {
+        return ApiRoastingRecordsRequest.builder()
                 .clientName(CLIENT_NAME)
                 .clientId(CLIENT_ID)
                 .memberId(memberId)
                 .build();
     }
 
-    public static ExtractableResponse<Response> requestApiRoastingRecord(final ApiRoastingRecordListRequest request, final long recordId) {
+    public static ExtractableResponse<Response> requestApiRoastingRecord(final ApiRoastingRecordsRequest request, final long recordId) {
         return RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
