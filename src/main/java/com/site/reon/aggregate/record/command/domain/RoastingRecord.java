@@ -72,4 +72,7 @@ public class RoastingRecord extends BaseTimeEntity {
 
     @Column
     private Integer inputCapacity;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean pilot;
 }

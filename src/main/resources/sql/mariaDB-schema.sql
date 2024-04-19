@@ -19,6 +19,7 @@ create table roasting_record
     dispose_temp  TEXT,
     dispose_time  TEXT,
     input_capacity  INT,
+    pilot tinyint(1) DEFAULT false,
     created_dt  timestamp(6),
     modified_dt timestamp(6),
     PRIMARY KEY (id)
