@@ -82,6 +82,24 @@ public class RoastingRecordSteps {
                 .log().all().extract();
     }
 
+    public static ApiRoastingRecordsRequest getRoastingRecordsAndPilotsRequest(final long memberId) {
+        return ApiRoastingRecordsRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .memberId(memberId)
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestRoastingRecordsAndPilots(final ApiRoastingRecordsRequest request) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/records/contain/pilot")
+                .then()
+                .log().all().extract();
+    }
+
     public static ApiRoastingRecordsRequest getApiRoastingRecordRequest(final long memberId) {
         return ApiRoastingRecordsRequest.builder()
                 .clientName(CLIENT_NAME)
