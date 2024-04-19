@@ -1,9 +1,12 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.member.controller.steps.MemberLoginApiSteps;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.global.ApiTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -12,15 +15,9 @@ class RoastingRecordApiTest extends ApiTest {
     private final static String AUTH_CLIENT_NAME = "kakao";
     private final static String EMAIL = "user@gmail.com";
 
-    @Test
-    void upload_record_asis() {
-        final var request = RoastingRecordSteps.getRoastingRecordRequest();
-
-        final var response = RoastingRecordSteps.requestUploadRoastingRecord(request);
-
-        assertEquals(HttpStatus.CREATED.value(), response.statusCode());
-    }
-
+    /**
+     * /api/records
+     */
     @Test
     void find_roasting_record_list() {
         // given
@@ -43,6 +40,38 @@ class RoastingRecordApiTest extends ApiTest {
         assertEquals("test roasting222", response.jsonPath().getString("data[1].title"));
     }
 
+    /**
+     * /api/records/contain/pilot
+     */
+    @Test
+    void find_roasting_record_and_pilot_list() {
+        // given
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);
+        final long memberId = getMemberId(AUTH_CLIENT_NAME, EMAIL);
+        requestUploadRoastingRecord();
+        requestUploadRoastingRecord();
+
+        // when
+        final var request = RoastingRecordSteps.getRoastingRecordsAndPilotsRequest(memberId);
+
+        // then
+        final var response = RoastingRecordSteps.requestRoastingRecordsAndPilots(request);
+
+        System.out.println(response.jsonPath().getString("data.personalRecords"));
+        System.out.println(response.jsonPath().getString("data.personalRecords"));
+
+        assertEquals(HttpStatus.OK.value(), response.statusCode());
+        assertEquals("1", response.jsonPath().getString("count"));
+
+        List<RoastingRecordListResponse> personalRecords = response.jsonPath().getList("data.personalRecords");
+        List<RoastingRecordListResponse> pilotRecords = response.jsonPath().getList("data.pilotRecords");
+        assertEquals(2, personalRecords.size());
+        assertEquals(0, pilotRecords.size());
+    }
+
+    /**
+     * /api/records/ + recordId
+     */
     @Test
     void find_roasting_record() {
         // given
@@ -63,6 +92,21 @@ class RoastingRecordApiTest extends ApiTest {
         assertEquals("test roasting222", response.jsonPath().getString("data.title"));
     }
 
+    /**
+     * /record/upload
+     */
+    @Test
+    void upload_record_asis() {
+        final var request = RoastingRecordSteps.getRoastingRecordRequest();
+
+        final var response = RoastingRecordSteps.requestUploadRoastingRecord(request);
+
+        assertEquals(HttpStatus.CREATED.value(), response.statusCode());
+    }
+
+    /**
+     * /api/records/upload
+     */
     @Test
     void upload_record() {
         final var request = RoastingRecordSteps.getApiRoastingRecordRequest();
@@ -72,6 +116,9 @@ class RoastingRecordApiTest extends ApiTest {
         assertEquals(HttpStatus.CREATED.value(), response.statusCode());
     }
 
+    /**
+     * /api/records/ + recordId + /share?email= + email
+     */
     @Test
     void share_record() {
         requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);

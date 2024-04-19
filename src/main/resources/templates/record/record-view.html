@@ -2,17 +2,6 @@
 <link th:href="@{/css/record/record.css}" rel="stylesheet"/>
 <body>
 <div th:replace="~{common/header :: header('record')}"></div>
-<style>
-    .background-black {
-        background-color: #44414287; !important;
-    }
-    .font-white {
-        color: white; !important;
-    }
-    .bi-folder::before {
-        color: white; !important;
-    }
-</style>
 
 <main id="main">
     <section id="breadcrumbs" class="breadcrumbs">
@@ -32,6 +21,27 @@
             <div class="row">
                 <div class="entries">
                     <article class="entry entry-single background-black">
+                        <div sec:authorize="hasRole('ROLE_PILOT')" class="entry-meta" style="margin-bottom: 50px">
+                            <span style="color: #f2b626">* Pilot account can share roasting profile.</span>
+                            <div class="pilot-container">
+                                <div class="pilot-left">Status:
+                                    <span th:if="${record.pilot}">
+                                        <span class="badge badge-pill badge-success custom-badge" style="--bs-badge-padding-y: 0.55em; --bs-badge-font-size: 0.85em; background-color: #198754">Sharing</span>
+                                    </span>
+                                    <span th:unless="${record.pilot}">
+                                        <span class="badge badge-pill badge-danger custom-badge" style="--bs-badge-padding-y: 0.55em; --bs-badge-font-size: 0.85em; background-color: #dc3545;">Not Sharing</span>
+                                    </span>
+                                </div>
+                                <div class="pilot-right">
+                                    <div th:if="${record.pilot}">
+                                        <button type="button" class="btn btn-danger" th:onclick="'share(' + ${record.id} + ', false);'">Do Not Share</button>
+                                    </div>
+                                    <span th:unless="${record.pilot}">
+                                        <button type="button" class="btn btn-success" th:onclick="'share(' + ${record.id} + ', true);'">Do Share</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
                         <h2 class="entry-view-title font-white">
                             <p>[(${record.title})]</p>
@@ -126,6 +136,7 @@
 
 <script th:src="@{/js/library/agGrid/ag-grid-community.min.js}"></script>
 
+<script th:src="@{/js/record/record.js}"></script>
 <script th:src="@{/js/record/chart.js}"></script>
 <script th:src="@{/js/record/grid.js}"></script>
 <script type="text/javascript" th:inline="javascript">

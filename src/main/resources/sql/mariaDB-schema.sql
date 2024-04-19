@@ -19,6 +19,7 @@ create table roasting_record
     dispose_temp  TEXT,
     dispose_time  TEXT,
     input_capacity  INT,
+    pilot tinyint(1) DEFAULT false,
     created_dt  timestamp(6),
     modified_dt timestamp(6),
     PRIMARY KEY (id)
@@ -93,6 +94,7 @@ values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwD
 insert into authority (authority_name) values ('ROLE_GUEST');
 insert into authority (authority_name) values ('ROLE_USER');
 insert into authority (authority_name) values ('ROLE_ADMIN');
+insert into authority (authority_name) values ('ROLE_PILOT');
 
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_USER');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_ADMIN');

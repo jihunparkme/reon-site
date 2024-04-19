@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "roasting_record")
@@ -72,4 +73,12 @@ public class RoastingRecord extends BaseTimeEntity {
 
     @Column
     private Integer inputCapacity;
+
+    @Column
+    @ColumnDefault("false")
+    private boolean pilot;
+
+    public void sharePilot(final Boolean pilot) {
+        this.pilot = pilot;
+    }
 }
