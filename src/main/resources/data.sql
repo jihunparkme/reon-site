@@ -229,10 +229,13 @@ values ('PRIVATE', 'user', 'park', 'user@gmail.com', '$2a$10$Q9AWFqYicGA9m8OlmwD
 insert into authority (authority_name) values ('ROLE_GUEST');
 insert into authority (authority_name) values ('ROLE_USER');
 insert into authority (authority_name) values ('ROLE_ADMIN');
+insert into authority (authority_name) values ('ROLE_PILOT');
 
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_USER');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_ADMIN');
 insert into member_authority (member_id, authority_name) values (2, 'ROLE_USER');
+insert into member_authority (member_id, authority_name) values (3, 'ROLE_USER');
+insert into member_authority (member_id, authority_name) values (3, 'ROLE_PILOT');
 
 insert into category (TITLE)
 values ('Roaster');
