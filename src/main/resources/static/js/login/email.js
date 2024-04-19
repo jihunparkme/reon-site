@@ -1,3 +1,13 @@
+document.addEventListener("DOMContentLoaded", function(event) {
+    let form = document.getElementById('sign-in-form');
+    form.addEventListener('keydown', function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            login();
+        }
+    });
+});
+
 $('.message a').click(function () {
     $('.transform-form').animate({height: "toggle", opacity: "toggle"}, "slow");
     let loginTitle = $(this).text();
