@@ -30,6 +30,21 @@ Content-Type: application/json
 
 
 
+
+### Find roasting list contain pilot
+POST http://localhost:8080/api/records/contain/pilot
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "memberId": "2"
+}
+
+
+
+
+
 ### Find roasting record
 POST http://localhost:8080/api/records/1
 Content-Type: application/json
