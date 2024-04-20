@@ -20,7 +20,7 @@ public record RoastingRecordListResponse(
         LocalDateTime dateTime = LocalDateTime.parse(record.getCreatedDt().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         return RoastingRecordListResponse.builder()
                 .id(record.getId())
-                .title(record.getTitle())
+                .title(record.getRoastingInfo().getTitle())
                 .createdDate(dateTime.toLocalDate().toString())
                 .createdTime(dateTime.toLocalTime().withNano(0).toString())
                 .build();

@@ -2,6 +2,7 @@ package com.site.reon.aggregate.record.command.dto;
 
 import com.site.reon.aggregate.record.command.domain.CoolingPoint;
 import com.site.reon.aggregate.record.command.domain.Dispose;
+import com.site.reon.aggregate.record.command.domain.RoastingInfo;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -99,7 +100,11 @@ public class RoastingRecordRequest {
 
     public RoastingRecord toEntity(final long memberId) {
         return RoastingRecord.builder()
-                .title(this.title)
+                .roastingInfo(RoastingInfo.builder()
+                        .title(this.title)
+                        .roasterSn(this.roasterSn)
+                        .memberId(memberId)
+                        .build())
                 .fan(this.fan)
                 .heater(this.heater)
                 .temp1(this.temp1)
@@ -107,8 +112,6 @@ public class RoastingRecordRequest {
                 .temp3(this.temp3)
                 .temp4(this.temp4)
                 .ror(this.ror)
-                .roasterSn(this.roasterSn)
-                .memberId(memberId)
                 .crackPoint(this.crackPoint)
                 .crackPointTime(this.crackPointTime)
                 .turningPointTemp(this.turningPointTemp)

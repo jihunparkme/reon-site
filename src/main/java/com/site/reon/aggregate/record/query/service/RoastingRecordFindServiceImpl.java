@@ -28,7 +28,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     @Override
     public Page<RoastingRecord> findAllByMemberIdOrderByIdDescPaging(final long memberId, final int page, final int size) {
         final var pageable = PageRequest.of(page, size, Sort.by("id").descending());
-        return recordRepository.findByMemberId(memberId, pageable);
+        return recordRepository.findByRoastingInfoMemberId(memberId, pageable);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
 
     @Override
     public RoastingRecord findRoastingRecordBy(final long recordId, final long memberId) {
-        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndMemberId(recordId, memberId);
+        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
         if (roastingRecordOpt.isEmpty()) {
             throw new IllegalArgumentException("You do not have permission to access this data.");
         }
@@ -94,7 +94,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     }
 
     private List<RoastingRecord> findMemberRecords(final long memberId) {
-        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByMemberId(memberId);
+        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByRoastingInfoMemberId(memberId);
         if (roastingRecordsOpt.isEmpty()) {
             return Collections.EMPTY_LIST;
         }

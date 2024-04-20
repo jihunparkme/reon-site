@@ -20,8 +20,8 @@ public class RoastingRecord extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 100, nullable = false)
-    private String title;
+    @Embedded
+    private RoastingInfo roastingInfo;
 
     @Column(length = 20000, nullable = false)
     private String fan;
@@ -43,12 +43,6 @@ public class RoastingRecord extends BaseTimeEntity {
 
     @Column(length = 20000)
     private String ror;
-
-    @Column(length = 100, nullable = false)
-    private String roasterSn;
-
-    @Column(nullable = false)
-    private long memberId;
 
     @Column(length = 100)
     private String crackPoint;
