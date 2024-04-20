@@ -22,6 +22,8 @@ public record ApiRoastingRecordResponse(
         String crackPointTime,
         String turningPointTemp,
         String turningPointTime,
+        String coolingPointTemp,
+        String coolingPointTime,
         float preheatTemp,
         String disposeTemp,
         String disposeTime,
@@ -51,6 +53,8 @@ public record ApiRoastingRecordResponse(
                 .crackPointTime(record.getCrackPointTime())
                 .turningPointTemp(record.getTurningPointTemp())
                 .turningPointTime(record.getTurningPointTime())
+                .coolingPointTemp(record.getCoolingPoint().getCoolingPointTemp())
+                .coolingPointTime(record.getCoolingPoint().getCoolingPointTime())
                 .preheatTemp(record.getPreheatTemp())
                 .disposeTemp(record.getDisposeTemp())
                 .disposeTime(record.getDisposeTime())

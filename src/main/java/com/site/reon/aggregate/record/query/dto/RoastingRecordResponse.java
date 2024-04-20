@@ -43,6 +43,8 @@ public class RoastingRecordResponse {
     private CreakInfo creakInfo;
     private float turningPointTemp;
     private String turningPointTime;
+    private float coolingPointTemp;
+    private String coolingPointTime;
     private float preheatTemp;
     private float disposeTemp;
     private String disposeTime;
@@ -70,6 +72,8 @@ public class RoastingRecordResponse {
                 .creakInfo(creakInfo)
                 .turningPointTemp(getSingleTemp(roastingRecord.getTurningPointTemp()))
                 .turningPointTime(getSingleTime(roastingRecord.getTurningPointTime()))
+                .coolingPointTemp(getSingleTemp(roastingRecord.getCoolingPoint().getCoolingPointTemp()))
+                .coolingPointTime(getSingleTime(roastingRecord.getCoolingPoint().getCoolingPointTime()))
                 .preheatTemp(roastingRecord.getPreheatTemp())
                 .disposeTemp(getSingleTemp(roastingRecord.getDisposeTemp()))
                 .disposeTime(getSingleTime(roastingRecord.getDisposeTime()))

@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.record.command.dto;
 
+import com.site.reon.aggregate.record.command.domain.CoolingPoint;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -54,6 +55,12 @@ public class RoastingRecordRequest {
     @NotNull(message = "turningPointTime is required.")
     private String turningPointTime; // 터닝 포인트 시간. [2024-02-20 15:00:18 +0000]
 
+    @NotNull(message = "coolingPointTemp is required.")
+    private String coolingPointTemp; // 쿨링 포인트 온도. [30.3]
+
+    @NotNull(message = "coolingPointTime is required.")
+    private String coolingPointTime; // 쿨링 포인트 시간. [2024-02-20 15:00:18 +0000]
+
     @NotNull(message = "preheatTemp is required.")
     private Float preheatTemp; // 예열 온도. 100.3
 
@@ -105,6 +112,10 @@ public class RoastingRecordRequest {
                 .crackPointTime(this.crackPointTime)
                 .turningPointTemp(this.turningPointTemp)
                 .turningPointTime(this.turningPointTime)
+                .coolingPoint(CoolingPoint.builder()
+                        .coolingPointTemp(this.coolingPointTemp)
+                        .coolingPointTime(this.coolingPointTime)
+                        .build())
                 .preheatTemp(this.preheatTemp)
                 .disposeTemp(this.disposeTemp)
                 .disposeTime(this.disposeTime)
