@@ -54,7 +54,7 @@ public class RoastingRecordResponse {
     private boolean pilot;
 
     public static RoastingRecordResponse of(final RoastingRecord roastingRecord) {
-        final CreakInfo creakInfo = generateCrackInfo(roastingRecord.getCrackPoint(), roastingRecord.getCrackPointTime());
+        final CreakInfo creakInfo = generateCrackInfo(roastingRecord.getCrackPoint().getCrackPoint(), roastingRecord.getCrackPoint().getCrackPointTime());
         final int totalRoastingSecondsTime = calculateRoastingLogsInSeconds(roastingRecord.getTemperature().getTemp1());
 
         return RoastingRecordResponse.builder()

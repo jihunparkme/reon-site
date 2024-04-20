@@ -38,11 +38,8 @@ public class RoastingRecord extends BaseTimeEntity {
     @Column(length = 20000)
     private String ror;
 
-    @Column(length = 100)
-    private String crackPoint;
-
-    @Column(length = 100)
-    private String crackPointTime;
+    @Embedded
+    private CrackPoint crackPoint;
 
     @Column(length = 100)
     private String turningPointTemp;
