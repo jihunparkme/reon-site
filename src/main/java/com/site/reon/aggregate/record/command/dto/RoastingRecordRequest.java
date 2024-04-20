@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.record.command.dto;
 
 import com.site.reon.aggregate.record.command.domain.CoolingPoint;
+import com.site.reon.aggregate.record.command.domain.Dispose;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -117,8 +118,10 @@ public class RoastingRecordRequest {
                         .coolingPointTime(this.coolingPointTime)
                         .build())
                 .preheatTemp(this.preheatTemp)
-                .disposeTemp(this.disposeTemp)
-                .disposeTime(this.disposeTime)
+                .dispose(Dispose.builder()
+                        .disposeTemp(this.disposeTemp)
+                        .disposeTime(this.disposeTime)
+                        .build())
                 .inputCapacity(this.inputCapacity)
                 .build();
     }

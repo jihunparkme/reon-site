@@ -65,11 +65,8 @@ public class RoastingRecord extends BaseTimeEntity {
     @Column
     private Float preheatTemp;
 
-    @Column(length = 100)
-    private String disposeTemp;
-
-    @Column(length = 100)
-    private String disposeTime;
+    @Embedded
+    private Dispose dispose;
 
     @Embedded
     private CoolingPoint coolingPoint;
