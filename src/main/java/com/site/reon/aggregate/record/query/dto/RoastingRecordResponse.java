@@ -55,7 +55,7 @@ public class RoastingRecordResponse {
 
     public static RoastingRecordResponse of(final RoastingRecord roastingRecord) {
         final CreakInfo creakInfo = generateCrackInfo(roastingRecord.getCrackPoint(), roastingRecord.getCrackPointTime());
-        final int totalRoastingSecondsTime = calculateRoastingLogsInSeconds(roastingRecord.getTemp1());
+        final int totalRoastingSecondsTime = calculateRoastingLogsInSeconds(roastingRecord.getTemperature().getTemp1());
 
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
@@ -66,10 +66,10 @@ public class RoastingRecordResponse {
                 .inputCapacity(roastingRecord.getInputInfo().getInputCapacity())
                 .fan(roastingRecord.getFan())
                 .heater(roastingRecord.getHeater())
-                .temp1(roastingRecord.getTemp1())
-                .temp2(roastingRecord.getTemp2())
-                .temp3(roastingRecord.getTemp3())
-                .temp4(roastingRecord.getTemp4())
+                .temp1(roastingRecord.getTemperature().getTemp1())
+                .temp2(roastingRecord.getTemperature().getTemp2())
+                .temp3(roastingRecord.getTemperature().getTemp3())
+                .temp4(roastingRecord.getTemperature().getTemp4())
                 .ror(roastingRecord.getRor())
                 .creakInfo(creakInfo)
                 .turningPointTemp(getSingleTemp(roastingRecord.getTurningPointTemp()))

@@ -32,17 +32,8 @@ public class RoastingRecord extends BaseTimeEntity {
     @Column(length = 20000, nullable = false)
     private String heater;
 
-    @Column(length = 20000, nullable = false)
-    private String temp1;
-
-    @Column(length = 20000, nullable = false)
-    private String temp2;
-
-    @Column(length = 20000, nullable = false)
-    private String temp3;
-
-    @Column(length = 20000, nullable = false)
-    private String temp4;
+    @Embedded
+    private Temperature temperature;
 
     @Column(length = 20000)
     private String ror;
