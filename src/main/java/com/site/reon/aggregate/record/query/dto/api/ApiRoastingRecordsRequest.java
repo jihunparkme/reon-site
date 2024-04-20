@@ -14,4 +14,6 @@ import lombok.experimental.SuperBuilder;
 public class ApiRoastingRecordsRequest extends ApiRequest {
     @NotNull(message = "memberId is required.")
     private Long memberId;
+
+    private boolean pilot;
 }

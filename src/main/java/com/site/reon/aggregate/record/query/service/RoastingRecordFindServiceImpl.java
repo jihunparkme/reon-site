@@ -5,6 +5,7 @@ import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRe
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
+import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,12 +39,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
 
     @Override
     public RoastingRecordResponse findRoastingRecordBy(final Long id) {
-        final var roastingRecordOpt = recordRepository.findById(id);
-        if (roastingRecordOpt.isEmpty()) {
-            return RoastingRecordResponse.EMPTY;
-        }
-
-        return RoastingRecordResponse.of(roastingRecordOpt.get());
+        return RoastingRecordResponse.of(findRoastingRecord(id));
     }
 
     @Override
@@ -54,6 +50,14 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
         }
 
         return roastingRecordOpt.get();
+    }
+
+    @Override
+    public RoastingRecord findRoastingRecordBy(final long recordId, final long memberId, final boolean pilot) {
+        if (pilot) {
+            return findRoastingRecord(recordId);
+        }
+        return this.findRoastingRecordBy(recordId, memberId);
     }
 
     @Override
@@ -78,6 +82,15 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
                         .map(RoastingRecordListResponse::of)
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+    private RoastingRecord findRoastingRecord(final Long id) {
+        final var roastingRecordOpt = recordRepository.findById(id);
+        if (roastingRecordOpt.isEmpty()) {
+            throw new NotFoundRoastingRecordException();
+        }
+
+        return roastingRecordOpt.get();
     }
 
     private List<RoastingRecord> findMemberRecords(final long memberId) {
