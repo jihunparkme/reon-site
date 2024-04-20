@@ -108,7 +108,7 @@ Content-Type: application/json
   "inputCapacity" : 40
 }
 
-### Upload Roasting Record then fail
+### Upload Roasting Record then fail BAD_REQUEST (inputCapacity is required.)
 POST http://localhost:8080/api/records/upload
 Content-Type: application/json
 
