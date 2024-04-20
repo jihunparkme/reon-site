@@ -1,9 +1,6 @@
 package com.site.reon.aggregate.record.command.dto;
 
-import com.site.reon.aggregate.record.command.domain.CoolingPoint;
-import com.site.reon.aggregate.record.command.domain.Dispose;
-import com.site.reon.aggregate.record.command.domain.RoastingInfo;
-import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.domain.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -105,6 +102,10 @@ public class RoastingRecordRequest {
                         .roasterSn(this.roasterSn)
                         .memberId(memberId)
                         .build())
+                .inputInfo(InputInfo.builder()
+                        .preheatTemp(this.preheatTemp)
+                        .inputCapacity(this.inputCapacity)
+                        .build())
                 .fan(this.fan)
                 .heater(this.heater)
                 .temp1(this.temp1)
@@ -120,12 +121,10 @@ public class RoastingRecordRequest {
                         .coolingPointTemp(this.coolingPointTemp)
                         .coolingPointTime(this.coolingPointTime)
                         .build())
-                .preheatTemp(this.preheatTemp)
                 .dispose(Dispose.builder()
                         .disposeTemp(this.disposeTemp)
                         .disposeTime(this.disposeTime)
                         .build())
-                .inputCapacity(this.inputCapacity)
                 .build();
     }
 }

@@ -23,6 +23,9 @@ public class RoastingRecord extends BaseTimeEntity {
     @Embedded
     private RoastingInfo roastingInfo;
 
+    @Embedded
+    private InputInfo inputInfo;
+
     @Column(length = 20000, nullable = false)
     private String fan;
 
@@ -56,17 +59,11 @@ public class RoastingRecord extends BaseTimeEntity {
     @Column(length = 100)
     private String turningPointTime;
 
-    @Column
-    private Float preheatTemp;
-
     @Embedded
     private Dispose dispose;
 
     @Embedded
     private CoolingPoint coolingPoint;
-
-    @Column
-    private Integer inputCapacity;
 
     @Column
     @ColumnDefault("false")
