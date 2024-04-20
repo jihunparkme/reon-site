@@ -20,6 +20,6 @@ public class HomeControllerTest extends ApiTest {
                 .log().all().extract();
 
         assertEquals(HttpStatus.OK.value(), response.statusCode());
-        assertThat(response.body().asString(), containsString("<title>REONAI / Home</title>"));
+        assertThat(response.body().asString(), containsString("/img/logo/reonai-logo.png"));
     }
 }

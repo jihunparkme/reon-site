@@ -26,6 +26,8 @@ public class RoastingRecordSteps {
     public static final String crackPointTime = "[2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]";
     public static final String turningPointTemp = "[30.3]";
     public static final String turningPointTime = "[2024-02-20 15:00:18 +0000]";
+    public static final String coolingPointTemp = "[30.3]";
+    public static final String coolingPointTime = "[2024-02-20 15:00:18 +0000]";
     public static final float preheatTemp = 100.3F;
     public static final String disposeTemp = "[95.3]";
     public static final String disposeTime = "[2024-02-20 15:00:18 +0000]";
@@ -135,6 +137,8 @@ public class RoastingRecordSteps {
                 .crackPointTime(crackPointTime)
                 .turningPointTemp(turningPointTemp)
                 .turningPointTime(turningPointTime)
+                .coolingPointTemp(coolingPointTemp)
+                .coolingPointTime(coolingPointTime)
                 .preheatTemp(preheatTemp)
                 .disposeTemp(disposeTemp)
                 .disposeTime(disposeTime)
