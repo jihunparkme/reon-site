@@ -5,6 +5,7 @@ import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRe
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
+import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,7 +28,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     @Override
     public Page<RoastingRecord> findAllByMemberIdOrderByIdDescPaging(final long memberId, final int page, final int size) {
         final var pageable = PageRequest.of(page, size, Sort.by("id").descending());
-        return recordRepository.findByMemberId(memberId, pageable);
+        return recordRepository.findByRoastingInfoMemberId(memberId, pageable);
     }
 
     @Override
@@ -38,22 +39,25 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
 
     @Override
     public RoastingRecordResponse findRoastingRecordBy(final Long id) {
-        final var roastingRecordOpt = recordRepository.findById(id);
-        if (roastingRecordOpt.isEmpty()) {
-            return RoastingRecordResponse.EMPTY;
-        }
-
-        return RoastingRecordResponse.of(roastingRecordOpt.get());
+        return RoastingRecordResponse.of(findRoastingRecord(id));
     }
 
     @Override
     public RoastingRecord findRoastingRecordBy(final long recordId, final long memberId) {
-        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndMemberId(recordId, memberId);
+        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
         if (roastingRecordOpt.isEmpty()) {
             throw new IllegalArgumentException("You do not have permission to access this data.");
         }
 
         return roastingRecordOpt.get();
+    }
+
+    @Override
+    public RoastingRecord findRoastingRecordBy(final long recordId, final long memberId, final boolean pilot) {
+        if (pilot) {
+            return findRoastingRecord(recordId);
+        }
+        return this.findRoastingRecordBy(recordId, memberId);
     }
 
     @Override
@@ -80,8 +84,17 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
                 .build();
     }
 
+    private RoastingRecord findRoastingRecord(final Long id) {
+        final var roastingRecordOpt = recordRepository.findById(id);
+        if (roastingRecordOpt.isEmpty()) {
+            throw new NotFoundRoastingRecordException();
+        }
+
+        return roastingRecordOpt.get();
+    }
+
     private List<RoastingRecord> findMemberRecords(final long memberId) {
-        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByMemberId(memberId);
+        Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByRoastingInfoMemberId(memberId);
         if (roastingRecordsOpt.isEmpty()) {
             return Collections.EMPTY_LIST;
         }

@@ -15,6 +15,8 @@ create table roasting_record
     crack_point_time  TEXT,
     turning_point_temp  TEXT,
     turning_point_time  TEXT,
+    cooling_point_temp  TEXT,
+    cooling_point_time  TEXT,
     preheat_temp  FLOAT,
     dispose_temp  TEXT,
     dispose_time  TEXT,

@@ -65,6 +65,17 @@ Content-Type: application/json
   "memberId": "5"
 }
 
+### Find pilot roasting record
+POST http://localhost:8080/api/records/13
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "memberId": "2",
+  "pilot": true
+}
+
 
 
 
@@ -89,13 +100,15 @@ Content-Type: application/json
   "crackPointTime" : "[2024-02-20 15:00:15 +0000, 2024-02-20 15:00:45 +0000]",
   "turningPointTemp" : "[30.3]",
   "turningPointTime" : "[2024-02-20 15:00:18 +0000]",
+  "coolingPointTemp" : "[30.3]",
+  "coolingPointTime" : "[2024-02-20 15:00:18 +0000]",
   "preheatTemp" : "100.3F",
   "disposeTemp" : "[95.3]",
   "disposeTime" : "[2024-02-20 15:00:18 +0000]",
   "inputCapacity" : 40
 }
 
-### Upload Roasting Record then fail
+### Upload Roasting Record then fail BAD_REQUEST (inputCapacity is required.)
 POST http://localhost:8080/api/records/upload
 Content-Type: application/json
 

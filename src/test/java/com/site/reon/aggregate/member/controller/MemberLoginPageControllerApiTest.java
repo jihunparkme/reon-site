@@ -24,7 +24,7 @@ class MemberLoginPageControllerApiTest extends ApiTest {
         final var response = MemberLoginPageApiSteps.requestEmailLoginPage();
 
         assertEquals(HttpStatus.OK.value(), response.statusCode());
-        assertThat(response.body().asString(), containsString("<h1>LOGIN</h1>"));
+        assertThat(response.body().asString(), containsString("<h1 id=\"login-title\">Sign In</h1>"));
     }
 
     @Test

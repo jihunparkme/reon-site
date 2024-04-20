@@ -35,7 +35,7 @@ public class RoastingRecordShareServiceImpl implements RoastingRecordShareServic
 
         final RoastingRecord roastingRecord = roastingRecordOpt.get();
         final Member roastingRecordOwner = memberOpt.get();
-        if (roastingRecord.getMemberId() != roastingRecordOwner.getId()) {
+        if (roastingRecord.getRoastingInfo().getMemberId() != roastingRecordOwner.getId()) {
             throw new IllegalArgumentException("Roasting information is incorrect.");
         }
 

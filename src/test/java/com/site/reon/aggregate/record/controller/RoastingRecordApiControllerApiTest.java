@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class RoastingRecordApiTest extends ApiTest {
+class RoastingRecordApiControllerApiTest extends ApiTest {
 
     private final static String AUTH_CLIENT_NAME = "kakao";
     private final static String EMAIL = "user@gmail.com";

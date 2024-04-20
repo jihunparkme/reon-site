@@ -18,6 +18,8 @@ public interface RoastingRecordFindService {
 
     RoastingRecord findRoastingRecordBy(long recordId, long memberId);
 
+    RoastingRecord findRoastingRecordBy(long recordId, long memberId, boolean pilot);
+
     List<RoastingRecordListResponse> findRoastingRecordListBy(long memberId);
 
     RoastingRecordsAndPilotsResponse findRoastingRecordsAndPilotsBy(Long memberId);

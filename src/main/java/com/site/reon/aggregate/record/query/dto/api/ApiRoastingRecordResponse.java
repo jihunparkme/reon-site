@@ -22,6 +22,8 @@ public record ApiRoastingRecordResponse(
         String crackPointTime,
         String turningPointTemp,
         String turningPointTime,
+        String coolingPointTemp,
+        String coolingPointTime,
         float preheatTemp,
         String disposeTemp,
         String disposeTime,
@@ -37,24 +39,26 @@ public record ApiRoastingRecordResponse(
         LocalDateTime dateTime = LocalDateTime.parse(record.getCreatedDt().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         return ApiRoastingRecordResponse.builder()
                 .id(record.getId())
-                .title(record.getTitle())
-                .fan(record.getFan())
-                .heater(record.getHeater())
-                .temp1(record.getTemp1())
-                .temp2(record.getTemp2())
-                .temp3(record.getTemp3())
-                .temp4(record.getTemp4())
-                .ror(record.getRor())
-                .roasterSn(record.getRoasterSn())
-                .memberId(record.getMemberId())
-                .crackPoint(record.getCrackPoint())
-                .crackPointTime(record.getCrackPointTime())
-                .turningPointTemp(record.getTurningPointTemp())
-                .turningPointTime(record.getTurningPointTime())
-                .preheatTemp(record.getPreheatTemp())
-                .disposeTemp(record.getDisposeTemp())
-                .disposeTime(record.getDisposeTime())
-                .inputCapacity(record.getInputCapacity())
+                .title(record.getRoastingInfo().getTitle())
+                .roasterSn(record.getRoastingInfo().getRoasterSn())
+                .memberId(record.getRoastingInfo().getMemberId())
+                .preheatTemp(record.getInputInfo().getPreheatTemp())
+                .inputCapacity(record.getInputInfo().getInputCapacity())
+                .fan(record.getProfile().getFan())
+                .heater(record.getProfile().getHeater())
+                .ror(record.getProfile().getRor())
+                .temp1(record.getProfile().getTemperature().getTemp1())
+                .temp2(record.getProfile().getTemperature().getTemp2())
+                .temp3(record.getProfile().getTemperature().getTemp3())
+                .temp4(record.getProfile().getTemperature().getTemp4())
+                .crackPoint(record.getProfile().getCrackPoint().getCrackPoint())
+                .crackPointTime(record.getProfile().getCrackPoint().getCrackPointTime())
+                .turningPointTemp(record.getProfile().getTurningPoint().getTurningPointTemp())
+                .turningPointTime(record.getProfile().getTurningPoint().getTurningPointTime())
+                .coolingPointTemp(record.getProfile().getCoolingPoint().getCoolingPointTemp())
+                .coolingPointTime(record.getProfile().getCoolingPoint().getCoolingPointTime())
+                .disposeTemp(record.getProfile().getDispose().getDisposeTemp())
+                .disposeTime(record.getProfile().getDispose().getDisposeTime())
                 .createdDate(dateTime.toLocalDate().toString())
                 .createdTime(dateTime.toLocalTime().withNano(0).toString())
                 .build();

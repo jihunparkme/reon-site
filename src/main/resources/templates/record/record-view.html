@@ -93,6 +93,10 @@
                                         <td>[(${record.creakInfo.secondCrackPointTime})] / [(${record.creakInfo.secondCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
                                     </tr>
                                     <tr>
+                                        <th scope="row">Cooling Point</th>
+                                        <td>[(${record.coolingPointTime})] / [(${record.coolingPointTime})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                    </tr>
+                                    <tr>
                                         <th scope="row">DTR</th>
                                         <td>[(${record.dtr})] &#37;</td>
                                     </tr>
@@ -203,11 +207,13 @@
         const turningPointTime = data.turningPointTime;
         const firstCrackPointTime = data.creakInfo.firstCrackPointTime;
         const secondCrackPointTime = data.creakInfo.secondCrackPointTime;
+        const coolingPointTime = data.coolingPointTime;
 
         result[MMSSToSeconds(disposeTime)] = 'Dispose';
         result[MMSSToSeconds(turningPointTime)] = 'Turning Point';
         result[MMSSToSeconds(firstCrackPointTime)] = 'First Crack';
         result[MMSSToSeconds(secondCrackPointTime)] = 'Second Crack';
+        result[MMSSToSeconds(coolingPointTime)] = 'Cooling Point';
 
         return result;
     }

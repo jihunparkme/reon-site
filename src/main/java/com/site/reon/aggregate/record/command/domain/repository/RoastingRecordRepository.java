@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface RoastingRecordRepository extends JpaRepository<RoastingRecord, Long> {
-    Page<RoastingRecord> findByMemberId(Long memberId, Pageable pageable);
+    Page<RoastingRecord> findByRoastingInfoMemberId(Long memberId, Pageable pageable);
 
-    Optional<RoastingRecord> findByRoasterSn(@Param(value = "roasterSn") String roasterSn);
+    Optional<RoastingRecord> findByRoastingInfoRoasterSn(@Param(value = "roasterSn") String roasterSn);
 
-    Optional<RoastingRecord> findByIdAndMemberId(@Param(value = "id") long id,
-                                                 @Param(value = "memberId") long memberId);
+    Optional<RoastingRecord> findByIdAndRoastingInfoMemberId(@Param(value = "id") long id,
+                                                             @Param(value = "memberId") long memberId);
 
-    Optional<List<RoastingRecord>> findByMemberId(@Param(value = "memberId") long memberId);
+    Optional<List<RoastingRecord>> findByRoastingInfoMemberId(@Param(value = "memberId") long memberId);
 
     Optional<List<RoastingRecord>> findByPilotTrue();
 }

@@ -50,7 +50,8 @@ public class RoastingRecordApiController {
     @PostMapping("/{id}")
     public ResponseEntity view(@PathVariable(name = "id") final Long id,
                                @Valid @RequestBody final ApiRoastingRecordsRequest request) {
-        final RoastingRecord roastingRecord = roastingRecordFindService.findRoastingRecordBy(id, request.getMemberId());
+        final RoastingRecord roastingRecord = roastingRecordFindService.findRoastingRecordBy(
+                id, request.getMemberId(), request.isPilot());
         return BasicResponse.ok(ApiRoastingRecordResponse.of(roastingRecord));
     }
 

@@ -54,15 +54,16 @@ class ProductAdminControllerApiTest {
                 .size(2)
                 .manufacturedDt(LocalDate.of(2024, 04, 15))
                 .build();
+        final LocalDate today = LocalDate.of(2024, 04, 20);
         final SerialNo serialNo1 = SerialNo.builder()
                 .productNo(ProductNo.of("R2N0BK"))
                 .createdNo(1)
-                .date(LocalDate.now())
+                .date(today)
                 .build();
         final SerialNo serialNo2 = SerialNo.builder()
                 .productNo(ProductNo.of("R2N0BK"))
                 .createdNo(2)
-                .date(LocalDate.now())
+                .date(today)
                 .build();
 
         when(productCommandService.saveProducts(any(SaveProductRequest.class)))
@@ -76,9 +77,9 @@ class ProductAdminControllerApiTest {
                 .andExpect(jsonPath("$.status").value("201"))
                 .andExpect(jsonPath("$.httpStatusCode").value("CREATED"))
                 .andExpect(jsonPath("$.count").value("2"))
-                .andExpect(jsonPath("$.data[0].no").value("R2N0BK-0001-20240415"))
+                .andExpect(jsonPath("$.data[0].no").value("R2N0BK-0001-20240420"))
                 .andExpect(jsonPath("$.data[0].activated").value("false"))
-                .andExpect(jsonPath("$.data[1].no").value("R2N0BK-0002-20240415"))
+                .andExpect(jsonPath("$.data[1].no").value("R2N0BK-0002-20240420"))
                 .andExpect(jsonPath("$.data[1].activated").value("false"));
     }
 

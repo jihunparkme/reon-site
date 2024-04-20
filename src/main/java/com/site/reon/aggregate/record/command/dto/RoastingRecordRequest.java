@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.record.command.dto;
 
-import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.domain.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -54,6 +54,12 @@ public class RoastingRecordRequest {
     @NotNull(message = "turningPointTime is required.")
     private String turningPointTime; // 터닝 포인트 시간. [2024-02-20 15:00:18 +0000]
 
+    @NotNull(message = "coolingPointTemp is required.")
+    private String coolingPointTemp; // 쿨링 포인트 온도. [30.3]
+
+    @NotNull(message = "coolingPointTime is required.")
+    private String coolingPointTime; // 쿨링 포인트 시간. [2024-02-20 15:00:18 +0000]
+
     @NotNull(message = "preheatTemp is required.")
     private Float preheatTemp; // 예열 온도. 100.3
 
@@ -91,24 +97,42 @@ public class RoastingRecordRequest {
 
     public RoastingRecord toEntity(final long memberId) {
         return RoastingRecord.builder()
-                .title(this.title)
-                .fan(this.fan)
-                .heater(this.heater)
-                .temp1(this.temp1)
-                .temp2(this.temp2)
-                .temp3(this.temp3)
-                .temp4(this.temp4)
-                .ror(this.ror)
-                .roasterSn(this.roasterSn)
-                .memberId(memberId)
-                .crackPoint(this.crackPoint)
-                .crackPointTime(this.crackPointTime)
-                .turningPointTemp(this.turningPointTemp)
-                .turningPointTime(this.turningPointTime)
-                .preheatTemp(this.preheatTemp)
-                .disposeTemp(this.disposeTemp)
-                .disposeTime(this.disposeTime)
-                .inputCapacity(this.inputCapacity)
+                .roastingInfo(RoastingInfo.builder()
+                        .title(this.title)
+                        .roasterSn(this.roasterSn)
+                        .memberId(memberId)
+                        .build())
+                .inputInfo(InputInfo.builder()
+                        .preheatTemp(this.preheatTemp)
+                        .inputCapacity(this.inputCapacity)
+                        .build())
+                .profile(Profile.builder()
+                        .fan(this.fan)
+                        .heater(this.heater)
+                        .ror(this.ror)
+                        .temperature(Temperature.builder()
+                                .temp1(this.temp1)
+                                .temp2(this.temp2)
+                                .temp3(this.temp3)
+                                .temp4(this.temp4)
+                                .build())
+                        .crackPoint(CrackPoint.builder()
+                                .crackPoint(this.crackPoint)
+                                .crackPointTime(this.crackPointTime)
+                                .build())
+                        .turningPoint(TurningPoint.builder()
+                                .turningPointTemp(this.turningPointTemp)
+                                .turningPointTime(this.turningPointTime)
+                                .build())
+                        .coolingPoint(CoolingPoint.builder()
+                                .coolingPointTemp(this.coolingPointTemp)
+                                .coolingPointTime(this.coolingPointTime)
+                                .build())
+                        .dispose(Dispose.builder()
+                                .disposeTemp(this.disposeTemp)
+                                .disposeTime(this.disposeTime)
+                                .build())
+                        .build())
                 .build();
     }
 }
