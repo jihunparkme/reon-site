@@ -46,7 +46,7 @@ Content-Type: application/json
 
 
 ### Find roasting record
-POST http://localhost:8080/api/records/1
+POST http://localhost:8080/api/records/13
 Content-Type: application/json
 
 {
@@ -63,6 +63,17 @@ Content-Type: application/json
   "clientName": "reon",
   "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
   "memberId": "5"
+}
+
+### Find pilot roasting record
+POST http://localhost:8080/api/records/1
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "memberId": "2",
+  "pilot": true
 }
 
 
