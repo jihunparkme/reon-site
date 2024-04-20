@@ -4,8 +4,9 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.service.RoastingRecordCommandService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
-import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.query.service.RoastingRecordFindService;
+import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +63,10 @@ class FindRoastingRecordServiceTest {
     }
 
     @Test
-    void findRoastingRecordById_should_return_empty() throws Exception {
-        RoastingRecordResponse result = findService.findRoastingRecordBy(10000L);
-
-        assertEquals(RoastingRecordResponse.EMPTY, result);
+    void findRoastingRecordById_should_return_exception() throws Exception {
+        Assertions.assertThatThrownBy(() -> {
+            findService.findRoastingRecordBy(10000L);
+         }).isInstanceOf(NotFoundRoastingRecordException.class)
+        .hasMessageContaining("Not Found Roasting Record");
     }
 }
