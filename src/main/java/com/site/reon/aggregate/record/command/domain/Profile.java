@@ -2,6 +2,7 @@ package com.site.reon.aggregate.record.command.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import lombok.*;
 
 @Embeddable
@@ -19,4 +20,19 @@ public class Profile {
 
     @Column(length = 20000)
     private String ror;
+
+    @Embedded
+    private Temperature temperature;
+
+    @Embedded
+    private CrackPoint crackPoint;
+
+    @Embedded
+    private TurningPoint turningPoint;
+
+    @Embedded
+    private CoolingPoint coolingPoint;
+
+    @Embedded
+    private Dispose dispose;
 }

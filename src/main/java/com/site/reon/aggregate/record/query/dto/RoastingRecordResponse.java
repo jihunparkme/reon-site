@@ -54,8 +54,8 @@ public class RoastingRecordResponse {
     private boolean pilot;
 
     public static RoastingRecordResponse of(final RoastingRecord roastingRecord) {
-        final CreakInfo creakInfo = generateCrackInfo(roastingRecord.getCrackPoint().getCrackPoint(), roastingRecord.getCrackPoint().getCrackPointTime());
-        final int totalRoastingSecondsTime = calculateRoastingLogsInSeconds(roastingRecord.getTemperature().getTemp1());
+        final CreakInfo creakInfo = generateCrackInfo(roastingRecord.getProfile().getCrackPoint().getCrackPoint(), roastingRecord.getProfile().getCrackPoint().getCrackPointTime());
+        final int totalRoastingSecondsTime = calculateRoastingLogsInSeconds(roastingRecord.getProfile().getTemperature().getTemp1());
 
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
@@ -67,17 +67,17 @@ public class RoastingRecordResponse {
                 .fan(roastingRecord.getProfile().getFan())
                 .heater(roastingRecord.getProfile().getHeater())
                 .ror(roastingRecord.getProfile().getRor())
-                .temp1(roastingRecord.getTemperature().getTemp1())
-                .temp2(roastingRecord.getTemperature().getTemp2())
-                .temp3(roastingRecord.getTemperature().getTemp3())
-                .temp4(roastingRecord.getTemperature().getTemp4())
+                .temp1(roastingRecord.getProfile().getTemperature().getTemp1())
+                .temp2(roastingRecord.getProfile().getTemperature().getTemp2())
+                .temp3(roastingRecord.getProfile().getTemperature().getTemp3())
+                .temp4(roastingRecord.getProfile().getTemperature().getTemp4())
                 .creakInfo(creakInfo)
-                .turningPointTemp(getSingleTemp(roastingRecord.getTurningPoint().getTurningPointTemp()))
-                .turningPointTime(getSingleTime(roastingRecord.getTurningPoint().getTurningPointTime()))
-                .coolingPointTemp(getSingleTemp(roastingRecord.getCoolingPoint().getCoolingPointTemp()))
-                .coolingPointTime(getSingleTime(roastingRecord.getCoolingPoint().getCoolingPointTime()))
-                .disposeTemp(getSingleTemp(roastingRecord.getDispose().getDisposeTemp()))
-                .disposeTime(getSingleTime(roastingRecord.getDispose().getDisposeTime()))
+                .turningPointTemp(getSingleTemp(roastingRecord.getProfile().getTurningPoint().getTurningPointTemp()))
+                .turningPointTime(getSingleTime(roastingRecord.getProfile().getTurningPoint().getTurningPointTime()))
+                .coolingPointTemp(getSingleTemp(roastingRecord.getProfile().getCoolingPoint().getCoolingPointTemp()))
+                .coolingPointTime(getSingleTime(roastingRecord.getProfile().getCoolingPoint().getCoolingPointTime()))
+                .disposeTemp(getSingleTemp(roastingRecord.getProfile().getDispose().getDisposeTemp()))
+                .disposeTime(getSingleTime(roastingRecord.getProfile().getDispose().getDisposeTime()))
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
                 .dtr(calculateDevelopmentTimeRatio(totalRoastingSecondsTime, creakInfo.getFirstCrackPointTime()))

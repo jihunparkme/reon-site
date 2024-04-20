@@ -29,21 +29,6 @@ public class RoastingRecord extends BaseTimeEntity {
     @Embedded
     private Profile profile;
 
-    @Embedded
-    private Temperature temperature;
-
-    @Embedded
-    private CrackPoint crackPoint;
-
-    @Embedded
-    private TurningPoint turningPoint;
-
-    @Embedded
-    private Dispose dispose;
-
-    @Embedded
-    private CoolingPoint coolingPoint;
-
     @Column
     @ColumnDefault("false")
     private boolean pilot;
