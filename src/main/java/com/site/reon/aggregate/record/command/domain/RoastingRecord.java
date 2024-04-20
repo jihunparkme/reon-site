@@ -26,17 +26,11 @@ public class RoastingRecord extends BaseTimeEntity {
     @Embedded
     private InputInfo inputInfo;
 
-    @Column(length = 20000, nullable = false)
-    private String fan;
-
-    @Column(length = 20000, nullable = false)
-    private String heater;
+    @Embedded
+    private Profile profile;
 
     @Embedded
     private Temperature temperature;
-
-    @Column(length = 20000)
-    private String ror;
 
     @Embedded
     private CrackPoint crackPoint;
