@@ -13,3 +13,9 @@ spring:
       set2: set2-port, real, mail, real-db, management, real-oauth
   messages:
     basename: messages,errors
+
+  jpa:
+    properties:
+      hibernate:
+        create_empty_composites:
+          enabled: true

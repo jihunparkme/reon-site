@@ -61,19 +61,6 @@ public class Member extends BaseTimeEntity {
             inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")})
     private Set<Authority> authorities;
 
-    @PostLoad
-    private void postLoad() {
-        if (personalInfo == null) {
-            personalInfo = new PersonalInfo();
-        }
-        if (productInfo == null) {
-            productInfo = new ProductInfo();
-        }
-        if (oAuth2 == null) {
-            oAuth2 = new OAuth2();
-        }
-    }
-
     public Member updateOAuth2AccountInfo(final Long oAuthUserId, final String name, final String picture) {
         this.oAuth2.update(picture, oAuthUserId);
         this.personalInfo.updateFirstName(name);
