@@ -1,6 +1,6 @@
 package com.site.reon.aggregate.record.controller;
 
-import com.site.reon.aggregate.record.command.dto.SharePilotRecordRequest;
+import com.site.reon.aggregate.record.command.dto.DeleteRecordRequest;
 import com.site.reon.aggregate.record.command.service.RoastingRecordCommandService;
 import com.site.reon.global.common.dto.BasicResponse;
 import jakarta.validation.Valid;
@@ -16,15 +16,15 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RestController
 @RequestMapping("/records")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ROLE_PILOT')")
+@PreAuthorize("isAuthenticated()")
 public class RoastingRecordController {
 
     private final RoastingRecordCommandService roastingRecordCommandService;
 
-    @PutMapping("/{id}/pilot")
-    public ResponseEntity sharePilotRecord(@PathVariable(name = "id") final Long id,
-                                           @Valid @RequestBody final SharePilotRecordRequest request) {
-        roastingRecordCommandService.sharePilotRecord(id, request);
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteRecord(@PathVariable(name = "id") final Long id,
+                                       @Valid @RequestBody final DeleteRecordRequest request) {
+        roastingRecordCommandService.deleteRecord(id, request.getMemberId());
         return BasicResponse.ok(SUCCESS);
     }
 }
