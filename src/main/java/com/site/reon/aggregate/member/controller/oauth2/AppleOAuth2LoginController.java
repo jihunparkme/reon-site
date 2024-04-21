@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.member.controller;
+package com.site.reon.aggregate.member.controller.oauth2;
 
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.controller.dto.AppleOauth2LoginResponse;
