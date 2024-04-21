@@ -118,7 +118,8 @@
 
                         <div class="entry-button">
                             <div>
-                                <button th:onclick="|location.href='@{/record}'|" class="btn btn-light">목록</button>
+                                <button type="button" th:onclick="'remove(' + ${record.id} + ', ' + ${record.memberId} + ');'" class="btn btn-danger" style="margin-right: 5px;">DELETE</button>
+                                <button th:onclick="|location.href='@{/record}'|" class="btn btn-light">LIST</button>
                             </div>
                         </div>
                     </article>

@@ -31,3 +31,32 @@ function share(id, pilot) {
         alert("Failed to save. Please contact the administrator.\n(" + responseJson.message + ")");
     });
 }
+
+function remove(recordId, memberId) {
+    if (!confirm("Are you sure you want to delete?")) {
+        return;
+    }
+
+    const url = "/records/" + recordId;
+    const data = {
+        "memberId": memberId
+    };
+
+    $.ajax({
+        type: 'DELETE',
+        url: url,
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8'
+    }).done(function (response) {
+        if (response.success) {
+            alert("Deleted successfully.");
+            location.href = "/record";
+            return;
+        }
+        alert("Failed to delete. Please try again.");
+    }).fail(function (error) {
+        let responseJson = error.responseJSON;
+        alert("Failed to delete. Please contact the administrator.\n(" + responseJson.message + ")");
+    });
+}
