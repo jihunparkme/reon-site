@@ -20,18 +20,13 @@ public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandSe
     @Override
     @Transactional
     public void upload(final RoastingRecordRequest request) {
-        long memberId = request.getMemberId();
-        if (memberId == 0) {
-            new IllegalArgumentException("memberId is required.");
-        }
-
-        final var roastingRecord = request.toEntity(memberId);
+        final var roastingRecord = request.toEntity(request.getMemberId());
         recordRepository.save(roastingRecord);
     }
 
     @Override
-    public void sharePilotRecord(final Long id, final SharePilotRecordRequest request) {
-        final Optional<RoastingRecord> recordOpt = recordRepository.findById(id);
+    public void sharePilotRecord(final Long recordId, final SharePilotRecordRequest request) {
+        final Optional<RoastingRecord> recordOpt = recordRepository.findById(recordId);
         if (recordOpt.isEmpty()) {
             new NotFoundRoastingRecordException();
         }
@@ -39,5 +34,16 @@ public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandSe
         final RoastingRecord roastingRecord = recordOpt.get();
         roastingRecord.sharePilot(request.getPilot());
         recordRepository.save(roastingRecord);
+    }
+
+    @Override
+    public void deleteRecord(final Long recordId, final Long memberId) {
+        final Optional<RoastingRecord> recordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
+        if (recordOpt.isEmpty()) {
+            throw new IllegalArgumentException("You do not have permission to access this data.");
+        }
+
+        final RoastingRecord roastingRecord = recordOpt.get();
+        recordRepository.delete(roastingRecord);
     }
 }

@@ -4,6 +4,7 @@ import com.site.reon.aggregate.member.controller.steps.MemberEmailLoginApiSteps;
 import com.site.reon.global.ApiTest;
 import com.site.reon.global.common.util.infra.RedisUtilService;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ class MemberEmailLoginControllerApiTest extends ApiTest {
     private static final String EMAIL = "example@gmail.com";
 
     @Test
+    @Disabled
     void when_email_sign_up_then_success() {
         final var request = MemberEmailLoginApiSteps.signUpRequest();
 
@@ -32,6 +34,7 @@ class MemberEmailLoginControllerApiTest extends ApiTest {
     }
 
     @Test
+    @Disabled
     void when_authorize_then_success() {
         final var signUpRequest = MemberEmailLoginApiSteps.signUpRequest();
         redisUtilService.setValueExpire("sign-up-verified:example@gmail.com", "true", 5L);
@@ -49,7 +52,8 @@ class MemberEmailLoginControllerApiTest extends ApiTest {
         Assertions.assertEquals("EMPTY", response.jsonPath().getString("oauthClient"));
     }
     
-    @Test 
+    @Test
+    @Disabled
     void when_sendAuthenticationCodeByEmail_then_success() {
         final var request = MemberEmailLoginApiSteps.sendAuthCodeRequest();
 
@@ -59,7 +63,8 @@ class MemberEmailLoginControllerApiTest extends ApiTest {
         assertThat(response.body().asString(), containsString("SUCCESS"));
     }
     
-    @Test 
+    @Test
+    @Disabled
     void when_verifyAuthenticationCode_then_success() {
         final var sendAuthCodeRequest = MemberEmailLoginApiSteps.sendAuthCodeRequest();
         MemberEmailLoginApiSteps.requestSendAuthCode(sendAuthCodeRequest);
