@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
+import com.site.reon.aggregate.record.command.dto.api.ApiDeleteRecordRequest;
 import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
 import com.site.reon.aggregate.record.query.dto.api.ApiRoastingRecordsRequest;
 import com.site.reon.global.common.dto.ApiRequest;
@@ -174,4 +175,24 @@ public class RoastingRecordSteps {
                 .then()
                 .log().all().extract();
     }
+
+    public static ApiDeleteRecordRequest getApiRoastingRecordDeleteRequest(final long memberId) {
+        return ApiDeleteRecordRequest.builder()
+                .clientName(CLIENT_NAME)
+                .clientId(CLIENT_ID)
+                .memberId(memberId)
+                .build();
+    }
+
+    public static ExtractableResponse<Response> requestApiRoastingRecordDelete(
+            final ApiDeleteRecordRequest request, final long recordId) {
+        return RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/api/records/" + recordId + "/delete")
+                .then()
+                .log().all().extract();
+    }
+
 }

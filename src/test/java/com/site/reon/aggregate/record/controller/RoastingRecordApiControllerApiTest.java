@@ -172,6 +172,44 @@ class RoastingRecordApiControllerApiTest extends ApiTest {
         assertEquals("Roasting information is incorrect.", response.jsonPath().getString("message"));
     }
 
+    /**
+     * /{id}/delete
+     */
+    @Test
+    void delete_record_then_success() {
+        // given
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);
+        final long memberId = getMemberId(AUTH_CLIENT_NAME, EMAIL);
+        requestUploadRoastingRecord();
+
+        // when
+        final long recordId = 1L;
+        final var request = RoastingRecordSteps.getApiRoastingRecordDeleteRequest(memberId);
+
+        // then
+        final var response = RoastingRecordSteps.requestApiRoastingRecordDelete(request, recordId);
+
+        assertEquals(HttpStatus.OK.value(), response.statusCode());
+        assertEquals("SUCCESS", response.jsonPath().getString("data"));
+    }
+
+    @Test
+    void delete_record_then_fail() {
+        // given
+        requestOAuth2SignUp(AUTH_CLIENT_NAME, EMAIL);
+        requestUploadRoastingRecord();
+
+        // when
+        final long recordId = 1L;
+        final var request = RoastingRecordSteps.getApiRoastingRecordDeleteRequest(9999L);
+
+        // then
+        final var response = RoastingRecordSteps.requestApiRoastingRecordDelete(request, recordId);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), response.statusCode());
+        assertEquals("You do not have permission to access this data.", response.jsonPath().getString("message"));
+    }
+
     private void requestUploadRoastingRecord() {
         final var roastingRecordRequest = RoastingRecordSteps.getRoastingRecordRequest();
 
