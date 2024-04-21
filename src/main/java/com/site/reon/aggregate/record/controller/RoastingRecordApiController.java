@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.record.controller;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.dto.api.ApiDeleteRecordRequest;
 import com.site.reon.aggregate.record.command.dto.api.ApiRoastingRecordUploadRequest;
 import com.site.reon.aggregate.record.command.service.RoastingRecordCommandService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
@@ -69,5 +70,13 @@ public class RoastingRecordApiController {
                                 @Valid @RequestBody final ApiRequest request) {
         final ApiRoastingRecordResponse result = roastingRecordShareService.findRoastingRecordByIdAndEmail(id, email);
         return BasicResponse.ok(result);
+    }
+
+    @ApiOperation(value = "로스팅 로그 삭제", notes = "앱에서 로스팅 로그를 삭제합니다.")
+    @PostMapping("/{id}/delete")
+    public ResponseEntity delete(@PathVariable(name = "id") final Long id,
+                                @Valid @RequestBody final ApiDeleteRecordRequest request) {
+        roastingRecordCommandService.deleteRecord(id, request.getMemberId());
+        return BasicResponse.ok(SUCCESS);
     }
 }
