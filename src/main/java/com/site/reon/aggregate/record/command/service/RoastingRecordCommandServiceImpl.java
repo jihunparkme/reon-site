@@ -20,12 +20,7 @@ public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandSe
     @Override
     @Transactional
     public void upload(final RoastingRecordRequest request) {
-        long memberId = request.getMemberId();
-        if (memberId == 0) {
-            new IllegalArgumentException("memberId is required.");
-        }
-
-        final var roastingRecord = request.toEntity(memberId);
+        final var roastingRecord = request.toEntity(request.getMemberId());
         recordRepository.save(roastingRecord);
     }
 
