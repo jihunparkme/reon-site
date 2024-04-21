@@ -137,3 +137,26 @@ Content-Type: application/json
 ### share Roasting Record then BAD_REQUEST (Required request parameter 'email' for method parameter type String is not present)
 POST http://localhost:8080/api/records/1/share
 Content-Type: application/json
+
+
+
+
+
+### delete Roasting Record then success.
+POST http://localhost:8080/api/records/1/delete
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa",
+  "memberId": "2"
+}
+
+### delete Roasting Record then BAD_REQUEST. (memberId is required.)
+POST http://localhost:8080/api/records/1/delete
+Content-Type: application/json
+
+{
+  "clientName": "reon",
+  "clientId": "235df110-bd70-11ee-aa8b-e30685fde2fa"
+}
