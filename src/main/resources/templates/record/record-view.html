@@ -165,6 +165,10 @@
     const heaterArr = generateGraphData(record.heater, dataSize);
     const fanArr = generateGraphData(record.fan, dataSize);
     const noteArr = generateNoteData(record);
+    const turningPointTime = record.turningPointTime;
+    const firstCrackPointTime = record.creakInfo.firstCrackPointTime;
+    const coolingPointTime = record.coolingPointTime;
+    const dtr = record.dtr;
 
     function generateGraphData(data, size) {
         if (data === null) {

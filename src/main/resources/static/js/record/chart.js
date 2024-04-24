@@ -1,3 +1,74 @@
+function setTurningPointArea(xAxis) {
+    if (turningPointTime.length == 0) {
+        return;
+    }
+
+    const rangeDataItem = xAxis.makeDataItem({
+        category: turningPointTime
+    });
+
+    const range = xAxis.createAxisRange(rangeDataItem);
+
+    rangeDataItem.get("grid").setAll({
+        stroke: am5.color(0x00ff33),
+        strokeOpacity: 0.5,
+        strokeDasharray: [3]
+    });
+
+    rangeDataItem.get("axisFill").setAll({
+        fill: am5.color(0x00ff33),
+        fillOpacity: 0.1,
+        visible: true
+    });
+
+    rangeDataItem.get("label").setAll({
+        inside: true,
+        text: 'Turning Point ' + '(' + turningPointTime + ')',
+        rotation: 90,
+        centerX: am5.p100,
+        centerY: am5.p100,
+        location: 0,
+        paddingBottom: 10,
+        paddingRight: 15
+    });
+}
+
+function setDTRArea(xAxis) {
+    if (firstCrackPointTime.length == 0 || coolingPointTime.length == 0) {
+        return;
+    }
+
+    const rangeDataItem = xAxis.makeDataItem({
+        category: firstCrackPointTime,
+        endCategory: coolingPointTime
+    });
+
+    const range = xAxis.createAxisRange(rangeDataItem);
+
+    rangeDataItem.get("grid").setAll({
+        stroke: am5.color(0xf2b626),
+        strokeOpacity: 1,
+        strokeDasharray: [3]
+    });
+
+    rangeDataItem.get("axisFill").setAll({
+        fill: am5.color(0xf2b626),
+        fillOpacity: 0.1,
+        visible: true
+    });
+
+    rangeDataItem.get("label").setAll({
+        inside: true,
+        text: 'DTR (' + dtr + '%)',
+        rotation: 90,
+        centerX: am5.p100,
+        centerY: am5.p100,
+        location: 0,
+        paddingBottom: 10,
+        paddingRight: 15
+    });
+}
+
 am5.ready(function() {
 
     /***********************************************************************************************************
@@ -125,6 +196,9 @@ am5.ready(function() {
             fill: am5.color(0xFFFFFF)
         })
     );
+
+    setTurningPointArea(xAxis);
+    setDTRArea(xAxis);
 
     yAxis.children.unshift(  // yAxis title
         am5.Label.new(root, {
