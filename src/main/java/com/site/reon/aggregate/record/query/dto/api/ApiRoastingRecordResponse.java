@@ -1,6 +1,8 @@
 package com.site.reon.aggregate.record.query.dto.api;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.util.RecordUtils;
 import lombok.Builder;
 
 import java.time.LocalDateTime;
@@ -28,6 +30,7 @@ public record ApiRoastingRecordResponse(
         String disposeTemp,
         String disposeTime,
         int inputCapacity,
+        float dtr,
         String createdDate,
         String createdTime
 ) {
@@ -37,6 +40,11 @@ public record ApiRoastingRecordResponse(
 
     public static ApiRoastingRecordResponse of(final RoastingRecord record) {
         LocalDateTime dateTime = LocalDateTime.parse(record.getCreatedDt().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        final RoastingRecordResponse.CreakInfo creakInfo = RecordUtils.generateCrackInfo(
+                record.getProfile().getCrackPoint().getCrackPoint(), record.getProfile().getCrackPoint().getCrackPointTime());
+        final int totalRoastingSecondsTime = RecordUtils.calculateRoastingLogsInSeconds(
+                record.getProfile().getTemperature().getTemp1());
+
         return ApiRoastingRecordResponse.builder()
                 .id(record.getId())
                 .title(record.getRoastingInfo().getTitle())
@@ -59,6 +67,7 @@ public record ApiRoastingRecordResponse(
                 .coolingPointTime(record.getProfile().getCoolingPoint().getCoolingPointTime())
                 .disposeTemp(record.getProfile().getDispose().getDisposeTemp())
                 .disposeTime(record.getProfile().getDispose().getDisposeTime())
+                .dtr(RecordUtils.calculateDevelopmentTimeRatio(totalRoastingSecondsTime, creakInfo.getFirstCrackPointTime()))
                 .createdDate(dateTime.toLocalDate().toString())
                 .createdTime(dateTime.toLocalTime().withNano(0).toString())
                 .build();
