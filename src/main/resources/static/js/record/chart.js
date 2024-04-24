@@ -185,9 +185,9 @@ am5.ready(function() {
 
     createSeries("Drum Bottom Temp", "temp1");
     createSeries("Drum Top Temp", "temp2");
-    createSeries("Exhaust Temp", "temp3");
     createSeries("Board Temp", "temp4");
     createSeries("ROR", "ror");
+    // createSeries("Exhaust Temp", "temp3");
 
     // Add scrollbar
     chart.set("scrollbarX", am5.Scrollbar.new(root, {
