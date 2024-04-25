@@ -74,7 +74,7 @@ am5.ready(function() {
     /***********************************************************************************************************
      * Temperature Chart
      */
-        // Create root element
+    // Create root element
     let root = am5.Root.new("temperatureChart");
     const myTheme = am5.Theme.new(root);
 
@@ -238,6 +238,15 @@ am5.ready(function() {
     });
 
     function createSeries(name, field) {
+        let tooltip = am5.Tooltip.new(root, {
+            getStrokeFromSprite: true,
+            getFillFromSprite: false,
+            getLabelFillFromSprite: false,
+            autoTextColor: false,
+            pointerOrientation: "horizontal",
+            labelText: "[bold]{name}: {valueY}"
+        });
+
         let series = chart.series.push(
             am5xy.LineSeries.new(root, {
                 name: name,
@@ -246,12 +255,11 @@ am5.ready(function() {
                 valueYField: field,
                 categoryXField: "second",
                 legendValueText: "{valueY}",
-                tooltip: am5.Tooltip.new(root, {
-                    pointerOrientation: "horizontal",
-                    labelText: "[bold]{name}: {valueY}"
-                })
+                tooltip: tooltip
             })
         );
+
+        series.get("tooltip").label.set("fill", am5.color(0xffffff));
 
         series.data.setAll(data);
         series.appear(1000);
@@ -452,6 +460,9 @@ am5.ready(function() {
         })
     );
 
+    setTurningPointArea(xAxisOfSensor);
+    setDTRArea(xAxisOfSensor);
+
     yAxisOfSensor.children.unshift(
         am5.Label.new(rootOfSensor, {
             rotation: -90,
@@ -490,6 +501,15 @@ am5.ready(function() {
     });
 
     function createSeriesOfSensor(name, field) {
+        let tooltip = am5.Tooltip.new(rootOfSensor, {
+            getStrokeFromSprite: true,
+            getFillFromSprite: false,
+            getLabelFillFromSprite: false,
+            autoTextColor: false,
+            pointerOrientation: "horizontal",
+            labelText: "[bold]{name}: {valueY}"
+        });
+
         let seriesOfSensor = chartOfSensor.series.push(
             am5xy.LineSeries.new(rootOfSensor, {
                 name: name,
@@ -498,12 +518,11 @@ am5.ready(function() {
                 valueYField: field,
                 categoryXField: "second",
                 legendValueText: "{valueY}",
-                tooltip: am5.Tooltip.new(rootOfSensor, {
-                    pointerOrientation: "horizontal",
-                    labelText: "[bold]{name}: {valueY}"
-                })
+                tooltip: tooltip
             })
         );
+
+        seriesOfSensor.get("tooltip").label.set("fill", am5.color(0xffffff));
 
         seriesOfSensor.data.setAll(dataOfSensor);
         seriesOfSensor.appear(1000);
