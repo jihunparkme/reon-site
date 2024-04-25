@@ -1,14 +1,38 @@
 package com.site.reon.aggregate.record.util;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class RecordUtilsTest {
+
+    @Test
+    void refine_LocalDateTime() {
+        final LocalDateTime now = LocalDateTime.parse(LocalDateTime.now().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+
+        final String date = now.toLocalDate().toString();
+        final String time = now.toLocalTime().withNano(0).toString();
+
+        System.out.println(date);
+        System.out.println(time);
+        assertEquals(now.getYear()
+                + "-" + getFormattedNumber(now.getMonthValue())
+                + "-" + getFormattedNumber(now.getDayOfMonth()), date);
+        assertEquals(getFormattedNumber(now.getHour())
+                + ":" + getFormattedNumber(now.getMinute())
+                + ":" + getFormattedNumber(now.getSecond()), time);
+    }
+
+    private String getFormattedNumber(final int now) {
+        return String.format("%02d", now);
+    }
 
     @Test
     void convertToFloat_single_value() throws Exception {
@@ -16,7 +40,7 @@ class RecordUtilsTest {
         List<Float> result = RecordUtils.convertToFloatList(input);
 
         List<Float> expect = Arrays.asList(30.3F);
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -25,7 +49,7 @@ class RecordUtilsTest {
         List<Float> result = RecordUtils.convertToFloatList(input);
 
         List<Float> expect = Arrays.asList(30.3F, 30.4F, 30.5F);
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -34,7 +58,7 @@ class RecordUtilsTest {
         List<Float> result = RecordUtils.convertToFloatList(input);
 
         List<Float> expect = Collections.emptyList();
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -43,7 +67,7 @@ class RecordUtilsTest {
         List<Float> result = RecordUtils.convertToFloatList(input);
 
         List<Float> expect = Collections.emptyList();
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -52,7 +76,7 @@ class RecordUtilsTest {
         List<String> result = RecordUtils.convertToMMSSTimeList(input);
 
         List<String> expect = Arrays.asList("00:18");
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -61,7 +85,7 @@ class RecordUtilsTest {
         List<String> result = RecordUtils.convertToMMSSTimeList(input);
 
         List<String> expect = Arrays.asList("00:18", "10:19");
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -70,7 +94,7 @@ class RecordUtilsTest {
         List<String> result = RecordUtils.convertToMMSSTimeList(input);
 
         List<String> expect = Collections.emptyList();
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -79,7 +103,7 @@ class RecordUtilsTest {
         List<String> result = RecordUtils.convertToMMSSTimeList(input);
 
         List<String> expect = Collections.emptyList();
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -90,7 +114,7 @@ class RecordUtilsTest {
         RecordUtils.resizeFloatList(result, 2);
 
         List<Float> expect = Arrays.asList(0.1F, 0F);
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -102,7 +126,7 @@ class RecordUtilsTest {
         RecordUtils.resizeFloatList(result, 2);
 
         List<Float> expect = Arrays.asList(0.1F, 0.2F);
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -112,7 +136,7 @@ class RecordUtilsTest {
         RecordUtils.resizeFloatList(result, 2);
 
         List<Float> expect = Arrays.asList(0F, 0F);
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -123,7 +147,7 @@ class RecordUtilsTest {
         RecordUtils.resizeStringList(result, 2);
 
         List<String> expect = Arrays.asList("00:00", "");
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -135,7 +159,7 @@ class RecordUtilsTest {
         RecordUtils.resizeStringList(result, 2);
 
         List<String> expect = Arrays.asList("00:03", "00:04");
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -145,7 +169,7 @@ class RecordUtilsTest {
         RecordUtils.resizeStringList(result, 2);
 
         List<String> expect = Arrays.asList("", "");
-        Assertions.assertEquals(expect, result);
+        assertEquals(expect, result);
     }
 
     @Test
@@ -154,16 +178,46 @@ class RecordUtilsTest {
 
         final int result = RecordUtils.calculateRoastingLogsInSeconds(tempLog);
 
-        Assertions.assertEquals(81, result);
+        assertEquals(81, result);
     }
 
     @Test
-    void calculateDevelopmentTimeRatio() {
+    void time_to_seconds_test() {
+        final String pointTimeStr = "[2024-02-20 15:01:10 +0000]";
+        final List<String> pointTimes = RecordUtils.convertToMMSSTimeList(pointTimeStr);
+
+        final String pointTime = pointTimes.get(0);
+        assertEquals("01:10", pointTime);
+
+        final float result = RecordUtils.getHHSSTimeToSeconds(pointTime);
+        assertEquals(70, result);
+    }
+    
+    @Test 
+    void when_getPointTimeToSeconds_then_return_converted_time() {
+        final String pointTimeStr = "[2024-02-20 15:01:10 +0000]";
+
+        final float result = RecordUtils.getPointTimeToSeconds(pointTimeStr, 90);
+
+        assertEquals(70, result);
+    }
+
+    @Test
+    void when_getPointTimeToSeconds_then_return_default_time() {
+        final String pointTimeStr = "[]";
+
+        final float result = RecordUtils.getPointTimeToSeconds(pointTimeStr, 90);
+
+        assertEquals(90, result);
+    }
+
+    @Test
+    void when_calculateDevelopmentTimeRatio_then_return_dtr() {
         final int totalRoastingSecondsTime = 10 * 60;
         final String firstCrackPointTime = "07:00";
 
         final float result = RecordUtils.calculateDevelopmentTimeRatio(totalRoastingSecondsTime, firstCrackPointTime);
 
-        Assertions.assertEquals(30.0, result);
+        assertEquals(30.0, result);
     }
 }
