@@ -44,6 +44,9 @@ public record ApiRoastingRecordResponse(
                 record.getProfile().getCrackPoint().getCrackPoint(), record.getProfile().getCrackPoint().getCrackPointTime());
         final int totalRoastingSecondsTime = RecordUtils.calculateRoastingLogsInSeconds(
                 record.getProfile().getTemperature().getTemp1());
+        final int coolingPointSecondsTime = RecordUtils.getPointTimeToSeconds(
+                record.getProfile().getCoolingPoint().getCoolingPointTime(),
+                totalRoastingSecondsTime);
 
         return ApiRoastingRecordResponse.builder()
                 .id(record.getId())
@@ -67,7 +70,7 @@ public record ApiRoastingRecordResponse(
                 .coolingPointTime(record.getProfile().getCoolingPoint().getCoolingPointTime())
                 .disposeTemp(record.getProfile().getDispose().getDisposeTemp())
                 .disposeTime(record.getProfile().getDispose().getDisposeTime())
-                .dtr(RecordUtils.calculateDevelopmentTimeRatio(totalRoastingSecondsTime, creakInfo.getFirstCrackPointTime()))
+                .dtr(RecordUtils.calculateDevelopmentTimeRatio(coolingPointSecondsTime, creakInfo.getFirstCrackPointTime()))
                 .createdDate(dateTime.toLocalDate().toString())
                 .createdTime(dateTime.toLocalTime().withNano(0).toString())
                 .build();

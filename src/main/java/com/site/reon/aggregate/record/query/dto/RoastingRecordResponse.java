@@ -49,6 +49,9 @@ public class RoastingRecordResponse {
                 roastingRecord.getProfile().getCrackPoint().getCrackPoint(), roastingRecord.getProfile().getCrackPoint().getCrackPointTime());
         final int totalRoastingSecondsTime = RecordUtils.calculateRoastingLogsInSeconds(
                 roastingRecord.getProfile().getTemperature().getTemp1());
+        final int coolingPointSecondsTime = RecordUtils.getPointTimeToSeconds(
+                roastingRecord.getProfile().getCoolingPoint().getCoolingPointTime(),
+                totalRoastingSecondsTime);
 
         return RoastingRecordResponse.builder()
                 .id(roastingRecord.getId())
@@ -73,7 +76,7 @@ public class RoastingRecordResponse {
                 .disposeTime(RecordUtils.getSingleTime(roastingRecord.getProfile().getDispose().getDisposeTime()))
                 .createdDt(roastingRecord.getCreatedDt())
                 .modifiedDt(roastingRecord.getModifiedDt())
-                .dtr(RecordUtils.calculateDevelopmentTimeRatio(totalRoastingSecondsTime, creakInfo.getFirstCrackPointTime()))
+                .dtr(RecordUtils.calculateDevelopmentTimeRatio(coolingPointSecondsTime, creakInfo.getFirstCrackPointTime()))
                 .totalRoastingSecondsTime(totalRoastingSecondsTime)
                 .pilot(roastingRecord.isPilot())
                 .build();
