@@ -553,7 +553,7 @@ section {
   width: 120px;
   height: 1px;
   display: inline-block;
-  background: #e6636a;
+  background: #fdbc1a;
   margin: 4px 10px;
 }
 
@@ -564,7 +564,7 @@ section {
   font-weight: 700;
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
-  color: #556270;
+  color: #fdbc1a;
 }
 
 /*--------------------------------------------------------------
@@ -1156,7 +1156,7 @@ section {
   border: 0;
   padding: 12px 15px 12px 0;
   transition: 0.3s;
-  color: #556270;
+  color: #ffffff;
   border-radius: 0;
   border-right: 2px solid white;
   font-weight: 600;
@@ -1164,12 +1164,13 @@ section {
 }
 
 .features .nav-link:hover {
-  color: #d9232d;
+  color: #fdbc1a;
 }
 
 .features .nav-link.active {
-  color: #d9232d;
-  border-color: #d9232d;
+  color: #fdbc1a;
+  border-color: #fdbc1a;
+  background-color: #211F20;
 }
 
 .features .tab-pane.active {
@@ -1180,7 +1181,7 @@ section {
   font-size: 26px;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #556270;
+  color: #ffffff;
 }
 
 .features .details p {
@@ -1199,7 +1200,7 @@ section {
 
   .features .nav-link.active {
     color: #fff;
-    background: #d9232d;
+    background: #fdbc1a;
   }
 }
 
