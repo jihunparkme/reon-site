@@ -265,11 +265,11 @@ am5.ready(function() {
         series.appear(1000);
     }
 
-    createSeries("Drum Bottom Temp", "temp1");
-    createSeries("Drum Top Temp", "temp2");
-    createSeries("Board Temp", "temp4");
+    createSeries("Drum Temp", "temp1");
+    createSeries("Heater Temp", "temp2");
+    createSeries("Pesudo Bean Temp", "temp3");
+    // createSeries("Board Temp", "temp4");
     createSeries("ROR", "ror");
-    // createSeries("Exhaust Temp", "temp3");
 
     // Add scrollbar
     chart.set("scrollbarX", am5.Scrollbar.new(root, {
