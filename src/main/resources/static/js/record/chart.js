@@ -265,9 +265,9 @@ am5.ready(function() {
         series.appear(1000);
     }
 
-    createSeries("Drum Temp", "temp1");
-    createSeries("Heater Temp", "temp2");
-    createSeries("Pesudo Bean Temp", "temp3");
+    createSeries("Drum", "temp1");
+    createSeries("Heater", "temp2");
+    createSeries("Pesudo Bean", "temp3");
     // createSeries("Board Temp", "temp4");
     createSeries("ROR", "ror");
 
@@ -329,7 +329,8 @@ am5.ready(function() {
     legend.itemContainers.template.set("width", am5.p100);
     legend.valueLabels.template.setAll({
         width: am5.p100,
-        textAlign: "right"
+        textAlign: "right",
+        fill: am5.color(0xffffff)
     });
 
     // It's is important to set legend data after all the events are set on template, otherwise events won't be copied
@@ -586,7 +587,8 @@ am5.ready(function() {
     legendOfSensor.itemContainers.template.set("width", am5.p100);
     legendOfSensor.valueLabels.template.setAll({
         width: am5.p100,
-        textAlign: "right"
+        textAlign: "right",
+        fill: am5.color(0xffffff)
     });
 
     // It's is important to set legend data after all the events are set on template, otherwise events won't be copied
