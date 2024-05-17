@@ -26,7 +26,7 @@ public class RoastingRecordAdminPageController {
             @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
             @RequestParam(value = "size", required = false, defaultValue = "10") final int size,
             Model model) {
-        // TODO: 날짜, 제목 검색
+        // TODO: 날짜, 제목, 시리얼넘버 검색
         final var roastingRecordListPage = recordService.findAllOrderByIdDescPaging(page, size);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
