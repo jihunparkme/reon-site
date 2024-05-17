@@ -13,6 +13,6 @@ public class SearchRequestParam {
     private int size = 10;
 
     private String title = StringUtils.EMPTY;
-    private String date = StringUtils.EMPTY;
-    private String roasterSn = StringUtils.EMPTY;
+    private String startDate = StringUtils.EMPTY;
+    private String endDate = StringUtils.EMPTY;
 }
