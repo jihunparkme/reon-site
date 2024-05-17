@@ -4,6 +4,7 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.service.RoastingRecordCommandService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
 import com.site.reon.aggregate.record.query.service.RoastingRecordFindService;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.security.dto.SessionMember;
@@ -29,17 +30,14 @@ public class RoastingRecordPageController {
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public String list(
-            @LoginMember final SessionMember session,
-            @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") final int size,
-            Model model) {
-        // TODO: 날짜, 제목 검색
+    public String list(@LoginMember final SessionMember session,
+                       @ModelAttribute SearchRequestParam param,
+                       Model model) {
         final long memberId = session.getId();
-        final var roastingRecordListPage = roastingRecordFindService.findAllByMemberIdOrderByIdDescPaging(memberId, page, size);
+        final var roastingRecordListPage = roastingRecordFindService.findByFilter(memberId, param);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
-        model.addAttribute("page", page);
+        model.addAttribute("page", param.getPage());
 
         return "record/record-list";
     }
