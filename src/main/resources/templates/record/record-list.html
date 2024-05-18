@@ -1,4 +1,5 @@
 <div th:replace="~{common/head :: head('Record')}"></div>
+<link th:href="@{/css/record/record.css}" rel="stylesheet"/>
 <body>
 <div th:replace="~{common/header :: header('record')}"></div>
 
@@ -15,12 +16,40 @@
         </div>
     </section>
 
-    <form name="form" id="form" th:action="@{/record}" method="get">
-        <input type="hidden" id="page" name="page" value="0"/>
-    </form>
-
     <section id="records" class="records">
         <div class="container">
+            <div class="row">
+                <form name="form" id="form" th:action="@{/record}" method="get">
+                    <input type="hidden" id="page" name="page" value="0"/>
+
+                    <div class="search-bar">
+                        <h4>Search</h4>
+                        <hr/>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex">
+                                <label for="title">Title: </label>
+                                <input type="text" id="title" name="title" th:value="${param.title}" class="search-text form-control width-300" >
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex">
+                                <label for="title">Date. </label>
+                                <input class="search-text form-control width-300" type="date" id="startDate">
+                                <input class="search-text form-control width-300" type="date" id="endDate">
+                            </div>
+                        </div>
+
+                        <div style="float: right;">
+                            <div style="display: inline-block">
+                                <button type="button" id="btn-delete" class="btn btn-warning">DELETE</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <div class="row">
                 <div class="total">
                     <h5 style="float: left">Total : [(${roastingRecordListPage.totalElements})]</h5>
