@@ -3,6 +3,7 @@ package com.site.reon.aggregate.record.query.service;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
 import org.springframework.data.domain.Page;
 
@@ -13,6 +14,8 @@ public interface RoastingRecordFindService {
     Page<RoastingRecord> findAllByMemberIdOrderByIdDescPaging(long memberId, int page, int size);
 
     Page<RoastingRecord> findAllOrderByIdDescPaging(int page, int size);
+
+    Page<RoastingRecord> findByFilter(long memberId, SearchRequestParam param);
 
     RoastingRecordResponse findRoastingRecordBy(Long id);
 
