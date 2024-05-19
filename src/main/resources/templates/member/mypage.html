@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="member-card-content">
-                            <h1>Member information</h1>
+                            <h1>My information</h1>
                             <form th:action="@{/member/mypage/edit}" th:object="${member}" method="post">
                                 <div th:if="${#fields.hasGlobalErrors()}" class="global-error">
                                     <button class="btn btn-outline-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></button>
