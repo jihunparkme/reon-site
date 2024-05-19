@@ -109,7 +109,7 @@ jacocoTestReport {
     )
 }
 
-def generated = 'src/main/build/generated'
+def generated = 'src/main/generated'
 
 tasks.withType(JavaCompile) {
     options.getGeneratedSourceOutputDirectory().set(file(generated))
