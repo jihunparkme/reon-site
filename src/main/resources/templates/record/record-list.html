@@ -43,7 +43,10 @@
 
                             <div style="float: right;">
                                 <div style="display: inline-block">
-                                    <button type="button" id="btn-search" class="btn btn-warning" th:onclick="'search()'">Search</button>
+                                    <button type="button" class="btn btn-danger" th:onclick="'resetFilter()'"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+                                </div>
+                                <div style="display: inline-block">
+                                    <button type="button" class="btn btn-warning" th:onclick="'search()'"><i class="bi bi-search"></i> Search</button>
                                 </div>
                             </div>
                         </div>
