@@ -40,7 +40,7 @@
                      th:classappend="${status.index gt 0 ? 'mt-4 mt-md-0' : ''}">
                     <div class="icon-box" th:onclick="'location.href=\'' + @{/admin/members/{id}(id=${member.id})} + '\''">
                         <i class="bi bi-person-circle"></i>
-                        <h4><a th:href="@{/admin/members/{id}(id=${member.id})}">[(${member.personalInfo.firstName})]</a></h4>
+                        <h4><a th:href="@{/admin/members/{id}(id=${member.id})}">[(${member.personalInfo.firstName})] [(${member.personalInfo.lastName})]</a></h4>
                         <p>
                             Email. [(${member.email})]<br/>
                             Product Code. [(${member.productInfo.prdCode})]<br/>
@@ -64,26 +64,27 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 <div th:replace="~{common/commonjs}"></div>
+<script type="text/javascript" th:src="@{/js/member/member.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    // let totalPages = [[${memberListPage.totalPages}]];
-    // let startPage = [[${memberListPage.number}]] + 1;
-    //
-    // if (totalPages > 1) {
-    //     window.pagObj = $('#pagination').twbsPagination({
-    //         totalPages: totalPages,
-    //         startPage: startPage,
-    //         visiblePages: 10,
-    //         prev: "‹",
-    //         next: "›",
-    //         first: '«',
-    //         last: '»',
-    //         onPageClick: function (event, page) {
-    //         }
-    //     }).on('page', function (event, page) {
-    //         searchRecordList(page - 1);
-    //     });
-    // }
+    let totalPages = [[${memberListPage.totalPages}]];
+    let startPage = [[${memberListPage.number}]] + 1;
+
+    if (totalPages > 1) {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: totalPages,
+            startPage: startPage,
+            visiblePages: 10,
+            prev: "‹",
+            next: "›",
+            first: '«',
+            last: '»',
+            onPageClick: function (event, page) {
+            }
+        }).on('page', function (event, page) {
+            searchMemberList(page - 1);
+        });
+    }
     /*]]>*/
 </script>
 </body>
