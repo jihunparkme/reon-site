@@ -7,6 +7,11 @@ function searchRecordList(page) {
     $("#form").submit();
 }
 
+function search() {
+    $("#page").val(0);
+    $("#form").submit();
+}
+
 function share(id, pilot) {
     const url = "/records/" + id + "/pilot";
     const data = {
