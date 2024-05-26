@@ -196,3 +196,7 @@
     color: rgb(127, 127, 127);
     border-radius: 10px;
 }
+
+.my-page-label-text {
+    margin-bottom: 0.5em;
+}
