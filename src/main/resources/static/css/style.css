@@ -2345,6 +2345,10 @@ section {
   width: 300px;
 }
 
+.width-250 {
+  width: 250px;
+}
+
 .width-200 {
   width: 200px;
 }
@@ -2360,4 +2364,19 @@ main {
 
 main .container {
   margin-top: 10px;
+}
+
+.search-bar {
+  color: white;
+  padding: 30px;
+  margin: 0 0 40px 0;
+  background-color: #44414287;
+}
+.search-text {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.display-flex {
+  display: flex;
+  justify-content: flex-start;
 }
