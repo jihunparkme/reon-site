@@ -15,7 +15,7 @@ public interface RoastingRecordFindService {
 
     Page<RoastingRecord> findAllOrderByIdDescPaging(int page, int size);
 
-    Page<RoastingRecord> findByFilter(long memberId, RecordSearchRequestParam param);
+    Page<RoastingRecord> findAllByFilter(long memberId, RecordSearchRequestParam param);
 
     RoastingRecordResponse findRoastingRecordBy(Long id);
 

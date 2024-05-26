@@ -39,8 +39,8 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     }
 
     @Override
-    public Page<RoastingRecord> findByFilter(final long memberId, final RecordSearchRequestParam param) {
-        return recordRepository.findByFilter(memberId, param);
+    public Page<RoastingRecord> findAllByFilter(final long memberId, final RecordSearchRequestParam param) {
+        return recordRepository.findAllByFilter(memberId, param);
     }
 
     @Override

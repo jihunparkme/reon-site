@@ -5,5 +5,5 @@ import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import org.springframework.data.domain.Page;
 
 public interface RoastingRecordRepositoryCustom {
-    Page<RoastingRecord> findByFilter(Long memberId, RecordSearchRequestParam pageable);
+    Page<RoastingRecord> findAllByFilter(Long memberId, RecordSearchRequestParam pageable);
 }

@@ -34,7 +34,7 @@ public class RoastingRecordPageController {
                        @ModelAttribute RecordSearchRequestParam param,
                        Model model) {
         final long memberId = session.getId();
-        final var roastingRecordListPage = roastingRecordFindService.findByFilter(memberId, param);
+        final var roastingRecordListPage = roastingRecordFindService.findAllByFilter(memberId, param);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", param.getPage());

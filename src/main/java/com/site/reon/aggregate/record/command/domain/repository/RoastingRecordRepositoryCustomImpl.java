@@ -25,7 +25,7 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<RoastingRecord> findByFilter(final Long memberId, final RecordSearchRequestParam param) {
+    public Page<RoastingRecord> findAllByFilter(final Long memberId, final RecordSearchRequestParam param) {
         final var pageable = PageRequest.of(param.getPage(), param.getSize(), Sort.by("id").descending());
 
         final List<RoastingRecord> content = getContent(memberId, param, pageable);
