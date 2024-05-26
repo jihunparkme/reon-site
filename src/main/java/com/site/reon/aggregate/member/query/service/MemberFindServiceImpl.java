@@ -44,4 +44,9 @@ public class MemberFindServiceImpl implements MemberFindService {
         final var pageable = PageRequest.of(param.getPage(), param.getSize(), Sort.by("id").descending());
         return memberRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<Member> findAllByFilter(final MemberSearchRequestParam param) {
+        return memberRepository.findAllByFilter(param);
+    }
 }

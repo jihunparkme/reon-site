@@ -16,4 +16,6 @@ public interface MemberFindService {
     MemberDto getMember(long id);
 
     Page<Member> findAll(MemberSearchRequestParam param);
+
+    Page<Member> findAllByFilter(MemberSearchRequestParam param);
 }
