@@ -5,5 +5,5 @@ import com.site.reon.aggregate.member.query.dto.MemberSearchRequestParam;
 import org.springframework.data.domain.Page;
 
 public interface MemberRepositoryCustom {
-    Page<Member> findByFilter(MemberSearchRequestParam param);
+    Page<Member> findAllByFilter(MemberSearchRequestParam param);
 }
