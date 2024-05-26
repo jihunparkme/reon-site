@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.member.query.service;
 
 import com.site.reon.aggregate.member.command.domain.Member;
-import com.site.reon.aggregate.member.controller.dto.MemberSearchRequestParam;
+import com.site.reon.aggregate.member.query.dto.MemberSearchRequestParam;
 import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import org.springframework.data.domain.Page;
