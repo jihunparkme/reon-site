@@ -1,7 +1,7 @@
 package com.site.reon.aggregate.record.command.domain.repository;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
-import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.global.common.config.QueryDslConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ class RoastingRecordRepositoryCustomImplTest {
 
     @Test
     void when_findByFilter_then_return_all_record() throws Exception {
-        final SearchRequestParam param = new SearchRequestParam(0, 10, "", "", "");
+        final RecordSearchRequestParam param = new RecordSearchRequestParam(0, 10, "", "", "");
 
         final Page<RoastingRecord> result = roastingRecordRepository.findByFilter(2L, param);
 
@@ -32,7 +32,7 @@ class RoastingRecordRepositoryCustomImplTest {
 
     @Test
     void when_findByFilter_then_return_title_filtered_record() throws Exception {
-        final SearchRequestParam param = new SearchRequestParam(0, 10, "10", "", "");
+        final RecordSearchRequestParam param = new RecordSearchRequestParam(0, 10, "10", "", "");
 
         final Page<RoastingRecord> result = roastingRecordRepository.findByFilter(2L, param);
 
@@ -42,7 +42,7 @@ class RoastingRecordRepositoryCustomImplTest {
 
     @Test
     void when_findByFilter_then_return_create_date_filtered_record() throws Exception {
-        final SearchRequestParam param = new SearchRequestParam(0, 10, "", "2023-10-01", "2023-10-05");
+        final RecordSearchRequestParam param = new RecordSearchRequestParam(0, 10, "", "2023-10-01", "2023-10-05");
 
         final Page<RoastingRecord> result = roastingRecordRepository.findByFilter(2L, param);
 

@@ -4,7 +4,7 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
 import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     }
 
     @Override
-    public Page<RoastingRecord> findByFilter(final long memberId, final SearchRequestParam param) {
+    public Page<RoastingRecord> findByFilter(final long memberId, final RecordSearchRequestParam param) {
         return recordRepository.findByFilter(memberId, param);
     }
 

@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.site.reon.aggregate.record.command.domain.QRoastingRecord;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
-import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.util.RecordUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<RoastingRecord> findByFilter(final Long memberId, final SearchRequestParam param) {
+    public Page<RoastingRecord> findByFilter(final Long memberId, final RecordSearchRequestParam param) {
         final var pageable = PageRequest.of(param.getPage(), param.getSize(), Sort.by("id").descending());
 
         final List<RoastingRecord> content = getContent(memberId, param, pageable);
@@ -35,7 +35,7 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
     }
 
     private List<RoastingRecord> getContent(
-            final Long memberId, final SearchRequestParam param, final PageRequest pageable) {
+            final Long memberId, final RecordSearchRequestParam param, final PageRequest pageable) {
 
         QRoastingRecord record = QRoastingRecord.roastingRecord;
         final JPAQuery<RoastingRecord> query = jpaQueryFactory.selectFrom(record)
@@ -60,7 +60,7 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
                 .fetch();
     }
 
-    private long getCount(final Long memberId, final SearchRequestParam param) {
+    private long getCount(final Long memberId, final RecordSearchRequestParam param) {
         QRoastingRecord record = QRoastingRecord.roastingRecord;
         final JPAQuery<Long> query = jpaQueryFactory.select(record.count())
                 .from(record)

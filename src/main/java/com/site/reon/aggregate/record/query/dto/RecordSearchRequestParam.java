@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchRequestParam {
+public class RecordSearchRequestParam {
     private int page = 0;
     private int size = 10;
 
