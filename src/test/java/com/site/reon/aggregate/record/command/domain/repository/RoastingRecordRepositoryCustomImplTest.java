@@ -49,4 +49,14 @@ class RoastingRecordRepositoryCustomImplTest {
         assertEquals(5, result.getTotalElements());
         assertEquals(1, result.getTotalPages());
     }
+
+    @Test
+    void when_findAllByFilter_then_return_title_and_create_date_filtered_record() throws Exception {
+        final RecordSearchRequestParam param = new RecordSearchRequestParam(0, 10, "0", "2023-10-01", "2023-10-05");
+
+        final Page<RoastingRecord> result = roastingRecordRepository.findAllByFilter(2L, param);
+
+        assertEquals(4, result.getTotalElements());
+        assertEquals(1, result.getTotalPages());
+    }
 }

@@ -41,17 +41,7 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
         final JPAQuery<RoastingRecord> query = jpaQueryFactory.selectFrom(record)
                 .where(record.roastingInfo.memberId.eq(memberId));
 
-        if (StringUtils.isNotBlank(param.getTitle())) {
-            query.where(record.roastingInfo.title.contains(param.getTitle()));
-        }
-
-        final String startDate = param.getStartDate();
-        final String endDate = param.getEndDate();
-        if (StringUtils.isNotBlank(startDate) && StringUtils.isNotBlank(endDate)) {
-            LocalDate start = LocalDate.parse(startDate, RecordUtils.DATE_FORMATTER);
-            LocalDate end = LocalDate.parse(endDate, RecordUtils.DATE_FORMATTER);
-            query.where(record.createdDt.between(start.atStartOfDay(), end.atTime(LocalTime.of(23, 59, 59))));
-        }
+        applyWhereClause(param, query, record);
 
         return query
                 .orderBy(record.id.desc())
@@ -66,6 +56,12 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
                 .from(record)
                 .where(record.roastingInfo.memberId.eq(memberId));
 
+        applyWhereClause(param, query, record);
+
+        return query.fetchOne();
+    }
+
+    private <T> void applyWhereClause(final RecordSearchRequestParam param, final JPAQuery<T> query, final QRoastingRecord record) {
         if (StringUtils.isNotBlank(param.getTitle())) {
             query.where(record.roastingInfo.title.contains(param.getTitle()));
         }
@@ -77,7 +73,5 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
             LocalDate end = LocalDate.parse(endDate, RecordUtils.DATE_FORMATTER);
             query.where(record.createdDt.between(start.atStartOfDay(), end.atTime(LocalTime.of(23, 59, 59))));
         }
-
-        return query.fetchOne();
     }
 }
