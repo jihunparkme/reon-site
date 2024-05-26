@@ -42,10 +42,10 @@
                         <i class="bi bi-person-circle"></i>
                         <h4><a th:href="@{/admin/members/{id}(id=${member.id})}">[(${member.personalInfo.firstName})] [(${member.personalInfo.lastName})]</a></h4>
                         <p>
-                            Email. [(${member.email})]<br/>
-                            Product Code. [(${member.productInfo.prdCode})]<br/>
-                            Serial No. [(${member.productInfo.roasterSn})]<br/>
-                            Activated. [(${member.activated})]
+                            <strong>Email.</strong> [(${member.email})]<br/>
+                            <strong>Product Code.</strong> [(${member.productInfo.prdCode})]<br/>
+                            <strong>Serial No.</strong> [(${member.productInfo.roasterSn})]<br/>
+                            <strong>Activated.</strong> [(${member.activated})]
                         </p>
                     </div>
                 </div>
