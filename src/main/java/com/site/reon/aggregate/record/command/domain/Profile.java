@@ -15,6 +15,9 @@ public class Profile {
     @Column(length = 20000, nullable = false)
     private String fan;
 
+    @Column(length = 20000)
+    private String fan2;
+
     @Column(length = 20000, nullable = false)
     private String heater;
 

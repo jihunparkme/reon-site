@@ -18,6 +18,8 @@ public class RoastingRecordRequest {
     @NotNull(message = "fan is required.")
     private String fan;
 
+    private String fan2;
+
     @NotNull(message = "heater is required.")
     private String heater;
 
@@ -41,6 +43,8 @@ public class RoastingRecordRequest {
 
     @NotNull(message = "memberId is required.")
     private Long memberId;
+
+    private String memo;
 
     @NotNull(message = "crackPoint is required.")
     private String crackPoint; // 크랙 포인트(1차, 2차). [30.3, 50.3]
@@ -101,6 +105,7 @@ public class RoastingRecordRequest {
                         .title(this.title)
                         .roasterSn(this.roasterSn)
                         .memberId(memberId)
+                        .memo(this.memo)
                         .build())
                 .inputInfo(InputInfo.builder()
                         .preheatTemp(this.preheatTemp)
@@ -108,6 +113,7 @@ public class RoastingRecordRequest {
                         .build())
                 .profile(Profile.builder()
                         .fan(this.fan)
+                        .fan2(this.fan2)
                         .heater(this.heater)
                         .ror(this.ror)
                         .temperature(Temperature.builder()
