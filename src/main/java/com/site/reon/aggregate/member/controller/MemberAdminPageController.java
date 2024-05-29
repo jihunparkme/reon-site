@@ -2,7 +2,7 @@ package com.site.reon.aggregate.member.controller;
 
 import com.site.reon.aggregate.member.command.dto.MemberAdminEditRequest;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
-import com.site.reon.aggregate.member.controller.dto.MemberSearchRequestParam;
+import com.site.reon.aggregate.member.query.dto.MemberSearchRequestParam;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class MemberAdminPageController {
     @GetMapping
     public String findMembers(@ModelAttribute MemberSearchRequestParam param,
                               Model model) {
-        final var memberListPage = memberFindService.findAll(param);
+        final var memberListPage = memberFindService.findAllByFilter(param);
 
         model.addAttribute("memberListPage", memberListPage);
         model.addAttribute("page", param.getPage());
