@@ -20,6 +20,7 @@ public class RoastingRecordResponse {
     private Long id;
     private String title;
     private String fan;
+    private String fan2;
     private String heater;
     private String temp1;
     private String temp2;
@@ -28,6 +29,7 @@ public class RoastingRecordResponse {
     private String ror;
     private String roasterSn;
     private long memberId;
+    private String memo;
     private LocalDateTime createdDt;
     private LocalDateTime modifiedDt;
 
@@ -58,9 +60,11 @@ public class RoastingRecordResponse {
                 .title(roastingRecord.getRoastingInfo().getTitle())
                 .roasterSn(roastingRecord.getRoastingInfo().getRoasterSn())
                 .memberId(roastingRecord.getRoastingInfo().getMemberId())
+                .memo(roastingRecord.getRoastingInfo().getMemo())
                 .preheatTemp(roastingRecord.getInputInfo().getPreheatTemp())
                 .inputCapacity(roastingRecord.getInputInfo().getInputCapacity())
                 .fan(roastingRecord.getProfile().getFan())
+                .fan2(roastingRecord.getProfile().getFan2())
                 .heater(roastingRecord.getProfile().getHeater())
                 .ror(roastingRecord.getProfile().getRor())
                 .temp1(roastingRecord.getProfile().getTemperature().getTemp1())
