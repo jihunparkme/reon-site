@@ -61,6 +61,8 @@
 
                             <h2 class="font-white" style="margin-top: 50px;">Profile Details</h2>
 
+                            <p class="font-white">[(${record.memo})]</p>
+
                             <div class="profile-info">
                                 <table class="table table-dark table-hover">
                                     <tbody>
@@ -164,6 +166,7 @@
     const rorArr = stringToFloatTwoDecimals(generateGraphData(record.ror, dataSize));
     const heaterArr = generateGraphData(record.heater, dataSize);
     const fanArr = generateGraphData(record.fan, dataSize);
+    const fan2Arr = generateGraphData(record.fan2, dataSize);
     const noteArr = generateNoteData(record);
     const turningPointTime = record.turningPointTime;
     const firstCrackPointTime = record.creakInfo.firstCrackPointTime;

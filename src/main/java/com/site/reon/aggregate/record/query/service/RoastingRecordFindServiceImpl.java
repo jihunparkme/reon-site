@@ -2,9 +2,10 @@ package com.site.reon.aggregate.record.query.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
+import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
 import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,13 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     }
 
     @Override
-    public Page<RoastingRecord> findByFilter(final long memberId, final SearchRequestParam param) {
-        return recordRepository.findByFilter(memberId, param);
+    public Page<RoastingRecord> findAllByFilter(final long memberId, final RecordSearchRequestParam param) {
+        return recordRepository.findAllByFilter(memberId, param);
+    }
+
+    @Override
+    public Page<RoastingRecord> findAllByAdminFilter(final AdminRecordSearchRequestParam param) {
+        return recordRepository.findAllByAdminFilter(param);
     }
 
     @Override

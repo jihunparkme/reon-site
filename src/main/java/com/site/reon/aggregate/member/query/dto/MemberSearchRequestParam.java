@@ -1,4 +1,4 @@
-package com.site.reon.aggregate.record.query.dto;
+package com.site.reon.aggregate.member.query.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +10,11 @@ import org.apache.commons.lang3.StringUtils;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchRequestParam {
+public class MemberSearchRequestParam {
     private int page = 0;
     private int size = 10;
 
-    private String title = StringUtils.EMPTY;
-    private String startDate = StringUtils.EMPTY;
-    private String endDate = StringUtils.EMPTY;
+    private String name = StringUtils.EMPTY;
+    private String email = StringUtils.EMPTY;
+    private String serialNo = StringUtils.EMPTY;
 }

@@ -19,4 +19,7 @@ public class RoastingInfo {
 
     @Column(nullable = false)
     private long memberId;
+
+    @Column(length = 20000)
+    private String memo;
 }

@@ -1,9 +1,10 @@
 package com.site.reon.aggregate.record.query.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
 import org.springframework.data.domain.Page;
 
@@ -15,7 +16,9 @@ public interface RoastingRecordFindService {
 
     Page<RoastingRecord> findAllOrderByIdDescPaging(int page, int size);
 
-    Page<RoastingRecord> findByFilter(long memberId, SearchRequestParam param);
+    Page<RoastingRecord> findAllByFilter(long memberId, RecordSearchRequestParam param);
+
+    Page<RoastingRecord> findAllByAdminFilter(AdminRecordSearchRequestParam param);
 
     RoastingRecordResponse findRoastingRecordBy(Long id);
 

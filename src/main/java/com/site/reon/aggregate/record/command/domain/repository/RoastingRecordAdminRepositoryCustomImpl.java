@@ -4,7 +4,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.site.reon.aggregate.record.command.domain.QRoastingRecord;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
-import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
 import com.site.reon.aggregate.record.util.RecordUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -20,26 +20,23 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class RoastingRecordRepositoryCustomImpl implements RoastingRecordRepositoryCustom {
+public class RoastingRecordAdminRepositoryCustomImpl implements RoastingRecordAdminRepositoryCustom {
 
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<RoastingRecord> findAllByFilter(final Long memberId, final RecordSearchRequestParam param) {
+    public Page<RoastingRecord> findAllByAdminFilter(final AdminRecordSearchRequestParam param) {
         final var pageable = PageRequest.of(param.getPage(), param.getSize(), Sort.by("id").descending());
 
-        final List<RoastingRecord> content = getContent(memberId, param, pageable);
-        final long count = getCount(memberId, param);
+        final List<RoastingRecord> content = getContent(param, pageable);
+        final long count = getCount(param);
 
         return new PageImpl<>(content, pageable, count);
     }
 
-    private List<RoastingRecord> getContent(
-            final Long memberId, final RecordSearchRequestParam param, final PageRequest pageable) {
-
+    private List<RoastingRecord> getContent(final AdminRecordSearchRequestParam param, final PageRequest pageable) {
         QRoastingRecord record = QRoastingRecord.roastingRecord;
-        final JPAQuery<RoastingRecord> query = jpaQueryFactory.selectFrom(record)
-                .where(record.roastingInfo.memberId.eq(memberId));
+        final JPAQuery<RoastingRecord> query = jpaQueryFactory.selectFrom(record);
 
         applyWhereClause(param, query, record);
 
@@ -50,21 +47,29 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
                 .fetch();
     }
 
-    private long getCount(final Long memberId, final RecordSearchRequestParam param) {
+    private long getCount(final AdminRecordSearchRequestParam param) {
         QRoastingRecord record = QRoastingRecord.roastingRecord;
         final JPAQuery<Long> query = jpaQueryFactory.select(record.count())
-                .from(record)
-                .where(record.roastingInfo.memberId.eq(memberId));
+                .from(record);
 
         applyWhereClause(param, query, record);
 
         return query.fetchOne();
     }
 
-    private <T> void applyWhereClause(final RecordSearchRequestParam param, final JPAQuery<T> query, final QRoastingRecord record) {
+    private <T> void applyWhereClause(final AdminRecordSearchRequestParam param, final JPAQuery<T> query, final QRoastingRecord record) {
         if (StringUtils.isNotBlank(param.getTitle())) {
             query.where(record.roastingInfo.title.contains(param.getTitle()));
         }
+
+        if (StringUtils.isNotBlank(param.getSerialNo())) {
+            query.where(record.roastingInfo.roasterSn.eq(param.getSerialNo()));
+        }
+
+        // TODO: join member and where email
+//        if (StringUtils.isNotBlank(param.getEmail())) {
+//
+//        }
 
         final String startDate = param.getStartDate();
         final String endDate = param.getEndDate();

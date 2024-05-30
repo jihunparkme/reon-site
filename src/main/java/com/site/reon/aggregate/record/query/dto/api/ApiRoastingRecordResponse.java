@@ -12,6 +12,7 @@ public record ApiRoastingRecordResponse(
         long id,
         String title,
         String fan,
+        String fan2,
         String heater,
         String temp1,
         String temp2,
@@ -20,6 +21,7 @@ public record ApiRoastingRecordResponse(
         String ror,
         String roasterSn,
         long memberId,
+        String memo,
         String crackPoint,
         String crackPointTime,
         String turningPointTemp,
@@ -53,9 +55,11 @@ public record ApiRoastingRecordResponse(
                 .title(record.getRoastingInfo().getTitle())
                 .roasterSn(record.getRoastingInfo().getRoasterSn())
                 .memberId(record.getRoastingInfo().getMemberId())
+                .memo(record.getRoastingInfo().getMemo())
                 .preheatTemp(record.getInputInfo().getPreheatTemp())
                 .inputCapacity(record.getInputInfo().getInputCapacity())
                 .fan(record.getProfile().getFan())
+                .fan2(record.getProfile().getFan2())
                 .heater(record.getProfile().getHeater())
                 .ror(record.getProfile().getRor())
                 .temp1(record.getProfile().getTemperature().getTemp1())

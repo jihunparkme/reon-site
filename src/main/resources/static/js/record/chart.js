@@ -430,6 +430,7 @@ am5.ready(function() {
                 second: timeArr[i],
                 heater: heaterArr[i],
                 fan: fanArr[i],
+                fan2: fan2Arr[i],
             }
         );
     }
@@ -531,6 +532,7 @@ am5.ready(function() {
 
     createSeriesOfSensor("Heater", "heater");
     createSeriesOfSensor("Fan", "fan");
+    createSeriesOfSensor("Fan2", "fan2");
 
     // Add scrollbar
     chartOfSensor.set("scrollbarX", am5.Scrollbar.new(rootOfSensor, {

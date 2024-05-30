@@ -4,7 +4,7 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.service.RoastingRecordCommandService;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.dto.SearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.service.RoastingRecordFindService;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.security.dto.SessionMember;
@@ -31,10 +31,10 @@ public class RoastingRecordPageController {
     @GetMapping
     @PreAuthorize("isAuthenticated()")
     public String list(@LoginMember final SessionMember session,
-                       @ModelAttribute SearchRequestParam param,
+                       @ModelAttribute RecordSearchRequestParam param,
                        Model model) {
         final long memberId = session.getId();
-        final var roastingRecordListPage = roastingRecordFindService.findByFilter(memberId, param);
+        final var roastingRecordListPage = roastingRecordFindService.findAllByFilter(memberId, param);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", param.getPage());
