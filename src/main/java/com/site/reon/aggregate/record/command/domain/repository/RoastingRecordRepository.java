@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface RoastingRecordRepository extends JpaRepository<RoastingRecord, Long>, RoastingRecordRepositoryCustom {
+public interface RoastingRecordRepository extends JpaRepository<RoastingRecord, Long>, RoastingRecordRepositoryCustom, RoastingRecordAdminRepositoryCustom {
     Page<RoastingRecord> findByRoastingInfoMemberId(Long memberId, Pageable pageable);
 
     Optional<RoastingRecord> findByRoastingInfoRoasterSn(@Param(value = "roasterSn") String roasterSn);
