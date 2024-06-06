@@ -2,7 +2,7 @@ package com.site.reon.aggregate.catalog.command.service;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.*;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
-import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
+import com.site.reon.aggregate.catalog.command.domain.product.repository.ProductRepository;
 import com.site.reon.aggregate.common.model.ProductNo;
 import com.site.reon.aggregate.common.model.SerialNo;
 import com.site.reon.global.security.exception.NotFoundProductException;

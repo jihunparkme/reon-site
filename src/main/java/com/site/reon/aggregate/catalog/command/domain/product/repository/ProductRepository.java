@@ -1,5 +1,6 @@
-package com.site.reon.aggregate.catalog.command.domain.product;
+package com.site.reon.aggregate.catalog.command.domain.product.repository;
 
+import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.common.model.ProductNo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

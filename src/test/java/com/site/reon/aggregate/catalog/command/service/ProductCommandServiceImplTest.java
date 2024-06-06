@@ -2,7 +2,7 @@ package com.site.reon.aggregate.catalog.command.service;
 
 import com.site.reon.aggregate.catalog.command.domain.dto.SaveProductRequest;
 import com.site.reon.aggregate.catalog.command.domain.product.Color;
-import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
+import com.site.reon.aggregate.catalog.command.domain.product.repository.ProductRepository;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import com.site.reon.aggregate.common.model.SerialNo;
 import org.junit.jupiter.api.Assertions;
