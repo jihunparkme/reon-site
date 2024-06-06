@@ -67,7 +67,7 @@ public class RoastingRecordAdminRepositoryCustomImpl implements RoastingRecordAd
             final QRoastingRecord record, final QMember member) {
 
         if (StringUtils.isNotEmpty(param.getTitle())) {
-            query.where(record.roastingInfo.title.contains(param.getTitle()));
+            query.where(record.roastingInfo.title.containsIgnoreCase(param.getTitle()));
         }
 
         if (StringUtils.isNotEmpty(param.getSerialNo())) {

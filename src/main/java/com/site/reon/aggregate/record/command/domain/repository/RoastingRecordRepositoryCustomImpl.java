@@ -63,7 +63,7 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
 
     private <T> void applyWhereClause(final RecordSearchRequestParam param, final JPAQuery<T> query, final QRoastingRecord record) {
         if (StringUtils.isNotEmpty(param.getTitle())) {
-            query.where(record.roastingInfo.title.contains(param.getTitle()));
+            query.where(record.roastingInfo.title.containsIgnoreCase(param.getTitle()));
         }
 
         final String startDate = param.getStartDate();
