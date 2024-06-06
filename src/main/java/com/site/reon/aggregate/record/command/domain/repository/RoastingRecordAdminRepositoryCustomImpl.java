@@ -62,9 +62,10 @@ public class RoastingRecordAdminRepositoryCustomImpl implements RoastingRecordAd
         return query.fetchOne();
     }
 
-    private <T> void applyWhereClause(
-            final AdminRecordSearchRequestParam param, final JPAQuery<T> query,
-            final QRoastingRecord record, final QMember member) {
+    private <T> void applyWhereClause(final AdminRecordSearchRequestParam param,
+                                      final JPAQuery<T> query,
+                                      final QRoastingRecord record,
+                                      final QMember member) {
 
         if (StringUtils.isNotEmpty(param.getTitle())) {
             query.where(record.roastingInfo.title.containsIgnoreCase(param.getTitle()));
