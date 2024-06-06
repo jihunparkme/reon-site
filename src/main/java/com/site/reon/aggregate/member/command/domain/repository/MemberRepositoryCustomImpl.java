@@ -55,16 +55,16 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
     }
 
     private <T> void applyWhereClause(final MemberSearchRequestParam param, final JPAQuery<T> query, final QMember member) {
-        if (StringUtils.isNotBlank(param.getName())) {
+        if (StringUtils.isNotEmpty(param.getName())) {
             query.where(member.personalInfo.firstName.contains(param.getName())
                     .or(member.personalInfo.lastName.contains(param.getName())));
         }
 
-        if (StringUtils.isNotBlank(param.getEmail())) {
+        if (StringUtils.isNotEmpty(param.getEmail())) {
             query.where(member.email.eq(param.getEmail()));
         }
 
-        if (StringUtils.isNotBlank(param.getSerialNo())) {
+        if (StringUtils.isNotEmpty(param.getSerialNo())) {
             query.where(member.productInfo.roasterSn.eq(param.getSerialNo()));
         }
     }

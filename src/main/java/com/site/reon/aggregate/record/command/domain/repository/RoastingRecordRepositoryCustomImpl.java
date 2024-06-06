@@ -62,13 +62,13 @@ public class RoastingRecordRepositoryCustomImpl implements RoastingRecordReposit
     }
 
     private <T> void applyWhereClause(final RecordSearchRequestParam param, final JPAQuery<T> query, final QRoastingRecord record) {
-        if (StringUtils.isNotBlank(param.getTitle())) {
+        if (StringUtils.isNotEmpty(param.getTitle())) {
             query.where(record.roastingInfo.title.contains(param.getTitle()));
         }
 
         final String startDate = param.getStartDate();
         final String endDate = param.getEndDate();
-        if (StringUtils.isNotBlank(startDate) && StringUtils.isNotBlank(endDate)) {
+        if (StringUtils.isNotEmpty(startDate) && StringUtils.isNotEmpty(endDate)) {
             LocalDate start = LocalDate.parse(startDate, RecordUtils.DATE_FORMATTER);
             LocalDate end = LocalDate.parse(endDate, RecordUtils.DATE_FORMATTER);
             query.where(record.createdDt.between(start.atStartOfDay(), end.atTime(LocalTime.of(23, 59, 59))));
