@@ -62,18 +62,20 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
                                       final QProduct product) {
 
         if (StringUtils.isNotEmpty(param.getModelName())) {
-            query.where(product.productInfo.name.containsIgnoreCase(param.getModelName()));
+            query.where(product.productInfo.name.equalsIgnoreCase(param.getModelName()));
         }
 
         if (StringUtils.isNotEmpty(param.getProductNo())) {
-            query.where(product.productInfo.productNo.no.containsIgnoreCase(param.getProductNo()));
+            query.where(product.productInfo.productNo.no.equalsIgnoreCase(param.getProductNo()));
         }
 
         if (StringUtils.isNotEmpty(param.getSerialNo())) {
-            query.where(product.productInfo.serialNo.no.containsIgnoreCase(param.getSerialNo()));
+            query.where(product.productInfo.serialNo.no.equalsIgnoreCase(param.getSerialNo()));
         }
 
-        query.where(product.productInfo.serialNo.activated.eq(param.isActivated()));
+        if (param.getActivated() != null) {
+            query.where(product.productInfo.serialNo.activated.eq(param.getActivated()));
+        }
 
         final String startDate = param.getStartDate();
         final String endDate = param.getEndDate();

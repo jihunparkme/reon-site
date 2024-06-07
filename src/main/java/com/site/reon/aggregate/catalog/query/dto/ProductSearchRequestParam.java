@@ -15,7 +15,7 @@ public class ProductSearchRequestParam {
     private String modelName = StringUtils.EMPTY;
     private String productNo = StringUtils.EMPTY;
     private String serialNo = StringUtils.EMPTY;
-    private boolean activated = true;
+    private Boolean activated = null;
     private String startDate = StringUtils.EMPTY;
     private String endDate = StringUtils.EMPTY;
 }
