@@ -15,12 +15,72 @@
         </div>
     </section>
 
-    <form name="list-form" id="list-form" th:action="@{/admin/products}" method="get">
-        <input type="hidden" id="page" name="page" value="0"/>
-    </form>
-
     <section id="products" class="products">
         <div class="container">
+            <div class="row">
+                <form name="list-form" id="list-form" th:action="@{/admin/products}" method="get">
+                    <input type="hidden" id="page" name="page" value="0"/>
+
+                    <div class="search-bar">
+                        <h4>Search</h4>
+                        <hr/>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex" style="margin-left: 1.1em;">
+                                <label for="modelName">Model Name: </label>
+                                <input type="text" id="modelName" name="modelName" th:value="${param.modelName}" class="search-text form-control width-250" >
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex" style="margin-left: 1.6em;">
+                                <label for="productNo">Product No: </label>
+                                <input type="text" id="productNo" name="productNo" th:value="${param.productNo}" class="search-text form-control width-250" >
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex" style="margin-left: 5.3em;">
+                                <label for="serialNo">S/N: </label>
+                                <input type="text" id="serialNo" name="serialNo" th:value="${param.serialNo}" class="search-text form-control width-250" >
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex" style="margin-left: 2.6em;">
+                                <label for="activated">Activated: </label>
+                                <select id="activated" name="activated" th:value="${param.activated}" class="search-text form-control width-250">
+                                    <option value=""></option>
+                                    <option th:value="true" th:text="TRUE"></option>
+                                    <option th:value="false" th:text="FALSE"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex mb-3" style="margin-left: 0.3em;">
+                                <label for="startDate">Manufactured: </label>
+                                <input type="date" id="startDate" name="startDate" th:value="${param.startDate}" class="search-text form-control width-200">
+                                <span>~</span>
+                                <input type="date" id="endDate" name="endDate" th:value="${param.endDate}" class="search-text form-control width-200">
+                            </div>
+
+                            <div style="float: right;">
+                                <div style="display: inline-block">
+                                    <button type="button" class="btn btn-danger" th:onclick="'resetFilter()'"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+                                </div>
+                                <div style="display: inline-block">
+                                    <button type="button" class="btn btn-warning" th:onclick="'search()'"><i class="bi bi-search"></i> Search</button>
+                                </div>
+                                <button type="submit" style="display: none;">Submit</button>
+                            </div>
+                        </div>
+
+                        <p class="mb-5"></p>
+                    </div>
+                </form>
+            </div>
+
             <div class="row">
                 <div class="total">
                     <h5 style="float: left">Total : [(${productListPage.totalElements})]</h5>
@@ -44,7 +104,7 @@
                         <i class="bi bi-menu-button-wide"></i>
                         <h4><a th:href="@{/admin/products/{id}(id=${product.id})}">[(${product.productInfo.productNo.no})]</a></h4>
                         <p>
-                            Name: [(${product.productInfo.name})]<br/>
+                            Model: [(${product.productInfo.name})]<br/>
                             S/N : [(${product.productInfo.serialNo.no})]<br/>
                             [(${product.productInfo.color})] / [(${product.productInfo.ratedVoltage})]<br/>
                             [(${#temporals.format(product.productInfo.manufacturedDt, 'yyyy-MM-dd HH:mm')})]

@@ -56,8 +56,8 @@
                         </div>
 
                         <div class="entry-content">
-                            <div id="temperatureChart"></div>
-                            <div id="sensorChart"></div>
+                            <div id="temperatureChart" style="height: 650px;"></div>
+                            <div id="sensorChart" style="height: 350px;"></div>
 
                             <h2 class="font-white" style="margin-top: 50px;">Profile Details</h2>
 
@@ -120,8 +120,8 @@
 
                         <div class="entry-button">
                             <div>
-                                <button type="button" th:onclick="'remove(' + ${record.id} + ', ' + ${record.memberId} + ');'" class="btn btn-danger" style="margin-right: 5px;">DELETE</button>
-                                <button th:onclick="|location.href='@{/record}'|" class="btn btn-light">LIST</button>
+                                <button type="button" th:onclick="'remove(' + ${record.id} + ', ' + ${record.memberId} + ');'" class="btn btn-danger" style="margin-right: 5px;"><i class="bi bi-trash3"></i> DELETE</button>
+                                <button th:onclick="|location.href='@{/record}'|" class="btn btn-light"><i class="bi bi-list"></i> LIST</button>
                             </div>
                         </div>
                     </article>

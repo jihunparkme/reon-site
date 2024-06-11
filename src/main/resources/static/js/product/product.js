@@ -7,6 +7,20 @@ function searchProductList(page) {
     $("#list-form").submit();
 }
 
+function search() {
+    $("#page").val(0);
+    $("#list-form").submit();
+}
+
+function resetFilter() {
+    document.getElementById('modelName').value = null;
+    document.getElementById('productNo').value = null;
+    document.getElementById('serialNo').value = null;
+    document.getElementById('activated').value = null;
+    document.getElementById('startDate').value = null;
+    document.getElementById('endDate').value = null;
+}
+
 /**
  * Create
  */

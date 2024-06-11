@@ -1,11 +1,12 @@
 package com.site.reon.aggregate.catalog.query.service;
 
 import com.site.reon.aggregate.catalog.command.domain.category.Category;
-import com.site.reon.aggregate.catalog.command.domain.category.CategoryRepository;
+import com.site.reon.aggregate.catalog.command.domain.category.repository.CategoryRepository;
 import com.site.reon.aggregate.catalog.command.domain.product.Product;
-import com.site.reon.aggregate.catalog.command.domain.product.ProductRepository;
+import com.site.reon.aggregate.catalog.command.domain.product.repository.ProductRepository;
 import com.site.reon.aggregate.catalog.query.dto.CategoryResponse;
 import com.site.reon.aggregate.catalog.query.dto.ProductResponse;
+import com.site.reon.aggregate.catalog.query.dto.ProductSearchRequestParam;
 import com.site.reon.global.security.exception.NotFoundProductException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,11 @@ public class ProductFindServiceImpl implements ProductFindService {
     public Page<Product> findAllOrderByIdDescPaging(final int page, final int size) {
         final var pageable = PageRequest.of(page, size, Sort.by("id").descending());
         return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByFilter(final ProductSearchRequestParam param) {
+        return productRepository.findAllByFilter(param);
     }
 
     @Override

@@ -1,5 +1,6 @@
-package com.site.reon.aggregate.catalog.command.domain.product;
+package com.site.reon.aggregate.catalog.command.domain.product.repository;
 
+import com.site.reon.aggregate.catalog.command.domain.product.Product;
 import com.site.reon.aggregate.common.model.ProductNo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, ProductRepositoryCustom {
+
     @Query("SELECT count(product) " +
             "FROM Product product " +
             "WHERE product.productInfo.productNo = :productNo " +

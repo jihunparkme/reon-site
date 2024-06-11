@@ -25,9 +25,7 @@ public class RoastingRecordAdminPageController {
     @GetMapping
     public String list(@ModelAttribute AdminRecordSearchRequestParam param,
                        Model model) {
-        final var roastingRecordListPage = recordFindService.findAllOrderByIdDescPaging(param.getPage(), param.getSize());
-        // TODO: call findAllByAdminFilter
-//        final var roastingRecordListPage = recordFindService.findAllByAdminFilter(param);
+        final var roastingRecordListPage = recordFindService.findAllByAdminFilter(param);
 
         model.addAttribute("roastingRecordListPage", roastingRecordListPage);
         model.addAttribute("page", param.getPage());

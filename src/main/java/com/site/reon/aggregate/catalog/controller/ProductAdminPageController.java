@@ -5,6 +5,7 @@ import com.site.reon.aggregate.catalog.command.domain.dto.UpdateProductRequest;
 import com.site.reon.aggregate.catalog.command.domain.product.Color;
 import com.site.reon.aggregate.catalog.command.domain.product.RatedVoltage;
 import com.site.reon.aggregate.catalog.command.service.ProductCommandService;
+import com.site.reon.aggregate.catalog.query.dto.ProductSearchRequestParam;
 import com.site.reon.aggregate.catalog.query.service.ProductFindService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +28,12 @@ public class ProductAdminPageController {
     private final ProductCommandService productCommandService;
 
     @GetMapping
-    public String findProducts(
-            @RequestParam(value = "page", required = false, defaultValue = "0") final int page,
-            @RequestParam(value = "size", required = false, defaultValue = "10") final int size,
-            Model model) {
-        // TODO: 카테고리, 제품명, 상품코드, 시리얼넘버, 생산날짜, 색상, 전압 으로 검색
-        final var productListPage = productFindService.findAllOrderByIdDescPaging(page, size);
+    public String findProducts(@ModelAttribute ProductSearchRequestParam param,
+                               Model model) {
+        final var productListPage = productFindService.findAllByFilter(param);
 
         model.addAttribute("productListPage", productListPage);
-        model.addAttribute("page", page);
+        model.addAttribute("page", param.getPage());
         return "admin/products/product-list";
     }
 
@@ -50,10 +48,10 @@ public class ProductAdminPageController {
 
     @PostMapping("/{id}/edit")
     public String updateProduct(@PathVariable(name = "id") final Long id,
-                              @Valid @ModelAttribute("product") final UpdateProductRequest request,
-                              final BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes,
-                              Model model) {
+                                @Valid @ModelAttribute("product") final UpdateProductRequest request,
+                                final BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                Model model) {
         if (bindingResult.hasErrors()) {
             addSelectAttribute(model);
             return "admin/products/product-view";

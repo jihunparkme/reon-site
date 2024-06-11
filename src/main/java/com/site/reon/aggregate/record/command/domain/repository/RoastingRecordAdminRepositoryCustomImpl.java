@@ -2,6 +2,7 @@ package com.site.reon.aggregate.record.command.domain.repository;
 
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.site.reon.aggregate.member.command.domain.QMember;
 import com.site.reon.aggregate.record.command.domain.QRoastingRecord;
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
@@ -36,9 +37,11 @@ public class RoastingRecordAdminRepositoryCustomImpl implements RoastingRecordAd
 
     private List<RoastingRecord> getContent(final AdminRecordSearchRequestParam param, final PageRequest pageable) {
         QRoastingRecord record = QRoastingRecord.roastingRecord;
-        final JPAQuery<RoastingRecord> query = jpaQueryFactory.selectFrom(record);
+        QMember member = QMember.member;
+        final JPAQuery<RoastingRecord> query = jpaQueryFactory.selectFrom(record)
+                .join(member).on(record.roastingInfo.memberId.eq(member.id));
 
-        applyWhereClause(param, query, record);
+        applyWhereClause(param, query, record, member);
 
         return query
                 .orderBy(record.id.desc())
@@ -49,31 +52,36 @@ public class RoastingRecordAdminRepositoryCustomImpl implements RoastingRecordAd
 
     private long getCount(final AdminRecordSearchRequestParam param) {
         QRoastingRecord record = QRoastingRecord.roastingRecord;
+        QMember member = QMember.member;
         final JPAQuery<Long> query = jpaQueryFactory.select(record.count())
-                .from(record);
+                .from(record)
+                .join(member).on(record.roastingInfo.memberId.eq(member.id));;
 
-        applyWhereClause(param, query, record);
+        applyWhereClause(param, query, record, member);
 
         return query.fetchOne();
     }
 
-    private <T> void applyWhereClause(final AdminRecordSearchRequestParam param, final JPAQuery<T> query, final QRoastingRecord record) {
-        if (StringUtils.isNotBlank(param.getTitle())) {
-            query.where(record.roastingInfo.title.contains(param.getTitle()));
+    private <T> void applyWhereClause(final AdminRecordSearchRequestParam param,
+                                      final JPAQuery<T> query,
+                                      final QRoastingRecord record,
+                                      final QMember member) {
+
+        if (StringUtils.isNotEmpty(param.getTitle())) {
+            query.where(record.roastingInfo.title.containsIgnoreCase(param.getTitle()));
         }
 
-        if (StringUtils.isNotBlank(param.getSerialNo())) {
+        if (StringUtils.isNotEmpty(param.getSerialNo())) {
             query.where(record.roastingInfo.roasterSn.eq(param.getSerialNo()));
         }
 
-        // TODO: join member and where email
-//        if (StringUtils.isNotBlank(param.getEmail())) {
-//
-//        }
+        if (StringUtils.isNotEmpty(param.getEmail())) {
+            query.where(member.email.eq(param.getEmail()));
+        }
 
         final String startDate = param.getStartDate();
         final String endDate = param.getEndDate();
-        if (StringUtils.isNotBlank(startDate) && StringUtils.isNotBlank(endDate)) {
+        if (StringUtils.isNotEmpty(startDate) && StringUtils.isNotEmpty(endDate)) {
             LocalDate start = LocalDate.parse(startDate, RecordUtils.DATE_FORMATTER);
             LocalDate end = LocalDate.parse(endDate, RecordUtils.DATE_FORMATTER);
             query.where(record.createdDt.between(start.atStartOfDay(), end.atTime(LocalTime.of(23, 59, 59))));
