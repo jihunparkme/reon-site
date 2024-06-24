@@ -2,8 +2,8 @@ package com.site.reon.aggregate.member.query.service;
 
 import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
+import com.site.reon.aggregate.member.query.dto.MemberResponse;
 import com.site.reon.aggregate.member.query.dto.MemberSearchRequestParam;
-import com.site.reon.aggregate.member.query.dto.MemberDto;
 import com.site.reon.global.security.oauth2.dto.OAuth2Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,8 +34,8 @@ public class MemberFindServiceImpl implements MemberFindService {
     }
 
     @Override
-    public MemberDto getMember(final long id) {
-        return MemberDto.from(memberRepository.findById(id)
+    public MemberResponse getMember(final long id) {
+        return MemberResponse.from(memberRepository.findById(id)
                 .orElse(null));
     }
 

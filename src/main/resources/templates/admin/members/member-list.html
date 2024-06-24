@@ -86,7 +86,8 @@
                             <strong>Email.</strong> [(${member.email})]<br/>
                             <strong>Product Code.</strong> [(${member.productInfo.prdCode})]<br/>
                             <strong>Serial No.</strong> [(${member.productInfo.roasterSn})]<br/>
-                            <strong>Activated.</strong> [(${member.activated})]
+                            <strong>Activated.</strong> [(${member.activated})]<br/>
+                            <strong>Created.</strong> [(${#temporals.format(member.createdDt, 'yyyy-MM-dd HH:mm')})]
                         </p>
                     </div>
                 </div>

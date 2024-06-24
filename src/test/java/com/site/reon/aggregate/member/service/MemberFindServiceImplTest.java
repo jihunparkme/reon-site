@@ -2,7 +2,7 @@ package com.site.reon.aggregate.member.service;
 
 import com.site.reon.aggregate.member.command.domain.*;
 import com.site.reon.aggregate.member.command.domain.repository.MemberRepository;
-import com.site.reon.aggregate.member.query.dto.MemberDto;
+import com.site.reon.aggregate.member.query.dto.MemberResponse;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import com.site.reon.aggregate.member.query.service.MemberFindServiceImpl;
 import com.site.reon.global.common.constant.member.Role;
@@ -94,7 +94,7 @@ class MemberFindServiceImplTest {
         given(memberRepository.findById(memberId))
                 .willReturn(Optional.of(mockMember));
 
-        final MemberDto member = memberFindService.getMember(memberId);
+        final MemberResponse member = memberFindService.getMember(memberId);
 
         assertEquals("admin", member.getFirstName());
         assertEquals("park", member.getLastName());
@@ -107,7 +107,7 @@ class MemberFindServiceImplTest {
         given(memberRepository.findById(memberId))
                 .willReturn(Optional.empty());
 
-        final MemberDto member = memberFindService.getMember(memberId);
+        final MemberResponse member = memberFindService.getMember(memberId);
 
         assertEquals(null, member);
     }

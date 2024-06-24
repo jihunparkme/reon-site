@@ -1,11 +1,14 @@
 package com.site.reon.aggregate.member.controller;
 
+import com.site.reon.aggregate.member.command.domain.Member;
 import com.site.reon.aggregate.member.command.dto.MemberAdminEditRequest;
 import com.site.reon.aggregate.member.command.service.MemberCommandService;
+import com.site.reon.aggregate.member.query.dto.MemberResponse;
 import com.site.reon.aggregate.member.query.dto.MemberSearchRequestParam;
 import com.site.reon.aggregate.member.query.service.MemberFindService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +28,7 @@ public class MemberAdminPageController {
     @GetMapping
     public String findMembers(@ModelAttribute MemberSearchRequestParam param,
                               Model model) {
-        final var memberListPage = memberFindService.findAllByFilter(param);
+        final Page<Member> memberListPage = memberFindService.findAllByFilter(param);
 
         model.addAttribute("memberListPage", memberListPage);
         model.addAttribute("page", param.getPage());
@@ -35,7 +38,7 @@ public class MemberAdminPageController {
 
     @GetMapping("/{id}")
     public String findMember(@PathVariable(name = "id") final Long id, Model model) {
-        final var member = memberFindService.getMember(id);
+        final MemberResponse member = memberFindService.getMember(id);
 
         model.addAttribute("member", member);
 
