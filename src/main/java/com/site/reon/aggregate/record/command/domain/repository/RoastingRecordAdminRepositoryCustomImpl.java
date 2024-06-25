@@ -1,10 +1,11 @@
 package com.site.reon.aggregate.record.command.domain.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.site.reon.aggregate.member.command.domain.QMember;
 import com.site.reon.aggregate.record.command.domain.QRoastingRecord;
-import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordsResponse;
 import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
 import com.site.reon.aggregate.record.util.RecordUtils;
 import lombok.RequiredArgsConstructor;
@@ -26,20 +27,31 @@ public class RoastingRecordAdminRepositoryCustomImpl implements RoastingRecordAd
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public Page<RoastingRecord> findAllByAdminFilter(final AdminRecordSearchRequestParam param) {
+    public Page<RoastingRecordsResponse> findAllByAdminFilter(final AdminRecordSearchRequestParam param) {
         final var pageable = PageRequest.of(param.getPage(), param.getSize(), Sort.by("id").descending());
 
-        final List<RoastingRecord> content = getContent(param, pageable);
+        final List<RoastingRecordsResponse> content = getContent(param, pageable);
         final long count = getCount(param);
 
         return new PageImpl<>(content, pageable, count);
     }
 
-    private List<RoastingRecord> getContent(final AdminRecordSearchRequestParam param, final PageRequest pageable) {
+    private List<RoastingRecordsResponse> getContent(final AdminRecordSearchRequestParam param, final PageRequest pageable) {
         QRoastingRecord record = QRoastingRecord.roastingRecord;
         QMember member = QMember.member;
-        final JPAQuery<RoastingRecord> query = jpaQueryFactory.selectFrom(record)
-                .join(member).on(record.roastingInfo.memberId.eq(member.id));
+        final JPAQuery<RoastingRecordsResponse> query = jpaQueryFactory
+                .select(Projections.constructor(RoastingRecordsResponse.class,
+                        record.id,
+                        record.roastingInfo.title,
+                        record.roastingInfo.roasterSn,
+                        record.createdDt,
+                        member.email,
+                        member.personalInfo.firstName,
+                        member.personalInfo.lastName
+                        ))
+                .join(record)
+                .join(member)
+                .on(record.roastingInfo.memberId.eq(member.id));
 
         applyWhereClause(param, query, record, member);
 
@@ -53,9 +65,11 @@ public class RoastingRecordAdminRepositoryCustomImpl implements RoastingRecordAd
     private long getCount(final AdminRecordSearchRequestParam param) {
         QRoastingRecord record = QRoastingRecord.roastingRecord;
         QMember member = QMember.member;
-        final JPAQuery<Long> query = jpaQueryFactory.select(record.count())
+        final JPAQuery<Long> query = jpaQueryFactory
+                .select(record.count())
                 .from(record)
-                .join(member).on(record.roastingInfo.memberId.eq(member.id));;
+                .join(member)
+                .on(record.roastingInfo.memberId.eq(member.id));;
 
         applyWhereClause(param, query, record, member);
 

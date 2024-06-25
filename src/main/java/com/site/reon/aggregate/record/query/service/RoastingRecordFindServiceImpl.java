@@ -2,6 +2,7 @@ package com.site.reon.aggregate.record.query.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordsResponse;
 import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
@@ -45,7 +46,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     }
 
     @Override
-    public Page<RoastingRecord> findAllByAdminFilter(final AdminRecordSearchRequestParam param) {
+    public Page<RoastingRecordsResponse> findAllByAdminFilter(final AdminRecordSearchRequestParam param) {
         return recordRepository.findAllByAdminFilter(param);
     }
 

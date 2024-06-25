@@ -1,6 +1,7 @@
 package com.site.reon.aggregate.record.query.service;
 
 import com.site.reon.aggregate.record.command.domain.RoastingRecord;
+import com.site.reon.aggregate.record.command.dto.RoastingRecordsResponse;
 import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
@@ -18,7 +19,7 @@ public interface RoastingRecordFindService {
 
     Page<RoastingRecord> findAllByFilter(long memberId, RecordSearchRequestParam param);
 
-    Page<RoastingRecord> findAllByAdminFilter(AdminRecordSearchRequestParam param);
+    Page<RoastingRecordsResponse> findAllByAdminFilter(AdminRecordSearchRequestParam param);
 
     RoastingRecordResponse findRoastingRecordBy(Long id);
 
