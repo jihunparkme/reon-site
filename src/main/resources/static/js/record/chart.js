@@ -394,6 +394,7 @@ am5.ready(function() {
     chartOfSensor.get("colors").set("colors", [
         am5.color("#FF7F00"),
         am5.color("#8B00FF"),
+        am5.color("#FFD400"),
     ]);
 
     chartOfSensor.topAxesContainer.children.push(am5.Label.new(rootOfSensor, {
