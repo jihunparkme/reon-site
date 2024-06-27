@@ -17,6 +17,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.site.reon.global.common.constant.Result.SUCCESS;
 
 @Slf4j
@@ -42,7 +44,7 @@ public class RoastingRecordPageController {
         return "record/record-list";
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     @PreAuthorize("isAuthenticated()")
     public String view(@LoginMember final SessionMember session,
                        @PathVariable(name = "id") final Long id,
@@ -51,6 +53,20 @@ public class RoastingRecordPageController {
         final RoastingRecord roastingRecord = roastingRecordFindService.findRoastingRecordBy(id, memberId);
         model.addAttribute("record", RoastingRecordResponse.of(roastingRecord));
         return "record/record-view";
+    }
+
+    @GetMapping("/compare")
+    @PreAuthorize("isAuthenticated()")
+    public String view(@LoginMember final SessionMember session,
+                       @RequestParam(name = "id") final List<Long> id,
+                       Model model) {
+        final Long memberId = session.getId();
+        final List<RoastingRecordResponse> roastingRecordResponses = List.of(
+                RoastingRecordResponse.of(roastingRecordFindService.findRoastingRecordBy(12, memberId)),
+                RoastingRecordResponse.of(roastingRecordFindService.findRoastingRecordBy(13, memberId))
+        );
+        model.addAttribute("records", roastingRecordResponses);
+        return "record/record-compare";
     }
 
     @ResponseBody
