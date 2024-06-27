@@ -17,7 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.site.reon.global.common.constant.Result.SUCCESS;
 
@@ -58,14 +60,14 @@ public class RoastingRecordPageController {
     @GetMapping("/compare")
     @PreAuthorize("isAuthenticated()")
     public String view(@LoginMember final SessionMember session,
-                       @RequestParam(name = "id") final List<Long> id,
+                       @RequestParam(name = "id") final List<Long> ids,
                        Model model) {
         final Long memberId = session.getId();
-        final List<RoastingRecordResponse> roastingRecordResponses = List.of(
-                RoastingRecordResponse.of(roastingRecordFindService.findRoastingRecordBy(12, memberId)),
-                RoastingRecordResponse.of(roastingRecordFindService.findRoastingRecordBy(13, memberId))
-        );
-        model.addAttribute("records", roastingRecordResponses);
+        final List<RoastingRecord> roastingRecords = roastingRecordFindService.findRoastingRecordBy(ids, memberId);
+        final Collection<RoastingRecordResponse> response = roastingRecords.stream()
+                .map(RoastingRecordResponse::of)
+                .collect(Collectors.toList());
+        model.addAttribute("records", response);
         return "record/record-compare";
     }
 

@@ -17,6 +17,9 @@ public interface RoastingRecordRepository extends JpaRepository<RoastingRecord, 
     Optional<RoastingRecord> findByIdAndRoastingInfoMemberId(@Param(value = "id") long id,
                                                              @Param(value = "memberId") long memberId);
 
+    Optional<List<RoastingRecord>> findByIdInAndRoastingInfoMemberId(@Param(value = "id") List<Long> id,
+                                                             @Param(value = "memberId") long memberId);
+
     Optional<List<RoastingRecord>> findByRoastingInfoMemberId(@Param(value = "memberId") long memberId);
 
     Optional<List<RoastingRecord>> findByPilotTrue();

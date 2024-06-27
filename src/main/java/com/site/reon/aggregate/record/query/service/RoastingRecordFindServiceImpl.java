@@ -74,6 +74,16 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     }
 
     @Override
+    public List<RoastingRecord> findRoastingRecordBy(final List<Long> ids, final Long memberId) {
+        final Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByIdInAndRoastingInfoMemberId(ids, memberId);
+        if (roastingRecordsOpt.isEmpty()) {
+            throw new IllegalArgumentException("You do not have permission to access this data.");
+        }
+
+        return roastingRecordsOpt.get();
+    }
+
+    @Override
     public List<RoastingRecordListResponse> findRoastingRecordListBy(final long memberId) {
         final List<RoastingRecord> roastingRecords = findMemberRecords(memberId);
 
