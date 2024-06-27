@@ -263,15 +263,15 @@ am5.ready(function() {
         series.appear(1000);
     }
 
-    createSeries("1_Drum", "temp1");
-    createSeries("1_Heater", "temp2");
-    createSeries("1_Pesudo Bean", "temp3");
-    createSeries("1_ROR", "ror");
+    createSeries("R1_Drum", "temp1");
+    createSeries("R1_Heater", "temp2");
+    createSeries("R1_Pesudo Bean", "temp3");
+    createSeries("R1_ROR", "ror");
 
-    createSeries("2_Drum", "temp1_2");
-    createSeries("2_Heater", "temp2_2");
-    createSeries("2_Pesudo Bean", "temp3_2");
-    createSeries("2_ROR", "ror_2");
+    createSeries("R2_Drum", "temp1_2");
+    createSeries("R2_Heater", "temp2_2");
+    createSeries("R2_Pesudo Bean", "temp3_2");
+    createSeries("R2_ROR", "ror_2");
 
     // Add scrollbar
     chart.set("scrollbarX", am5.Scrollbar.new(root, {
@@ -528,13 +528,13 @@ am5.ready(function() {
         seriesOfSensor.appear(1000);
     }
 
-    createSeriesOfSensor("1_Heater", "heater");
-    createSeriesOfSensor("1_Fan", "fan");
-    createSeriesOfSensor("1_Fan2", "fan2");
+    createSeriesOfSensor("R1_Heater", "heater");
+    createSeriesOfSensor("R1_Fan", "fan");
+    createSeriesOfSensor("R1_Fan2", "fan2");
 
-    createSeriesOfSensor("2_Heater", "heater_2");
-    createSeriesOfSensor("2_Fan", "fan_2");
-    createSeriesOfSensor("2_Fan2", "fan2_2");
+    createSeriesOfSensor("R2_Heater", "heater_2");
+    createSeriesOfSensor("R2_Fan", "fan_2");
+    createSeriesOfSensor("R2_Fan2", "fan2_2");
 
     // Add scrollbar
     chartOfSensor.set("scrollbarX", am5.Scrollbar.new(rootOfSensor, {
