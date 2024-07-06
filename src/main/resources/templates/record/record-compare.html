@@ -26,7 +26,7 @@
                         </h2>
 
                         <div class="entry-meta">
-                            <h5>Record 1:</h5>
+                            <h5>Record 1 (R1):</h5>
                             <ul>
                                 <span style="margin-right: 1em;">[(${records[0].title})]</span>
                                 <li class="d-flex align-items-center">
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="entry-meta">
-                            <h5>Record 2:</h5>
+                            <h5>Record 2 (R2):</h5>
                             <ul>
                                 <span style="margin-right: 1em;">[(${records[1].title})]</span>
                                 <li class="d-flex align-items-center">
@@ -50,6 +50,82 @@
                         <div class="entry-content">
                             <div id="temperatureChart" style="height: 650px;"></div>
                             <div id="sensorChart" style="height: 350px;"></div>
+
+                            <h2 class="font-white" style="margin-top: 50px;">Profile Details</h2>
+
+                            <div class="profile-info">
+                                <table class="table table-dark table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Record 1</th>
+                                        <th scope="col">Record 2</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Roasting Title</th>
+                                            <td>[(${records[0].title})]</td>
+                                            <td>[(${records[1].title})]</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Roasting Date</th>
+                                            <td>[(${#temporals.format(records[0].createdDt, 'yyyy-MM-dd HH:mm')})]</td>
+                                            <td>[(${#temporals.format(records[1].createdDt, 'yyyy-MM-dd HH:mm')})]</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total Roasting Time</th>
+                                            <td id="totalRoastingTime0"></td>
+                                            <td id="totalRoastingTime1"></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Input Capacity</th>
+                                            <td>[(${records[0].inputCapacity})] g</td>
+                                            <td>[(${records[1].inputCapacity})] g</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Preheat</th>
+                                            <td>[(${records[0].preheatTemp})] &#8451;</td>
+                                            <td>[(${records[1].preheatTemp})] &#8451;</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Dispose</th>
+                                            <td>[(${records[0].disposeTime})] / [(${records[0].disposeTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                            <td>[(${records[1].disposeTime})] / [(${records[1].disposeTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Turning Point</th>
+                                            <td>[(${records[0].turningPointTime})] / [(${records[0].turningPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                            <td>[(${records[1].turningPointTime})] / [(${records[1].turningPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">First Crack</th>
+                                            <td>[(${records[0].creakInfo.firstCrackPointTime})] / [(${records[0].creakInfo.firstCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                            <td>[(${records[1].creakInfo.firstCrackPointTime})] / [(${records[1].creakInfo.firstCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Second Crack</th>
+                                            <td>[(${records[0].creakInfo.secondCrackPointTime})] / [(${records[0].creakInfo.secondCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                            <td>[(${records[1].creakInfo.secondCrackPointTime})] / [(${records[1].creakInfo.secondCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Cooling Point</th>
+                                            <td>[(${records[0].coolingPointTime})] / [(${records[0].coolingPointTime})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                            <td>[(${records[1].coolingPointTime})] / [(${records[1].coolingPointTime})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">DTR</th>
+                                            <td>[(${records[0].dtr})] &#37;</td>
+                                            <td>[(${records[1].dtr})] &#37;</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Memo</th>
+                                            <td>[(${records[0].memo})]</td>
+                                            <td>[(${records[1].memo})]</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         <div class="entry-footer">
@@ -105,9 +181,12 @@
             mainIdxSize = dataSize;
         }
 
+        const totalRoastingTime = secondsToMMSS(record.totalRoastingSecondsTime);
+        document.getElementById('totalRoastingTime' + i).textContent = totalRoastingTime;
+
         recordObjs.push({
             dataSize: dataSize,
-            totalRoastingTime: secondsToMMSS(record.totalRoastingSecondsTime),
+            totalRoastingTime: totalRoastingTime,
             timeArr: generateTimeArr(dataSize),
             temp1Arr: generateGraphData(record.temp1, dataSize),
             temp2Arr: generateGraphData(record.temp2, dataSize),
