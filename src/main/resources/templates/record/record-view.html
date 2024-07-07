@@ -61,7 +61,21 @@
 
                             <h2 class="font-white" style="margin-top: 50px;">Profile Details</h2>
 
-                            <p class="font-white">[(${record.memo})]</p><br/>
+                            <p class="font-white" id="memo">[(${record.memo})]</p><br/>
+                            <textarea class="form-control mb-2" style="display: none" id="updated-memo" rows="5">[(${record.memo})]</textarea>
+
+                            <div class="entry-button">
+                                <div>
+                                    <div id="memo-btn-area">
+                                        <button type="button" th:onclick="updateMemoBtn()" class="btn btn-success" style="margin-right: 5px;"><i class="bi bi-pencil-square"></i> UPDATE</button>
+                                    </div>
+                                    <div id="update-memo-btn-area" style="display: none;">
+                                        <button type="button" th:onclick="'updateMeno(' + ${record.id} + ', ' + ${record.memberId} + ');'" class="btn btn-primary" style="margin-right: 5px;"><i class="bi bi-pencil-square"></i> SAVE</button>
+                                        <button type="button" th:onclick="updateMemoCancelBtn()" class="btn btn-secondary" style="margin-right: 5px;"><i class="bi bi-x-square"></i> CANCEL</button>
+                                    </div>
+                                </div>
+                            </div>
+
 
                             <div class="profile-info">
                                 <table class="table table-dark table-hover">

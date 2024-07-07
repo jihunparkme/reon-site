@@ -71,3 +71,25 @@ function remove(recordId, memberId) {
         alert("Failed to delete. Please contact the administrator.\n(" + responseJson.message + ")");
     });
 }
+
+function updateMemoBtn() {
+    document.getElementById('memo').style.display = 'none';
+    document.getElementById('updated-memo').style.display = 'block';
+
+    document.getElementById('memo-btn-area').style.display = 'none';
+    document.getElementById('update-memo-btn-area').style.display = 'block';
+}
+
+function updateMemoCancelBtn() {
+    document.getElementById('memo').style.display = 'block';
+    document.getElementById('updated-memo').style.display = 'none';
+
+    document.getElementById('memo-btn-area').style.display = 'block';
+    document.getElementById('update-memo-btn-area').style.display = 'none';
+}
+
+function updateMeno(recordId, memberId) {
+    console.log(recordId);
+    console.log(memberId);
+    console.log(document.getElementById('updated-memo').value);
+}
