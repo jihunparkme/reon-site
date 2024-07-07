@@ -22,4 +22,8 @@ public class RoastingInfo {
 
     @Column(length = 20000)
     private String memo;
+
+    public void updateMemo(final String memo) {
+        this.memo = memo;
+    }
 }

@@ -89,7 +89,27 @@ function updateMemoCancelBtn() {
 }
 
 function updateMeno(recordId, memberId) {
-    console.log(recordId);
-    console.log(memberId);
-    console.log(document.getElementById('updated-memo').value);
+    const memo = document.getElementById('updated-memo').value;
+    const data = {
+        memberId: memberId,
+        memo: memo
+    };
+
+    $.ajax({
+        type: 'PUT',
+        url: "/records/" + recordId,
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8'
+    }).done(function (response) {
+        if (response.success) {
+            alert("Update successfully.");
+            location.reload();
+            return;
+        }
+        alert("Failed to update. Please try again.");
+    }).fail(function (error) {
+        let responseJson = error.responseJSON;
+        alert("Failed to update. Please contact the administrator.\n(" + responseJson.message + ")");
+    });
 }

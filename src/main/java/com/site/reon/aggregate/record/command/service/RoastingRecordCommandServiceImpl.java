@@ -50,7 +50,7 @@ public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandSe
         final Optional<RoastingRecord> recordOpt = getRoastingRecord(recordId, request.getMemberId());
 
         final RoastingRecord roastingRecord = recordOpt.get();
-        roastingRecord.updateMeno(request.getMemo());
+        roastingRecord.updateMemo(request.getMemo());
         recordRepository.save(roastingRecord);
     }
 

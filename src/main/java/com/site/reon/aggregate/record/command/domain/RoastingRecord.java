@@ -7,8 +7,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Table(name = "roasting_record")
 @Getter
 @Builder
@@ -37,13 +39,7 @@ public class RoastingRecord extends BaseTimeEntity {
         this.pilot = pilot;
     }
 
-    public void updateMeno(final String memo) {
-        final RoastingInfo updatedRoastingInfo = RoastingInfo.builder()
-                .title(this.roastingInfo.getTitle())
-                .roasterSn(this.roastingInfo.getRoasterSn())
-                .memberId(this.roastingInfo.getMemberId())
-                .memo(memo)
-                .build();
-        this.roastingInfo = updatedRoastingInfo;
+    public void updateMemo(final String memo) {
+        this.roastingInfo.updateMemo(memo);
     }
 }
