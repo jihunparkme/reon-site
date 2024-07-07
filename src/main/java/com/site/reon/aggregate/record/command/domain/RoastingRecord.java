@@ -36,4 +36,14 @@ public class RoastingRecord extends BaseTimeEntity {
     public void sharePilot(final Boolean pilot) {
         this.pilot = pilot;
     }
+
+    public void updateMeno(final String memo) {
+        final RoastingInfo updatedRoastingInfo = RoastingInfo.builder()
+                .title(this.roastingInfo.getTitle())
+                .roasterSn(this.roastingInfo.getRoasterSn())
+                .memberId(this.roastingInfo.getMemberId())
+                .memo(memo)
+                .build();
+        this.roastingInfo = updatedRoastingInfo;
+    }
 }
