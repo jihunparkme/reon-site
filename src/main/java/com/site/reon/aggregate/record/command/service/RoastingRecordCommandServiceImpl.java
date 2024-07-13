@@ -5,6 +5,7 @@ import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRe
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.dto.SharePilotRecordRequest;
 import com.site.reon.aggregate.record.command.dto.UpdateRecordRequest;
+import com.site.reon.global.security.exception.DataAccessPermissionException;
 import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,7 +58,7 @@ public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandSe
     private Optional<RoastingRecord> getRoastingRecord(final Long recordId, final Long memberId) {
         final Optional<RoastingRecord> recordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
         if (recordOpt.isEmpty()) {
-            throw new IllegalArgumentException("You do not have permission to access this data.");
+            throw new DataAccessPermissionException("You do not have permission to access this data.");
         }
         return recordOpt;
     }
