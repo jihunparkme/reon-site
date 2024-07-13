@@ -8,6 +8,7 @@ import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
 import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
+import com.site.reon.global.security.exception.DataAccessPermissionException;
 import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -59,7 +60,7 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     public RoastingRecord findRoastingRecordBy(final long recordId, final long memberId) {
         final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
         if (roastingRecordOpt.isEmpty()) {
-            throw new IllegalArgumentException("You do not have permission to access this data.");
+            throw new DataAccessPermissionException("You do not have permission to access this data.");
         }
 
         return roastingRecordOpt.get();
@@ -71,6 +72,16 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
             return findRoastingRecord(recordId);
         }
         return this.findRoastingRecordBy(recordId, memberId);
+    }
+
+    @Override
+    public List<RoastingRecord> findRoastingRecordBy(final List<Long> ids, final Long memberId) {
+        final Optional<List<RoastingRecord>> roastingRecordsOpt = recordRepository.findByIdInAndRoastingInfoMemberId(ids, memberId);
+        if (roastingRecordsOpt.isEmpty()) {
+            throw new DataAccessPermissionException("You do not have permission to access this data.");
+        }
+
+        return roastingRecordsOpt.get();
     }
 
     @Override

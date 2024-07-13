@@ -71,3 +71,45 @@ function remove(recordId, memberId) {
         alert("Failed to delete. Please contact the administrator.\n(" + responseJson.message + ")");
     });
 }
+
+function updateMemoBtn() {
+    document.getElementById('memo').style.display = 'none';
+    document.getElementById('updated-memo').style.display = 'block';
+
+    document.getElementById('memo-btn-area').style.display = 'none';
+    document.getElementById('update-memo-btn-area').style.display = 'block';
+}
+
+function updateMemoCancelBtn() {
+    document.getElementById('memo').style.display = 'block';
+    document.getElementById('updated-memo').style.display = 'none';
+
+    document.getElementById('memo-btn-area').style.display = 'block';
+    document.getElementById('update-memo-btn-area').style.display = 'none';
+}
+
+function updateMeno(recordId, memberId) {
+    const memo = document.getElementById('updated-memo').value;
+    const data = {
+        memberId: memberId,
+        memo: memo
+    };
+
+    $.ajax({
+        type: 'PUT',
+        url: "/records/" + recordId,
+        dataType: 'json',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8'
+    }).done(function (response) {
+        if (response.success) {
+            alert("Update successfully.");
+            location.reload();
+            return;
+        }
+        alert("Failed to update. Please try again.");
+    }).fail(function (error) {
+        let responseJson = error.responseJSON;
+        alert("Failed to update. Please contact the administrator.\n(" + responseJson.message + ")");
+    });
+}

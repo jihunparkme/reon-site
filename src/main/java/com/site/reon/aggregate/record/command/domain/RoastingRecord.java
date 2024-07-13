@@ -7,8 +7,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@DynamicUpdate
 @Table(name = "roasting_record")
 @Getter
 @Builder
@@ -35,5 +37,9 @@ public class RoastingRecord extends BaseTimeEntity {
 
     public void sharePilot(final Boolean pilot) {
         this.pilot = pilot;
+    }
+
+    public void updateMemo(final String memo) {
+        this.roastingInfo.updateMemo(memo);
     }
 }

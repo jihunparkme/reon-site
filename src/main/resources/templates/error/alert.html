@@ -1,0 +1,13 @@
+<html>
+<title></title>
+<head>
+</head>
+<body>
+    <input type="hidden" name="msg" id="msg" th:value="${msg}">
+</body>
+<script type="text/javascript">
+    const msg = document.getElementById('msg').value;
+    alert(msg);
+    window.history.back();
+</script>
+</html>

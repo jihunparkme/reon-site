@@ -55,6 +55,7 @@ dependencies {
 
     // tool
     compileOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
     // lombok
     compileOnly 'org.projectlombok:lombok'

@@ -4,6 +4,8 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.dto.SharePilotRecordRequest;
+import com.site.reon.aggregate.record.command.dto.UpdateRecordRequest;
+import com.site.reon.global.security.exception.DataAccessPermissionException;
 import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,12 +40,26 @@ public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandSe
 
     @Override
     public void deleteRecord(final Long recordId, final Long memberId) {
-        final Optional<RoastingRecord> recordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
-        if (recordOpt.isEmpty()) {
-            throw new IllegalArgumentException("You do not have permission to access this data.");
-        }
+        final Optional<RoastingRecord> recordOpt = getRoastingRecord(recordId, memberId);
 
         final RoastingRecord roastingRecord = recordOpt.get();
         recordRepository.delete(roastingRecord);
+    }
+
+    @Override
+    public void updateMemo(final Long recordId, final UpdateRecordRequest request) {
+        final Optional<RoastingRecord> recordOpt = getRoastingRecord(recordId, request.getMemberId());
+
+        final RoastingRecord roastingRecord = recordOpt.get();
+        roastingRecord.updateMemo(request.getMemo());
+        recordRepository.save(roastingRecord);
+    }
+
+    private Optional<RoastingRecord> getRoastingRecord(final Long recordId, final Long memberId) {
+        final Optional<RoastingRecord> recordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
+        if (recordOpt.isEmpty()) {
+            throw new DataAccessPermissionException("You do not have permission to access this data.");
+        }
+        return recordOpt;
     }
 }

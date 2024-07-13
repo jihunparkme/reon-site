@@ -1,10 +1,10 @@
-function setTurningPointArea(xAxis) {
-    if (turningPointTime.length == 0) {
+function setTurningPointArea(xAxis, record) {
+    if (record.turningPointTime.length == 0) {
         return;
     }
 
     const rangeDataItem = xAxis.makeDataItem({
-        category: turningPointTime
+        category: record.turningPointTime
     });
 
     const range = xAxis.createAxisRange(rangeDataItem);
@@ -23,7 +23,7 @@ function setTurningPointArea(xAxis) {
 
     rangeDataItem.get("label").setAll({
         inside: true,
-        text: 'Turning Point ' + '(' + turningPointTime + ')',
+        text: 'Turning Point ' + '(' + record.turningPointTime + ')',
         rotation: 90,
         centerX: am5.p100,
         centerY: am5.p100,
@@ -33,14 +33,14 @@ function setTurningPointArea(xAxis) {
     });
 }
 
-function setDTRArea(xAxis) {
-    if (firstCrackPointTime.length == 0 || coolingPointTime.length == 0) {
+function setDTRArea(xAxis, record) {
+    if (record.firstCrackPointTime.length == 0 || record.coolingPointTime.length == 0) {
         return;
     }
 
     const rangeDataItem = xAxis.makeDataItem({
-        category: firstCrackPointTime,
-        endCategory: coolingPointTime
+        category: record.firstCrackPointTime,
+        endCategory: record.coolingPointTime
     });
 
     const range = xAxis.createAxisRange(rangeDataItem);
@@ -59,7 +59,7 @@ function setDTRArea(xAxis) {
 
     rangeDataItem.get("label").setAll({
         inside: true,
-        text: 'DTR (' + dtr + '%)',
+        text: 'DTR (' + record.dtr + '%)',
         rotation: 90,
         centerX: am5.p100,
         centerY: am5.p100,
@@ -124,9 +124,14 @@ am5.ready(function() {
     // set chart color
     chart.get("colors").set("colors", [
         am5.color("#FF0000"),
+        am5.color("#FF0000"),
+        am5.color("#FF0000"),
+        am5.color("#FF0000"),
+
         am5.color("#0000FF"),
-        am5.color("#FFFF00"),
-        am5.color("#008000")
+        am5.color("#0000FF"),
+        am5.color("#0000FF"),
+        am5.color("#0000FF")
     ]);
 
     chart.topAxesContainer.children.push(am5.Label.new(root, { // chart title
@@ -151,21 +156,24 @@ am5.ready(function() {
         stroke: am5.color(0xFFFFFF)
     });
 
-    let dataSize = 0;
-    if (record.temp1 !== null) {
-        dataSize = JSON.parse(record.temp1).length;
-    }
-
+    let dataSize = Math.max(recordObjs[0].temp1Arr.length, recordObjs[1].temp1Arr.length);
     let data = [];
     for (let i = 0; i < dataSize; i++) {
         data.push(
             {
-                second: timeArr[i],
-                temp1: temp1Arr[i],
-                temp2: temp2Arr[i],
-                temp3: temp3Arr[i],
-                temp4: temp4Arr[i],
-                ror: rorArr[i]
+                second: recordObjs[mainIdx].timeArr[i],
+
+                temp1: recordObjs[0].temp1Arr[i],
+                temp2: recordObjs[0].temp2Arr[i],
+                temp3: recordObjs[0].temp3Arr[i],
+                temp4: recordObjs[0].temp4Arr[i],
+                ror: recordObjs[0].rorArr[i],
+
+                temp1_2: recordObjs[1].temp1Arr[i],
+                temp2_2: recordObjs[1].temp2Arr[i],
+                temp3_2: recordObjs[1].temp3Arr[i],
+                temp4_2: recordObjs[1].temp4Arr[i],
+                ror_2: recordObjs[1].rorArr[i]
             }
         );
     }
@@ -197,8 +205,10 @@ am5.ready(function() {
         })
     );
 
-    setTurningPointArea(xAxis);
-    setDTRArea(xAxis);
+    setTurningPointArea(xAxis, recordObjs[0]);
+    setTurningPointArea(xAxis, recordObjs[1]);
+    setDTRArea(xAxis, recordObjs[0]);
+    setDTRArea(xAxis, recordObjs[1]);
 
     yAxis.children.unshift(  // yAxis title
         am5.Label.new(root, {
@@ -238,15 +248,6 @@ am5.ready(function() {
     });
 
     function createSeries(name, field) {
-        let tooltip = am5.Tooltip.new(root, {
-            getStrokeFromSprite: true,
-            getFillFromSprite: false,
-            getLabelFillFromSprite: false,
-            autoTextColor: false,
-            pointerOrientation: "horizontal",
-            labelText: "[bold]{name}: {valueY}"
-        });
-
         let series = chart.series.push(
             am5xy.LineSeries.new(root, {
                 name: name,
@@ -254,22 +255,23 @@ am5.ready(function() {
                 yAxis: yAxis,
                 valueYField: field,
                 categoryXField: "second",
-                legendValueText: "{valueY}",
-                tooltip: tooltip
+                legendValueText: "{valueY}"
             })
         );
-
-        series.get("tooltip").label.set("fill", am5.color(0xffffff));
 
         series.data.setAll(data);
         series.appear(1000);
     }
 
-    createSeries("Drum", "temp1");
-    createSeries("Heater", "temp2");
-    createSeries("Pesudo Bean", "temp3");
-    // createSeries("Board Temp", "temp4");
-    createSeries("ROR", "ror");
+    createSeries("R1_Drum", "temp1");
+    createSeries("R1_Heater", "temp2");
+    createSeries("R1_Pesudo Bean", "temp3");
+    createSeries("R1_ROR", "ror");
+
+    createSeries("R2_Drum", "temp1_2");
+    createSeries("R2_Heater", "temp2_2");
+    createSeries("R2_Pesudo Bean", "temp3_2");
+    createSeries("R2_ROR", "ror_2");
 
     // Add scrollbar
     chart.set("scrollbarX", am5.Scrollbar.new(root, {
@@ -282,7 +284,7 @@ am5.ready(function() {
 
     // Add legend
     let legend = chart.rightAxesContainer.children.push(am5.Legend.new(root, {
-        width: 200,
+        width: 230,
         paddingLeft: 15,
         height: am5.percent(100)
     }));
@@ -392,9 +394,13 @@ am5.ready(function() {
 
     // set chart color
     chartOfSensor.get("colors").set("colors", [
-        am5.color("#FF7F00"),
-        am5.color("#8B00FF"),
-        am5.color("#FFD400"),
+        am5.color("#FF0000"),
+        am5.color("#FF0000"),
+        am5.color("#FF0000"),
+
+        am5.color("#0000FF"),
+        am5.color("#0000FF"),
+        am5.color("#0000FF")
     ]);
 
     chartOfSensor.topAxesContainer.children.push(am5.Label.new(rootOfSensor, {
@@ -419,19 +425,20 @@ am5.ready(function() {
         stroke: am5.color(0xFFFFFF)
     });
 
-    let dataSizeOfSensor = 0;
-    if (record.heater !== null) {
-        dataSizeOfSensor = JSON.parse(record.heater).length;
-    }
-
+    let dataSizeOfSensor = Math.max(recordObjs[0].heaterArr.length, recordObjs[1].heaterArr.length);
     let dataOfSensor = [];
     for (let i = 0; i < dataSizeOfSensor; i++) {
         dataOfSensor.push(
             {
-                second: timeArr[i],
-                heater: heaterArr[i],
-                fan: fanArr[i],
-                fan2: fan2Arr[i],
+                second: recordObjs[mainIdx].timeArr[i],
+
+                heater: recordObjs[0].heaterArr[i],
+                fan: recordObjs[0].fanArr[i],
+                fan2: recordObjs[0].fan2Arr[i],
+
+                heater_2: recordObjs[1].heaterArr[i],
+                fan_2: recordObjs[1].fanArr[i],
+                fan2_2: recordObjs[1].fan2Arr[i],
             }
         );
     }
@@ -463,8 +470,10 @@ am5.ready(function() {
         })
     );
 
-    setTurningPointArea(xAxisOfSensor);
-    setDTRArea(xAxisOfSensor);
+    setTurningPointArea(xAxisOfSensor, recordObjs[0]);
+    setTurningPointArea(xAxisOfSensor, recordObjs[1]);
+    setDTRArea(xAxisOfSensor, recordObjs[0]);
+    setDTRArea(xAxisOfSensor, recordObjs[1]);
 
     yAxisOfSensor.children.unshift(
         am5.Label.new(rootOfSensor, {
@@ -504,15 +513,6 @@ am5.ready(function() {
     });
 
     function createSeriesOfSensor(name, field) {
-        let tooltip = am5.Tooltip.new(rootOfSensor, {
-            getStrokeFromSprite: true,
-            getFillFromSprite: false,
-            getLabelFillFromSprite: false,
-            autoTextColor: false,
-            pointerOrientation: "horizontal",
-            labelText: "[bold]{name}: {valueY}"
-        });
-
         let seriesOfSensor = chartOfSensor.series.push(
             am5xy.LineSeries.new(rootOfSensor, {
                 name: name,
@@ -520,20 +520,21 @@ am5.ready(function() {
                 yAxis: yAxisOfSensor,
                 valueYField: field,
                 categoryXField: "second",
-                legendValueText: "{valueY}",
-                tooltip: tooltip
+                legendValueText: "{valueY}"
             })
         );
-
-        seriesOfSensor.get("tooltip").label.set("fill", am5.color(0xffffff));
 
         seriesOfSensor.data.setAll(dataOfSensor);
         seriesOfSensor.appear(1000);
     }
 
-    createSeriesOfSensor("Heater", "heater");
-    createSeriesOfSensor("Fan", "fan");
-    createSeriesOfSensor("Fan2", "fan2");
+    createSeriesOfSensor("R1_Heater", "heater");
+    createSeriesOfSensor("R1_Fan", "fan");
+    createSeriesOfSensor("R1_Fan2", "fan2");
+
+    createSeriesOfSensor("R2_Heater", "heater_2");
+    createSeriesOfSensor("R2_Fan", "fan_2");
+    createSeriesOfSensor("R2_Fan2", "fan2_2");
 
     // Add scrollbar
     chartOfSensor.set("scrollbarX", am5.Scrollbar.new(rootOfSensor, {
@@ -546,7 +547,7 @@ am5.ready(function() {
 
     // Add legend
     let legendOfSensor = chartOfSensor.rightAxesContainer.children.push(am5.Legend.new(rootOfSensor, {
-        width: 200,
+        width: 230,
         paddingLeft: 15,
         height: am5.percent(100)
     }));

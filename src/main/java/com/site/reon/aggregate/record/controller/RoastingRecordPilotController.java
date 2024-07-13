@@ -16,7 +16,7 @@ import static com.site.reon.global.common.constant.Result.SUCCESS;
 @RestController
 @RequestMapping("/records")
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyRole('ROLE_PILOT')")
+@PreAuthorize("hasAnyRole('ROLE_PILOT', 'ROLE_ADMIN')")
 public class RoastingRecordPilotController {
 
     private final RoastingRecordCommandService roastingRecordCommandService;
