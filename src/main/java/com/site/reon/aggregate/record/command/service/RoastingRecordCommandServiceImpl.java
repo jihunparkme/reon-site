@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandService {
 
     private final RoastingRecordRepository recordRepository;
 
     @Override
-    @Transactional
     public void upload(final RoastingRecordRequest request) {
         final var roastingRecord = request.toEntity(request.getMemberId());
         recordRepository.save(roastingRecord);
