@@ -76,9 +76,13 @@
                     <div class="icon-box" th:onclick="'location.href=\'' + @{/record/{id}(id=${record.id})} + '\''">
                         <i class="bi bi-bar-chart"></i>
                         <h4><a th:href="@{/record/{id}(id=${record.id})}">[(${record.roastingInfo.title})]</a></h4>
-                        <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]
-                        <br/>
-                        Roaster S/N : [(${record.roastingInfo.roasterSn})]</p>
+                        <p>
+                            <strong>ID</strong> : [(${record.id})]
+                            <br/>
+                            <strong>Roasting Date</strong> : [(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]
+                            <br/>
+                            <strong>Roaster S/N</strong> : [(${record.roastingInfo.roasterSn})]
+                        </p>
                     </div>
                 </div>
             </div>
