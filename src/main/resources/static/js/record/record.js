@@ -113,3 +113,15 @@ function updateMeno(recordId, memberId) {
         alert("Failed to update. Please contact the administrator.\n(" + responseJson.message + ")");
     });
 }
+
+function compare() {
+    const record1 = document.getElementById('record1').value;
+    const record2 = document.getElementById('record2').value;
+    if (record1.length === 0 || record2.length === 0) {
+        alert("compare record is required.");
+        return;
+    }
+
+    const url = "/record/compare?";
+    window.location.href = url + "id=" + record1 + "&id=" + record2;
+}

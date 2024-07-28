@@ -2353,6 +2353,10 @@ section {
   width: 200px;
 }
 
+.width-80 {
+  width: 80px;
+}
+
 .total {
   margin-bottom: 30px;
   color: #f8f9fad9;
