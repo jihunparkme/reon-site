@@ -66,6 +66,7 @@ public class RoastingRecordPageController {
         final List<RoastingRecord> roastingRecords = roastingRecordFindService.findRoastingRecordBy(ids, memberId);
         final Collection<RoastingRecordResponse> response = roastingRecords.stream()
                 .map(RoastingRecordResponse::of)
+                .map(RoastingRecordResponse::calculateDtrArea)
                 .collect(Collectors.toList());
         model.addAttribute("records", response);
         return "record/record-compare";
