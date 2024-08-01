@@ -1,10 +1,7 @@
 package com.site.reon.global.common.handler;
 
 import com.site.reon.global.common.dto.BasicResponse;
-import com.site.reon.global.security.exception.DuplicateMemberException;
-import com.site.reon.global.security.exception.NotFoundMemberException;
-import com.site.reon.global.security.exception.NotFoundProductException;
-import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
+import com.site.reon.global.security.exception.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +55,8 @@ public class RestControllerExceptionHandler {
             IllegalArgumentException.class,
             BadCredentialsException.class,
             MissingServletRequestParameterException.class,
-            AccessDeniedException.class
+            AccessDeniedException.class,
+            DataAccessPermissionException.class,
     })
     public ResponseEntity handleBadRequest(Exception ex) {
         return BasicResponse.clientError(ex.getMessage());
