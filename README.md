@@ -95,7 +95,7 @@
   - Roasting Record Graph with [amcharts](https://www.amcharts.com/)
   - Roasting Profile Recipe with [AG Grid](https://www.ag-grid.com/)
     - [AG Grid javascript Doc.](https://www.ag-grid.com/javascript-data-grid/getting-started/)
-- [ ] search function(title, date ..)
+- search function(title, date ..)
 
 ### Admin
 
@@ -112,8 +112,8 @@
 - [ ] Member(PRIVATE/COMPANY), Region, Roasting statistics 
 
 **Members**
-- [ ] Member management
-- [ ] View/Update/Delete Member
+- Member search and management
+- view/update/delete Member
 
 ---
 
