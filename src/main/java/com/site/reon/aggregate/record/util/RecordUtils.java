@@ -77,7 +77,7 @@ public class RecordUtils {
 
     public static float calculateDevelopmentTimeRatio(final int coolingPointSecondsTime, final String firstCrackPointTime) {
         try {
-            final float firstCrackPointSecondsTime = getHHSSTimeToSeconds(firstCrackPointTime);
+            final int firstCrackPointSecondsTime = getHHSSTimeToSeconds(firstCrackPointTime);
             // 발현 시간: 첫 번째 크랙부터 쿨링까지의 시간
             final float developmentSecondsTime = coolingPointSecondsTime - firstCrackPointSecondsTime;
             final float dtr = (developmentSecondsTime / coolingPointSecondsTime) * 100;
@@ -118,14 +118,14 @@ public class RecordUtils {
     /**
      * "01:10" -> 70
      */
-    public static float getHHSSTimeToSeconds(final String firstCrackPointTime) {
+    public static int getHHSSTimeToSeconds(final String firstCrackPointTime) {
         try {
             final String[] parts = firstCrackPointTime.split(":");
             final int minutes = Integer.parseInt(parts[0]);
             final int seconds = Integer.parseInt(parts[1]);
-            return (float) ((minutes * 60) + seconds);
+            return (minutes * 60) + seconds;
         } catch (Exception e) {
-            return 0.0F;
+            return 0;
         }
     }
 
@@ -139,6 +139,6 @@ public class RecordUtils {
         }
 
         final String pointTime = pointTimes.get(0);
-        return (int) RecordUtils.getHHSSTimeToSeconds(pointTime);
+        return RecordUtils.getHHSSTimeToSeconds(pointTime);
     }
 }
