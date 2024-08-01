@@ -50,7 +50,7 @@
                         <div class="entry-content">
                             <div id="temperatureChart" style="height: 650px;"></div>
                             <div id="sensorChart" style="height: 350px;"></div>
-                            <div id="dtrBar" style="width: 100%; height: 200px;"></div>
+                            <div id="dtrBar" style="width: 80%; height: 200px;"></div>
 
                             <h2 class="font-white" style="margin-top: 50px;">Profile Details</h2>
 
@@ -206,6 +206,9 @@
             firstCrackPointTime: record.creakInfo.firstCrackPointTime,
             coolingPointTime: record.coolingPointTime,
             dtr: record.dtr,
+            dtrFirstPercent: record.dtrFirstPercent,
+            dtrSecondPercent: record.dtrSecondPercent,
+            dtrThirdPercent: record.dtrThirdPercent,
         })
     }
 

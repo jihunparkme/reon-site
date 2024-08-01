@@ -31,14 +31,14 @@ am5.ready(function () {
     const dtrData = [
         {
             "record": "Record2",
-            "dtr1": 20,
-            "dtr2": 20,
-            "dtr3": 30
+            "dtr1": recordObjs[1].dtrFirstPercent,
+            "dtr2": recordObjs[1].dtrSecondPercent,
+            "dtr3": recordObjs[1].dtrThirdPercent
         }, {
             "record": "Record1",
-            "dtr1": 30,
-            "dtr2": 40,
-            "dtr3": 30
+            "dtr1": recordObjs[0].dtrFirstPercent,
+            "dtr2": recordObjs[0].dtrSecondPercent,
+            "dtr3": recordObjs[0].dtrThirdPercent
         }]
 
     dtrChart.topAxesContainer.children.push(am5.Label.new(dtrRoot, {
