@@ -50,6 +50,7 @@
                         <div class="entry-content">
                             <div id="temperatureChart" style="height: 650px;"></div>
                             <div id="sensorChart" style="height: 350px;"></div>
+                            <div id="dtrBar" style="width: 100%; height: 200px;"></div>
 
                             <h2 class="font-white" style="margin-top: 50px;">Profile Details</h2>
 
@@ -161,6 +162,10 @@
 
 <script th:src="@{/js/record/record.js}"></script>
 <script th:src="@{/js/record/compare-chart.js}"></script>
+<script th:src="@{/js/record/dtr-bar.js}"></script>
+
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     const records = [[${records}]];
