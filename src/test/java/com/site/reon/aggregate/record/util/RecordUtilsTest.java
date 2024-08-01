@@ -189,7 +189,7 @@ class RecordUtilsTest {
         final String pointTime = pointTimes.get(0);
         assertEquals("01:10", pointTime);
 
-        final float result = RecordUtils.getHHSSTimeToSeconds(pointTime);
+        final int result = RecordUtils.getHHSSTimeToSeconds(pointTime);
         assertEquals(70, result);
     }
     

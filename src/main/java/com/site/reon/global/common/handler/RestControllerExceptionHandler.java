@@ -1,14 +1,12 @@
 package com.site.reon.global.common.handler;
 
 import com.site.reon.global.common.dto.BasicResponse;
-import com.site.reon.global.security.exception.DuplicateMemberException;
-import com.site.reon.global.security.exception.NotFoundMemberException;
-import com.site.reon.global.security.exception.NotFoundProductException;
-import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
+import com.site.reon.global.security.exception.*;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.BeanCreationNotAllowedException;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -32,6 +30,7 @@ import java.util.List;
 import static com.site.reon.global.common.constant.Result.FAIL;
 
 @Slf4j
+@Order(1)
 @RestControllerAdvice(annotations = RestController.class)
 public class RestControllerExceptionHandler {
 
@@ -56,7 +55,8 @@ public class RestControllerExceptionHandler {
             IllegalArgumentException.class,
             BadCredentialsException.class,
             MissingServletRequestParameterException.class,
-            AccessDeniedException.class
+            AccessDeniedException.class,
+            DataAccessPermissionException.class,
     })
     public ResponseEntity handleBadRequest(Exception ex) {
         return BasicResponse.clientError(ex.getMessage());

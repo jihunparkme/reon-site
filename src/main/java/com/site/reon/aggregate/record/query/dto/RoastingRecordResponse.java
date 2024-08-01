@@ -46,6 +46,11 @@ public class RoastingRecordResponse {
     private int totalRoastingSecondsTime;
     private boolean pilot;
 
+    private int dtrTimeSeconds;
+    private float dtrFirstPercent; // 터닝포인트 ~ 1차 크랙
+    private float dtrSecondPercent; // 1차 크랙 ~ 2차 크랙
+    private float dtrThirdPercent; // 2차 크랙 ~ 쿨링
+
     public static RoastingRecordResponse of(final RoastingRecord roastingRecord) {
         final CreakInfo creakInfo = RecordUtils.generateCrackInfo(
                 roastingRecord.getProfile().getCrackPoint().getCrackPoint(), roastingRecord.getProfile().getCrackPoint().getCrackPointTime());
@@ -84,6 +89,24 @@ public class RoastingRecordResponse {
                 .totalRoastingSecondsTime(totalRoastingSecondsTime)
                 .pilot(roastingRecord.isPilot())
                 .build();
+    }
+
+    public RoastingRecordResponse calculateDtrArea() {
+        final int turningPointSecond = RecordUtils.getHHSSTimeToSeconds(this.turningPointTime);
+        final int firstCrackSecond = RecordUtils.getHHSSTimeToSeconds(this.creakInfo.firstCrackPointTime);
+        final int secondCrackSecond = RecordUtils.getHHSSTimeToSeconds(this.creakInfo.secondCrackPointTime);
+        final int coolingPointSecond = RecordUtils.getHHSSTimeToSeconds(this.coolingPointTime);
+        final int middleAreaSecond = secondCrackSecond == 0 ? firstCrackSecond : secondCrackSecond;
+
+        this.dtrTimeSeconds = coolingPointSecond - turningPointSecond;
+        this.dtrFirstPercent = calculatePercentage(firstCrackSecond, turningPointSecond);
+        this.dtrSecondPercent = calculatePercentage(middleAreaSecond, firstCrackSecond);
+        this.dtrThirdPercent = calculatePercentage(coolingPointSecond, middleAreaSecond);
+        return this;
+    }
+
+    private float calculatePercentage(final int firstCrackSecond, final int turningPointSecond) {
+        return (float) (Math.round((float) (firstCrackSecond - turningPointSecond) / this.dtrTimeSeconds * 100.0 * 10.0) / 10.0);
     }
 
     @Getter

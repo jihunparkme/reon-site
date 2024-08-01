@@ -81,7 +81,12 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
             throw new DataAccessPermissionException("You do not have permission to access this data.");
         }
 
-        return roastingRecordsOpt.get();
+        final List<RoastingRecord> roastingRecords = roastingRecordsOpt.get();
+        if (roastingRecords.size() < ids.size()) {
+            throw new NotFoundRoastingRecordException("There is a record number that cannot be found.");
+        }
+
+        return roastingRecords;
     }
 
     @Override

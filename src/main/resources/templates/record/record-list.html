@@ -22,7 +22,7 @@
                 <form name="form" id="form" th:action="@{/record}" method="get">
                     <input type="hidden" id="page" name="page" value="0"/>
 
-                    <div class="search-bar">
+                    <div class="search-bar" style="margin-bottom: 0px;">
                         <h4>Search</h4>
                         <hr/>
 
@@ -57,6 +57,25 @@
             </div>
 
             <div class="row">
+                <form name="compare-form" id="compare-form">
+                    <div class="search-bar">
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex">
+                                <label for="title">Compare: </label>
+                                <label for="record1"></label><input type="text" id="record1" name="record1" class="form-control width-80" style="margin-left: 0.5em;"/>
+                                <label for="record2"></label><input type="text" id="record2" name="record2" class="form-control width-80" style="margin-left: 0.5em;"/>
+                                <div style="margin-left: 10px">
+                                    <div style="display: inline-block">
+                                        <button type="button" class="btn btn-light" th:onclick="'compare()'"><i class="bi bi-journals"></i> Compare</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
                 <div class="total">
                     <h5 style="float: left">Total : [(${roastingRecordListPage.totalElements})]</h5>
                 </div>
@@ -76,9 +95,13 @@
                     <div class="icon-box" th:onclick="'location.href=\'' + @{/record/{id}(id=${record.id})} + '\''">
                         <i class="bi bi-bar-chart"></i>
                         <h4><a th:href="@{/record/{id}(id=${record.id})}">[(${record.roastingInfo.title})]</a></h4>
-                        <p>[(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]
-                        <br/>
-                        Roaster S/N : [(${record.roastingInfo.roasterSn})]</p>
+                        <p>
+                            <strong>ID</strong> : [(${record.id})]
+                            <br/>
+                            <strong>Roasting Date</strong> : [(${#temporals.format(record.createdDt, 'yyyy-MM-dd HH:mm')})]
+                            <br/>
+                            <strong>Roaster S/N</strong> : [(${record.roastingInfo.roasterSn})]
+                        </p>
                     </div>
                 </div>
             </div>
