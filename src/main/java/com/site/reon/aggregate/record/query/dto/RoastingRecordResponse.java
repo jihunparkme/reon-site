@@ -45,6 +45,7 @@ public class RoastingRecordResponse {
     private float dtr; // Development Time Ratio
     private int totalRoastingSecondsTime;
     private boolean pilot;
+    private Long originalRecordId;
 
     private int dtrTimeSeconds;
     private float dtrFirstPercent; // 터닝포인트 ~ 1차 크랙
@@ -88,6 +89,7 @@ public class RoastingRecordResponse {
                 .dtr(RecordUtils.calculateDevelopmentTimeRatio(coolingPointSecondsTime, creakInfo.getFirstCrackPointTime()))
                 .totalRoastingSecondsTime(totalRoastingSecondsTime)
                 .pilot(roastingRecord.isPilot())
+                .originalRecordId(roastingRecord.getOriginalRecordId())
                 .build();
     }
 

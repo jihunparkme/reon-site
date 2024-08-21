@@ -35,6 +35,9 @@ public class RoastingRecord extends BaseTimeEntity {
     @ColumnDefault("false")
     private boolean pilot;
 
+    @Column
+    private Long originalRecordId;
+
     public void sharePilot(final Boolean pilot) {
         this.pilot = pilot;
     }

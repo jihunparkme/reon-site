@@ -43,6 +43,15 @@
                             </div>
                         </div>
 
+                        <div th:if="${record.originalRecordId == null}" style="margin-bottom: 50px">
+                            <span style="color: #f2b626">* Share it on the Workshop page.</span>
+                            <div class="workshop-container">
+                                <div class="workshop-left">
+                                    <button type="button" class="btn btn-info" th:onclick="'workshop(' + ${record.id} + ');'">Share Workshop</button>
+                                </div>
+                            </div>
+                        </div>
+
                         <h2 class="entry-view-title font-white">
                             <p>[(${record.title})]</p>
                         </h2>
