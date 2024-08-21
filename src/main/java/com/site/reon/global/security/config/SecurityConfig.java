@@ -66,8 +66,9 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/favicon.ico"),
                                 new AntPathRequestMatcher("/error"),
 
-                                new AntPathRequestMatcher("/profile"),
                                 new AntPathRequestMatcher("/management/actuator/health"),
+                                new AntPathRequestMatcher("/profile"),
+                                new AntPathRequestMatcher("/workshop"),
 
                                 new AntPathRequestMatcher("/contact/**"),
                                 new AntPathRequestMatcher("/login/**"),
