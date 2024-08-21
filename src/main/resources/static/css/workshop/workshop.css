@@ -1,0 +1,96 @@
+.container-workshop {
+    flex: auto;
+    min-height: 0;
+}
+
+.workshop-label-text {
+    margin-bottom: 0.5em;
+}
+
+.container-workshop div.workshop-box {
+    min-height: 80%;
+    background: #211F20;
+}
+
+.container-workshop .workshop-row {
+    flex-flow: row wrap;
+    place-content: center;
+    row-gap: 0px;
+}
+
+.container-workshop .workshop-row, .workshop-row:after, .workshop-row:before {
+    display: flex;
+}
+
+.container-workshop .workshop-col {
+    position: relative;
+    max-width: 100%;
+    min-height: 1px;
+    width: 1500px;
+}
+
+.container-workshop .workshop-card {
+    width: 100%;
+    border-radius: 15px;
+    box-sizing: border-box;
+    padding: 0;
+    color: #272b41;
+    font-size: 15px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    font-feature-settings: "tnum","tnum";
+    position: relative;
+    background: #fff;
+    margin: 100px 0 100px;
+}
+
+.container-workshop .workshop-card .workshop-card-body {
+    padding: 25px;
+    position: relative;
+}
+
+.container-workshop .workshop-card .workshop-card-body .workshop-card-content{
+    padding: 24px;
+}
+
+.workshop-card-content input {
+    width: 100%;
+    margin: 0 0 15px;
+    box-sizing: border-box;
+    height: 48px;
+    min-height: 48px;
+    padding: 0px 16px;
+    outline: none;
+    background-color: transparent;
+    color: rgb(33, 33, 33);
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.workshop-card-content input::placeholder {
+    color: #ced4da;
+}
+
+.workshop-card-content select {
+    width: 100%;
+    margin: 0 0 15px;
+    box-sizing: border-box;
+    height: 48px;
+    min-height: 48px;
+    padding: 0px 16px;
+    outline: none;
+    background-color: transparent;
+    border: 1px solid rgb(176, 190, 197);
+    color: rgb(33, 33, 33);
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.workshop-card-content button {
+    width: 100%;
+    padding: 15px;
+    font-size: 14px;
+}

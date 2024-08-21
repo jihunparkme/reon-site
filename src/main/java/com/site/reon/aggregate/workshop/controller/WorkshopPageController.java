@@ -5,6 +5,7 @@ import com.site.reon.aggregate.workshop.command.domain.Workshop;
 import com.site.reon.aggregate.workshop.command.dto.SaveWorkshopPageRequest;
 import com.site.reon.aggregate.workshop.command.dto.WorkshopSaveRequest;
 import com.site.reon.aggregate.workshop.command.service.WorkshopService;
+import com.site.reon.aggregate.workshop.query.dto.WorkshopResponse;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.common.dto.BasicResponse;
 import com.site.reon.global.security.dto.SessionMember;
@@ -27,11 +28,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/workshop")
 @RequiredArgsConstructor
 public class WorkshopPageController {
+    
     @PostMapping("/share")
     @PreAuthorize("isAuthenticated()")
-    public String sharePage(@ModelAttribute("recordId") String recordId,
+    public String sharePage(@ModelAttribute("recordId") long recordId,
                             Model model) {
-        model.addAttribute("workshop", new Workshop());
+        model.addAttribute("workshop", WorkshopResponse.create(recordId));
         model.addAttribute("recordId", recordId);
         return "workshop/workshop-save";
     }
