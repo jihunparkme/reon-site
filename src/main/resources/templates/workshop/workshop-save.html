@@ -68,7 +68,7 @@
                                             <button type="submit" id="btn-save" class="btn btn-success"><i class="bi bi-pencil-square"></i> SAVE</button>
                                         </div>
                                         <div style="display: inline-block">
-                                            <button type="button" id="btn-withdraw" class="btn btn-danger"><i class="bi bi-x-square"></i> CANCEL</button>
+                                            <button type="button" id="btn-withdraw" th:onclick="'location.href=\'' + @{/record/{id}(id=*{recordId})} + '\''" class="btn btn-danger"><i class="bi bi-x-square"></i> CANCEL</button>
                                         </div>
                                     </div>
                                 </div>
