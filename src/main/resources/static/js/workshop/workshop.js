@@ -1,5 +1,5 @@
 ClassicEditor
-    .create(document.querySelector('#editor'),
+    .create(document.querySelector('#content'),
         {
             toolbar: {
                 items: [
