@@ -29,7 +29,6 @@
                         <div class="workshop-card-content">
                             <h1>Save Workshop</h1>
                             <form th:action="@{/workshop/save}" th:object="${workshop}" method="post">
-                                <input type="hidden" id="recordId" name="recordId" value="0"/>
                                 <div th:if="${#fields.hasGlobalErrors()}" class="global-error">
                                     <button class="btn btn-outline-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></button>
                                 </div>
@@ -50,7 +49,7 @@
                                         <div class="workshop-input-field-out">
                                             <div class="workshop-input-field-in">
                                                 <div class="field-error" th:errors="*{content}">content error</div>
-                                                <textarea th:field="*{content}" th:errorclass="field-error-input" class="form-control" name="content" id="editor" style="min-height: 300px;"></textarea>
+                                                <textarea th:field="*{content}" th:errorclass="field-error-input" class="form-control" name="content" id="content" style="min-height: 300px;"></textarea>
                                             </div>
                                         </div>
                                     </div>
