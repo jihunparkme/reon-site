@@ -1,0 +1,13 @@
+<div th:replace="~{common/head :: head('result')}"></div>
+<body>
+    <input type="hidden" name="message" id="message" th:value="${message}">
+    <input type="hidden" name="redirectUrl" id="redirectUrl" th:value="${redirectUrl}">
+</body>
+<script type="text/javascript">
+    const message = document.getElementById('message').value;
+    const redirectUrl = document.getElementById('redirectUrl').value;
+
+    alert(message);
+
+    window.location.href = redirectUrl;
+</script>
