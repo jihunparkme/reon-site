@@ -51,7 +51,7 @@ public class WorkshopPageController {
     public String save(@Valid @ModelAttribute("workshop") final WorkshopSaveRequest request,
                        final BindingResult bindingResult,
                        @LoginMember final SessionMember session,
-                       RedirectAttributes redirectAttributes) {
+                       final Model model) {
 
         if (bindingResult.hasErrors()) {
             return "workshop/workshop-save";
@@ -60,10 +60,11 @@ public class WorkshopPageController {
         try {
             final long memberId = session.getId();
             String workshopId = workshopService.saveWorkshop(request, memberId);
-            redirectAttributes.addAttribute("workshopId", workshopId);
-            return "redirect:/record/" + request.getRecordId();
+            model.addAttribute("message", "saved successfully.");
+            model.addAttribute("redirectUrl", "/workshop/" + workshopId);
+            return "common/alertAndRedirect";
         } catch (Exception e) {
-            bindingResult.reject("global.error", e.getMessage());
+            bindingResult.reject("global.error", "Failed to write article. Please try again later");
             return "workshop/workshop-save";
         }
     }
