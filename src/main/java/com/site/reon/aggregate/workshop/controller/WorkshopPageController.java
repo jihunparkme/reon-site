@@ -40,7 +40,7 @@ public class WorkshopPageController {
     @PreAuthorize("isAuthenticated()")
     public String sharePage(@ModelAttribute("recordId") long recordId,
                             Model model) {
-        model.addAttribute("workshop", WorkshopResponse.create(recordId));
+        model.addAttribute("workshop", WorkshopSaveRequest.create(recordId));
         model.addAttribute("recordId", recordId);
         return "workshop/workshop-save";
     }
