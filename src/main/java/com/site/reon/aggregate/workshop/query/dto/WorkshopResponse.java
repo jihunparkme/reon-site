@@ -1,23 +1,22 @@
 package com.site.reon.aggregate.workshop.query.dto;
 
-import lombok.AllArgsConstructor;
+import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
+import com.site.reon.aggregate.workshop.command.domain.Workshop;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-@Getter
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class WorkshopResponse {
-    private Long id;
-    private String title;
-    private String content;
-    private Long recordId;
-
-    public static WorkshopResponse create(final long recordId) {
+public record WorkshopResponse(
+        Long id,
+        String title,
+        String content,
+        RoastingRecordResponse roastingRecord
+) {
+    public static WorkshopResponse of(final Workshop workshop, final RoastingRecordResponse roastingRecord) {
         return WorkshopResponse.builder()
-                .recordId(recordId)
+                .id(workshop.getId())
+                .title(workshop.getTitle())
+                .content(workshop.getContent())
+                .roastingRecord(roastingRecord)
                 .build();
     }
 }
