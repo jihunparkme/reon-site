@@ -29,11 +29,12 @@ public class WorkshopSaveRequest {
                 .build();
     }
 
-    public Workshop toWorkshop() {
+    public Workshop toWorkshop(final long memberId) {
         return Workshop.builder()
                 .title(this.title)
                 .content(this.content)
                 .recordId(this.recordId)
+                .memberId(memberId)
                 .build();
     }
 }

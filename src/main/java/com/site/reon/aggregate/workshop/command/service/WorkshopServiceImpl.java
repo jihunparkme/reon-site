@@ -19,7 +19,7 @@ public class WorkshopServiceImpl implements WorkshopService {
     @Override
     public Long saveWorkshop(final WorkshopSaveRequest request, final long memberId) {
         roastingRecordFindService.findRoastingRecordBy(request.getRecordId(), memberId);
-        final Workshop workshop = request.toWorkshop();
+        final Workshop workshop = request.toWorkshop(memberId);
         return workshopRepository.save(workshop).getId();
     }
 }

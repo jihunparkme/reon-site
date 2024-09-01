@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.workshop.command.domain;
 
+import com.site.reon.global.common.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Workshop {
+public class Workshop extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +27,7 @@ public class Workshop {
 
     @Column(nullable = false)
     private Long recordId;
+
+    @Column(nullable = false)
+    private long memberId;
 }
