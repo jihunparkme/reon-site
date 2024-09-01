@@ -1,6 +1,5 @@
 package com.site.reon.aggregate.workshop.controller;
 
-import com.site.reon.aggregate.workshop.command.domain.Workshop;
 import com.site.reon.aggregate.workshop.command.dto.WorkshopSaveRequest;
 import com.site.reon.aggregate.workshop.command.service.WorkshopService;
 import com.site.reon.aggregate.workshop.query.dto.WorkshopResponse;
@@ -16,7 +15,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -59,12 +57,12 @@ public class WorkshopPageController {
 
         try {
             final long memberId = session.getId();
-            String workshopId = workshopService.saveWorkshop(request, memberId);
+            Long workshopId = workshopService.saveWorkshop(request, memberId);
             model.addAttribute("message", "saved successfully.");
             model.addAttribute("redirectUrl", "/workshop/" + workshopId);
             return "common/alertAndRedirect";
         } catch (Exception e) {
-            bindingResult.reject("global.error", "Failed to write article. Please try again later");
+            bindingResult.reject("global.error", "Failed to write article. Please try again later.\n (" + e.getMessage() + ")");
             return "workshop/workshop-save";
         }
     }

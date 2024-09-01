@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.workshop.command.dto;
 
+import com.site.reon.aggregate.workshop.command.domain.Workshop;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,4 +20,12 @@ public class WorkshopSaveRequest {
 
     @Min(value = 1, message = "recordId must be at least greater than 1.")
     private long recordId;
+
+    public Workshop toWorkshop() {
+        return Workshop.builder()
+                .title(this.title)
+                .content(this.content)
+                .recordId(this.recordId)
+                .build();
+    }
 }
