@@ -1,7 +1,4 @@
-<html>
-<title></title>
-<head>
-</head>
+<div th:replace="~{common/head :: head('error')}"></div>
 <body>
     <input type="hidden" name="msg" id="msg" th:value="${msg}">
 </body>
@@ -10,4 +7,3 @@
     alert(msg);
     window.history.back();
 </script>
-</html>

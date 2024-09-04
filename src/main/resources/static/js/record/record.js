@@ -43,6 +43,21 @@ function share(id, pilot) {
     });
 }
 
+function workshop(id) {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = "/workshop/share";
+
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.name = "recordId";
+    hiddenField.value = id;
+    form.appendChild(hiddenField);
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
 function remove(recordId, memberId) {
     if (!confirm("Are you sure you want to delete?")) {
         return;
