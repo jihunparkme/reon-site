@@ -88,32 +88,50 @@
     - Google revoke token
     - [ ] Apple revoke token
 
-
 ### Record
 
+View
 - View private roasting profile
   - Roasting Record Graph with [amcharts](https://www.amcharts.com/)
   - Roasting Profile Recipe with [AG Grid](https://www.ag-grid.com/)
     - [AG Grid javascript Doc.](https://www.ag-grid.com/javascript-data-grid/getting-started/)
-- search function(title, date ..)
+- Share to workshop article
+- Register pilot record
+- Update record memo
+
+List
+- Search roasting profile(title, date ..)
+- Compare roasting profile
+
+### Workshop
+
+View
+- View workshop article and roasting profile
+- Subscribe roasting profile
+  - Subscribed records cannot be shared
+
+List
+- Search workshop article(title, date ..)
 
 ### Admin
 
-**Records**
-- View all roasting profile
+**Members**
+- Search all Member
+- Management member
+  - View/Update/Delete 
 
 **Products**
-- View all product list
-- View/Update/Delete product detail
+- Search all product
+- Management product
+  - View/Update/Delete
 - Create S/N
 - Register S/N
 
-**Statistics**
-- [ ] Member(PRIVATE/COMPANY), Region, Roasting statistics 
+**Records**
+- Search all roasting profile
 
-**Members**
-- Member search and management
-- view/update/delete Member
+**Statistics**
+- [ ] Member(PRIVATE/COMPANY), Region, Roasting statistics
 
 ---
 
@@ -121,34 +139,65 @@
 
 ### Login
 
-**Login Main Page**
+**Login**
 
-![Result](reference/image/page/login.png 'Result')
+![login-mypage](https://github.com/user-attachments/assets/c4e8898e-3854-465c-996c-01994ea2ebc2)
 
-**Email Login/Sign Up Page**
+**Create Email Account**
 
-<p align="center" width="100%">
-    <img src="reference/image/page/email-login.png" width="40%">
-    <img src="reference/image/page/email-signup.png" width="40%">
-</p>
+![create-account](https://github.com/user-attachments/assets/f3fe184e-10d0-455f-9dc3-240a32b59e35)
 
 ### Mypage
 
-![Result](reference/image/page/mypage.png 'Result')
+![mypage](https://github.com/user-attachments/assets/89cffd9c-cefe-4ace-bc65-7173a339e276)
 
 ### Record
 
 **Record List**
 
-![Result](reference/image/page/record-list.png 'Result')
+![record-list](https://github.com/user-attachments/assets/9a36de3c-e6b9-4b94-909a-9c33d63d9c30)
+
 
 **Record View**
 
-![Result](reference/image/page/record-graph.png 'Result')
+![record-view](https://github.com/user-attachments/assets/3d860602-8985-4f1d-bbf2-00e67cbb0ef4)
 
-![Result](reference/image/page/profile-recipe.png 'Result')
+**Record Compare**
+
+![compare-record](https://github.com/user-attachments/assets/02f9da74-b7cc-4a40-9a27-be26499c9e23)
+
+
+### Admin
+
+**Members**
+
+![admin-members](https://github.com/user-attachments/assets/578a7e07-1069-4f2f-aace-b2d21f512917)
+
+**Products**
+
+![admin-products](https://github.com/user-attachments/assets/950b98b2-bbf9-4bdd-b13f-da114fa38e24)
+
+**Records**
+
+![admin-records](https://github.com/user-attachments/assets/445669ec-0fe8-44db-a90b-904d6352edc8)
+
+### Workshop
+
+**share to workshop**
+
+![workshop-save](https://github.com/user-attachments/assets/8bb0da00-a9b7-4eab-b182-2fcaaab0847d)
+
+**subscribe record**
+
+![workshop-subscribe](https://github.com/user-attachments/assets/9db25b70-2f36-486d-8e50-600fc3284ea4)
 
 # TODD
+
+## Workshop
+
+- [ ] 배포
+  - roastingrecord 필드 추가
+  - workshop 테이블 추가
 
 ## Notice
 
@@ -191,11 +240,6 @@
 
 ## TOBE
 
-- [ ] 레시피 공유(레시피 업로드, 다운로드)
-  - 로스팅 로그 페이지에서 공유하기 누르고, 글 작성을 하면 로스팅 공유 페이지로 등록
-  - 글쓰기(ckeditor) 기능
-    - https://ckeditor.com/
-    - https://ckeditor.com/ckeditor-5/download/
 - [ ] 레시피 명예의 전당
 - [ ] amcharts.com 결제
 - 로그 관리 -> 날짜별로 덮어쓰기
