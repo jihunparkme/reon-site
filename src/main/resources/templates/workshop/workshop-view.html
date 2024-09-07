@@ -99,9 +99,16 @@
                         </div>
 
                         <div class="entry-button">
-                            <div>
-                                <button type="button" th:onclick="'remove(' + ${workshop.record.id} + ', ' + ${workshop.record.memberId} + ');'" class="btn btn-danger" style="margin-right: 5px;"><i class="bi bi-trash3"></i> DELETE</button>
-                                <button th:onclick="|location.href='@{/record}'|" class="btn btn-light"><i class="bi bi-list"></i> LIST</button>
+                            <div class="entry-button">
+                                <div th:if="${isWriter}" style="margin-right: 5px;">
+                                    <button type="button" th:onclick="'remove(' + ${workshop.id} +');'" class="btn btn-danger"><i class="bi bi-trash3"></i> DELETE</button>
+                                </div>
+                                <div sec:authorize="isAuthenticated()" th:if="${!isWriter}" style="margin-right: 5px;">
+                                    <button type="button" th:onclick="'subscribe(' + ${workshop.id} + ');'" class="btn btn-success"><i class="bi bi-bookmark-check-fill"></i> SUBSCRIBE</button>
+                                </div>
+                                <div style="margin-right: 5px;">
+                                    <button th:onclick="|location.href='@{/workshop}'|" class="btn btn-light"><i class="bi bi-list"></i> LIST</button>
+                                </div>
                             </div>
                         </div>
                     </article>
