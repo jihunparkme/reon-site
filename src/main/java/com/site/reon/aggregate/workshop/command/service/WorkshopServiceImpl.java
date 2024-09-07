@@ -7,9 +7,11 @@ import com.site.reon.aggregate.workshop.command.dto.WorkshopSaveRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class WorkshopServiceImpl implements WorkshopService {
 
@@ -21,5 +23,10 @@ public class WorkshopServiceImpl implements WorkshopService {
         roastingRecordFindService.findRoastingRecordBy(request.getRecordId(), memberId);
         final Workshop workshop = request.toWorkshop(memberId);
         return workshopRepository.save(workshop).getId();
+    }
+
+    @Override
+    public void delete(final Long workshopId) {
+        workshopRepository.deleteById(workshopId);
     }
 }
