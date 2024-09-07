@@ -1,5 +1,6 @@
 package com.site.reon.aggregate.record.command.service;
 
+import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordRequest;
 import com.site.reon.aggregate.record.command.dto.SharePilotRecordRequest;
 import com.site.reon.aggregate.record.command.dto.UpdateRecordRequest;
@@ -12,4 +13,6 @@ public interface RoastingRecordCommandService {
     void deleteRecord(Long recordId, Long memberId);
 
     void updateMemo(Long recordId, UpdateRecordRequest memberId);
+
+    void saveSubscribe(RoastingRecord subscribed);
 }

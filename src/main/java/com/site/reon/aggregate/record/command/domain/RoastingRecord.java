@@ -45,4 +45,19 @@ public class RoastingRecord extends BaseTimeEntity {
     public void updateMemo(final String memo) {
         this.roastingInfo.updateMemo(memo);
     }
+
+    public RoastingRecord subscribe(final Long memberId) {
+        return RoastingRecord.builder()
+                .roastingInfo(RoastingInfo.builder()
+                        .title(this.roastingInfo.getTitle())
+                        .roasterSn("subscribe")
+                        .memberId(memberId)
+                        .memo(this.roastingInfo.getMemo())
+                        .build())
+                .inputInfo(this.inputInfo)
+                .profile(this.profile)
+                .pilot(false)
+                .originalRecordId(this.id)
+                .build();
+    }
 }

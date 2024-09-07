@@ -6,4 +6,6 @@ public interface WorkshopService {
     Long saveWorkshop(WorkshopSaveRequest request, long memberId);
 
     void delete(Long workshopId);
+
+    void subscribe(Long workshopId, final Long memberId);
 }

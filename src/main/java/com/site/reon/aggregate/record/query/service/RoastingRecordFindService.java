@@ -21,6 +21,8 @@ public interface RoastingRecordFindService {
 
     Page<RoastingRecordsResponse> findAllByAdminFilter(AdminRecordSearchRequestParam param);
 
+    RoastingRecord findById(long recordId);
+
     RoastingRecordResponse findRoastingRecordBy(Long id);
 
     RoastingRecord findRoastingRecordBy(long recordId, long memberId);
