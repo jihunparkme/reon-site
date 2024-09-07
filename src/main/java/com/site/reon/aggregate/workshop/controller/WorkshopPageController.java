@@ -75,7 +75,10 @@ public class WorkshopPageController {
                        Model model) {
         final WorkshopResponse workshop = workshopFindService.findWorkshop(id);
         final Long memberId = getMemberId(session);
+        final boolean isSubscribed = workshopFindService.isSubscribed(workshop.record().getId(), memberId);
+
         model.addAttribute("isWriter", Objects.equals(memberId, workshop.memberId()));
+        model.addAttribute("isSubscribed", isSubscribed);
         model.addAttribute("workshop", workshop);
         return "workshop/workshop-view";
     }

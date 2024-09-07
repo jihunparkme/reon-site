@@ -363,4 +363,4 @@ values ('<p>workshop 테스트 입니다.</p><p> </p><h2>workshop 테스트 입�
 
 insert into workshop (content, created_dt, member_id, modified_dt, record_id, title)
 values ('<h1>testsetse</h1><h2>testsetse</h2><h3>testsetse</h3><h4>testsetse</h4><h5>testsetse</h5><h6>testsetse</h6><p><strong>testsetse</strong></p><p><i>testsetse</i></p><p><a target="_blank" rel="noopener noreferrer" href="https://naver.com">testsetse</a></p><p>testsetse</p><figure class="table"><table><tbody><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>a</td><td>b</td><td>c</td></tr></tbody></table></figure>',
-        PARSEDATETIME('2024-09-01 19:00:00','yyyy-MM-dd HH:mm:ss'), 2, PARSEDATETIME('2024-09-01 19:00:00','yyyy-MM-dd HH:mm:ss'), 11, 'workshop 테스트 입니다.')
+        PARSEDATETIME('2024-09-01 19:00:00','yyyy-MM-dd HH:mm:ss'), 2, PARSEDATETIME('2024-09-01 19:00:00','yyyy-MM-dd HH:mm:ss'), 13, 'workshop 테스트 입니다.')

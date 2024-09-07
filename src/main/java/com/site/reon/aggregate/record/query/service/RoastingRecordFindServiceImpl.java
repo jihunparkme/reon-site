@@ -119,6 +119,11 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
                 .build();
     }
 
+    @Override
+    public boolean isSubscribed(final Long recordId, final Long memberId) {
+        return recordRepository.existsByRoastingInfoMemberIdAndOriginalRecordId(memberId, recordId);
+    }
+
     private RoastingRecord findRoastingRecord(final Long id) {
         final var roastingRecordOpt = recordRepository.findById(id);
         if (roastingRecordOpt.isEmpty()) {

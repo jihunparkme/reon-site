@@ -9,11 +9,13 @@ import com.site.reon.global.security.exception.NotFoundWorkshopException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Slf4j
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class WorkshopFindServiceImpl implements WorkshopFindService {
 
@@ -30,5 +32,10 @@ public class WorkshopFindServiceImpl implements WorkshopFindService {
         final Workshop workshop = workshopOpt.get();
         final RoastingRecordResponse roastingRecord = roastingRecordFindService.findRoastingRecordBy(workshop.getRecordId());
         return WorkshopResponse.of(workshop, roastingRecord);
+    }
+
+    @Override
+    public boolean isSubscribed(final Long recordId, final Long memberId) {
+        return roastingRecordFindService.isSubscribed(recordId, memberId);
     }
 }

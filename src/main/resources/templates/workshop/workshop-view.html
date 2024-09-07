@@ -103,9 +103,14 @@
                                 <div th:if="${isWriter}" style="margin-right: 5px;">
                                     <button type="button" th:onclick="'remove(' + ${workshop.id} +');'" class="btn btn-danger"><i class="bi bi-trash3"></i> DELETE</button>
                                 </div>
-                                <div sec:authorize="isAuthenticated()" th:if="${!isWriter}" style="margin-right: 5px;">
+
+                                <div th:if="${isSubscribed}" style="margin-right: 5px;">
+                                    <button type="button" th:onclick="alreadySubscribed()" class="btn btn-secondary"><i class="bi bi-bookmark-check-fill"></i> SUBSCRIBED</button>
+                                </div>
+                                <div sec:authorize="isAuthenticated()" th:if="${!isWriter && !isSubscribed}" style="margin-right: 5px;">
                                     <button type="button" th:onclick="'subscribe(' + ${workshop.id} + ');'" class="btn btn-success"><i class="bi bi-bookmark-check-fill"></i> SUBSCRIBE</button>
                                 </div>
+
                                 <div style="margin-right: 5px;">
                                     <button th:onclick="|location.href='@{/workshop}'|" class="btn btn-light"><i class="bi bi-list"></i> LIST</button>
                                 </div>

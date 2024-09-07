@@ -4,4 +4,6 @@ import com.site.reon.aggregate.workshop.query.dto.WorkshopResponse;
 
 public interface WorkshopFindService {
     WorkshopResponse findWorkshop(Long id);
+
+    boolean isSubscribed(Long recordId, final Long memberId);
 }

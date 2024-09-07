@@ -34,4 +34,6 @@ public interface RoastingRecordFindService {
     List<RoastingRecordListResponse> findRoastingRecordListBy(long memberId);
 
     RoastingRecordsAndPilotsResponse findRoastingRecordsAndPilotsBy(Long memberId);
+
+    boolean isSubscribed(Long recordId, Long memberId);
 }

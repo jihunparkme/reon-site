@@ -38,6 +38,7 @@ function subscribe(workshopId) {
     }).done(function (response) {
         if (response.success) {
             alert("Subscribed successfully.");
+            window.location.reload();
             return;
         }
         alert("Failed to subscribe. Please try again.");
@@ -45,4 +46,8 @@ function subscribe(workshopId) {
         let responseJson = error.responseJSON;
         alert("Failed to subscribe. Please contact the administrator.\n(" + responseJson.message + ")");
     });
+}
+
+function alreadySubscribed() {
+    alert("You are already subscribed.");
 }
