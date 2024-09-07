@@ -35,6 +35,20 @@
 
                         <div class="font-white mt-3 editor-content" style="white-space:pre;">[(${workshop.content})]</div><br/>
 
+                        <br/><hr style="color: white;"/><br/>
+
+                        <h2 class="entry-view-title font-white">
+                            <p>[Workshop]<br/>[(${workshop.record.title})]</p>
+                        </h2>
+                        <div class="entry-meta">
+                            <ul>
+                                <li class="d-flex align-items-center">
+                                    <i class="bi bi-clock"></i>[(${#temporals.format(workshop.record.createdDt, 'yyyy-MM-dd
+                                    HH:mm')})]
+                                </li>
+                            </ul>
+                        </div>
+
                         <div class="entry-content">
                             <div id="temperatureChart" style="height: 650px;"></div>
                             <div id="sensorChart" style="height: 350px;"></div>
