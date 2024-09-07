@@ -85,8 +85,8 @@ public class WorkshopRepositoryCustomImpl implements WorkshopRepositoryCustom {
         }
 
         if (StringUtils.isNotEmpty(param.getName())) {
-            query.where(member.personalInfo.firstName.containsIgnoreCase(param.getName()))
-                    .where(member.personalInfo.lastName.containsIgnoreCase(param.getName()));
+            query.where(member.personalInfo.firstName.containsIgnoreCase(param.getName())
+                    .or(member.personalInfo.lastName.containsIgnoreCase(param.getName())));
         }
 
         final String startDate = param.getStartDate();
