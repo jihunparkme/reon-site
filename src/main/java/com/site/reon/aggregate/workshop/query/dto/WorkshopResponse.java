@@ -12,6 +12,7 @@ public record WorkshopResponse(
         String title,
         String content,
         RoastingRecordResponse record,
+        Long memberId,
         LocalDateTime createdDt
 ) {
     public static WorkshopResponse of(final Workshop workshop, final RoastingRecordResponse roastingRecord) {
@@ -20,6 +21,7 @@ public record WorkshopResponse(
                 .title(workshop.getTitle())
                 .content(workshop.getContent())
                 .record(roastingRecord)
+                .memberId(workshop.getMemberId())
                 .createdDt(workshop.getCreatedDt())
                 .build();
     }

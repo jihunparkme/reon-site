@@ -1,0 +1,248 @@
+<div th:replace="~{common/head :: head('Workshop')}"></div>
+<link th:href="@{/css/record/record.css}" rel="stylesheet"/>
+<body>
+<div th:replace="~{common/header :: header('Workshop')}"></div>
+
+<main id="main">
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2><a href="/workshop" class="small-menu">Workshop</a></h2>
+                <ol>
+                    <li><a href="/" class="small-menu">Home</a></li>
+                    <li><a href="/workshop" class="small-menu">Workshop</a></li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <section id="notice" class="notice">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="entries">
+                    <article class="entry entry-single background-black">
+                        <h2 class="entry-view-title font-white">
+                            <p>[(${workshop.title})]</p>
+                        </h2>
+                        <div class="entry-meta">
+                            <ul>
+                                <li class="d-flex align-items-center">
+                                    <i class="bi bi-clock"></i>
+                                    [(${#temporals.format(workshop.createdDt, 'yyyy-MM-dd HH:mm')})]
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="font-white mt-3 editor-content" style="white-space:pre;">[(${workshop.content})]</div><br/>
+
+                        <br/><hr style="color: white;"/><br/>
+
+                        <h2 class="entry-view-title font-white">
+                            <p>[Workshop]</p>
+                            <p>[(${workshop.record.title})]</p>
+                        </h2>
+                        <div class="entry-meta">
+                            <ul>
+                                <li class="d-flex align-items-center">
+                                    <i class="bi bi-clock"></i>[(${#temporals.format(workshop.record.createdDt, 'yyyy-MM-dd
+                                    HH:mm')})]
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="entry-content">
+                            <div id="temperatureChart" style="height: 650px;"></div>
+                            <div id="sensorChart" style="height: 350px;"></div>
+
+                            <h2 class="font-white mt-5">Profile Details</h2>
+
+                            <div class="font-white mt-3" id="memo" style="white-space:pre;">[(${workshop.record.memo})]</div><br/>
+
+                            <div class="profile-info">
+                                <table class="table table-dark table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">Total Roasting Time</th>
+                                        <td id="totalRoastingTime"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Input Capacity</th>
+                                        <td>[(${workshop.record.inputCapacity})] g</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Preheat</th>
+                                        <td>[(${workshop.record.preheatTemp})] &#8451;</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Dispose</th>
+                                        <td>[(${workshop.record.disposeTime})] / [(${workshop.record.disposeTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Turning Point</th>
+                                        <td>[(${workshop.record.turningPointTime})] / [(${workshop.record.turningPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">First Crack</th>
+                                        <td>[(${workshop.record.creakInfo.firstCrackPointTime})] / [(${workshop.record.creakInfo.firstCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Second Crack</th>
+                                        <td>[(${workshop.record.creakInfo.secondCrackPointTime})] / [(${workshop.record.creakInfo.secondCrackPointTemp})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Cooling Point</th>
+                                        <td>[(${workshop.record.coolingPointTime})] / [(${workshop.record.coolingPointTime})] &#8451; <span class="comment">(Drum Temp)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">DTR</th>
+                                        <td>[(${workshop.record.dtr})] &#37;</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div style="height: 1000px; margin-top: 20px; box-sizing: border-box">
+                                <div id="myGrid" class="ag-theme-quartz-dark"></div>
+                            </div>
+                        </div>
+
+                        <div class="entry-footer">
+                            <i class="bi bi-folder"></i>
+                            <ul class="cats">
+                                <li><a href="/record" style="color: white;">Record</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="entry-button">
+                            <div class="entry-button">
+                                <div th:if="${isWriter}" style="margin-right: 5px;">
+                                    <button type="button" th:onclick="'remove(' + ${workshop.id} +');'" class="btn btn-danger"><i class="bi bi-trash3"></i> DELETE</button>
+                                </div>
+
+                                <div th:if="${isSubscribed}" style="margin-right: 5px;">
+                                    <button type="button" th:onclick="alreadySubscribed()" class="btn btn-secondary"><i class="bi bi-bookmark-check-fill"></i> SUBSCRIBED</button>
+                                </div>
+                                <div sec:authorize="isAuthenticated()" th:if="${!isWriter && !isSubscribed}" style="margin-right: 5px;">
+                                    <button type="button" th:onclick="'subscribe(' + ${workshop.id} + ');'" class="btn btn-success"><i class="bi bi-bookmark-check-fill"></i> SUBSCRIBE</button>
+                                </div>
+
+                                <div style="margin-right: 5px;">
+                                    <button th:onclick="|location.href='@{/workshop}'|" class="btn btn-light"><i class="bi bi-list"></i> LIST</button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="~{common/footer :: footer}"></div>
+</main>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<div th:replace="~{common/commonjs}"></div>
+
+<script th:src="@{/js/library/amcharts/index.js}"></script>
+<script th:src="@{/js/library/amcharts/xy.js}"></script>
+<script th:src="@{/js/library/amcharts/themes/Animated.js}"></script>
+
+<script th:src="@{/js/library/agGrid/ag-grid-community.min.js}"></script>
+
+<script th:src="@{/js/record/chart.js}"></script>
+<script th:src="@{/js/record/grid.js}"></script>
+<script type="text/javascript" th:src="@{/js/workshop/workshop-view.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    const record = [[${workshop.record}]];
+
+    let dataSize = 0;
+    if (record.temp1 !== null) {
+        dataSize = JSON.parse(record.temp1).length;
+    }
+
+    const totalRoastingTime = secondsToMMSS(record.totalRoastingSecondsTime);
+    document.getElementById('totalRoastingTime').textContent = totalRoastingTime;
+
+    const timeArr = generateTimeArr(dataSize);
+    const temp1Arr = generateGraphData(record.temp1, dataSize);
+    const temp2Arr = generateGraphData(record.temp2, dataSize);
+    const temp3Arr = generateGraphData(record.temp3, dataSize);
+    const temp4Arr = generateGraphData(record.temp4, dataSize);
+    const rorArr = stringToFloatTwoDecimals(generateGraphData(record.ror, dataSize));
+    const heaterArr = generateGraphData(record.heater, dataSize);
+    const fanArr = generateGraphData(record.fan, dataSize);
+    const fan2Arr = generateGraphData(record.fan2, dataSize);
+    const noteArr = generateNoteData(record);
+    const turningPointTime = record.turningPointTime;
+    const firstCrackPointTime = record.creakInfo.firstCrackPointTime;
+    const coolingPointTime = record.coolingPointTime;
+    const dtr = record.dtr;
+
+    function generateGraphData(data, size) {
+        if (data === null) {
+            return Array(size).fill(0);
+        }
+
+        return JSON.parse(data);
+    }
+
+    function generateTimeArr(dataSize) {
+        let result = [];
+        for (let i = 0; i < dataSize; i++) {
+            result.push(secondsToMMSS(i));
+        }
+        return result;
+    }
+
+    function secondsToMMSS(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = remainingSeconds.toString().padStart(2, '0');
+
+        return `${formattedMinutes}:${formattedSeconds}`;
+    }
+
+    function stringToFloatTwoDecimals(data) {
+        const result = [];
+        data.forEach(str => {
+            const floatNum = parseFloat(str);
+            const twoDecimal = parseFloat(floatNum.toFixed(2));
+            result.push(twoDecimal);
+        });
+        return result;
+    }
+
+    function generateNoteData(data) {
+        let result = [];
+        const disposeTime = data.disposeTime;
+        const turningPointTime = data.turningPointTime;
+        const firstCrackPointTime = data.creakInfo.firstCrackPointTime;
+        const secondCrackPointTime = data.creakInfo.secondCrackPointTime;
+        const coolingPointTime = data.coolingPointTime;
+
+        result[MMSSToSeconds(disposeTime)] = 'Dispose';
+        result[MMSSToSeconds(turningPointTime)] = 'Turning Point';
+        result[MMSSToSeconds(firstCrackPointTime)] = 'First Crack';
+        result[MMSSToSeconds(secondCrackPointTime)] = 'Second Crack';
+        result[MMSSToSeconds(coolingPointTime)] = 'Cooling Point';
+
+        return result;
+    }
+
+    function MMSSToSeconds(timeString) {
+        const parts = timeString.split(":");
+        const minutes = parseInt(parts[0], 10);
+        const seconds = parseInt(parts[1], 10);
+
+        return (minutes * 60) + seconds;
+    }
+    /*]]>*/
+</script>
+</body>
+<div th:replace="~{common/head :: head('Record')}"></div>
+<link th:href="@{/css/record/record.css}" rel="stylesheet"/>
+</html>

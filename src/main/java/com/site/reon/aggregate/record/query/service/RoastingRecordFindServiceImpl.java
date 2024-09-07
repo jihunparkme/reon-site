@@ -4,9 +4,9 @@ import com.site.reon.aggregate.record.command.domain.RoastingRecord;
 import com.site.reon.aggregate.record.command.domain.repository.RoastingRecordRepository;
 import com.site.reon.aggregate.record.command.dto.RoastingRecordsResponse;
 import com.site.reon.aggregate.record.query.dto.AdminRecordSearchRequestParam;
+import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordListResponse;
 import com.site.reon.aggregate.record.query.dto.RoastingRecordResponse;
-import com.site.reon.aggregate.record.query.dto.RecordSearchRequestParam;
 import com.site.reon.aggregate.record.query.dto.api.RoastingRecordsAndPilotsResponse;
 import com.site.reon.global.security.exception.DataAccessPermissionException;
 import com.site.reon.global.security.exception.NotFoundRoastingRecordException;
@@ -57,11 +57,17 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
     }
 
     @Override
+    public RoastingRecord findById(final long recordId) {
+        final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findById(recordId);
+        validateRoastingRecordPresent(roastingRecordOpt);
+
+        return roastingRecordOpt.get();
+    }
+
+    @Override
     public RoastingRecord findRoastingRecordBy(final long recordId, final long memberId) {
         final Optional<RoastingRecord> roastingRecordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
-        if (roastingRecordOpt.isEmpty()) {
-            throw new DataAccessPermissionException("You do not have permission to access this data.");
-        }
+        validateRoastingRecordPresent(roastingRecordOpt);
 
         return roastingRecordOpt.get();
     }
@@ -113,6 +119,11 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
                 .build();
     }
 
+    @Override
+    public boolean isSubscribed(final Long recordId, final Long memberId) {
+        return recordRepository.existsByRoastingInfoMemberIdAndOriginalRecordId(memberId, recordId);
+    }
+
     private RoastingRecord findRoastingRecord(final Long id) {
         final var roastingRecordOpt = recordRepository.findById(id);
         if (roastingRecordOpt.isEmpty()) {
@@ -137,5 +148,11 @@ public class RoastingRecordFindServiceImpl implements RoastingRecordFindService 
             return Collections.EMPTY_LIST;
         }
         return pilotRecordOpt.get();
+    }
+
+    private static void validateRoastingRecordPresent(final Optional<RoastingRecord> roastingRecordOpt) {
+        if (roastingRecordOpt.isEmpty()) {
+            throw new DataAccessPermissionException("You do not have permission to access this data.");
+        }
     }
 }

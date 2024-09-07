@@ -1,5 +1,4 @@
 <div th:replace="~{common/head :: head('Workshop')}"></div>
-<link th:href="@{/css/workshop/workshop.css}" rel="stylesheet"/>
 <body>
 <div th:replace="~{common/header :: header('workshop')}"></div>
 
@@ -16,9 +15,85 @@
         </div>
     </section>
 
-    <section id="workshop" class="workshop">
+    <section id="records" class="records">
         <div class="container">
             <div class="row">
+                <form name="form" id="form" th:action="@{/workshop}" method="get">
+                    <input type="hidden" id="page" name="page" value="0"/>
+
+                    <div class="search-bar">
+                        <h4>Search</h4>
+                        <hr/>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex" style="margin-left: 0.8em;">
+                                <label for="title">Title: </label>
+                                <input type="text" id="title" name="title" th:value="${param.title}" class="search-text form-control width-250" >
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex">
+                                <label for="name">Name: </label>
+                                <input type="text" id="name" name="name" th:value="${param.name}" class="search-text form-control width-250" >
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 20px; margin-bottom: 10px">
+                            <div class="display-flex mb-3" style="margin-left: 0.5em;">
+                                <label for="title">Date: </label>
+                                <input type="date" id="startDate" name="startDate" th:value="${param.startDate}" class="search-text form-control width-200">
+                                <span>~</span>
+                                <input type="date" id="endDate" name="endDate" th:value="${param.endDate}" class="search-text form-control width-200">
+                            </div>
+
+                            <div style="float: right;">
+                                <div style="display: inline-block">
+                                    <button type="button" class="btn btn-danger" th:onclick="'resetFilter()'"><i class="bi bi-arrow-clockwise"></i> Reset</button>
+                                </div>
+                                <div style="display: inline-block">
+                                    <button type="button" class="btn btn-warning" th:onclick="'search()'"><i class="bi bi-search"></i> Search</button>
+                                </div>
+                                <button type="submit" style="display: none;">Submit</button>
+                            </div>
+                        </div>
+
+                        <p class="mb-5"></p>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div class="total">
+                    <h5 style="float: left">Total : [(${workshopListPage.totalElements})]</h5>
+                </div>
+
+                <tr th:if="${workshopListPage.totalElements} == 0">
+                    <div class="col-md-6">
+                        <div class="icon-box">
+                            <i class="bi bi-journal-text"></i>
+                            <h4><a>등록된 글이 없습니다.</a></h4>
+                        </div>
+                    </div>
+                </tr>
+
+                <div th:each="workshop, status : ${workshopListPage.content}"
+                     th:unless="${#lists.isEmpty(workshopListPage.content)}" class="col-md-6"
+                     th:classappend="${status.index gt 0 ? 'mt-4 mt-md-0' : ''}">
+                    <div class="icon-box" th:onclick="'location.href=\'' + @{/workshop/{id}(id=${workshop.id})} + '\''">
+                        <i class="bi bi-journal-text"></i>
+                        <h4><a th:href="@{/workshop/{id}(id=${workshop.id})}">[(${workshop.title})]</a></h4>
+                        <p>
+                            Date : [(${#temporals.format(workshop.createdDt, 'yyyy-MM-dd HH:mm')})]<br/>
+                            Name : [(${workshop.lastName})] [(${workshop.firstName})]<br/>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="paging-div">
+                <ul class="pagination" id="pagination"></ul>
             </div>
         </div>
     </section>
@@ -29,8 +104,28 @@
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 <div th:replace="~{common/commonjs}"></div>
+<script type="text/javascript" th:src="@{/js/workshop/workshop-list.js}"></script>
 <script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    let totalPages = [[${workshopListPage.totalPages}]];
+    let startPage = [[${workshopListPage.number}]] + 1;
 
+    if (totalPages > 1) {
+        window.pagObj = $('#pagination').twbsPagination({
+            totalPages: totalPages,
+            startPage: startPage,
+            visiblePages: 10,
+            prev: "‹",
+            next: "›",
+            first: '«',
+            last: '»',
+            onPageClick: function (event, page) {
+            }
+        }).on('page', function (event, page) {
+            searchWorkshopList(page - 1);
+        });
+    }
+    /*]]>*/
 </script>
 </body>
 </html>

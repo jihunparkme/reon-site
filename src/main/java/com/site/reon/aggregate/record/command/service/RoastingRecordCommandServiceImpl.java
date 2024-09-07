@@ -55,6 +55,11 @@ public class RoastingRecordCommandServiceImpl implements RoastingRecordCommandSe
         recordRepository.save(roastingRecord);
     }
 
+    @Override
+    public void saveSubscribe(final RoastingRecord subscribed) {
+        recordRepository.save(subscribed);
+    }
+
     private Optional<RoastingRecord> getRoastingRecord(final Long recordId, final Long memberId) {
         final Optional<RoastingRecord> recordOpt = recordRepository.findByIdAndRoastingInfoMemberId(recordId, memberId);
         if (recordOpt.isEmpty()) {

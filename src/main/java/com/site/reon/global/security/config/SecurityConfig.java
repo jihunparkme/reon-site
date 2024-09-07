@@ -68,7 +68,7 @@ public class SecurityConfig {
 
                                 new AntPathRequestMatcher("/management/actuator/health"),
                                 new AntPathRequestMatcher("/profile"),
-                                new AntPathRequestMatcher("/workshop"),
+                                new AntPathRequestMatcher("/workshop/**"),
 
                                 new AntPathRequestMatcher("/contact/**"),
                                 new AntPathRequestMatcher("/login/**"),
