@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 @Slf4j
 @Controller
 @RequestMapping("/workshop")
@@ -68,9 +70,21 @@ public class WorkshopPageController {
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable(name = "id") final Long id, Model model) {
+    public String view(@PathVariable(name = "id") final Long id,
+                       @LoginMember final SessionMember session,
+                       Model model) {
         final WorkshopResponse workshop = workshopFindService.findWorkshop(id);
+        final Long memberId = getMemberId(session);
+        model.addAttribute("isWriter", Objects.equals(memberId, workshop.memberId()));
         model.addAttribute("workshop", workshop);
         return "workshop/workshop-view";
+    }
+
+    private static Long getMemberId(final SessionMember session) {
+        try {
+            return session.getId();
+        } catch (Exception e) {
+            return 0L;
+        }
     }
 }
