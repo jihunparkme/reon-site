@@ -356,3 +356,7 @@ values (1, 3);
 
 insert into product_category (category_ids, product_id)
 values (1, 4);
+
+insert into workshop (content, created_dt, member_id, modified_dt, record_id, title)
+values ('<p>workshop 테스트 입니다.</p><p> </p><h2>workshop 테스트 입니다.</h2><h4>workshop 테스트 입니다.</h4><p> </p><p><strong>workshop 테스트 입니다.</strong></p><p><i>workshop 테스트 입니다.</i></p><p> </p><ul><li>workshop 테스트 입니다.</li><li>workshop 테스트 입니다.</li></ul><p> </p><ol><li>workshop 테스트 입니다.</li><li>workshop 테스트 입니다.</li></ol><p> </p><figure class="table"><table><tbody><tr><td>가</td><td>나</td><td>다</td></tr><tr><td>1</td><td>2</td><td>3</td></tr></tbody></table></figure><p> </p><p><a target="_blank" rel="noopener noreferrer" href="https://www.naver.com">naver</a></p>',
+        PARSEDATETIME('2024-09-01 19:00:00','yyyy-MM-dd HH:mm:ss'), 2, PARSEDATETIME('2024-09-01 19:00:00','yyyy-MM-dd HH:mm:ss'), 11, 'workshop 테스트 입니다.')
