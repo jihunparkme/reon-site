@@ -1,14 +1,18 @@
 package com.site.reon.aggregate.workshop.controller;
 
+import com.site.reon.aggregate.record.command.dto.RoastingRecordsResponse;
 import com.site.reon.aggregate.workshop.command.dto.WorkshopSaveRequest;
 import com.site.reon.aggregate.workshop.command.service.WorkshopService;
 import com.site.reon.aggregate.workshop.query.dto.WorkshopResponse;
+import com.site.reon.aggregate.workshop.query.dto.WorkshopSearchRequestParam;
+import com.site.reon.aggregate.workshop.query.dto.WorkshopsResponse;
 import com.site.reon.aggregate.workshop.query.service.WorkshopFindService;
 import com.site.reon.global.common.annotation.LoginMember;
 import com.site.reon.global.security.dto.SessionMember;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,16 +30,16 @@ public class WorkshopPageController {
     private final WorkshopService workshopService;
     private final WorkshopFindService workshopFindService;
 
-//    @GetMapping
-//    public String list(@ModelAttribute WorkshopSearchRequestParam param,
-//                       Model model) {
-//        final var roastingRecordListPage = workshopService.findAllOrderByIdDescPaging(memberId, param);
+    @GetMapping
+    public String list(@ModelAttribute WorkshopSearchRequestParam param,
+                       Model model) {
+        final Page<WorkshopsResponse> workshopResponsePage = workshopFindService.findAllByFilter(param);
 
-//        model.addAttribute("workshopListPage", null);
-//        model.addAttribute("page", param.getPage());
+        model.addAttribute("workshopListPage", workshopResponsePage);
+        model.addAttribute("page", param.getPage());
 
-//        return "workshop/workshop-list";
-//    }
+        return "workshop/workshop-list";
+    }
 
     @PostMapping("/share")
     @PreAuthorize("isAuthenticated()")
