@@ -193,12 +193,6 @@ List
 
 # TODD
 
-## Workshop
-
-- [ ] 배포
-  - roastingrecord 필드 추가
-  - workshop 테이블 추가
-
 ## Notice
 
 **Notice.** (`/notice`)
