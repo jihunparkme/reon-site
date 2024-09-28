@@ -33,6 +33,7 @@ create table roasting_record
 -- alter table roasting_record MODIFY COLUMN fan TEXT;
 
 -- ALTER TABLE TABLE_NAME ADD ADD_COLUMN VARCHAR(1) DEFAULT NULL COMMENT 'XXX';
+-- ALTER TABLE roasting_record ADD original_record_id bigint DEFAULT NULL;
 
 insert into roasting_record (TITLE, FAN, HEATER, TEMP1, TEMP2, TEMP3, TEMP4, ROR,
                              CRACK_POINT, CRACK_POINT_TIME, TURNING_POINT_TEMP, TURNING_POINT_TIME, PREHEAT_TEMP, DISPOSE_TEMP, DISPOSE_TIME, INPUT_CAPACITY,
@@ -131,4 +132,16 @@ create table product (
 create table product_category (
       product_id bigint(20) NOT NULL,
       category_ids bigint(20)
-)
+);
+
+create table workshop
+(
+    id          bigint         NOT NULL AUTO_INCREMENT,
+    member_id   bigint         not null,
+    record_id   bigint         not null,
+    title       varchar(100)   not null,
+    content     varchar(20000) not null,
+    created_dt  timestamp(6),
+    modified_dt timestamp(6),
+    PRIMARY KEY (id)
+);
