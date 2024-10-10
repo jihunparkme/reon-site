@@ -22,7 +22,7 @@
                 <div class="entries">
                     <article class="entry entry-single background-black">
                         <div sec:authorize="hasRole('ROLE_PILOT')" class="entry-meta" style="margin-bottom: 50px">
-                            <span style="color: #f2b626">* Pilot account can share roasting profile.</span>
+                            <span style="color: #F5E6CC">* Pilot account can share roasting profile.</span>
                             <div class="pilot-container">
                                 <div class="pilot-left">Status:
                                     <span th:if="${record.pilot}">
@@ -44,7 +44,7 @@
                         </div>
 
                         <div th:if="${record.originalRecordId == null}" style="margin-bottom: 50px">
-                            <span style="color: #f2b626">* Share it on the Workshop page.</span>
+                            <span style="color: #F5E6CC">* Share it on the Workshop page.</span>
                             <div class="workshop-container">
                                 <div class="workshop-left">
                                     <button type="button" class="btn btn-info" th:onclick="'workshop(' + ${record.id} + ');'">Share Workshop</button>
