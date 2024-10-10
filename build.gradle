@@ -79,6 +79,9 @@ dependencies {
     implementation 'org.bouncycastle:bcpkix-jdk15on:1.70'
     implementation 'commons-io:commons-io:2.15.1'
 
+    // monitoring
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

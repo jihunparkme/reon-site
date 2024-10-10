@@ -12,7 +12,7 @@ a {
 }
 
 a:hover {
-  color: #f2b626;
+  color: #F5E6CC;
   text-decoration: none;
 }
 
@@ -145,12 +145,12 @@ header .logo {
 .navbar .active,
 .navbar .active:focus,
 .navbar li:hover>a {
-  color: #f2b626;
+  color: #F5E6CC;
 }
 
 .navbar .getstarted,
 .navbar .getstarted:focus {
-  background: #f2b626;
+  background: #F5E6CC;
   padding: 8px 25px;
   margin-left: 30px;
   border-radius: 4px;
@@ -174,7 +174,7 @@ header .logo {
   z-index: 99;
   opacity: 0;
   visibility: hidden;
-  background: #f2b626;
+  background: #F5E6CC;
   box-shadow: 0px 0px 30px rgb(0, 0, 0, 0.25);
   transition: 0.3s;
 }
@@ -233,7 +233,7 @@ header .logo {
 * Mobile Navigation
 */
 .mobile-nav-toggle {
-  color: #f2b626;
+  color: #F5E6CC;
   font-size: 28px;
   cursor: pointer;
   display: none;
@@ -296,7 +296,7 @@ header .logo {
 .navbar-mobile a:hover,
 .navbar-mobile .active,
 .navbar-mobile li:hover>a {
-  color: #f2b626;
+  color: #F5E6CC;
 }
 
 .navbar-mobile .getstarted,
@@ -312,7 +312,7 @@ header .logo {
   z-index: 99;
   opacity: 1;
   visibility: visible;
-  background: #f2b626;
+  background: #F5E6CC;
   box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
 }
 
@@ -708,7 +708,7 @@ section {
 
 .records .icon-box i {
   float: left;
-  color: #f2b626;
+  color: #F5E6CC;
   font-size: 40px;
 }
 
@@ -731,7 +731,7 @@ section {
 }
 
 .records .icon-box:hover h4 a {
-  color: #f2b626;
+  color: #F5E6CC;
 }
 
 /*--------------------------------------------------------------
@@ -751,7 +751,7 @@ section {
 
 .products .icon-box i {
   float: left;
-  color: #f2b626;
+  color: #F5E6CC;
   font-size: 40px;
 }
 
@@ -2103,7 +2103,7 @@ section {
 #footer {
   background: #111111;
   padding: 0 0 30px 0;
-  color: #f2b626;
+  color: #F5E6CC;
   font-size: 20px;
 }
 
@@ -2268,8 +2268,8 @@ section {
 .page-item.active .page-link {
   z-index: 3 !important;
   color: #fff !important;
-  background-color: #f2b626 !important;
-  border-color: #f2b626 !important;
+  background-color: #F5E6CC !important;
+  border-color: #F5E6CC !important;
 }
 
 .page-link {
