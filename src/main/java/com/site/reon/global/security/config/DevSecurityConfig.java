@@ -73,6 +73,7 @@ public class DevSecurityConfig {
                                 new AntPathRequestMatcher("/error"),
 
                                 new AntPathRequestMatcher("/management/actuator/health"),
+                                new AntPathRequestMatcher("/management/actuator/prometheus"),
                                 new AntPathRequestMatcher("/profile"),
                                 new AntPathRequestMatcher("/workshop/**"),
 
