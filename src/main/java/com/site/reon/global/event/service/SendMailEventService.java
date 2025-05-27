@@ -38,7 +38,7 @@ public class SendMailEventService {
             MimeMessage message = getMimeMessage(request);
             mailSender.send(message);
         } catch (Exception e) {
-            log.error("[MailUtilService.sendMail] Fail to send mail.");
+            log.error("[MailUtilService.sendMail] Fail to send mail.", e);
             throw new MailSendException("Fail to send mail.");
         }
     }
@@ -55,7 +55,7 @@ public class SendMailEventService {
             message.setFrom(new InternetAddress(senderAddress, MimeUtility.encodeText("REONAi", "UTF-8", "B")));
             message.setContent(contents, "text/html;charset=UTF-8");
         } catch (Exception e) {
-            log.error("[MailUtilService.getMimeMessage] exception.");
+            log.error("[MailUtilService.getMimeMessage] exception.", e);
             throw new MailSendException("Fail to generate mail.");
         }
 
